@@ -1,6 +1,7 @@
 #include "frm_principal.h"
 #include "ui_frm_principal.h"
 #include "funcoes_gloabais.h" //funcoes globais
+#include "variaveis_globais.h"
 #include "frm_gestaousuarios.h"
 
 Frm_principal::Frm_principal(QWidget *parent)

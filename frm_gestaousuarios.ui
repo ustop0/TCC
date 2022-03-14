@@ -68,7 +68,7 @@
       </layout>
      </widget>
     </widget>
-    <widget class="QTableWidget" name="tw_ge_listacolab">
+    <widget class="QTableWidget" name="tw_ge_listausuario">
      <property name="geometry">
       <rect>
        <x>300</x>
@@ -247,7 +247,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="txt_nome_novocolab"/>
+           <widget class="QLineEdit" name="txt_nv_nome"/>
           </item>
          </layout>
         </item>
@@ -261,7 +261,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="txt_usuario_novousuario"/>
+           <widget class="QLineEdit" name="txt_nv_usuario"/>
           </item>
          </layout>
         </item>
@@ -275,7 +275,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="txt_senha_novocolab">
+           <widget class="QLineEdit" name="txt_nv_senha">
             <property name="echoMode">
              <enum>QLineEdit::Password</enum>
             </property>
@@ -316,7 +316,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="cb_acesso_novocolab"/>
+           <widget class="QComboBox" name="cb_nv_acesso"/>
           </item>
          </layout>
         </item>
@@ -351,14 +351,14 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="QPushButton" name="btn_novo_novocolab">
+         <widget class="QPushButton" name="btn_nv_novo">
           <property name="text">
            <string>Novo</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="btn_gravar_novocolab">
+         <widget class="QPushButton" name="btn_nv_gravar">
           <property name="text">
            <string>Gravar</string>
           </property>
