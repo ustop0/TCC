@@ -4,8 +4,8 @@
 #include <QTableWidget>
 #include <QString>
 #include <iostream>
-#include <string>
-#include <algorithm>
+//#include <algorithm>
+//#include <string>
 
 class funcoes_globais
 {
@@ -16,10 +16,10 @@ public:
     static void removerLinhas(QTableWidget *tw);
 
     //to lower case
-    static QString tLower( QString &str );
+    //static QString tLower( QString &str );
 
     //to upper case
-    static QString tUpper( QString &str );
+    //static QString tUpper( QString &str );
 };
 
 #endif // FUNCOES_GLOABAIS_H

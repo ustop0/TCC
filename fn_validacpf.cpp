@@ -6,7 +6,7 @@ fn_validaCpf::fn_validaCpf()
 }
 
 //valida cpf
-bool fn_validaCpf::validaCPF(int &cpf)
+bool fn_validaCpf::validaCPF( int *cpf )
 {
     int digito1, digito2, temp = 0;
 
@@ -16,7 +16,7 @@ bool fn_validaCpf::validaCPF(int &cpf)
     (o primeiro por 10, o segundo por 9, e assim por diante);
     Em seguida, calcula-se o resto “r1″ da divisão da soma dos resultados das multiplicações por 11,
     e se o resto for zero ou 1, digito é zero, caso contrário digito = (11-r1) */
-    for(char i = 0; i < 9; i++)
+    for(unsigned char i = 0; i < 9; i++)
     {
         temp += (cpf[i] * (10 - i));
     }
@@ -40,7 +40,7 @@ bool fn_validaCpf::validaCPF(int &cpf)
     procedendo da mesma maneira do primeiro digito*/
 
     temp = 0;
-    for(char i = 0; i < 10; i++)
+    for(unsigned char i = 0; i < 10; i++)
     {
         temp += (cpf[i] * (11 - i));
     }

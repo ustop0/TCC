@@ -2,6 +2,7 @@
 #define FRM_GESTAOCLIENTES_H
 
 #include <QDialog>
+#include <QMessageBox>
 #include <QDebug>
 #include <QString>
 #include "funcoes_gloabais.h"
@@ -20,7 +21,7 @@ public:
     ~frm_gestaoclientes();
 
 private slots:
-    void on_btn_nv_gravar_clicked();
+    bool on_btn_nv_gravar_clicked(); //original( void )
 
 private:
     Ui::frm_gestaoclientes *ui;
