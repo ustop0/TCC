@@ -5,7 +5,10 @@ fn_validaCpf::fn_validaCpf()
 
 }
 
-//valida cpf
+//-----------------------------------------------------
+//Data: 15/03/2022                                    |
+//Função: validar o CPF                               |
+//-----------------------------------------------------
 bool fn_validaCpf::validaCPF( int *cpf )
 {
     int digito1, digito2, temp = 0;
@@ -67,3 +70,30 @@ bool fn_validaCpf::validaCPF( int *cpf )
         return false;
     }
 }
+
+//-----------------------------------------------------
+//Data: 15/03/2022                                    |
+//Função: validar a entrada do usuário antes do CPF   |
+//-----------------------------------------------------
+//int fn_validaCpf::entradaCPF( const char *input )
+//{
+//    int cpf[11];
+
+//    for(unsigned char i = 0; i < 11; i++)
+//    {
+//       //Convertendo char para valor absoluto segundo tabela ASCII
+//        cpf[i] = static_cast<int>(input[i] - 48);
+
+//        if(cpf[i] < 0 || cpf[i] > 9)
+//        {   //Validando a entrada de dados
+//            std::cout << "ENTRADA INVÁLIDA" << "\n";
+//            //QMessageBox::warning(this, "Erro", "Entráda inválida");
+//            return false;
+//        }
+//        else
+//        {
+//            return *cpf;
+//        }
+//    }
+//    return *cpf;
+//}

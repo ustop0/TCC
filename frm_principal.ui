@@ -106,14 +106,22 @@
     <property name="title">
      <string>Gestão</string>
     </property>
+    <widget class="QMenu" name="menuVendas">
+     <property name="title">
+      <string>Vendas</string>
+     </property>
+     <addaction name="actionNova_Venda"/>
+     <addaction name="actionGestao_de_Vendas"/>
+    </widget>
     <addaction name="actionUsuario"/>
     <addaction name="actionClientes"/>
     <addaction name="actionFornecedores"/>
     <addaction name="actionCarros"/>
     <addaction name="separator"/>
     <addaction name="actionEstoque"/>
-    <addaction name="actionVendas"/>
+    <addaction name="menuVendas"/>
     <addaction name="actionOrdem_de_Servi_o"/>
+    <addaction name="actionAgendar_Servi_o"/>
    </widget>
    <widget class="QMenu" name="menuSistema">
     <property name="title">
@@ -135,11 +143,6 @@
   <action name="actionEstoque">
    <property name="text">
     <string>Estoque</string>
-   </property>
-  </action>
-  <action name="actionVendas">
-   <property name="text">
-    <string>Vendas</string>
    </property>
   </action>
   <action name="actionSobre">
@@ -170,6 +173,21 @@
   <action name="actionCarros">
    <property name="text">
     <string>Carros</string>
+   </property>
+  </action>
+  <action name="actionAgendar_Servi_o">
+   <property name="text">
+    <string>Agendar Serviço</string>
+   </property>
+  </action>
+  <action name="actionNova_Venda">
+   <property name="text">
+    <string>Nova Venda</string>
+   </property>
+  </action>
+  <action name="actionGestao_de_Vendas">
+   <property name="text">
+    <string>Gestao de Vendas</string>
    </property>
   </action>
  </widget>

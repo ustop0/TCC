@@ -11,10 +11,16 @@ CONFIG += c++17
 
 SOURCES += \
     fn_validacpf.cpp \
+    frm_agendaservicos.cpp \
     frm_gestaoclientes.cpp \
+    frm_gestaoesotque.cpp \
     frm_gestaousuarios.cpp \
+    frm_gestaovendas.cpp \
     frm_login.cpp \
+    frm_novavenda.cpp \
+    frm_ordemservico.cpp \
     frms_ge_editarcliente.cpp \
+    frms_selecionacliente.cpp \
     funcoes_gloabais.cpp \
     main.cpp \
     frm_principal.cpp
@@ -22,20 +28,32 @@ SOURCES += \
 HEADERS += \
     ConexaoBanco.h \
     fn_validacpf.h \
+    frm_agendaservicos.h \
     frm_gestaoclientes.h \
+    frm_gestaoesotque.h \
     frm_gestaousuarios.h \
+    frm_gestaovendas.h \
     frm_login.h \
+    frm_novavenda.h \
+    frm_ordemservico.h \
     frm_principal.h \
     frms_ge_editarcliente.h \
+    frms_selecionacliente.h \
     funcoes_gloabais.h \
     variaveis_globais.h
 
 FORMS += \
+    frm_agendaservicos.ui \
     frm_gestaoclientes.ui \
+    frm_gestaoesotque.ui \
     frm_gestaousuarios.ui \
+    frm_gestaovendas.ui \
     frm_login.ui \
+    frm_novavenda.ui \
+    frm_ordemservico.ui \
     frm_principal.ui \
-    frms_ge_editarcliente.ui
+    frms_ge_editarcliente.ui \
+    frms_selecionacliente.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
