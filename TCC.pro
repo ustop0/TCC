@@ -10,6 +10,14 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Classes/clagendaservicos.cpp \
+    Classes/clcliente.cpp \
+    Classes/clestoque.cpp \
+    Classes/clfornecedor.cpp \
+    Classes/clordemservico.cpp \
+    Classes/clusuario.cpp \
+    Classes/clveiculo.cpp \
+    Classes/usuario.cpp \
     fn_validacpf.cpp \
     frm_agendaservicos.cpp \
     frm_gestaoclientes.cpp \
@@ -28,6 +36,14 @@ SOURCES += \
     frm_principal.cpp
 
 HEADERS += \
+    Classes/clagendaservicos.h \
+    Classes/clcliente.h \
+    Classes/clestoque.h \
+    Classes/clfornecedor.h \
+    Classes/clordemservico.h \
+    Classes/clusuario.h \
+    Classes/clveiculo.h \
+    Classes/usuario.h \
     ConexaoBanco.h \
     fn_validacpf.h \
     frm_agendaservicos.h \
