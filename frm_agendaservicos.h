@@ -15,6 +15,10 @@ public:
     explicit frm_agendaservicos(QWidget *parent = nullptr);
     ~frm_agendaservicos();
 
+private slots:
+
+    void on_btn_selecionaCliente_clicked();
+
 private:
     Ui::frm_agendaservicos *ui;
 };

@@ -14,7 +14,9 @@ SOURCES += \
     frm_agendaservicos.cpp \
     frm_gestaoclientes.cpp \
     frm_gestaoesotque.cpp \
+    frm_gestaofornecedores.cpp \
     frm_gestaousuarios.cpp \
+    frm_gestaoveiculos.cpp \
     frm_gestaovendas.cpp \
     frm_login.cpp \
     frm_novavenda.cpp \
@@ -31,7 +33,9 @@ HEADERS += \
     frm_agendaservicos.h \
     frm_gestaoclientes.h \
     frm_gestaoesotque.h \
+    frm_gestaofornecedores.h \
     frm_gestaousuarios.h \
+    frm_gestaoveiculos.h \
     frm_gestaovendas.h \
     frm_login.h \
     frm_novavenda.h \
@@ -46,7 +50,9 @@ FORMS += \
     frm_agendaservicos.ui \
     frm_gestaoclientes.ui \
     frm_gestaoesotque.ui \
+    frm_gestaofornecedores.ui \
     frm_gestaousuarios.ui \
+    frm_gestaoveiculos.ui \
     frm_gestaovendas.ui \
     frm_login.ui \
     frm_novavenda.ui \

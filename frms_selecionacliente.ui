@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>572</width>
-    <height>322</height>
+    <height>350</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,7 +26,7 @@
   <widget class="QPushButton" name="btn_filtrarCliente">
    <property name="geometry">
     <rect>
-     <x>140</x>
+     <x>131</x>
      <y>10</y>
      <width>89</width>
      <height>25</height>
@@ -44,6 +44,19 @@
      <width>113</width>
      <height>25</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_confirmarCliente">
+   <property name="geometry">
+    <rect>
+     <x>474</x>
+     <y>320</y>
+     <width>89</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Confirmar</string>
    </property>
   </widget>
  </widget>

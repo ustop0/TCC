@@ -5,6 +5,8 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    //formulário principal do sistema
     //Frm_principal w;
     //w.show();
 
