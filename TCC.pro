@@ -29,6 +29,7 @@ SOURCES += \
     frm_login.cpp \
     frm_novavenda.cpp \
     frm_ordemservico.cpp \
+    frm_sobre.cpp \
     frms_ge_editarcliente.cpp \
     frms_selecionacliente.cpp \
     funcoes_gloabais.cpp \
@@ -57,6 +58,7 @@ HEADERS += \
     frm_novavenda.h \
     frm_ordemservico.h \
     frm_principal.h \
+    frm_sobre.h \
     frms_ge_editarcliente.h \
     frms_selecionacliente.h \
     funcoes_gloabais.h \
@@ -74,6 +76,7 @@ FORMS += \
     frm_novavenda.ui \
     frm_ordemservico.ui \
     frm_principal.ui \
+    frm_sobre.ui \
     frms_ge_editarcliente.ui \
     frms_selecionacliente.ui
 
