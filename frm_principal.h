@@ -2,8 +2,12 @@
 #define FRM_PRINCIPAL_H
 
 #include <QMainWindow>
+#include <QDialog>
+#include <QMainWindow>
 #include <QtSql> //banco de dados
 #include <QMessageBox>
+#include "funcoes_gloabais.h" //funcoes globais
+#include "variaveis_globais.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Frm_principal; }

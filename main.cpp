@@ -1,5 +1,6 @@
 #include "frm_principal.h"
 #include "frm_gestaoclientes.h" //teste do form clientes
+#include "frm_login.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
@@ -11,7 +12,11 @@ int main(int argc, char *argv[])
     //w.show();
 
     //fazendo testes na validacao do CPF
-    frm_gestaoclientes w;
+    //frm_gestaoclientes w;
+    //w.show();
+
+    //formulário de login
+    Frm_login w;
     w.show();
 
     return a.exec();

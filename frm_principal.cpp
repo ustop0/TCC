@@ -1,7 +1,5 @@
 #include "frm_principal.h"
 #include "ui_frm_principal.h"
-#include "funcoes_gloabais.h" //funcoes globais
-#include "variaveis_globais.h"
 #include "frm_gestaousuarios.h"
 #include "frm_gestaoclientes.h"
 #include "frm_gestaofornecedores.h"
@@ -13,6 +11,14 @@
 #include "frm_agendaservicos.h"
 #include "frm_sobre.h"
 
+int variaveis_globais::id_colab;
+QString variaveis_globais::nome_colab;
+QString variaveis_globais::acesso_colab;
+QString variaveis_globais::username_colab;
+bool variaveis_globais::logado;
+
+//definindo banco de dados, POSTGRESQL
+//static QSqlDatabase bancoDeDados=QSqlDatabase::addDatabase("QPSQL");
 
 Frm_principal::Frm_principal(QWidget *parent)
     : QMainWindow(parent)
@@ -29,15 +35,16 @@ Frm_principal::~Frm_principal()
 
 void Frm_principal::on_actionUsuario_triggered() //abre a tela de usuários
 {
-//    if(variaveis_globais::acesso_colab == 'A') //verifica a permissao de acesso do colaborador
-//    {
-//        frm_gestaousuarios f_gestaousuarios;
-//        f_gestaousuarios.exec();
-//    }
-//    else
-//    {
-//        QMessageBox::information(this, "ACESSO", "Acesso não permitido");
-//    }
+    //está apresentando erro, conferir
+    if(variaveis_globais::acesso_colab != 'A') //verifica a permissao de acesso do colaborador
+    {
+        frm_gestaousuarios f_gestaousuarios;
+        f_gestaousuarios.exec();
+   }
+   else
+   {
+       QMessageBox::information(this, "ACESSO", "Acesso não permitido");
+   }
 }
 
 

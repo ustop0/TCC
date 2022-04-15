@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>341</width>
+    <width>331</width>
     <height>295</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="btn_logar">
    <property name="geometry">
     <rect>
      <x>118</x>
@@ -23,13 +23,13 @@
     </rect>
    </property>
    <property name="text">
-    <string>Acessar</string>
+    <string>Logar</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>55</x>
      <y>80</y>
      <width>221</width>
      <height>131</height>
@@ -44,7 +44,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="lineEdit"/>
+     <widget class="QLineEdit" name="txt_usuario"/>
     </item>
     <item>
      <widget class="QLabel" name="label_2">
@@ -54,7 +54,11 @@
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="lineEdit_2"/>
+     <widget class="QLineEdit" name="txt_senha">
+      <property name="echoMode">
+       <enum>QLineEdit::Password</enum>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
