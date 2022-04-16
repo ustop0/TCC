@@ -8,7 +8,7 @@
 #include <QSplashScreen> //usar splash screens
 #include <QTimer>
 #include "ConexaoBanco.h" //conexao com o banco
-#include "funcoes_gloabais.h"
+#include "funcoes_globais.h"
 #include "variaveis_globais.h" //variaveis globais do programa
 
 namespace Ui {

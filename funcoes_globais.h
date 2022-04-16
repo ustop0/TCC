@@ -1,5 +1,5 @@
-#ifndef FUNCOES_GLOABAIS_H
-#define FUNCOES_GLOABAIS_H
+#ifndef FUNCOES_GLOBAIS_H
+#define FUNCOES_GLOBAIS_H
 
 #include <QTableWidget>
 #include <QString>
@@ -13,7 +13,10 @@ public:
     funcoes_globais();
 
     //função para remover as linhas do table widget, para reentrar na aba
-    static void removerLinhas(QTableWidget *tw);
+    static void removerLinhas( QTableWidget *tw );
+
+    //função para alterar o tipo de acesso dos usuários
+    static QString ajustaTipoAcesso( QString acesso );
 
     //to lower case
     //static QString tLower( QString &str );
@@ -22,4 +25,4 @@ public:
     //static QString tUpper( QString &str );
 };
 
-#endif // FUNCOES_GLOABAIS_H
+#endif // FUNCOES_GLOBAIS_H

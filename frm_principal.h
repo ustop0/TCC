@@ -6,7 +6,8 @@
 #include <QMainWindow>
 #include <QtSql> //banco de dados
 #include <QMessageBox>
-#include "funcoes_gloabais.h" //funcoes globais
+#include "ConexaoBanco.h" //banco
+#include "funcoes_globais.h" //funcoes globais
 #include "variaveis_globais.h"
 
 QT_BEGIN_NAMESPACE
@@ -20,6 +21,9 @@ class Frm_principal : public QMainWindow
 public:
     Frm_principal(QWidget *parent = nullptr);
     ~Frm_principal();
+
+    //instanciando conexao com o banco de dados
+    Conexao con;
 
 private slots:
     void on_actionUsuario_triggered();

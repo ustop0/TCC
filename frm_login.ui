@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Login</string>
   </property>
   <widget class="QPushButton" name="btn_logar">
    <property name="geometry">
@@ -44,7 +44,11 @@
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="txt_usuario"/>
+     <widget class="QLineEdit" name="txt_usuario">
+      <property name="text">
+       <string>amincar</string>
+      </property>
+     </widget>
     </item>
     <item>
      <widget class="QLabel" name="label_2">
@@ -55,6 +59,9 @@
     </item>
     <item>
      <widget class="QLineEdit" name="txt_senha">
+      <property name="text">
+       <string>12meurex</string>
+      </property>
       <property name="echoMode">
        <enum>QLineEdit::Password</enum>
       </property>

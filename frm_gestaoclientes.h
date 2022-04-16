@@ -5,7 +5,7 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QString>
-#include "funcoes_gloabais.h"
+#include "funcoes_globais.h"
 #include "fn_validacpf.h"
 
 namespace Ui {

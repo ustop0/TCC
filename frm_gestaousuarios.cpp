@@ -6,9 +6,369 @@ frm_gestaousuarios::frm_gestaousuarios(QWidget *parent) :
     ui(new Ui::frm_gestaousuarios)
 {
     ui->setupUi(this);
-}
 
-frm_gestaousuarios::~frm_gestaousuarios()
+    //abrindo a conexao com o banco
+    if( !con.abrir() ) //verificando se a conexao foi aberta
+    {
+        if( !con.abrir() )
+        {
+            QMessageBox::warning(this, "ERRO", "Erro ao abrir banco de dados");
+        }
+    }
+
+    ui->cb_nv_acesso->addItem("Administrador");
+    ui->cb_nv_acesso->addItem("Funcionário");
+    ui->cb_ge_acesso->addItem("Administrador");
+    ui->cb_ge_acesso->addItem("Funcionário");
+    ui->txt_nv_nome->setFocus();
+
+    //define o Novo Produto de index(0) como aba padrão(que inicia ao ser aberta a interface)
+    ui->tabWidget->setCurrentIndex(0);
+
+    //**Estilizando layout da table widget**
+    //definindo o tamanho das colunas
+    ui->tw_ge_listausuario->setColumnCount(2); //define que o table widget terá duas colunas
+    ui->tw_ge_listausuario->setColumnWidth(0, 150); //id colaborador
+    ui->tw_ge_listausuario->setColumnWidth(1, 220); //nome colaborador
+
+    //cabeçalhos do table widget
+    QStringList cabecalhos={"Id", "Nome", "Usuario", "Senha", "Tipo de Acesso"};
+    ui->tw_ge_listausuario->setHorizontalHeaderLabels(cabecalhos);
+    //definindo cor da linha ao ser selecionada
+    ui->tw_ge_listausuario->setStyleSheet("QTableView "
+                                      "{selection-background-color:red}");
+
+    //desabilita a edição dos registros pelo table widget
+    ui->tw_ge_listausuario->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    //selecionar a linha inteira quando clickar em uma celula
+    ui->tw_ge_listausuario->setSelectionBehavior(QAbstractItemView::SelectRows);
+    //desabilitando os indices das linhas
+    ui->tw_ge_listausuario->verticalHeader()->setVisible(false);
+
+}//**FIM construtor
+
+frm_gestaousuarios::~frm_gestaousuarios()//** destrutor
 {
+    con.fechar(); //fechando conexao com o banco de dados
+
     delete ui;
 }
+
+void frm_gestaousuarios::on_btn_nv_novo_clicked() //novo usuário
+{
+    ui->txt_nv_nome->clear();
+    ui->txt_nv_usuario->clear();
+    ui->txt_nv_senha->clear();
+    ui->cb_nv_acesso->setCurrentIndex(0); //deixa o A por padrão no combo box;
+    ui->txt_nv_nome->setFocus();
+}
+
+
+void frm_gestaousuarios::on_btn_nv_gravar_clicked() //salvar novo usuário
+{
+    QString nome = ui->txt_nv_nome->text(); //armazena o codigo
+    QString usuario = ui->txt_nv_usuario->text();
+    QString senha = ui->txt_nv_senha->text();
+    QString acesso = ui->cb_nv_acesso->currentText(); //combo box
+
+    //define o acesso para os tipos do banco de dados
+    acesso = funcoes_globais::ajustaTipoAcesso( acesso );
+
+    QSqlQuery query; //query insersao de colaboradores na tabela tb_colaboradores
+
+    //inserir
+    query.prepare("INSERT INTO "
+                    "a001_usuarios(a001_nome                "
+                                     ",a001_usuario         "
+                                     ",a001_senha           "
+                                     ",a001_tipo_acesso)    "
+                    "VALUES('" +nome     +  "'"
+                          ",'" +usuario  +  "'"
+                          ",'" +senha    +  "'"
+                          ",'" +acesso   +  "') ");
+
+    if( !query.exec() ) //verifica se a query tem algum erro e executa ela
+    {
+        QMessageBox::critical(this, "ERRO", "Nome de usuário já existe, escolha outro");
+    }
+    else
+    {
+        QMessageBox::information(this, "GRAVADO", "Usuario gravado com sucesso");
+        ui->txt_nv_nome->clear(); //armazena o codigo
+        ui->txt_nv_usuario->clear();
+        ui->txt_nv_senha->clear();
+        ui->cb_nv_acesso->setCurrentIndex(0); //padrão do combobox
+        ui->txt_nv_nome->setFocus();
+    }
+}
+
+
+void frm_gestaousuarios::on_tabWidget_currentChanged(int index)//quando ocorrer mudança na aba
+{
+    if( index == 1 ) //verifica a interface pelo index das tabs
+    {
+        //limpa as linhas do table widget
+        funcoes_globais::removerLinhas( ui->tw_ge_listausuario );
+        //inserir linhas dentro do table widget
+        int contlinhas=0;
+        //Remover os produtos do table widget
+        QSqlQuery query; //query para listar os colaboradores no table widget
+        query.prepare("SELECT "
+                          "a001_codigo "
+                          ",a001_nome "
+                      "FROM "
+                          "a001_usuarios "
+                      "WHERE "
+                        "a001_ativo = true "
+                      "ORDER BY "
+                          "a001_codigo DESC");
+
+        if( query.exec() ) //verifica se ouve algum erro na execução da query
+        {
+            //enquanto a query tiver retornando next, insere linhas dentro do table widget
+            while( query.next() )
+            {
+                //inserindo com contador de linhas, por index
+                ui->tw_ge_listausuario->insertRow(contlinhas);
+                ui->tw_ge_listausuario->setItem(contlinhas
+                                            , 0
+                                            , new QTableWidgetItem(query.value(0).toString()));
+
+                ui->tw_ge_listausuario->setItem(contlinhas
+                                            , 1
+                                            , new QTableWidgetItem(query.value(1).toString()));
+
+                //definindo o tamanho das linhas
+                ui->tw_ge_listausuario->setRowHeight(contlinhas, 20);
+                contlinhas ++;
+            }
+        }
+        else
+        {
+            QMessageBox::warning(this, "ERRO", "Erro ao listar usuarios");
+        }
+    }
+}
+
+
+void frm_gestaousuarios::on_tw_ge_listausuario_itemSelectionChanged()//mostrar dados da seleção
+{
+    //pega a linha selecionada
+    int id=ui->tw_ge_listausuario->item(ui->tw_ge_listausuario->currentRow(), 0) ->text().toInt();
+
+    //exibe os dados da linha selecionada
+    QSqlQuery query;
+    query.prepare("SELECT "
+                    "* "
+                  "FROM "
+                    "a001_usuarios "
+                  "WHERE "
+                    "a001_codigo = '" +QString::number(id)+ "' ");
+
+    if( query.exec() ) //verifica se a query foi bem sucedida
+    {
+        query.first(); //pega o primeiro
+        ui->txt_ge_nome->setText(query.value(1).toString()); //valor 0 é do id
+        ui->txt_ge_usuario->setText(query.value(2).toString());
+        ui->txt_ge_senha->setText(query.value(3).toString());
+        ui->cb_ge_acesso->setCurrentText(query.value(4).toString());
+    }
+}
+
+
+void frm_gestaousuarios::on_txt_ge_filtro_returnPressed()//filtrar registros
+{
+    QString busca; //armazena busca
+    funcoes_globais::removerLinhas( ui->tw_ge_listausuario ); //remove as linhas o table widget
+
+    if( ui->txt_ge_filtro->text() == "" ) //verificando se algo foi digitado no campo de filtro
+    {
+        if( ui->rb_ge_id_usuario->isChecked() ) //consulta de acordo com o radio selecionado
+        {
+            busca = "SELECT " //verificar o DESC
+                        "a001_codigo "
+                        ",a001_nome "
+                    "FROM "
+                        "a001_usuarios "
+                    "WHERE "
+                        "a001_ativo = true "
+                    "ORDER BY "
+                        "a001_codigo DESC";
+        }
+        else
+        {
+            busca = "SELECT " //verificar o DESC
+                        "a001_codigo "
+                        ",a001_nome "
+                    "FROM "
+                        "a001_usuarios "
+                    "WHERE "
+                        "a001_ativo = true "
+                    "ORDER BY "
+                        "a001_codigo DESC";
+        }
+    }
+    else
+    {
+        if( ui->rb_ge_id_usuario->isChecked() ) //consulta de acordo com o radio selecionado
+        {
+            //pega o id do produto pelo txt_ge_filtro
+            busca = "SELECT "
+                        "a001_codigo "
+                        ",a001_nome "
+                    "FROM "
+                        "a001_usuarios "
+                    "WHERE "
+                        "a001_codigo ='" +ui->txt_ge_filtro->text()+ "' "
+                        "AND a001_ativo = true "
+                    "ORDER BY "
+                        "a001_codigo DESC";
+        }
+        else
+        {
+            //filtro personalizado com LIKE
+            busca = "SELECT "
+                        "a001_codigo "
+                        ",a001_nome "
+                    "FROM "
+                        "a001_usuarios "
+                    "WHERE "
+                        "a001_nome "
+                    "LIKE "
+                        "'%"+ui->txt_ge_filtro->text()+"%' "
+                        "AND a001_ativo = true "
+                    "ORDER BY "
+                        "a001_codigo DESC";
+        }
+    }
+    //contador para percorrer linhas
+    int contlinhas=0;
+    QSqlQuery query;
+    query.prepare(busca);
+
+    if( query.exec() ) //executa a query
+    {
+        while( query.next() ) //percorrendo query e preenchendo table widget
+        {
+            //inserindo com contador de linhas, por index
+            ui->tw_ge_listausuario->insertRow(contlinhas);
+            ui->tw_ge_listausuario->setItem(contlinhas
+                                        , 0
+                                        , new QTableWidgetItem(query.value(0).toString()));
+
+            ui->tw_ge_listausuario->setItem(contlinhas
+                                        , 1
+                                        , new QTableWidgetItem(query.value(1).toString()));
+
+            //definindo o tamanho das linhas
+            ui->tw_ge_listausuario->setRowHeight(contlinhas, 20);
+            contlinhas ++;
+        }
+    }
+    else
+    {
+        QMessageBox::warning(this, "ERRO", "Erro ao filtrar usuários");
+    }
+
+    //apagar conteudo do campo txt_ge_filtrar toda vez que clickar em filtrar
+    ui->txt_ge_filtro->clear();
+    ui->txt_ge_filtro->setFocus(); //posiciona o cursos no campo novamente
+}
+
+
+void frm_gestaousuarios::on_btn_ge_filtrar_clicked()//botao filtrar registros
+{
+    frm_gestaousuarios::on_txt_ge_filtro_returnPressed();
+}
+
+
+void frm_gestaousuarios::on_btn_ge_salvar_clicked()//gravar alteração no produto
+{
+    if( ui->tw_ge_listausuario->currentRow() == -1 )
+    {
+        QMessageBox::warning(this, "ERRO", "Selecione um usuário");
+        return;
+    }
+
+    QString id = ui->tw_ge_listausuario->item(ui->tw_ge_listausuario->currentRow(),0)->text();
+    QSqlQuery query;
+
+    QString nome = ui->txt_ge_nome->text();
+    QString usuario = ui->txt_ge_usuario->text();
+    QString senha = ui->txt_ge_senha->text();
+    QString acesso = ui->cb_ge_acesso->currentText();
+
+    acesso = funcoes_globais::ajustaTipoAcesso( acesso );
+
+    query.prepare("UPDATE "
+                    "a001_usuarios "
+                  "SET "
+                    "a001_nome          ='" +nome         + "' "
+                    ",a001_usuario      ='" +usuario      + "' "
+                    ",a001_senha        ='" +senha        + "' "
+                    ",a001_tipo_acesso  ='" +acesso       + "' "
+                  "WHERE "
+                    "a001_codigo ='" +id+ "'");
+
+    if( query.exec() ) //executa a query
+    {
+        //pega a linha que está selecionada
+        int linha=ui->tw_ge_listausuario->currentRow();
+        //atualizando o table widget com o novo registro
+        ui->tw_ge_listausuario->item(linha, 1)->setText(nome);
+        QMessageBox::information(this, "Atualizado", "Usuário atualizado com sucesso!");
+    }
+    else
+    {
+        QMessageBox::warning(this, "ERRO", "Erro ao atualizar usuário");
+    }
+}
+
+
+void frm_gestaousuarios::on_btn_ge_excluir_clicked()//excluir colaborador
+{
+    if( ui->tw_ge_listausuario->currentRow() == -1 )
+    {
+        QMessageBox::warning(this, "ERRO", "Selecione um usuário");
+        return;
+    }
+
+    //pergunta se o usuário realmente quer excluir o registro
+    QMessageBox::StandardButton opc =QMessageBox::question(
+                                      this,"Exclusão"
+                                      ,"Confirma exclusão do usuario?"
+                                      ,QMessageBox::Yes|QMessageBox::No); //revisar tabulação
+
+    if( opc == QMessageBox::Yes ) //verificando o botao da caixa question
+    {
+        //pegando a linha corrent(atual), no caso o id(index(0))
+        int linha = ui->tw_ge_listausuario->currentRow();
+        QString id = ui->tw_ge_listausuario->item(linha, 0)->text();
+
+        QSqlQuery query;
+        /*
+        query.prepare("DELETE FROM "
+                        "a001_usuarios "
+                      "WHERE "
+                        "a001_codigo ='" +id+ "'");
+        */
+        query.prepare("UPDATE "
+                        "a001_usuarios "
+                      "SET "
+                        "a001_ativo = false "
+                      "WHERE "
+                        "a001_codigo ='" +id+ "'");
+
+        if( query.exec() ) //executa a query
+        {
+            ui->tw_ge_listausuario->removeRow( linha );
+            QMessageBox::information(this, "DELETADO", "Usuario excluído com sucesso");
+        }
+        else
+        {
+             QMessageBox::warning(this, "ERRO", "Erro ao excluir usuario");
+        }
+    }
+}
+
+

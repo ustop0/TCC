@@ -32,7 +32,7 @@ SOURCES += \
     frm_sobre.cpp \
     frms_ge_editarcliente.cpp \
     frms_selecionacliente.cpp \
-    funcoes_gloabais.cpp \
+    funcoes_globais.cpp \
     main.cpp \
     frm_principal.cpp
 
@@ -61,7 +61,7 @@ HEADERS += \
     frm_sobre.h \
     frms_ge_editarcliente.h \
     frms_selecionacliente.h \
-    funcoes_gloabais.h \
+    funcoes_globais.h \
     variaveis_globais.h
 
 FORMS += \

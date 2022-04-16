@@ -30,7 +30,7 @@ void Frm_login::on_btn_logar_clicked()
         query.prepare("SELECT "
                         "* "
                       "FROM "
-                        "a001_usuario "
+                        "a001_usuarios "
                       "WHERE "
                         "a001_usuario = '"+usuario+"' AND "
                         "a001_senha   = '"+senha+  "'");
@@ -43,6 +43,7 @@ void Frm_login::on_btn_logar_clicked()
                 //obtendo o nome e o acessono
                 variaveis_globais::logado = true;
                 variaveis_globais::nome_colab = query.value(1).toString();
+                variaveis_globais::username_colab = query.value(2).toString();
                 variaveis_globais::id_colab = query.value(0).toInt();
                 variaveis_globais::acesso_colab = query.value(5).toString();
 

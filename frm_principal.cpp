@@ -22,12 +22,20 @@ bool variaveis_globais::logado;
 
 Frm_principal::Frm_principal(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::Frm_principal)
+    , ui(new Ui::Frm_principal) //**INICIO** construtor
 {
     ui->setupUi(this);
+
+    //Configurando barra de status
+    //QString nome_usuario =  variaveis_globais::username_colab;
+    //ui->txt_nome_usuario = nome_usuario;
+    //ui->txt_base_dados;
+
+    ui->statusbar->addWidget(ui->txt_nome_usuario); //insere o botão na barra de status do programa
+    //ui->statusbar->addWidget(ui->txt_base_dados);
 }
 
-Frm_principal::~Frm_principal()
+Frm_principal::~Frm_principal()//**INICIO** destrutor
 {
     delete ui;
 }

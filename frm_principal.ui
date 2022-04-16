@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Frm_principal</string>
+   <string>Menu</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="pushButton">
@@ -66,30 +66,30 @@
      <string>PushButton</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="txt_base_dados">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>140</y>
-      <width>67</width>
-      <height>17</height>
+      <x>546</x>
+      <y>327</y>
+      <width>101</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>Base de dados</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="txt_nome_usuario">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>140</y>
+      <x>436</x>
+      <y>330</y>
       <width>67</width>
       <height>17</height>
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>usuario</string>
     </property>
    </widget>
   </widget>
