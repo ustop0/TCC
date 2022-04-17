@@ -55,7 +55,7 @@
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -69,6 +69,20 @@
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_27">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_26">
+            <item>
+             <widget class="QLabel" name="label_18">
+              <property name="text">
+               <string>Nome</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="txt_nv_nome"/>
+            </item>
+           </layout>
+          </item>
           <item>
            <widget class="QLabel" name="label_19">
             <property name="text">
@@ -96,20 +110,6 @@
              <enum>QLineEdit::Password</enum>
             </property>
            </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_26">
-          <item>
-           <widget class="QLabel" name="label_18">
-            <property name="text">
-             <string>Nome</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="txt_nv_nome"/>
           </item>
          </layout>
         </item>

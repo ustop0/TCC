@@ -6,6 +6,8 @@
 #include <QMainWindow>
 #include <QtSql> //banco de dados
 #include <QMessageBox>
+#include <QTime> //relogio do sistema
+#include <QDateTime>
 #include "ConexaoBanco.h" //banco
 #include "funcoes_globais.h" //funcoes globais
 #include "variaveis_globais.h"
@@ -24,6 +26,11 @@ public:
 
     //instanciando conexao com o banco de dados
     Conexao con;
+
+public slots:
+
+    //relógio da barra de status do sistema
+    void atualizaRelogio();
 
 private slots:
     void on_actionUsuario_triggered();
@@ -50,5 +57,7 @@ private slots:
 
 private:
     Ui::Frm_principal *ui;
+
+    QTimer *tempo;
 };
 #endif // FRM_PRINCIPAL_H

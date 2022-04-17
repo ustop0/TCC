@@ -66,7 +66,7 @@
      <string>PushButton</string>
     </property>
    </widget>
-   <widget class="QLabel" name="txt_base_dados">
+   <widget class="QLabel" name="lb_base_dados">
     <property name="geometry">
      <rect>
       <x>546</x>
@@ -75,11 +75,17 @@
       <height>20</height>
      </rect>
     </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
     <property name="text">
      <string>Base de dados</string>
     </property>
    </widget>
-   <widget class="QLabel" name="txt_nome_usuario">
+   <widget class="QLabel" name="lb_nome_usuario">
     <property name="geometry">
      <rect>
       <x>436</x>
@@ -90,6 +96,19 @@
     </property>
     <property name="text">
      <string>usuario</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lb_relogio">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>220</y>
+      <width>67</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Relogio</string>
     </property>
    </widget>
   </widget>

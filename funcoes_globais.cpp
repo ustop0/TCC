@@ -35,7 +35,6 @@ QString funcoes_globais::ajustaTipoAcesso( QString acesso ) //Altera o tipo aces
     return acesso;
 }
 
-
 /***FUNCOES PARA STRINGS***/
 //Converte string para  minusculo
 //QString funcoes_globais::tLower( QString &str )

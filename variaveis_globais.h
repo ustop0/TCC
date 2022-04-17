@@ -10,7 +10,9 @@ class  variaveis_globais
     public:
         //static mantém a variável por toda vida útil do programa
         static bool logado;
-        static QString nome_colab, acesso_colab, username_colab; //dados colaborador
+        static QString nome_colab; //dados do colaborador
+        static QString acesso_colab;
+        static QString username_colab;
         static int id_colab; //id colaborador
 };
 

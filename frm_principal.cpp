@@ -26,12 +26,16 @@ Frm_principal::Frm_principal(QWidget *parent)
 {
     ui->setupUi(this);
 
-    //Configurando barra de status
-    //QString nome_usuario =  variaveis_globais::username_colab;
-    //ui->txt_nome_usuario = nome_usuario;
-    //ui->txt_base_dados;
+    Conexao dadosBanco; //instanciando banco
 
-    ui->statusbar->addWidget(ui->txt_nome_usuario); //insere o botão na barra de status do programa
+    //barra de status, utilizando variaveis_globais e atributos da ConexaoBanco
+    ui->lb_nome_usuario->setText(variaveis_globais::username_colab);
+    ui->lb_base_dados->setText(dadosBanco.banco_nome);
+
+    //**ATENÇÃO** verificar problema de lentidao
+    //atualizaRelogio();
+
+    ui->statusbar->addWidget(ui->lb_nome_usuario); //insere o botão na barra de status do programa
     //ui->statusbar->addWidget(ui->txt_base_dados);
 }
 
@@ -123,3 +127,17 @@ void Frm_principal::on_actionSair_triggered() //sair do sistema
     close();
 }
 
+/**FUNÇÕES**/
+//relógio da barra de status do sistema
+void Frm_principal::atualizaRelogio()
+{
+    //Configurando barra de status
+    tempo = new QTimer(this);
+    connect( tempo, SIGNAL( timeout() ),this, SLOT( atualizaRelogio() ) );
+    tempo->start( 1000 );
+
+    QTime tempoAtual = QTime::currentTime();
+    QString tempoTexto = tempoAtual.toString("hh:mm:ss");
+
+    ui->lb_relogio->setText(tempoTexto);
+}

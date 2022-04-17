@@ -29,6 +29,9 @@ public:
     QString nome, acesso;
     int id;
 
+    //mostrar splashscreen
+    static void splashScreen();
+
 private slots:
     void on_btn_logar_clicked();
 

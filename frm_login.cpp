@@ -52,16 +52,7 @@ void Frm_login::on_btn_logar_clicked()
                 close(); //fecha a janela de login
 
                 //mostrando splashscreen
-                QSplashScreen *telaSplash=new QSplashScreen;
-
-                telaSplash->setPixmap(QPixmap(":/Imagens/splash.png"));
-                telaSplash->show(); //mostrando tela splashscreen
-
-                auto w = new Frm_principal();
-                w->setAttribute(Qt::WA_DeleteOnClose);
-
-                QTimer::singleShot(2000, telaSplash, SLOT(close())); //define o tempo de duração do splash
-                QTimer::singleShot(2000, w, SLOT(show())); //define o tempo para mostrar o formulario principal
+                splashScreen();
 
                 //abrindo o menu principal, sem splash screen
                 //auto w = new Frm_principal();
@@ -81,3 +72,18 @@ void Frm_login::on_btn_logar_clicked()
     con.fechar(); //fecha a conexao com o banco de dados após o login
 }
 
+/**FUNÇÕES**/
+//splash screen
+void Frm_login::splashScreen()
+{
+    QSplashScreen *telaSplash = new QSplashScreen;
+
+    telaSplash->setPixmap(QPixmap(":/Imagens/splash.png"));
+    telaSplash->show(); //mostrando tela splashscreen
+
+    auto w = new Frm_principal();
+    w->setAttribute(Qt::WA_DeleteOnClose);
+
+    QTimer::singleShot(2000, telaSplash, SLOT(close())); //define o tempo de duração do splash
+    QTimer::singleShot(2000, w, SLOT(show())); //define o tempo para mostrar o formulario principal
+}
