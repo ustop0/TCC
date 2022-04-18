@@ -50,11 +50,26 @@ bool frm_gestaoclientes::recebeCPF( const QString &cliente_cpf )
     const char *input = conv_cpf.c_str();
     int cpf[11];
 
+    //**TESTES** verificando se tem menos que 11 digitos
+    for( size_t i = 0; i < 11; i++ )
+    {
+        cpf[i] = i;
+
+        int totalNumeros = 0;
+        totalNumeros += cpf[i];
+        if( totalNumeros < 11 )
+        {
+            qDebug() << "_O CPF digitado NÃO É VÁLIDO, tem menos de 11 digitos" << "\n";
+            ui->lb_nv_cpf->setText("CPF: inválido");
+        }
+        break;
+    }
+
     //verificando se a entrada é válida
-    for(unsigned char i = 0; i < 11; i++)
+    for( unsigned char i = 0; i < 11; i++ )
     {
        //Convertendo char para valor absoluto segundo tabela ASCII
-        cpf[i] = static_cast<int>(input[i] - 48);
+        cpf[i] = static_cast<int>( input[i] - 48 );
 
         if( cpf[i] < 0 || cpf[i] > 9 )
         {
@@ -62,20 +77,22 @@ bool frm_gestaoclientes::recebeCPF( const QString &cliente_cpf )
         }
     }
 
+    //chamando a função que realiza a validação do cpf
     int valCpf;
     valCpf = fn_validaCpf::validaCPF( cpf );
 
+    //trata de acordo com o retorno da função, true e false
     do
     {
         if( valCpf == true )
         {
-            qDebug() << "O CPF digitado É válido" << "\n";
+            qDebug() << "_O CPF digitado É válido" << "\n";
             ui->lb_nv_cpf->setText("CPF");
         }
         else
         {
             //**DESENVOLVENDO**
-            qDebug() << "O CPF digitado NÃO É VÁLIDO" << "\n";
+            qDebug() << "_O CPF digitado NÃO É VÁLIDO" << "\n";
             QMessageBox::warning(this, "Erro", "O CPF digitado é inválido");
 
             //Informa que o cpf é inválido
@@ -119,6 +136,7 @@ void frm_gestaoclientes::validaCEP( const QString &cliente_cep )
         ui->txt_nv_cidade->clear();
         ui->txt_nv_bairro->clear();
         ui->txt_nv_rua->clear();
+        ui->lb_nv_cep->setText("CEP: inválido");
     }
     else
     {
