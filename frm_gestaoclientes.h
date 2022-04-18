@@ -5,6 +5,12 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QString>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QMainWindow>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include "funcoes_globais.h"
 #include "fn_validacpf.h"
 
@@ -20,8 +26,13 @@ public:
     explicit frm_gestaoclientes(QWidget *parent = nullptr);
     ~frm_gestaoclientes();
 
+public slots:
+    bool recebeCPF( const QString &cliente_cpf );
+
+    void validaCEP( const QString &cliente_cep );
+
 private slots:
-    bool on_btn_nv_gravar_clicked(); //original( void )
+    void on_btn_nv_gravar_clicked(); //original( void )
 
 private:
     Ui::frm_gestaoclientes *ui;

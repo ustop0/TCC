@@ -34,6 +34,10 @@ Frm_principal::Frm_principal(QWidget *parent)
 
     //**ATENÇÃO** verificar problema de lentidao
     //atualizaRelogio();
+    //Configurando barra de status
+    tempo = new QTimer(this);
+    connect( tempo, SIGNAL( timeout() ),this, SLOT( atualizaRelogio() ) );
+    tempo->start( 1000 );
 
     ui->statusbar->addWidget(ui->lb_nome_usuario); //insere o botão na barra de status do programa
     //ui->statusbar->addWidget(ui->txt_base_dados);
@@ -131,10 +135,7 @@ void Frm_principal::on_actionSair_triggered() //sair do sistema
 //relógio da barra de status do sistema
 void Frm_principal::atualizaRelogio()
 {
-    //Configurando barra de status
-    tempo = new QTimer(this);
-    connect( tempo, SIGNAL( timeout() ),this, SLOT( atualizaRelogio() ) );
-    tempo->start( 1000 );
+
 
     QTime tempoAtual = QTime::currentTime();
     QString tempoTexto = tempoAtual.toString("hh:mm:ss");

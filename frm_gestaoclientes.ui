@@ -318,7 +318,7 @@
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
-            <widget class="QLabel" name="label_3">
+            <widget class="QLabel" name="lb_nv_cpf">
              <property name="text">
               <string>CPF</string>
              </property>
@@ -350,7 +350,7 @@
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
-            <widget class="QLabel" name="label_2">
+            <widget class="QLabel" name="lb_nv_cep">
              <property name="text">
               <string>CEP</string>
              </property>

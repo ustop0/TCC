@@ -1,5 +1,6 @@
 QT       += core gui sql #consultas SQL
 QT       += core gui printsupport #para impressora
+QT       += core gui network #consultas APIs
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
