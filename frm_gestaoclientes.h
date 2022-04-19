@@ -11,6 +11,7 @@
 #include <QMainWindow>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include "ConexaoBanco.h"
 #include "funcoes_globais.h"
 #include "fn_validacpf.h"
 
@@ -26,6 +27,9 @@ public:
     explicit frm_gestaoclientes(QWidget *parent = nullptr);
     ~frm_gestaoclientes();
 
+    //instanciando conexao com o banco de dados
+    Conexao con;
+
 public slots:
     bool recebeCPF( const QString &cliente_cpf );
 
@@ -33,6 +37,8 @@ public slots:
 
 private slots:
     void on_btn_nv_gravar_clicked(); //original( void )
+
+    void on_txt_nv_cep_returnPressed(); //pressiona campo cep
 
 private:
     Ui::frm_gestaoclientes *ui;

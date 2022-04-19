@@ -7,31 +7,112 @@ frm_gestaoclientes::frm_gestaoclientes(QWidget *parent) :
     ui(new Ui::frm_gestaoclientes)
 {
     ui->setupUi(this);
-}
 
-frm_gestaoclientes::~frm_gestaoclientes()
+    //abrindo a conexao com o banco
+    if( !con.abrir() ) //verificando se a conexao foi aberta
+    {
+        if( !con.abrir() )
+        {
+            QMessageBox::warning(this, "ERRO", "Erro ao abrir banco de dados");
+        }
+    }
+
+//    ui->cb_nv_acesso->addItem("Administrador");
+//    ui->cb_nv_acesso->addItem("Funcionário");
+//    ui->cb_ge_acesso->addItem("Administrador");
+//    ui->cb_ge_acesso->addItem("Funcionário");
+//    ui->txt_nv_nome->setFocus();
+
+    //define o Novo Produto de index(0) como aba padrão(que inicia ao ser aberta a interface)
+    ui->tabWidget->setCurrentIndex(0);
+
+    //**Estilizando layout da table widget**
+    //definindo o tamanho das colunas
+
+}//**FIM** construtor
+
+frm_gestaoclientes::~frm_gestaoclientes()//**INICIO** destrutor
 {
+    con.fechar(); //fechando conexao com o banco de dados
     delete ui;
 }
 
 
-void frm_gestaoclientes::on_btn_nv_gravar_clicked() //gravar novo cliente **DESENVOLVENDO**
+void frm_gestaoclientes::on_btn_nv_gravar_clicked() //salvar novo cliente **DESENVOLVENDO**
 {
     //**EM DESENVOLVIMENTO
     ClCliente cliente; //instanciando
 
     cliente.nome = ui->txt_nv_nome->text();
     cliente.cpf = ui->txt_nv_cpf->text();
-    recebeCPF( cliente.cpf ); //validando cpf
+    if( recebeCPF( cliente.cpf ) == false ) //**EM TESTES**recebendo e tratando o cpf
+    {
+        qDebug() << "cpf inválido para sql";
+    }
+
+    cliente.cep = ui->txt_nv_cep->text();
+    //validaCEP( cliente.cep ); //validando cep
+    cliente.estado = ui->txt_nv_estado->text();
+    cliente.cidade = ui->txt_nv_cidade->text();
+    cliente.rua = ui->txt_nv_rua->text();
+    cliente.bairro = ui->txt_nv_bairro->text();
     cliente.telefone1 = ui->txt_nv_telefone->text();
+
+    //DESENVOLVENDO CRUD COM O BANCO
+    QSqlQuery query; //query insersao de colaboradores na tabela tb_colaboradores
+
+    //inserir
+    query.prepare("INSERT INTO "
+                    "a005_cliente(a005_nome           "
+                                     ",a005_cpf       "
+                                     ",a005_cep       "
+                                     ",a005_estado    "
+                                     ",a005_cidade    "
+                                     //",a005_rua       "
+                                     ",a005_bairro    "
+                                     ",a005_telefone) "
+                    "VALUES('" +cliente.nome      +  "'"
+                          ",'" +cliente.cpf       +  "'"
+                          ",'" +cliente.cep       +  "'"
+                          ",'" +cliente.estado    +  "'"
+                          ",'" +cliente.cidade    +  "'"
+                          //",'" +cliente.rua       +  "'"
+                          ",'" +cliente.bairro    +  "'"
+                          ",'" +cliente.telefone1 + "') ");
+
+    if( !query.exec() ) //verifica se a query tem algum erro e executa ela
+    {
+        QMessageBox::critical(this, "ERRO", "Não foi possível salvar os dados do cliente");
+    }
+    else
+    {
+        QMessageBox::information(this, "GRAVADO", "Cliente salvo com sucesso");
+        ui->txt_nv_nome->clear();
+        ui->txt_nv_cpf->clear();
+        ui->txt_nv_cep->clear();
+        ui->txt_nv_estado->clear();
+        ui->txt_nv_cidade->clear();
+        ui->txt_nv_rua->clear();
+        ui->txt_nv_bairro->clear();
+        ui->txt_nv_telefone->clear();
+        ui->txt_nv_nome->setFocus();
+    }
+}
+
+void frm_gestaoclientes::on_txt_nv_cep_returnPressed()//pressiona campo cep
+{
+    ClCliente cliente;
+
     cliente.cep = ui->txt_nv_cep->text();
     validaCEP( cliente.cep ); //validando cep
     cliente.estado = ui->txt_nv_estado->text();
     cliente.cidade = ui->txt_nv_cidade->text();
-    cliente.bairro = ui->txt_nv_bairro->text();
     cliente.rua = ui->txt_nv_rua->text();
-
+    cliente.bairro = ui->txt_nv_bairro->text();
+    cliente.telefone1 = ui->txt_nv_telefone->text();
 }
+
+
 
 //**FUNÇÕES**//
 /*--------------------------------------------------------------------------------------------
@@ -50,20 +131,19 @@ bool frm_gestaoclientes::recebeCPF( const QString &cliente_cpf )
     const char *input = conv_cpf.c_str();
     int cpf[11];
 
-    //**TESTES** verificando se tem menos que 11 digitos
+    //TESTES** verificando se tem menos que 11 digitos
     for( size_t i = 0; i < 11; i++ )
-    {
-        cpf[i] = i;
+     {
+         cpf[i] = i;
 
-        int totalNumeros = 0;
-        totalNumeros += cpf[i];
-        if( totalNumeros < 11 )
-        {
-            qDebug() << "_O CPF digitado NÃO É VÁLIDO, tem menos de 11 digitos" << "\n";
-            ui->lb_nv_cpf->setText("CPF: inválido");
-        }
-        break;
-    }
+         int totalNumeros = 0;
+         totalNumeros += cpf[i];
+         if( totalNumeros != 11 )
+         {
+             qDebug() << "_O CPF digitado NÃO É VÁLIDO, tem menos de 11 digitos" << "\n";
+             ui->lb_nv_cpf->setText("CPF: inválido");
+         }
+     }
 
     //verificando se a entrada é válida
     for( unsigned char i = 0; i < 11; i++ )
@@ -88,6 +168,7 @@ bool frm_gestaoclientes::recebeCPF( const QString &cliente_cpf )
         {
             qDebug() << "_O CPF digitado É válido" << "\n";
             ui->lb_nv_cpf->setText("CPF");
+            return valCpf; //teste
         }
         else
         {
@@ -102,7 +183,7 @@ bool frm_gestaoclientes::recebeCPF( const QString &cliente_cpf )
         }
     }while( valCpf == false );
 
-    return false; //essa função não deve retornar nenhum valor específico
+    return valCpf; //essa função não deve retornar nenhum valor específico
 }
 
 /*--------------------------------------------------------------------------------------------
@@ -147,3 +228,5 @@ void frm_gestaoclientes::validaCEP( const QString &cliente_cep )
         ui->txt_nv_rua->setText(json["street"].toString());
     }
 }
+
+

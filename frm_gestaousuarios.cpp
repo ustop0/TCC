@@ -93,7 +93,7 @@ void frm_gestaousuarios::on_btn_nv_gravar_clicked() //salvar novo usuário
     }
     else
     {
-        QMessageBox::information(this, "GRAVADO", "Usuario gravado com sucesso");
+        QMessageBox::information(this, "GRAVADO", "Usuario salvo com sucesso");
         ui->txt_nv_nome->clear(); //armazena o codigo
         ui->txt_nv_usuario->clear();
         ui->txt_nv_senha->clear();
