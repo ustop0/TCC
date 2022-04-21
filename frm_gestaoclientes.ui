@@ -163,21 +163,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="txt_nv_marca"/>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_12">
-           <item>
-            <widget class="QLabel" name="label_11">
-             <property name="text">
-              <string>Motor</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="txt_nv_motor"/>
+            <widget class="QComboBox" name="cb_nv_marca"/>
            </item>
           </layout>
          </item>
@@ -191,14 +177,10 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="txt_nv_modelo"/>
+            <widget class="QComboBox" name="cb_nv_modelo"/>
            </item>
           </layout>
          </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_5">
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_15">
            <item>
@@ -209,21 +191,25 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="txt_nv_ano"/>
+            <widget class="QComboBox" name="cb_nv_ano"/>
            </item>
           </layout>
          </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout_14">
+          <layout class="QVBoxLayout" name="verticalLayout_12">
            <item>
-            <widget class="QLabel" name="label_13">
+            <widget class="QLabel" name="label_11">
              <property name="text">
-              <string>KM</string>
+              <string>Motor</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="txt_nv_km"/>
+            <widget class="QComboBox" name="cb_nv_motor"/>
            </item>
           </layout>
          </item>

@@ -31,6 +31,9 @@ public:
     Conexao con;
 
 public slots:
+
+    void prepararCB();
+
     bool recebeCPF( const QString &cliente_cpf );
 
     void validaCEP( const QString &cliente_cep );

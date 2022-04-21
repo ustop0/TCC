@@ -8,11 +8,11 @@ class ClVeiculo
 {
 public:
     QString marca_veiculo;
-    QString nome_veiculo;
+    QString modelo_veiculo;
     QString motor_veiculo;
-    int ano_veiculo;
+    QString ano_veiculo;
     QString chassi_veiculo;
-    float km_veiculo;
+    QString km_veiculo;
     QString placa_veiculo;
     QString cor_veiculo;
     QString ocorrencia;

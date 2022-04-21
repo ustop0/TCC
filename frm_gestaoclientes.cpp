@@ -1,6 +1,7 @@
 #include "frm_gestaoclientes.h"
 #include "ui_frm_gestaoclientes.h"
 #include "Classes/clcliente.h"
+#include "Classes/clveiculo.h"
 
 frm_gestaoclientes::frm_gestaoclientes(QWidget *parent) :
     QDialog(parent),
@@ -17,11 +18,8 @@ frm_gestaoclientes::frm_gestaoclientes(QWidget *parent) :
         }
     }
 
-//    ui->cb_nv_acesso->addItem("Administrador");
-//    ui->cb_nv_acesso->addItem("Funcionário");
-//    ui->cb_ge_acesso->addItem("Administrador");
-//    ui->cb_ge_acesso->addItem("Funcionário");
-//    ui->txt_nv_nome->setFocus();
+    //chamando função que preenche combo box
+    prepararCB();
 
     //define o Novo Produto de index(0) como aba padrão(que inicia ao ser aberta a interface)
     ui->tabWidget->setCurrentIndex(0);
@@ -51,7 +49,6 @@ void frm_gestaoclientes::on_btn_nv_gravar_clicked() //salvar novo cliente **DESE
     }
 
     cliente.cep = ui->txt_nv_cep->text();
-    //validaCEP( cliente.cep ); //validando cep
     cliente.estado = ui->txt_nv_estado->text();
     cliente.cidade = ui->txt_nv_cidade->text();
     cliente.rua = ui->txt_nv_rua->text();
@@ -68,7 +65,7 @@ void frm_gestaoclientes::on_btn_nv_gravar_clicked() //salvar novo cliente **DESE
                                      ",a005_cep       "
                                      ",a005_estado    "
                                      ",a005_cidade    "
-                                     //",a005_rua       "
+                                     ",a005_rua       "
                                      ",a005_bairro    "
                                      ",a005_telefone) "
                     "VALUES('" +cliente.nome      +  "'"
@@ -76,7 +73,7 @@ void frm_gestaoclientes::on_btn_nv_gravar_clicked() //salvar novo cliente **DESE
                           ",'" +cliente.cep       +  "'"
                           ",'" +cliente.estado    +  "'"
                           ",'" +cliente.cidade    +  "'"
-                          //",'" +cliente.rua       +  "'"
+                          ",'" +cliente.rua       +  "'"
                           ",'" +cliente.bairro    +  "'"
                           ",'" +cliente.telefone1 + "') ");
 
@@ -113,8 +110,62 @@ void frm_gestaoclientes::on_txt_nv_cep_returnPressed()//pressiona campo cep
 }
 
 
-
 //**FUNÇÕES**//
+/*--------------------------------------------------------------------------------------------
+ * Autor: Thiago Ianzer                                                                       |
+ * Data: 21/04/2022                                                                           |
+ * Propósito: preencher os combo box com os dados a serem exibidos                            |
+ * Chamada: botão gravar cliente                                                              |
+ *--------------------------------------------------------------------------------------------
+ */
+void frm_gestaoclientes::prepararCB()
+{
+    //instanciar classe e usar atributos
+    ClVeiculo vel;
+
+    //pega a linha selecionada
+    //int id=ui->tw_ge_listacolab->item(ui->tw_ge_listacolab->currentRow(), 0) ->text().toInt();
+
+    QSqlQuery query;
+    query.prepare("SELECT "
+                    "a011_marca_nome "
+                    ",a012_nome_veiculo "
+                    ",a012_ano_veiculo "
+                    ",a012_motor_veiculo "
+                  "FROM "
+                    "a012_modelos "
+                    "JOIN a011_marcas ON (a011_codigo = a012_codigo) "
+                  "ORDER BY "
+                    "a011_marca_nome "
+                    ",a012_nome_veiculo DESC");
+
+    if( !query.exec() )
+    {
+        qDebug() << "Erro  ao realizar consulta";
+    }
+    else
+    {
+        //pegar o numero de colunas
+        const int columnCount = query.record().count();
+        qDebug() << "_O numero de colunas da tabela é: " << columnCount;
+
+        //query.first();
+
+        int marca = query.record().indexOf("a011_marca_nome");
+        int modelo = query.record().indexOf("a012_nome_veiculo");
+        int ano = query.record().indexOf("a012_ano_veiculo");
+        int motor = query.record().indexOf("a012_motor_veiculo");
+
+        while( query.next() )
+        {
+            //logica para adicionar itens no combobox, verificar e testar muito
+            ui->cb_nv_marca->addItem( query.value(marca).toString() );
+            ui->cb_nv_modelo->addItem( query.value(modelo).toString() );
+            ui->cb_nv_ano->addItem( query.value(ano).toString() );
+            ui->cb_nv_motor->addItem( query.value(motor).toString() );
+        }
+    }
+}
 /*--------------------------------------------------------------------------------------------
  * Autor: Thiago Ianzer                                                                       |
  * Data: 18/04/2022                                                                           |
