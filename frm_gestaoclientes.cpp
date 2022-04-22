@@ -109,23 +109,16 @@ void frm_gestaoclientes::on_txt_nv_cep_returnPressed()//pressiona campo cep
     cliente.telefone1 = ui->txt_nv_telefone->text();
 }
 
-
 //**FUNÇÕES**//
 /*--------------------------------------------------------------------------------------------
  * Autor: Thiago Ianzer                                                                       |
  * Data: 21/04/2022                                                                           |
  * Propósito: preencher os combo box com os dados a serem exibidos                            |
- * Chamada: botão gravar cliente                                                              |
+ * Chamada: construtor da classe                                                              |
  *--------------------------------------------------------------------------------------------
  */
 void frm_gestaoclientes::prepararCB()
 {
-    //instanciar classe e usar atributos
-    ClVeiculo vel;
-
-    //pega a linha selecionada
-    //int id=ui->tw_ge_listacolab->item(ui->tw_ge_listacolab->currentRow(), 0) ->text().toInt();
-
     QSqlQuery query;
     query.prepare("SELECT "
                     "a011_marca_nome "
@@ -141,15 +134,13 @@ void frm_gestaoclientes::prepararCB()
 
     if( !query.exec() )
     {
-        qDebug() << "Erro  ao realizar consulta";
+        qDebug() << "_Erro  ao realizar consulta: prepararCB";
     }
     else
     {
         //pegar o numero de colunas
-        const int columnCount = query.record().count();
-        qDebug() << "_O numero de colunas da tabela é: " << columnCount;
-
-        //query.first();
+        //const int columnCount = query.record().count();
+        //qDebug() << "_O numero de colunas da tabela é: " << columnCount;
 
         int marca = query.record().indexOf("a011_marca_nome");
         int modelo = query.record().indexOf("a012_nome_veiculo");
@@ -160,6 +151,69 @@ void frm_gestaoclientes::prepararCB()
         {
             //logica para adicionar itens no combobox, verificar e testar muito
             ui->cb_nv_marca->addItem( query.value(marca).toString() );
+            ui->cb_nv_modelo->addItem( query.value(modelo).toString() );
+            ui->cb_nv_ano->addItem( query.value(ano).toString() );
+            ui->cb_nv_motor->addItem( query.value(motor).toString() );
+        }
+    }
+
+    //filtrando modelo, chamando a funcao cbFiltro
+    QString cb_marca_change = ui->cb_nv_marca->currentText();
+    if( cb_marca_change != ui->cb_nv_marca->currentText() )
+    {
+        QString nome_marca = ui->cb_nv_marca->currentText();
+        QString nome_modelo = ui->cb_nv_modelo->currentText();
+        cbFiltro( nome_marca, nome_modelo );
+    }
+    //Os modelos e seus dados devem ser filtrados de acordo com as marcas
+    //talvez seja necessário fazer outra função, que será chamada após essa no construtor
+}
+
+//**FUNÇÕES**//
+/*--------------------------------------------------------------------------------------------
+ * Autor: Thiago Ianzer                                                                       |
+ * Data: 21/04/2022                                                                           |
+ * Propósito: filtrar os combo box pela marca e modelo dos veiculos                           |
+ * Chamada: na função prepararCB()                                                            |
+ * Status: NÃO FUNCIONA AINDA                                                                 |
+ *--------------------------------------------------------------------------------------------
+ */
+void frm_gestaoclientes::cbFiltro( const QString &nome_marca, const QString &nome_veiculo )
+{
+   //depurando bloco
+    qDebug() << "_Entrou na condição, função cbFiltro()";
+
+    ui->cb_nv_ano->clear();
+    ui->cb_nv_motor->clear();
+
+    QSqlQuery query;
+    query.prepare("SELECT "
+                       "a011_marca_nome "
+                       "a012_nome_veiculo "
+                       ",a012_ano_veiculo "
+                       ",a012_motor_veiculo "
+                  "FROM "
+                       "a012_modelos "
+                       "JOIN a011_marcas ON (a011_codigo = a012_codigo) "
+                  "WHERE "
+                       "a011_marca_nome       = '" + nome_marca   + "'"
+                       "AND a012_nome_veiculo = '" + nome_veiculo + "'"
+                  "ORDER BY "
+                       "a012_nome_veiculo DESC");
+
+    if( !query.exec() )
+    {
+        qDebug() << "_Erro  ao realizar consulta: cbFiltro";
+    }
+    else
+    {
+        int modelo = query.record().indexOf("a012_nome_veiculo");
+        int ano = query.record().indexOf("a012_ano_veiculo");
+        int motor = query.record().indexOf("a012_motor_veiculo");
+
+        while( query.next() )
+        {
+            //logica para adicionar itens no combobox, verificar e testar muito
             ui->cb_nv_modelo->addItem( query.value(modelo).toString() );
             ui->cb_nv_ano->addItem( query.value(ano).toString() );
             ui->cb_nv_motor->addItem( query.value(motor).toString() );
@@ -279,5 +333,6 @@ void frm_gestaoclientes::validaCEP( const QString &cliente_cep )
         ui->txt_nv_rua->setText(json["street"].toString());
     }
 }
+
 
 

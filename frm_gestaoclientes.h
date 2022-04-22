@@ -34,6 +34,8 @@ public slots:
 
     void prepararCB();
 
+    void cbFiltro( const QString &nome_marca, const QString &nome_veiculo );
+
     bool recebeCPF( const QString &cliente_cpf );
 
     void validaCEP( const QString &cliente_cep );
