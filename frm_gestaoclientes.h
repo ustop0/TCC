@@ -32,10 +32,6 @@ public:
 
 public slots:
 
-    void prepararCB();
-
-    void cbFiltro( const QString &nome_marca, const QString &nome_veiculo );
-
     bool recebeCPF( const QString &cliente_cpf );
 
     void validaCEP( const QString &cliente_cep );
@@ -44,6 +40,8 @@ private slots:
     void on_btn_nv_gravar_clicked(); //original( void )
 
     void on_txt_nv_cep_returnPressed(); //pressiona campo cep
+
+    void on_btn_nv_cadastrarveiculo_clicked();
 
 private:
     Ui::frm_gestaoclientes *ui;

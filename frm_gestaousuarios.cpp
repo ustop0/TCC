@@ -1,5 +1,6 @@
 #include "frm_gestaousuarios.h"
 #include "ui_frm_gestaousuarios.h"
+#include "frms_nv_veiculocliente.h"
 
 frm_gestaousuarios::frm_gestaousuarios(QWidget *parent) :
     QDialog(parent),
@@ -154,7 +155,8 @@ void frm_gestaousuarios::on_tabWidget_currentChanged(int index)//quando ocorrer 
 void frm_gestaousuarios::on_tw_ge_listausuario_itemSelectionChanged()//mostrar dados da seleção
 {
     //pega a linha selecionada
-    int id=ui->tw_ge_listausuario->item(ui->tw_ge_listausuario->currentRow(), 0) ->text().toInt();
+    int id=ui->tw_ge_listausuario->item(ui->tw_ge_listausuario->currentRow()
+                                        , 0) ->text().toInt();
 
     //exibe os dados da linha selecionada
     QSqlQuery query;
@@ -282,7 +284,7 @@ void frm_gestaousuarios::on_btn_ge_filtrar_clicked()//botao filtrar registros
 }
 
 
-void frm_gestaousuarios::on_btn_ge_salvar_clicked()//gravar alteração no produto
+void frm_gestaousuarios::on_btn_ge_salvar_clicked()//gravar alteração no usuário
 {
     if( ui->tw_ge_listausuario->currentRow() == -1 )
     {

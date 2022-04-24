@@ -129,180 +129,6 @@
     <attribute name="title">
      <string>Novo Cliente</string>
     </attribute>
-    <widget class="QGroupBox" name="groupBox_2">
-     <property name="geometry">
-      <rect>
-       <x>7</x>
-       <y>282</y>
-       <width>661</width>
-       <height>271</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>Carro Cliente</string>
-     </property>
-     <widget class="QLineEdit" name="txt_nv_observacao">
-      <property name="geometry">
-       <rect>
-        <x>440</x>
-        <y>160</y>
-        <width>211</width>
-        <height>81</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_3">
-      <property name="geometry">
-       <rect>
-        <x>440</x>
-        <y>130</y>
-        <width>81</width>
-        <height>17</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Observação</string>
-      </property>
-     </widget>
-     <widget class="QWidget" name="">
-      <property name="geometry">
-       <rect>
-        <x>21</x>
-        <y>47</y>
-        <width>511</width>
-        <height>52</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_10">
-         <item>
-          <widget class="QLabel" name="label_9">
-           <property name="text">
-            <string>Marca</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="cb_nv_marca"/>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_11">
-         <item>
-          <widget class="QLabel" name="label_10">
-           <property name="text">
-            <string>Modelo</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="cb_nv_modelo"/>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_15">
-         <item>
-          <widget class="QLabel" name="label_14">
-           <property name="text">
-            <string>Ano</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="cb_nv_ano"/>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="">
-      <property name="geometry">
-       <rect>
-        <x>21</x>
-        <y>178</y>
-        <width>401</width>
-        <height>52</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_6">
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_16">
-         <item>
-          <widget class="QLabel" name="label_15">
-           <property name="text">
-            <string>Placa</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="txt_nv_placa"/>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_13">
-         <item>
-          <widget class="QLabel" name="label_12">
-           <property name="text">
-            <string>Chassi</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="txt_nv_chassi"/>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="">
-      <property name="geometry">
-       <rect>
-        <x>22</x>
-        <y>114</y>
-        <width>88</width>
-        <height>50</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_12">
-       <item>
-        <widget class="QLabel" name="label_11">
-         <property name="text">
-          <string>Motor</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QComboBox" name="cb_nv_motor"/>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="">
-      <property name="geometry">
-       <rect>
-        <x>116</x>
-        <y>114</y>
-        <width>144</width>
-        <height>50</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_14">
-       <item>
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Cor</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="txt_nv_cor"/>
-       </item>
-      </layout>
-     </widget>
-    </widget>
     <widget class="QGroupBox" name="groupBox">
      <property name="geometry">
       <rect>
@@ -452,16 +278,16 @@
       </layout>
      </widget>
     </widget>
-    <widget class="QWidget" name="layoutWidget">
+    <widget class="QWidget" name="">
      <property name="geometry">
       <rect>
-       <x>443</x>
-       <y>565</y>
-       <width>211</width>
+       <x>370</x>
+       <y>560</y>
+       <width>302</width>
        <height>27</height>
       </rect>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_7">
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
       <item>
        <widget class="QPushButton" name="btn_nv_novo">
         <property name="text">
@@ -472,15 +298,22 @@
       <item>
        <widget class="QPushButton" name="btn_nv_gravar">
         <property name="text">
-         <string>Gravar</string>
+         <string>Salvar</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_nv_cadastrarveiculo">
+        <property name="text">
+         <string>Cadastrar Veiculo</string>
         </property>
        </widget>
       </item>
      </layout>
     </widget>
     <zorder>layoutWidget</zorder>
-    <zorder>groupBox_2</zorder>
     <zorder>groupBox</zorder>
+    <zorder>btn_nv_cadastrarveiculo</zorder>
    </widget>
   </widget>
  </widget>
