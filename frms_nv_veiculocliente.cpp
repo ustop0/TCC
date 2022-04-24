@@ -4,6 +4,8 @@
 #include "Classes/clcliente.h"
 #include "Classes/clveiculo.h"
 
+QString frms_nv_veiculocliente::cliente_cpf;
+
 frms_nv_veiculocliente::frms_nv_veiculocliente(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::frms_nv_veiculocliente)
@@ -134,17 +136,38 @@ frms_nv_veiculocliente::~frms_nv_veiculocliente() //**INICIO** destrutor
 }
 
 
-//pegar dados do cliente selecionado
+//pegar dados do cliente selecionado, em especial o valor do seu cpf
 void frms_nv_veiculocliente::on_tw_nv_listaveiculosclientes_itemSelectionChanged()
 {
     ClCliente cliente;
 
     //pega a linha selecionada, no caso o cpf do cliente
-    int cpf = ui->tw_nv_listaveiculosclientes->item(ui->tw_nv_listaveiculosclientes->currentRow()
-                                                   , 2) ->text().toInt();
+    int id = ui->tw_nv_listaveiculosclientes->item(ui->tw_nv_listaveiculosclientes->currentRow()
+                                                   , 0) ->text().toInt();
+
+    //pega os dados da linha selecionada
+    QSqlQuery query;
+    query.prepare("SELECT "
+                    "a005_cpf "
+                  "FROM "
+                    "a005_cliente "
+                  "WHERE "
+                    "a005_codigo = '" +QString::number(id)+ "' ");
+
+    if( query.exec() ) //verifica se a query foi bem sucedida
+    {
+        query.first(); //pega o primeiro
+
+        cliente_cpf = query.value(0).toString();
+    }
+    else
+    {
+        qDebug() << "Erro ao pegar cod_cliente";
+    }
 
     //armazena o cpf selecionado pelo usuário no atributo cpf da classe clientes
-    cliente.cpf = QString::number(cpf);
+
+    qDebug() << "Cliente.cpf fora do bloco da query: " << cliente_cpf;
 }
 
 void frms_nv_veiculocliente::on_btn_salvarveiculo_clicked() //salvar novo veiculo de cliente
@@ -161,37 +184,38 @@ void frms_nv_veiculocliente::on_btn_salvarveiculo_clicked() //salvar novo veicul
     veiculo.cor_veiculo = ui->txt_nv_cor->text();
     veiculo.placa_veiculo = ui->txt_nv_placa->text();
     veiculo.chassi_veiculo = ui->txt_nv_chassi->text();
-    veiculo.observacao = ui->txt2_nv_observacao->currentText();
+    veiculo.observacao = ui->txt2_nv_observacao->toPlainText();
+
+
+    qDebug() << "Veiculo observação: " << veiculo.observacao;
+    qDebug() << "Veiculo modelo: " << veiculo.modelo_veiculo;
+    qDebug() << "Cliente cpf global: " << cliente_cpf;
 
     //pegar o cpf do cliete e o nome do modelo do veiculo
     //Inserindo em veiculos, as chaves estrangeiras(cpf e modelo) no sql imbutido
     query.prepare("INSERT INTO "
-                    "a004_veiculos(a004_chassi_veiculo "
-                                  ",a004_placa_veiculo "
-                                  ",a004_cor_veiculo "
-                                  ",a004_observacao "
-                                  ",a004_fk_codigo_modelo "
-                                  ",a004_fk_codigo_cliente "
-                  "VALUES('" +veiculo.chassi_veiculo           + "'"
-                        ",'" +veiculo.placa_veiculo            + "'"
-                        ",'" +veiculo.cor_veiculo              + "'"
-                        ",'" +veiculo.observacao               + "'"
-                        ",(SELECT "
-                            "a012_codigo "
-                          "FROM "
-                            "a012_modelos "
-                          "WHERE "
-                            "a012_nome_veiculo = '" +veiculo.modelo_veiculo+ "') "
-                        ",(SELECT "
-                            "a005_codigo "
-                           "FROM "
-                            "a005_cliente "
-                           "WHERE "
-                            "a005_cpf = '" +cliente.cpf+ "')");
-
-    //ddepurando o cpf e o modelo do veiculos das constrains
-    qDebug() << "A constrain do modelo é: " << veiculo.modelo_veiculo;
-    qDebug() << "A constrain do cliente é: " << cliente.cpf;
+                       "a004_veiculos(a004_chassi_veiculo "
+                                     ",a004_placa_veiculo "
+                                     ",a004_cor_veiculo "
+                                     ",a004_observacao "
+                                     ",a004_fk_codigo_modelo "
+                                     ",a004_fk_codigo_cliente "
+                     "VALUES('" +veiculo.chassi_veiculo           + "'"
+                           ",'" +veiculo.placa_veiculo            + "'"
+                           ",'" +veiculo.cor_veiculo              + "'"
+                           ",'" +veiculo.observacao               + "'"
+                           ",(SELECT "
+                               "a012_codigo "
+                             "FROM "
+                               "a012_modelos "
+                             "WHERE "
+                               "a012_nome_veiculo = '" +veiculo.modelo_veiculo+ "') "
+                           ",(SELECT "
+                               "a005_codigo "
+                              "FROM "
+                               "a005_cliente "
+                              "WHERE "
+                               "a005_cpf = '" +cliente_cpf+ "')");
 
 
     if( !query.exec( ) )
@@ -326,6 +350,3 @@ void frms_nv_veiculocliente::cbFiltro( const QString &nome_marca, const QString 
         }
     }
 }
-
-
-

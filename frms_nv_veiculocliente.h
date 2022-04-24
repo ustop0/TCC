@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QString>
 #include <QMessageBox>
+#include <thread> //gerar threads
 #include "ConexaoBanco.h"
 #include "funcoes_globais.h"
 
@@ -23,6 +24,9 @@ public:
 
     //instanciando conexao com o banco de dados
     Conexao con;
+
+    //a chave estrangeira é feita por uma query que precisa do cpf para o filtro where
+    static QString cliente_cpf;
 
 public slots:
 

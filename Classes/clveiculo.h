@@ -7,6 +7,7 @@
 class ClVeiculo
 {
 public:
+    QString codigo;
     QString marca_veiculo;
     QString modelo_veiculo;
     QString motor_veiculo;

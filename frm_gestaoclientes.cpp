@@ -86,7 +86,8 @@ void frm_gestaoclientes::on_btn_nv_gravar_clicked() //salvar novo cliente **DESE
         //pergunta se o usuário quer cadastrar um veiculo para o cliente
         QMessageBox::StandardButton opc =QMessageBox::question(
                                           this,"Veículo"
-                                          ,"Deseja cadastrar um veículo para este cliente?"
+                                          ,"Clitente Salvo com sucesso, "
+                                           "deseja cadastrar um veículo para este cliente?"
                                           ,QMessageBox::Yes|QMessageBox::No); //revisar tabulação
 
         if( opc == QMessageBox::Yes ) //verificando o botao da caixa question

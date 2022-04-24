@@ -7,6 +7,7 @@
 class ClCliente
 {
 public:
+    QString codigo;
     QString nome;
     QString cpf;
     QString cep;
