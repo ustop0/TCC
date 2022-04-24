@@ -12,10 +12,8 @@ public:
     QString motor_veiculo;
     QString ano_veiculo;
     QString chassi_veiculo;
-    QString km_veiculo;
     QString placa_veiculo;
     QString cor_veiculo;
-    QString ocorrencia;
     QString observacao;
 
 public:

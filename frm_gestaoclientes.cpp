@@ -35,7 +35,6 @@ frm_gestaoclientes::~frm_gestaoclientes()//**INICIO** destrutor
     delete ui;
 }
 
-
 void frm_gestaoclientes::on_btn_nv_gravar_clicked() //salvar novo cliente **DESENVOLVENDO**
 {
     //**EM DESENVOLVIMENTO
@@ -56,9 +55,9 @@ void frm_gestaoclientes::on_btn_nv_gravar_clicked() //salvar novo cliente **DESE
     cliente.telefone1 = ui->txt_nv_telefone->text();
 
     //DESENVOLVENDO CRUD COM O BANCO
-    QSqlQuery query; //query insersao de colaboradores na tabela tb_colaboradores
+    QSqlQuery query;
 
-    //inserir
+    //inserir na tabela clientes
     query.prepare("INSERT INTO "
                     "a005_cliente(a005_nome           "
                                      ",a005_cpf       "
@@ -77,22 +76,114 @@ void frm_gestaoclientes::on_btn_nv_gravar_clicked() //salvar novo cliente **DESE
                           ",'" +cliente.bairro    +  "'"
                           ",'" +cliente.telefone1 + "') ");
 
+
     if( !query.exec() ) //verifica se a query tem algum erro e executa ela
     {
         QMessageBox::critical(this, "ERRO", "Não foi possível salvar os dados do cliente");
     }
     else
     {
-        QMessageBox::information(this, "GRAVADO", "Cliente salvo com sucesso");
-        ui->txt_nv_nome->clear();
-        ui->txt_nv_cpf->clear();
-        ui->txt_nv_cep->clear();
-        ui->txt_nv_estado->clear();
-        ui->txt_nv_cidade->clear();
-        ui->txt_nv_rua->clear();
-        ui->txt_nv_bairro->clear();
-        ui->txt_nv_telefone->clear();
-        ui->txt_nv_nome->setFocus();
+        qDebug() << "_Dados salvos na tabela a005_cliente";
+
+        //**PROBLEMAS** INSERE NA TABELA DE VEICULOS
+        QSqlQuery query2;
+        ClVeiculo veiculo;
+
+        veiculo.marca_veiculo = ui->cb_nv_marca->currentText();
+        veiculo.modelo_veiculo = ui->cb_nv_modelo->currentText();
+        veiculo.ano_veiculo = ui->cb_nv_ano->currentText();
+        veiculo.motor_veiculo = ui->cb_nv_motor->currentText();
+        veiculo.cor_veiculo = ui->txt_nv_cor->text();
+        veiculo.placa_veiculo = ui->txt_nv_placa->text();
+        veiculo.chassi_veiculo = ui->txt_nv_chassi->text();
+
+
+        //chamando o codigo do cliente e o codigo do modelo
+        int codigo_cliente;
+        int codigo_modelo;
+
+        //modelos
+        query2.prepare("SELECT "
+                        "a012_codigo "
+                      "FROM "
+                        "a012_modelos "
+                      "WHERE "
+                        "a012_nome_veiculo = '" +veiculo.marca_veiculo+ "'");
+
+        if( !query2.exec( ) )
+        {
+            qDebug() << "_Buscando codigo modelo falhou";
+        }
+        else
+        {
+            qDebug() << "_codigo modelo encontrado";
+        }
+        codigo_modelo = query.record().indexOf("a012_codigo");
+
+        //cliente
+        query2.prepare("SELECT "
+                        "a005_codigo "
+                      "FROM "
+                        "a005_cliente "
+                      "WHERE "
+                        "a005_cpf = '" +cliente.cpf+ "'");
+
+        if( !query2.exec( ) )
+        {
+            qDebug() << "_Buscando codigo cliente falhou";
+        }
+        else
+        {
+            qDebug() << "_codigo cliente encontrado";
+        }
+        codigo_cliente = query.record().indexOf("a005_codigo");
+
+        //**Verificar está com problemas e acredito que seja devido ao tipo das
+        //variaveis codigo_modelo e codigo_cliente
+        qDebug() << "_O codigo_modelo é: " << codigo_modelo;
+        qDebug() << "_O codigo_cliente é: " << codigo_cliente;
+
+        //Inserindo em veiculos
+        query2.prepare("INSERT INTO "
+                        "a004_veiculos(a004_chassi_veiculo "
+                                      ",a004_placa_veiculo "
+                                      ",a004_cor_veiculo "
+                                      ",a004_observacao "
+                                      ",a004_fk_codigo_modelo "
+                                      ",a004_fk_codigo_cliente "
+                      "VALUES('" +veiculo.chassi_veiculo           + "'"
+                            ",'" +veiculo.placa_veiculo            + "'"
+                            ",'" +veiculo.cor_veiculo              + "'"
+                            ",'" +veiculo.observacao               + "'"
+                            ",'" +QString::number(codigo_modelo)   + "'"
+                            ",'" +QString::number(codigo_cliente)  + "')");
+
+        if( !query2.exec( ) )
+        {
+            QMessageBox::critical(this, "ERRO", "Não foi possível salvar os dados do veiculo");
+        }
+        else
+        {
+            qDebug() << "_Dados salvos na tabela a004_veiculos";
+
+            //limpando todos os campos
+            ui->txt_nv_nome->clear();
+            ui->txt_nv_cpf->clear();
+            ui->txt_nv_cep->clear();
+            ui->txt_nv_estado->clear();
+            ui->txt_nv_cidade->clear();
+            ui->txt_nv_rua->clear();
+            ui->txt_nv_bairro->clear();
+            ui->txt_nv_telefone->clear();
+            ui->cb_nv_marca->clear();
+            ui->cb_nv_modelo->clear();
+            ui->cb_nv_ano->clear();
+            ui->cb_nv_motor->clear();
+            ui->txt_nv_cor->clear();
+            ui->txt_nv_placa->clear();
+            ui->txt_nv_chassi->clear();
+            ui->txt_nv_nome->setFocus();
+        }
     }
 }
 
