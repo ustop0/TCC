@@ -1,0 +1,9 @@
+drop table a001_usuario;
+drop table a002_estoque;
+drop table a003_fornecedor;
+drop table a004_carro;
+drop table a005_cliente;
+drop table a006_estoque_vendas;
+drop table a007_vendas;
+
+

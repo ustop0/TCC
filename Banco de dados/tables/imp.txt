@@ -1,0 +1,20 @@
+tabela condutores
+	cod_cliente
+	cod_veiculo
+	numero_cnh 
+	data_vencimento_cnh
+	data_registro
+	ativo
+	
+	
+RELACIONAMENTOS
+OS > cliente > estoque > veiculo
+
+Pode ocorrer de um cliente levar mais de um veiculo
+
+variavel global para pegar nome do usuario
+
+mostrar peças da OS com combo para selecionar o mecanico que realizou o serviço
+{
+	possivel tabela de funcionario com os seus cargos
+}
