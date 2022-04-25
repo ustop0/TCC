@@ -4,6 +4,8 @@
 #include "Classes/clcliente.h"
 #include "Classes/clveiculo.h"
 
+//pegando os valores para as chaves estrangeiras
+QString frms_nv_veiculocliente::veiculo_modelo;
 QString frms_nv_veiculocliente::cliente_cpf;
 
 frms_nv_veiculocliente::frms_nv_veiculocliente(QWidget *parent) :
@@ -164,10 +166,6 @@ void frms_nv_veiculocliente::on_tw_nv_listaveiculosclientes_itemSelectionChanged
     {
         qDebug() << "Erro ao pegar cod_cliente";
     }
-
-    //armazena o cpf selecionado pelo usuário no atributo cpf da classe clientes
-
-    qDebug() << "Cliente.cpf fora do bloco da query: " << cliente_cpf;
 }
 
 void frms_nv_veiculocliente::on_btn_salvarveiculo_clicked() //salvar novo veiculo de cliente
@@ -186,12 +184,20 @@ void frms_nv_veiculocliente::on_btn_salvarveiculo_clicked() //salvar novo veicul
     veiculo.chassi_veiculo = ui->txt_nv_chassi->text();
     veiculo.observacao = ui->txt2_nv_observacao->toPlainText();
 
-
+    qDebug() << "Veiculo chassi: " << veiculo.chassi_veiculo;
+    qDebug() << "Veiculo placa: " << veiculo.placa_veiculo;
+    qDebug() << "Veiculo cor: " << veiculo.cor_veiculo;
     qDebug() << "Veiculo observação: " << veiculo.observacao;
     qDebug() << "Veiculo modelo: " << veiculo.modelo_veiculo;
     qDebug() << "Cliente cpf global: " << cliente_cpf;
 
-    //pegar o cpf do cliete e o nome do modelo do veiculo
+    veiculo_modelo = veiculo.modelo_veiculo;
+    QString cod_modelo = crudModelo();
+    QString cod_cliente = crudCliente();
+    qDebug() << "codigo_modelo: " << cod_modelo;
+    qDebug() << "codigo_cliente: " << cod_cliente;
+
+    //pegar o cpf do cliente e o nome do modelo do veiculo
     //Inserindo em veiculos, as chaves estrangeiras(cpf e modelo) no sql imbutido
     query.prepare("INSERT INTO "
                        "a004_veiculos(a004_chassi_veiculo "
@@ -199,23 +205,13 @@ void frms_nv_veiculocliente::on_btn_salvarveiculo_clicked() //salvar novo veicul
                                      ",a004_cor_veiculo "
                                      ",a004_observacao "
                                      ",a004_fk_codigo_modelo "
-                                     ",a004_fk_codigo_cliente "
+                                     ",a004_fk_codigo_cliente) "
                      "VALUES('" +veiculo.chassi_veiculo           + "'"
                            ",'" +veiculo.placa_veiculo            + "'"
                            ",'" +veiculo.cor_veiculo              + "'"
                            ",'" +veiculo.observacao               + "'"
-                           ",(SELECT "
-                               "a012_codigo "
-                             "FROM "
-                               "a012_modelos "
-                             "WHERE "
-                               "a012_nome_veiculo = '" +veiculo.modelo_veiculo+ "') "
-                           ",(SELECT "
-                               "a005_codigo "
-                              "FROM "
-                               "a005_cliente "
-                              "WHERE "
-                               "a005_cpf = '" +cliente_cpf+ "')");
+                           ",'" +cod_modelo                       + "'"
+                           ",'" +cod_cliente                      + "') ");
 
 
     if( !query.exec( ) )
@@ -350,3 +346,65 @@ void frms_nv_veiculocliente::cbFiltro( const QString &nome_marca, const QString 
         }
     }
 }
+
+
+//função que pega o modelo do veiculo e o cpf do cliente
+QString frms_nv_veiculocliente::crudModelo()
+{
+    QString cod_modelo;
+    QSqlQuery query;
+    //pegar o nome do modelo do veiculo
+    //Inserindo em veiculos, as chaves estrangeiras(cpf e modelo) no sql imbutido
+    query.prepare("SELECT "
+                    "a012_codigo "
+                  "FROM "
+                    "a012_modelos "
+                  "WHERE "
+                    "a012_nome_veiculo = '" +veiculo_modelo+ "')");
+
+    if( query.exec() )
+    {
+        //QString cod_modelo = QString::number(query.record().indexOf("a012_codigo"));
+        //query.first();
+
+        //while( query.next() )
+        //{
+            query.first();
+            qDebug() << query.value(0).toString();
+            cod_modelo = query.value(0).toString();
+        //}
+    }
+
+    return cod_modelo;
+}
+
+//função thread cliente teste
+QString frms_nv_veiculocliente::crudCliente()
+{
+    QString cod_cliente;
+    QSqlQuery query;
+    //pegar o nome do modelo do veiculo
+    //Inserindo em veiculos, as chaves estrangeiras(cpf e modelo) no sql imbutido
+    query.prepare("SELECT "
+                    "a005_codigo "
+                  "FROM "
+                    "a005_cliente "
+                  "WHERE "
+                    "a005_cpf = '" +cliente_cpf+ "')");
+
+    if( query.exec() )
+    {
+        //QString cod_cliente = QString::number(query.record().indexOf("a005_codigo"));
+        //query.first();
+
+        //while( query.next() )
+        //{
+            query.first();
+            qDebug() << query.value(0).toString();
+            cod_cliente = query.value(0).toString();
+        //}
+    }
+
+   return cod_cliente;
+}
+

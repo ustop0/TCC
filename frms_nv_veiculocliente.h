@@ -26,6 +26,7 @@ public:
     Conexao con;
 
     //a chave estrangeira é feita por uma query que precisa do cpf para o filtro where
+    static QString veiculo_modelo;
     static QString cliente_cpf;
 
 public slots:
@@ -33,6 +34,10 @@ public slots:
     void prepararCB();
 
     void cbFiltro( const QString &nome_marca, const QString &nome_veiculo );
+
+    QString crudModelo();
+
+    QString crudCliente();
 
 private slots:
     void on_tw_nv_listaveiculosclientes_itemSelectionChanged();
