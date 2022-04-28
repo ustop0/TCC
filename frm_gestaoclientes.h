@@ -43,6 +43,12 @@ private slots:
 
     void on_btn_nv_cadastrarveiculo_clicked();
 
+    void on_tw_ge_listaclientes_itemSelectionChanged();
+
+    void on_txt_ge_filtro_returnPressed();
+
+    void on_btn_ge_filtrar_clicked();
+
 private:
     Ui::frm_gestaoclientes *ui;
 };

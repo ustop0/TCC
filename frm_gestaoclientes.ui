@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>701</width>
+    <width>780</width>
     <height>646</height>
    </rect>
   </property>
@@ -16,9 +16,9 @@
   <widget class="QTabWidget" name="tabWidget">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>9</x>
      <y>8</y>
-     <width>682</width>
+     <width>761</width>
      <height>631</height>
     </rect>
    </property>
@@ -27,126 +27,26 @@
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
-     <string>Gestão Clientes</string>
-    </attribute>
-    <widget class="QTableWidget" name="tw_ge_listaclientes">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>108</y>
-       <width>658</width>
-       <height>441</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QGroupBox" name="groupBox_3">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>20</y>
-       <width>133</width>
-       <height>81</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>Filtrar por:</string>
-     </property>
-     <widget class="QWidget" name="layoutWidget_3">
-      <property name="geometry">
-       <rect>
-        <x>7</x>
-        <y>26</y>
-        <width>120</width>
-        <height>54</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_19">
-       <item>
-        <widget class="QRadioButton" name="rb_ge_nomecliente">
-         <property name="text">
-          <string>Nome Cliente</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="rb_ge_carrocliente">
-         <property name="text">
-          <string>Carro Cliente</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </widget>
-    <widget class="QPushButton" name="btn_ge_editar">
-     <property name="geometry">
-      <rect>
-       <x>567</x>
-       <y>567</y>
-       <width>102</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Editar</string>
-     </property>
-    </widget>
-    <widget class="QWidget" name="layoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>276</x>
-       <y>50</y>
-       <width>391</width>
-       <height>52</height>
-      </rect>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_18">
-      <item>
-       <widget class="QLabel" name="label_16">
-        <property name="text">
-         <string>Filtrar</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_9">
-        <item>
-         <widget class="QLineEdit" name="txt_ge_filtro"/>
-        </item>
-        <item>
-         <widget class="QPushButton" name="btn_ge_filtrar">
-          <property name="text">
-           <string>Filtrar</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="tab_2">
-    <attribute name="title">
      <string>Novo Cliente</string>
     </attribute>
     <widget class="QGroupBox" name="groupBox">
      <property name="geometry">
       <rect>
-       <x>8</x>
-       <y>8</y>
-       <width>661</width>
+       <x>7</x>
+       <y>10</y>
+       <width>741</width>
        <height>261</height>
       </rect>
      </property>
      <property name="title">
       <string>Dados Cliente</string>
      </property>
-     <widget class="QWidget" name="layoutWidget">
+     <widget class="QWidget" name="layoutWidget_2">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>30</y>
-        <width>641</width>
+        <y>31</y>
+        <width>721</width>
         <height>221</height>
        </rect>
       </property>
@@ -278,11 +178,11 @@
       </layout>
      </widget>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>370</x>
-       <y>560</y>
+       <x>447</x>
+       <y>566</y>
        <width>302</width>
        <height>27</height>
       </rect>
@@ -311,9 +211,95 @@
       </item>
      </layout>
     </widget>
-    <zorder>layoutWidget</zorder>
-    <zorder>groupBox</zorder>
-    <zorder>btn_nv_cadastrarveiculo</zorder>
+   </widget>
+   <widget class="QWidget" name="tab_2">
+    <attribute name="title">
+     <string>Gestão Clientes</string>
+    </attribute>
+    <widget class="QTableWidget" name="tw_ge_listaclientes">
+     <property name="geometry">
+      <rect>
+       <x>8</x>
+       <y>85</y>
+       <width>741</width>
+       <height>471</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>161</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Filtrar por:</string>
+     </property>
+     <widget class="QWidget" name="layoutWidget_4">
+      <property name="geometry">
+       <rect>
+        <x>7</x>
+        <y>26</y>
+        <width>141</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_19">
+       <item>
+        <widget class="QComboBox" name="cb_ge_filtrar"/>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_3">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>30</y>
+       <width>391</width>
+       <height>52</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_18">
+      <item>
+       <widget class="QLabel" name="label_16">
+        <property name="text">
+         <string>Filtrar</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_9">
+        <item>
+         <widget class="QLineEdit" name="txt_ge_filtro"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_ge_filtrar">
+          <property name="text">
+           <string>Filtrar</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QPushButton" name="btn_ge_editar">
+     <property name="geometry">
+      <rect>
+       <x>607</x>
+       <y>567</y>
+       <width>102</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Editar</string>
+     </property>
+    </widget>
    </widget>
   </widget>
  </widget>

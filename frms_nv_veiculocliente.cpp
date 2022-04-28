@@ -166,6 +166,8 @@ void frms_nv_veiculocliente::on_tw_nv_listaveiculosclientes_itemSelectionChanged
     {
         qDebug() << "Erro ao pegar cod_cliente";
     }
+
+    qDebug() << "Cliente CPF: " << cliente_cpf;
 }
 
 void frms_nv_veiculocliente::on_btn_salvarveiculo_clicked() //salvar novo veiculo de cliente
@@ -189,11 +191,14 @@ void frms_nv_veiculocliente::on_btn_salvarveiculo_clicked() //salvar novo veicul
     qDebug() << "Veiculo cor: " << veiculo.cor_veiculo;
     qDebug() << "Veiculo observação: " << veiculo.observacao;
     qDebug() << "Veiculo modelo: " << veiculo.modelo_veiculo;
-    qDebug() << "Cliente cpf global: " << cliente_cpf;
 
     veiculo_modelo = veiculo.modelo_veiculo;
+
+    qDebug() << "Veiculo modelo Global: " << veiculo_modelo;
+    qDebug() << "Cliente cpf global: " << cliente_cpf;
     QString cod_modelo = crudModelo();
     QString cod_cliente = crudCliente();
+
     qDebug() << "codigo_modelo: " << cod_modelo;
     qDebug() << "codigo_cliente: " << cod_cliente;
 
@@ -367,12 +372,13 @@ QString frms_nv_veiculocliente::crudModelo()
         //QString cod_modelo = QString::number(query.record().indexOf("a012_codigo"));
         //query.first();
 
-        //while( query.next() )
-        //{
+        while( query.next() )
+        {
             query.first();
             qDebug() << query.value(0).toString();
-            cod_modelo = query.value(0).toString();
-        //}
+            cod_modelo = QString::number(query.record().indexOf("a012_codigo"));
+            //cod_modelo = query.value(0).toString();
+        }
     }
 
     return cod_modelo;
@@ -397,12 +403,13 @@ QString frms_nv_veiculocliente::crudCliente()
         //QString cod_cliente = QString::number(query.record().indexOf("a005_codigo"));
         //query.first();
 
-        //while( query.next() )
-        //{
-            query.first();
+        while( query.next() )
+        {
+            //query.first();
             qDebug() << query.value(0).toString();
-            cod_cliente = query.value(0).toString();
-        //}
+            cod_cliente = QString::number(query.record().indexOf("a005_codigo"));
+            //cod_cliente = query.value(0).toString();
+        }
     }
 
    return cod_cliente;

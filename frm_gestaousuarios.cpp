@@ -17,6 +17,7 @@ frm_gestaousuarios::frm_gestaousuarios(QWidget *parent) :
         }
     }
 
+    ui->cb_nv_acesso->addItem("-");
     ui->cb_nv_acesso->addItem("Administrador");
     ui->cb_nv_acesso->addItem("Funcionário");
     ui->cb_ge_acesso->addItem("Administrador");
@@ -237,7 +238,7 @@ void frm_gestaousuarios::on_txt_ge_filtro_returnPressed()//filtrar registros
                     "WHERE "
                         "a001_nome "
                     "LIKE "
-                        "'%"+ui->txt_ge_filtro->text()+"%' "
+                        "'%" +ui->txt_ge_filtro->text()+ "%' "
                         "AND a001_ativo = true "
                     "ORDER BY "
                         "a001_codigo DESC";
