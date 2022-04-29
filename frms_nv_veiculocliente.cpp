@@ -26,12 +26,12 @@ frms_nv_veiculocliente::frms_nv_veiculocliente(QWidget *parent) :
     //**Estilizando layout da table widget**
     //definindo o tamanho das colunas
     ui->tw_nv_listaveiculosclientes->setColumnCount(9); //define que o table widget terá duas colunas
-    ui->tw_nv_listaveiculosclientes->setColumnWidth(0, 150); //id colaborador
-    ui->tw_nv_listaveiculosclientes->setColumnWidth(1, 220); //nome colaborador
+    ui->tw_nv_listaveiculosclientes->setColumnWidth(0, 150); //id cliente
+    ui->tw_nv_listaveiculosclientes->setColumnWidth(1, 220); //nome cliente
 
     //cabeçalhos do table widget
-    QStringList cabecalhos={"ID", "Nome", "CPF", "CEP", "Estado"
-                           ,"Cidade", "Rua", "Bairro", "Telefone"};
+    QStringList cabecalhos={"ID", "Nome", "CPF", "CEP", "Estado","Cidade"
+                           ,"Rua", "Nro. Casa", "Bairro", "Telefone"};
 
     ui->tw_nv_listaveiculosclientes->setHorizontalHeaderLabels(cabecalhos);
     //definindo cor da linha ao ser selecionada
@@ -63,6 +63,7 @@ frms_nv_veiculocliente::frms_nv_veiculocliente(QWidget *parent) :
                       ",a005_estado "
                       ",a005_cidade "
                       ",a005_rua "
+                      ",a005_nro_casa "
                       ",a005_bairro "
                       ",a005_telefone "
                   "FROM "
@@ -114,6 +115,10 @@ frms_nv_veiculocliente::frms_nv_veiculocliente(QWidget *parent) :
             ui->tw_nv_listaveiculosclientes->setItem(contlinhas
                                         , 8
                                         , new QTableWidgetItem(query.value(8).toString()));
+
+            ui->tw_nv_listaveiculosclientes->setItem(contlinhas
+                                        , 9
+                                        , new QTableWidgetItem(query.value(9).toString()));
 
             //definindo o tamanho das linhas
             ui->tw_nv_listaveiculosclientes->setRowHeight(contlinhas, 20);
@@ -205,18 +210,22 @@ void frms_nv_veiculocliente::on_btn_salvarveiculo_clicked() //salvar novo veicul
     //pegar o cpf do cliente e o nome do modelo do veiculo
     //Inserindo em veiculos, as chaves estrangeiras(cpf e modelo) no sql imbutido
     query.prepare("INSERT INTO "
-                       "a004_veiculos(a004_chassi_veiculo "
+                       "a004_veiculos(a004_motor_veiculo "
+                                     ",a004_ano_veiculo "
+                                     ",a004_chassi_veiculo "
                                      ",a004_placa_veiculo "
                                      ",a004_cor_veiculo "
                                      ",a004_observacao "
                                      ",a004_fk_codigo_modelo "
                                      ",a004_fk_codigo_cliente) "
-                     "VALUES('" +veiculo.chassi_veiculo           + "'"
-                           ",'" +veiculo.placa_veiculo            + "'"
-                           ",'" +veiculo.cor_veiculo              + "'"
-                           ",'" +veiculo.observacao               + "'"
-                           ",'" +cod_modelo                       + "'"
-                           ",'" +cod_cliente                      + "') ");
+                     "VALUES('" +veiculo.motor_veiculo           + "'"
+                           ",'" +veiculo.ano_veiculo             + "'"
+                           ",'" +veiculo.chassi_veiculo          + "'"
+                           ",'" +veiculo.placa_veiculo           + "'"
+                           ",'" +veiculo.cor_veiculo             + "'"
+                           ",'" +veiculo.observacao              + "'"
+                           ",'" +cod_modelo                      + "'"
+                           ",'" +cod_cliente                     + "') ");
 
 
     if( !query.exec( ) )

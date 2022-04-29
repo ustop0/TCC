@@ -38,8 +38,8 @@ frm_gestaoclientes::frm_gestaoclientes(QWidget *parent) :
     ui->tw_ge_listaclientes->setColumnWidth(7, 150); //rua cliente
 
     //cabeçalhos do table widget
-    QStringList cabecalhos={"ID", "Nome", "CPF", "Veiculo", "Placa",
-                            "Estado","Cidade", "Rua", "Bairro", "Telefone"};
+    QStringList cabecalhos={"ID", "Nome", "CPF", "Veiculo", "Placa","Estado"
+                           ,"Cidade", "Rua","Nro. Casa","Bairro", "Telefone"};
 
     ui->tw_ge_listaclientes->setHorizontalHeaderLabels(cabecalhos);
     //definindo cor da linha ao ser selecionada
@@ -72,6 +72,7 @@ frm_gestaoclientes::frm_gestaoclientes(QWidget *parent) :
                       ",a005_estado "
                       ",a005_cidade "
                       ",a005_rua "
+                      ",a005_nro_casa "
                       ",a005_bairro "
                       ",a005_telefone "
                   "FROM "
@@ -131,6 +132,10 @@ frm_gestaoclientes::frm_gestaoclientes(QWidget *parent) :
                                         , 9
                                         , new QTableWidgetItem(query.value(9).toString()));
 
+            ui->tw_ge_listaclientes->setItem(contlinhas
+                                        , 10
+                                        , new QTableWidgetItem(query.value(10).toString()));
+
             //definindo o tamanho das linhas
             ui->tw_ge_listaclientes->setRowHeight(contlinhas, 20);
             contlinhas ++;
@@ -165,6 +170,7 @@ void frm_gestaoclientes::on_btn_nv_gravar_clicked() //salvar novo cliente **DESE
     cliente.estado = ui->txt_nv_estado->text();
     cliente.cidade = ui->txt_nv_cidade->text();
     cliente.rua = ui->txt_nv_rua->text();
+    cliente.nro_casa = ui->txt_nv_nrocasa->text();
     cliente.bairro = ui->txt_nv_bairro->text();
     cliente.telefone1 = ui->txt_nv_telefone->text();
 
@@ -179,6 +185,7 @@ void frm_gestaoclientes::on_btn_nv_gravar_clicked() //salvar novo cliente **DESE
                                      ",a005_estado    "
                                      ",a005_cidade    "
                                      ",a005_rua       "
+                                     ",a005_nro_casa  "
                                      ",a005_bairro    "
                                      ",a005_telefone) "
                     "VALUES('" +cliente.nome      +  "'"
@@ -187,6 +194,7 @@ void frm_gestaoclientes::on_btn_nv_gravar_clicked() //salvar novo cliente **DESE
                           ",'" +cliente.estado    +  "'"
                           ",'" +cliente.cidade    +  "'"
                           ",'" +cliente.rua       +  "'"
+                          ",'" +cliente.nro_casa  +  "'"
                           ",'" +cliente.bairro    +  "'"
                           ",'" +cliente.telefone1 + "') ");
 
@@ -220,6 +228,7 @@ void frm_gestaoclientes::on_btn_nv_gravar_clicked() //salvar novo cliente **DESE
             ui->txt_nv_estado->clear();
             ui->txt_nv_cidade->clear();
             ui->txt_nv_rua->clear();
+            ui->txt_nv_nrocasa->clear();
             ui->txt_nv_bairro->clear();
             ui->txt_nv_telefone->clear();
             ui->txt_nv_nome->setFocus();
@@ -227,7 +236,8 @@ void frm_gestaoclientes::on_btn_nv_gravar_clicked() //salvar novo cliente **DESE
     }
 }
 
-void frm_gestaoclientes::on_txt_nv_cep_returnPressed()//pressiona campo cep
+//pressiona campo cep, chama api
+void frm_gestaoclientes::on_txt_nv_cep_returnPressed()
 {
     ClCliente cliente;
 
@@ -240,7 +250,8 @@ void frm_gestaoclientes::on_txt_nv_cep_returnPressed()//pressiona campo cep
     cliente.telefone1 = ui->txt_nv_telefone->text();
 }
 
-void frm_gestaoclientes::on_btn_nv_cadastrarveiculo_clicked()//tela de cadastro de veiculos
+//tela de cadastro de veiculos
+void frm_gestaoclientes::on_btn_nv_cadastrarveiculo_clicked()
 {
     frms_nv_veiculocliente f_nv_veiculocliente;
     f_nv_veiculocliente.exec();
@@ -274,10 +285,11 @@ void frm_gestaoclientes::on_txt_ge_filtro_returnPressed()
                         ",a005_nome "
                         ",a005_cpf "
                         ",a012_nome_veiculo "
-                        ",a004_placa_Veiculo "
+                        ",a004_placa_veiculo "
                         ",a005_estado "
                         ",a005_cidade "
                         ",a005_rua "
+                        ",a005_nro_casa "
                         ",a005_bairro "
                         ",a005_telefone "
                     "FROM "
@@ -298,10 +310,11 @@ void frm_gestaoclientes::on_txt_ge_filtro_returnPressed()
                         ",a005_nome "
                         ",a005_cpf "
                         ",a012_nome_veiculo "
-                        ",a004_placa_Veiculo "
+                        ",a004_placa_veiculo "
                         ",a005_estado "
                         ",a005_cidade "
                         ",a005_rua "
+                        ",a005_nro_casa "
                         ",a005_bairro "
                         ",a005_telefone "
                     "FROM "
@@ -327,10 +340,11 @@ void frm_gestaoclientes::on_txt_ge_filtro_returnPressed()
                             ",a005_nome "
                             ",a005_cpf "
                             ",a012_nome_veiculo "
-                            ",a004_placa_Veiculo "
+                            ",a004_placa_veiculo "
                             ",a005_estado "
                             ",a005_cidade "
                             ",a005_rua "
+                            ",a005_nro_casa "
                             ",a005_bairro "
                             ",a005_telefone "
                         "FROM "
@@ -351,10 +365,11 @@ void frm_gestaoclientes::on_txt_ge_filtro_returnPressed()
                             ",a005_nome "
                             ",a005_cpf "
                             ",a012_nome_veiculo "
-                            ",a004_placa_Veiculo "
+                            ",a004_placa_veiculo "
                             ",a005_estado "
                             ",a005_cidade "
                             ",a005_rua "
+                            ",a005_nro_casa "
                             ",a005_bairro "
                             ",a005_telefone "
                         "FROM "
@@ -375,10 +390,11 @@ void frm_gestaoclientes::on_txt_ge_filtro_returnPressed()
                             ",a005_nome "
                             ",a005_cpf "
                             ",a012_nome_veiculo "
-                            ",a004_placa_Veiculo "
+                            ",a004_placa_veiculo "
                             ",a005_estado "
                             ",a005_cidade "
                             ",a005_rua "
+                            ",a005_nro_casa "
                             ",a005_bairro "
                             ",a005_telefone "
                         "FROM "
@@ -399,10 +415,11 @@ void frm_gestaoclientes::on_txt_ge_filtro_returnPressed()
                             ",a005_nome "
                             ",a005_cpf "
                             ",a012_nome_veiculo "
-                            ",a004_placa_Veiculo "
+                            ",a004_placa_veiculo "
                             ",a005_estado "
                             ",a005_cidade "
                             ",a005_rua "
+                            ",a005_nro_casa "
                             ",a005_bairro "
                             ",a005_telefone "
                         "FROM "
@@ -473,6 +490,10 @@ void frm_gestaoclientes::on_txt_ge_filtro_returnPressed()
             ui->tw_ge_listaclientes->setItem(contlinhas
                                         , 9
                                         , new QTableWidgetItem(query.value(9).toString()));
+
+            ui->tw_ge_listaclientes->setItem(contlinhas
+                                        , 10
+                                        , new QTableWidgetItem(query.value(10).toString()));
 
             //definindo o tamanho das linhas
             ui->tw_ge_listaclientes->setRowHeight(contlinhas, 20);

@@ -14,6 +14,7 @@ public:
     QString estado;
     QString cidade;
     QString rua;
+    QString nro_casa;
     QString bairro;
     QString telefone1;
 
