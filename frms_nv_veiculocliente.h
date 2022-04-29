@@ -33,7 +33,7 @@ public slots:
 
     void prepararCB();
 
-    void cbFiltro( const QString &nome_marca, const QString &nome_veiculo );
+    void cbFiltro( const QString &nome_marca );
 
     QString crudModelo();
 

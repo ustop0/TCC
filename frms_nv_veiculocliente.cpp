@@ -130,6 +130,8 @@ frms_nv_veiculocliente::frms_nv_veiculocliente(QWidget *parent) :
         QMessageBox::warning(this, "ERRO", "Erro ao listar clientes");
     }
 
+
+    ui->cb_nv_marca->addItem("-");
     //chamando função que preenche combo box
     prepararCB();
 
@@ -184,8 +186,8 @@ void frms_nv_veiculocliente::on_btn_salvarveiculo_clicked() //salvar novo veicul
     //devo pegar
     veiculo.marca_veiculo = ui->cb_nv_marca->currentText();
     veiculo.modelo_veiculo = ui->cb_nv_modelo->currentText();
-    veiculo.ano_veiculo = ui->cb_nv_ano->currentText();
-    veiculo.motor_veiculo = ui->cb_nv_motor->currentText();
+    veiculo.ano_veiculo = ui->txt_nv_ano->text();
+    veiculo.motor_veiculo = ui->txt_nv_motor->text();
     veiculo.cor_veiculo = ui->txt_nv_cor->text();
     veiculo.placa_veiculo = ui->txt_nv_placa->text();
     veiculo.chassi_veiculo = ui->txt_nv_chassi->text();
@@ -239,8 +241,8 @@ void frms_nv_veiculocliente::on_btn_salvarveiculo_clicked() //salvar novo veicul
         //limpando todos os campos
         ui->cb_nv_marca->clear();
         ui->cb_nv_modelo->clear();
-        ui->cb_nv_ano->clear();
-        ui->cb_nv_motor->clear();
+        ui->txt_nv_ano->clear();
+        ui->txt_nv_motor->clear();
         ui->txt_nv_cor->clear();
         ui->txt_nv_placa->clear();
         ui->txt_nv_chassi->clear();
@@ -263,8 +265,6 @@ void frms_nv_veiculocliente::prepararCB()
     query.prepare("SELECT "
                     "a011_marca_nome "
                     ",a012_nome_veiculo "
-                    ",a012_ano_veiculo "
-                    ",a012_motor_veiculo "
                   "FROM "
                     "a012_modelos "
                     "JOIN a011_marcas ON (a011_codigo = a012_codigo) "
@@ -283,17 +283,13 @@ void frms_nv_veiculocliente::prepararCB()
         //qDebug() << "_O numero de colunas da tabela é: " << columnCount;
 
         int marca = query.record().indexOf("a011_marca_nome");
-        int modelo = query.record().indexOf("a012_nome_veiculo");
-        int ano = query.record().indexOf("a012_ano_veiculo");
-        int motor = query.record().indexOf("a012_motor_veiculo");
+        //int modelo = query.record().indexOf("a012_nome_veiculo");
 
         while( query.next() )
         {
             //logica para adicionar itens no combobox, verificar e testar muito
             ui->cb_nv_marca->addItem( query.value(marca).toString() );
-            ui->cb_nv_modelo->addItem( query.value(modelo).toString() );
-            ui->cb_nv_ano->addItem( query.value(ano).toString() );
-            ui->cb_nv_motor->addItem( query.value(motor).toString() );
+            //ui->cb_nv_modelo->addItem( query.value(modelo).toString() );
         }
     }
 
@@ -302,11 +298,12 @@ void frms_nv_veiculocliente::prepararCB()
     if( cb_marca_change != ui->cb_nv_marca->currentText() )
     {
         QString nome_marca = ui->cb_nv_marca->currentText();
-        QString nome_modelo = ui->cb_nv_modelo->currentText();
-        cbFiltro( nome_marca, nome_modelo );
+        //QString nome_modelo = ui->cb_nv_modelo->currentText();
+        cbFiltro( nome_marca );
     }
     //Os modelos e seus dados devem ser filtrados de acordo com as marcas
     //talvez seja necessário fazer outra função, que será chamada após essa no construtor
+
 }
 
 //**FUNÇÕES**//
@@ -318,26 +315,20 @@ void frms_nv_veiculocliente::prepararCB()
  * Status: NÃO FUNCIONA AINDA                                                                 |
  *--------------------------------------------------------------------------------------------
  */
-void frms_nv_veiculocliente::cbFiltro( const QString &nome_marca, const QString &nome_veiculo )
+void frms_nv_veiculocliente::cbFiltro( const QString &nome_marca )
 {
    //depurando bloco
     qDebug() << "_Entrou na condição, função cbFiltro()";
 
-    ui->cb_nv_ano->clear();
-    ui->cb_nv_motor->clear();
-
     QSqlQuery query;
     query.prepare("SELECT "
-                       "a011_marca_nome "
                        "a012_nome_veiculo "
-                       ",a012_ano_veiculo "
-                       ",a012_motor_veiculo "
                   "FROM "
                        "a012_modelos "
-                       "JOIN a011_marcas ON (a011_codigo = a012_codigo) "
+                       "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca) "
                   "WHERE "
                        "a011_marca_nome       = '" + nome_marca   + "'"
-                       "AND a012_nome_veiculo = '" + nome_veiculo + "'"
+                       //"AND a012_nome_veiculo = '" + nome_veiculo + "'"
                   "ORDER BY "
                        "a012_nome_veiculo DESC");
 
@@ -348,15 +339,11 @@ void frms_nv_veiculocliente::cbFiltro( const QString &nome_marca, const QString 
     else
     {
         int modelo = query.record().indexOf("a012_nome_veiculo");
-        int ano = query.record().indexOf("a012_ano_veiculo");
-        int motor = query.record().indexOf("a012_motor_veiculo");
 
         while( query.next() )
         {
             //logica para adicionar itens no combobox, verificar e testar muito
             ui->cb_nv_modelo->addItem( query.value(modelo).toString() );
-            ui->cb_nv_ano->addItem( query.value(ano).toString() );
-            ui->cb_nv_motor->addItem( query.value(motor).toString() );
         }
     }
 }
@@ -393,7 +380,6 @@ QString frms_nv_veiculocliente::crudModelo()
     return cod_modelo;
 }
 
-//função thread cliente teste
 QString frms_nv_veiculocliente::crudCliente()
 {
     QString cod_cliente;
@@ -423,4 +409,3 @@ QString frms_nv_veiculocliente::crudCliente()
 
    return cod_cliente;
 }
-
