@@ -1,6 +1,6 @@
 #include "frm_gestaousuarios.h"
 #include "ui_frm_gestaousuarios.h"
-#include "frms_nv_veiculocliente.h"
+//#include "frms_nv_veiculocliente.h" // verificar
 
 frm_gestaousuarios::frm_gestaousuarios(QWidget *parent) :
     QDialog(parent),
@@ -34,7 +34,7 @@ frm_gestaousuarios::frm_gestaousuarios(QWidget *parent) :
     ui->tw_ge_listausuario->setColumnWidth(1, 220); //nome colaborador
 
     //cabeçalhos do table widget
-    QStringList cabecalhos={"Id", "Nome", "Usuario", "Senha", "Tipo de Acesso"};
+    QStringList cabecalhos={"Código", "Nome", "Usuario", "Senha", "Tipo de Acesso"};
     ui->tw_ge_listausuario->setHorizontalHeaderLabels(cabecalhos);
     //definindo cor da linha ao ser selecionada
     ui->tw_ge_listausuario->setStyleSheet("QTableView "
@@ -117,7 +117,7 @@ void frm_gestaousuarios::on_tabWidget_currentChanged(int index)//quando ocorrer 
         QSqlQuery query; //query para listar os colaboradores no table widget
         query.prepare("SELECT "
                           "a001_codigo "
-                          ",a001_nome "
+                          ",a001_nome  "
                       "FROM "
                           "a001_usuarios "
                       "WHERE "
@@ -349,12 +349,7 @@ void frm_gestaousuarios::on_btn_ge_excluir_clicked()//excluir colaborador
         QString id = ui->tw_ge_listausuario->item(linha, 0)->text();
 
         QSqlQuery query;
-        /*
-        query.prepare("DELETE FROM "
-                        "a001_usuarios "
-                      "WHERE "
-                        "a001_codigo ='" +id+ "'");
-        */
+
         query.prepare("UPDATE "
                         "a001_usuarios "
                       "SET "

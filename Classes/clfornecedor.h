@@ -7,15 +7,16 @@
 class ClFornecedor
 {
 public:
-    QString razao_social;
-    QString nome_fantasia;
+    QString codigo;
     QString cnpj;
-    int cep;
+    QString cep;
     QString estado;
     QString cidade;
     QString rua;
     QString bairro;
-    int numero_rua;
+    QString razao_social;
+    QString nome_fantasia;
+    QString numero_estabelecimento;
     QString porte_empresa;
     QString ocupacao_empresa;
     QString telefone1;

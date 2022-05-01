@@ -150,6 +150,12 @@ void frms_nv_veiculocliente::on_tw_nv_listaveiculosclientes_itemSelectionChanged
 {
     ClCliente cliente;
 
+    if( ui->tw_nv_listaveiculosclientes->currentRow() == -1 )
+    {
+        QMessageBox::warning(this, "ERRO", "Selecione um veiculo");
+        return;
+    }
+
     //pega a linha selecionada, no caso o cpf do cliente
     int id = ui->tw_nv_listaveiculosclientes->item(ui->tw_nv_listaveiculosclientes->currentRow()
                                                    , 0) ->text().toInt();
@@ -305,8 +311,6 @@ void frms_nv_veiculocliente::prepararCB()
     //talvez seja necessário fazer outra função, que será chamada após essa no construtor
 
 }
-
-//**FUNÇÕES**//
 /*--------------------------------------------------------------------------------------------
  * Autor: Thiago Ianzer                                                                       |
  * Data: 21/04/2022                                                                           |

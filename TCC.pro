@@ -31,7 +31,6 @@ SOURCES += \
     frm_novavenda.cpp \
     frm_ordemservico.cpp \
     frm_sobre.cpp \
-    frms_ge_editarcliente.cpp \
     frms_nv_veiculocliente.cpp \
     frms_selecionacliente.cpp \
     funcoes_globais.cpp \
@@ -61,7 +60,6 @@ HEADERS += \
     frm_ordemservico.h \
     frm_principal.h \
     frm_sobre.h \
-    frms_ge_editarcliente.h \
     frms_nv_veiculocliente.h \
     frms_selecionacliente.h \
     funcoes_globais.h \
@@ -80,7 +78,6 @@ FORMS += \
     frm_ordemservico.ui \
     frm_principal.ui \
     frm_sobre.ui \
-    frms_ge_editarcliente.ui \
     frms_nv_veiculocliente.ui \
     frms_selecionacliente.ui
 

@@ -49,6 +49,12 @@ private slots:
 
     void on_btn_ge_filtrar_clicked();
 
+    void on_btn_ge_salvar_clicked();
+
+    void on_txt_ge_cep_returnPressed();
+
+    void on_tabWidget_currentChanged(int index);
+
 private:
     Ui::frm_gestaoclientes *ui;
 };
