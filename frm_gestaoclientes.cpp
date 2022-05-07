@@ -166,6 +166,22 @@ void frm_gestaoclientes::on_btn_nv_cadastrarveiculo_clicked()
     f_nv_veiculocliente.exec();
 }
 
+//novo cliente
+void frm_gestaoclientes::on_btn_nv_novo_clicked()
+{
+    //limpando todos os campos
+    ui->txt_nv_nome->clear();
+    ui->txt_nv_cpf->clear();
+    ui->txt_nv_cep->clear();
+    ui->txt_nv_estado->clear();
+    ui->txt_nv_cidade->clear();
+    ui->txt_nv_rua->clear();
+    ui->txt_nv_nrocasa->clear();
+    ui->txt_nv_bairro->clear();
+    ui->txt_nv_telefone->clear();
+    ui->txt_nv_nome->setFocus();
+}
+
 //**TAB Gestão clientes**
 //selecionar cliente da grid, para usar no formulario que edita dados dos clientes
 void frm_gestaoclientes::on_tw_ge_listaclientes_itemSelectionChanged()
@@ -821,6 +837,9 @@ void frm_gestaoclientes::validaCEP( const QString &cliente_cep )
         ui->txt_ge_rua->setText(json["street"].toString());
     }
 }
+
+
+
 
 
 

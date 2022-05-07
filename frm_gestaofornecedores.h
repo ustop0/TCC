@@ -2,12 +2,13 @@
 #define FRM_GESTAOFORNECEDORES_H
 
 #include <QDialog>
-#include <QDebug>
 #include <QMessageBox>
-#include <QMainWindow>
+#include <QDebug>
+#include <QString>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include <QMainWindow>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include "ConexaoBanco.h"
@@ -34,9 +35,25 @@ public slots:
 private slots:
     void on_btn_nv_novo_clicked();
 
+    void on_btn_nv_salvar_clicked();
+
     void on_txt_nv_cnpj_returnPressed();
 
-    void on_btn_nv_salvar_clicked();
+    void on_tabWidget_currentChanged(int index);
+
+    void on_tw_ge_listarFornecedores_itemSelectionChanged();
+
+    void on_txt_ge_filtrar_returnPressed();
+
+    void on_btn_ge_filtrar_clicked();
+
+    void on_btn_ge_salvar_2_clicked();
+
+    void on_btn_ge_salvar_2btn_ge_excluir_clicked();
+
+    void on_btn_ge_salvar_clicked();
+
+    void on_btn_ge_excluir_clicked();
 
 private:
     Ui::frm_gestaofornecedores *ui;

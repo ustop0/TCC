@@ -9,7 +9,6 @@ class ClFornecedor
 public:
     QString codigo;
     QString cnpj;
-    QString cep;
     QString estado;
     QString cidade;
     QString rua;

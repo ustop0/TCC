@@ -56,7 +56,8 @@ frm_gestaousuarios::~frm_gestaousuarios()//** destrutor
     delete ui;
 }
 
-void frm_gestaousuarios::on_btn_nv_novo_clicked() //novo usuário
+//novo usuário
+void frm_gestaousuarios::on_btn_nv_novo_clicked()
 {
     ui->txt_nv_nome->clear();
     ui->txt_nv_usuario->clear();
@@ -65,8 +66,8 @@ void frm_gestaousuarios::on_btn_nv_novo_clicked() //novo usuário
     ui->txt_nv_nome->setFocus();
 }
 
-
-void frm_gestaousuarios::on_btn_nv_gravar_clicked() //salvar novo usuário
+//salvar novo usuário
+void frm_gestaousuarios::on_btn_nv_gravar_clicked()
 {
     QString nome = ui->txt_nv_nome->text(); //armazena o codigo
     QString usuario = ui->txt_nv_usuario->text();
@@ -104,8 +105,8 @@ void frm_gestaousuarios::on_btn_nv_gravar_clicked() //salvar novo usuário
     }
 }
 
-
-void frm_gestaousuarios::on_tabWidget_currentChanged(int index)//quando ocorrer mudança na aba
+//quando ocorrer mudança na aba
+void frm_gestaousuarios::on_tabWidget_currentChanged(int index)
 {
     if( index == 1 ) //verifica a interface pelo index das tabs
     {
@@ -152,8 +153,8 @@ void frm_gestaousuarios::on_tabWidget_currentChanged(int index)//quando ocorrer 
     }
 }
 
-
-void frm_gestaousuarios::on_tw_ge_listausuario_itemSelectionChanged()//mostrar dados da seleção
+//mostrar dados da seleção
+void frm_gestaousuarios::on_tw_ge_listausuario_itemSelectionChanged()
 {
     //pega a linha selecionada
     int id=ui->tw_ge_listausuario->item(ui->tw_ge_listausuario->currentRow()
@@ -178,8 +179,8 @@ void frm_gestaousuarios::on_tw_ge_listausuario_itemSelectionChanged()//mostrar d
     }
 }
 
-
-void frm_gestaousuarios::on_txt_ge_filtro_returnPressed()//filtrar registros
+//filtrar registros
+void frm_gestaousuarios::on_txt_ge_filtro_returnPressed()
 {
     QString busca; //armazena busca
     funcoes_globais::removerLinhas( ui->tw_ge_listausuario ); //remove as linhas o table widget
@@ -278,14 +279,14 @@ void frm_gestaousuarios::on_txt_ge_filtro_returnPressed()//filtrar registros
     ui->txt_ge_filtro->setFocus(); //posiciona o cursos no campo novamente
 }
 
-
-void frm_gestaousuarios::on_btn_ge_filtrar_clicked()//botao filtrar registros
+//botao filtrar registros
+void frm_gestaousuarios::on_btn_ge_filtrar_clicked()
 {
     frm_gestaousuarios::on_txt_ge_filtro_returnPressed();
 }
 
-
-void frm_gestaousuarios::on_btn_ge_salvar_clicked()//gravar alteração no usuário
+//gravar alteração no usuário
+void frm_gestaousuarios::on_btn_ge_salvar_clicked()
 {
     if( ui->tw_ge_listausuario->currentRow() == -1 )
     {
@@ -293,7 +294,8 @@ void frm_gestaousuarios::on_btn_ge_salvar_clicked()//gravar alteração no usuá
         return;
     }
 
-    QString id = ui->tw_ge_listausuario->item(ui->tw_ge_listausuario->currentRow(),0)->text();
+    QString id = ui->tw_ge_listausuario->item(ui->tw_ge_listausuario->currentRow()
+                                              ,0)->text();
     QSqlQuery query;
 
     QString nome = ui->txt_ge_nome->text();
@@ -306,10 +308,10 @@ void frm_gestaousuarios::on_btn_ge_salvar_clicked()//gravar alteração no usuá
     query.prepare("UPDATE "
                     "a001_usuarios "
                   "SET "
-                    "a001_nome          ='" +nome         + "' "
-                    ",a001_usuario      ='" +usuario      + "' "
-                    ",a001_senha        ='" +senha        + "' "
-                    ",a001_tipo_acesso  ='" +acesso       + "' "
+                    "a001_nome          ='" +nome    + "' "
+                    ",a001_usuario      ='" +usuario + "' "
+                    ",a001_senha        ='" +senha   + "' "
+                    ",a001_tipo_acesso  ='" +acesso  + "' "
                   "WHERE "
                     "a001_codigo ='" +id+ "'");
 
@@ -318,7 +320,7 @@ void frm_gestaousuarios::on_btn_ge_salvar_clicked()//gravar alteração no usuá
         //pega a linha que está selecionada
         int linha=ui->tw_ge_listausuario->currentRow();
         //atualizando o table widget com o novo registro
-        ui->tw_ge_listausuario->item(linha, 1)->setText(nome);
+        ui->tw_ge_listausuario->item(linha, 1)->setText( nome );
         QMessageBox::information(this, "Atualizado", "Usuário atualizado com sucesso!");
     }
     else
@@ -327,8 +329,8 @@ void frm_gestaousuarios::on_btn_ge_salvar_clicked()//gravar alteração no usuá
     }
 }
 
-
-void frm_gestaousuarios::on_btn_ge_excluir_clicked()//excluir colaborador
+//excluir colaborador
+void frm_gestaousuarios::on_btn_ge_excluir_clicked()
 {
     if( ui->tw_ge_listausuario->currentRow() == -1 )
     {

@@ -55,6 +55,8 @@ private slots:
 
     void on_tabWidget_currentChanged(int index);
 
+    void on_btn_nv_novo_clicked();
+
 private:
     Ui::frm_gestaoclientes *ui;
 };
