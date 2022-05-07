@@ -2,5 +2,6 @@
     <qresource prefix="/Imagens"/>
     <qresource prefix="/">
         <file>Imagens/splash.png</file>
+        <file>Imagens/car.png</file>
     </qresource>
 </RCC>

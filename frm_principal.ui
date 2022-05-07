@@ -69,8 +69,8 @@
    <widget class="QLabel" name="lb_base_dados">
     <property name="geometry">
      <rect>
-      <x>546</x>
-      <y>327</y>
+      <x>300</x>
+      <y>320</y>
       <width>101</width>
       <height>20</height>
      </rect>
@@ -88,8 +88,8 @@
    <widget class="QLabel" name="lb_nome_usuario">
     <property name="geometry">
      <rect>
-      <x>436</x>
-      <y>330</y>
+      <x>160</x>
+      <y>320</y>
       <width>67</width>
       <height>17</height>
      </rect>
@@ -101,14 +101,71 @@
    <widget class="QLabel" name="lb_relogio">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>220</y>
+      <x>450</x>
+      <y>320</y>
       <width>67</width>
       <height>17</height>
      </rect>
     </property>
     <property name="text">
      <string>Relogio</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line">
+    <property name="geometry">
+     <rect>
+      <x>-2</x>
+      <y>359</y>
+      <width>700</width>
+      <height>10</height>
+     </rect>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="lineWidth">
+     <number>0</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line_2">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>300</y>
+      <width>20</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="lineWidth">
+     <number>1</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line_3">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>300</y>
+      <width>20</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="lineWidth">
+     <number>1</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
     </property>
    </widget>
   </widget>

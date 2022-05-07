@@ -28,19 +28,29 @@ Frm_principal::Frm_principal(QWidget *parent)
 
     Conexao dadosBanco; //instanciando banco
 
-    //barra de status, utilizando variaveis_globais e atributos da ConexaoBanco
-    ui->lb_nome_usuario->setText(variaveis_globais::username_colab);
-    ui->lb_base_dados->setText(dadosBanco.banco_nome);
-
-    //**ATENÇÃO** verificar problema de lentidao
+    //**ATENÇÃO** Função atualiza relógio não pode ser chamada diretamento
     //atualizaRelogio();
-    //Configurando barra de status
+    //--Configurando barra de status--
     tempo = new QTimer(this);
     connect( tempo, SIGNAL( timeout() ),this, SLOT( atualizaRelogio() ) );
     tempo->start( 1000 );
 
-    ui->statusbar->addWidget(ui->lb_nome_usuario); //insere o botão na barra de status do programa
-    //ui->statusbar->addWidget(ui->txt_base_dados);
+
+    //barra de status, utilizando variaveis_globais e atributos da ConexaoBanco
+
+    QString nome_usuario = "Usuário: " + variaveis_globais::username_colab;
+    QString base_dados = "Base de dados: " + dadosBanco.banco_nome;
+
+    ui->lb_nome_usuario->setText( nome_usuario );
+    ui->lb_base_dados->setText( base_dados );
+
+    ui->statusbar->addPermanentWidget( ui->lb_nome_usuario );
+    ui->statusbar->addPermanentWidget( ui->line_2 );
+    ui->statusbar->addPermanentWidget( ui->lb_base_dados );
+    ui->statusbar->addPermanentWidget( ui->line_3 );
+    ui->statusbar->addPermanentWidget( ui->lb_relogio );
+
+    //ui->statusbar->showMessage("TESTE", 4000);
 }
 
 Frm_principal::~Frm_principal()//**INICIO** destrutor
