@@ -407,7 +407,7 @@ void frm_gestaoclientes::on_txt_ge_filtro_returnPressed()
     //contador para percorrer linhas
     int contlinhas=0;
     QSqlQuery query;
-    query.prepare(busca);
+    query.prepare( busca );
 
     if( query.exec() ) //executa a query
     {

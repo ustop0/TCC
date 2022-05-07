@@ -321,6 +321,7 @@ void frm_gestaousuarios::on_btn_ge_salvar_clicked()
         int linha=ui->tw_ge_listausuario->currentRow();
         //atualizando o table widget com o novo registro
         ui->tw_ge_listausuario->item(linha, 1)->setText( nome );
+
         QMessageBox::information(this, "Atualizado", "Usuário atualizado com sucesso!");
     }
     else

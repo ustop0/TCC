@@ -17,8 +17,7 @@ frm_gestaofornecedores::frm_gestaofornecedores(QWidget *parent) :
         }
     }
 
-    //ui->cb_nv_acesso->addItem("-");
-    //ui->cb_nv_acesso->addItem("Administrador");
+    ui->btn_validacnpj->setVisible(false); //or true - later in the code
     ui->txt_nv_cnpj->setFocus();
 
     //define o Novo Produto de index(0) como aba padrão(que inicia ao ser aberta a interface)
@@ -34,14 +33,14 @@ frm_gestaofornecedores::frm_gestaofornecedores(QWidget *parent) :
 
     //**Estilizando layout da table widget**
     //definindo o tamanho das colunas
-    ui->tw_ge_listarFornecedores->setColumnCount(2); //define que o table widget terá duas colunas
+    ui->tw_ge_listarFornecedores->setColumnCount(13); //define que o table widget terá duas colunas
     ui->tw_ge_listarFornecedores->setColumnWidth(0, 150); //id colaborador
     ui->tw_ge_listarFornecedores->setColumnWidth(1, 220); //nome colaborador7
 
     //cabeçalhos do table widget
     QStringList cabecalhos={"Código", "Razão Social", "Nome Fantasia", "CNPJ","Estado"
                            ,"Cidade", "Rua", "Bairro", "Numero", "Porte"
-                           , "Ocupação", "Telefone1", "Telefone2"};
+                           ,"Ocupação", "Telefone1", "Telefone2"};
 
     ui->tw_ge_listarFornecedores->setHorizontalHeaderLabels(cabecalhos);
     //definindo cor da linha ao ser selecionada
@@ -151,20 +150,13 @@ void frm_gestaofornecedores::on_btn_nv_salvar_clicked()
 //validando cnpj
 void frm_gestaofornecedores::on_txt_nv_cnpj_returnPressed()
 {
-    ClFornecedor fornecedor;
+    frm_gestaofornecedores::on_btn_validacnpj_clicked();
+}
 
-    fornecedor.cnpj = ui->txt_nv_cnpj->text(); //armazena o codigo
-    validaCNPJ( fornecedor.cnpj ); //validando cep
-    fornecedor.estado = ui->txt_nv_uf->text();
-    fornecedor.cidade = ui->txt_nv_cidade->text();
-    fornecedor.rua = ui->txt_nv_rua->text();
-    fornecedor.numero_estabelecimento = ui->txt_nv_numeroEstabelecimento->text();
-    fornecedor.bairro = ui->txt_nv_bairro->text();
-    fornecedor.razao_social = ui->txt_nv_razaoSocial->text();
-    fornecedor.nome_fantasia = ui->txt_nv_nomeFantasia->text();
-    fornecedor.porte_empresa = ui->txt_nv_porte->text();
-    fornecedor.ocupacao_empresa = ui->txt_nv_ocupacao->text();
-    fornecedor.telefone1 = ui->txt_nv_tel1->text();
+//btn valida cnpj(fica invisivel)
+void frm_gestaofornecedores::on_btn_validacnpj_clicked()
+{
+    validaCNPJ();
 }
 
 //quando ocorrer mudança na aba
@@ -205,7 +197,7 @@ void frm_gestaofornecedores::on_tabWidget_currentChanged(int index)
             while( query.next() )
             {
                 //inserindo com contador de linhas, por index
-                ui->tw_ge_listarFornecedores->insertRow(contlinhas);
+                ui->tw_ge_listarFornecedores->insertRow( contlinhas );
                 ui->tw_ge_listarFornecedores->setItem(contlinhas
                                             , 0
                                             , new QTableWidgetItem(query.value(0).toString()));
@@ -280,7 +272,18 @@ void frm_gestaofornecedores::on_tw_ge_listarFornecedores_itemSelectionChanged()
     //exibe os dados da linha selecionada
     QSqlQuery query;
     query.prepare("SELECT "
-                    "* "
+                      "a003_cnpj                    "
+                      ",a003_razao_social             "
+                      ",a003_nome_fantasia           "
+                      ",a003_estado                  "
+                      ",a003_cidade                  "
+                      ",a003_rua                     "
+                      ",a003_numero_estabelecimento  "
+                      ",a003_bairro                  "
+                      ",a003_porte                   "
+                      ",a003_ocupacao                "
+                      ",a003_telefone01              "
+                      ",a003_telefone02              "
                   "FROM "
                     "a003_fornecedor "
                   "WHERE "
@@ -291,18 +294,18 @@ void frm_gestaofornecedores::on_tw_ge_listarFornecedores_itemSelectionChanged()
         query.first(); //pega o primeiro
 
         //considerar inserir um campo para o código
-        ui->txt_ge_cnpj->setText(query.value(1).toString());
-        ui->txt_ge_razaoSocial->setText(query.value(2).toString());
-        ui->txt_ge_nomeFantasia->setText(query.value(3).toString());
-        ui->txt_ge_uf->setText(query.value(4).toString());
-        ui->txt_ge_cidade->setText(query.value(5).toString());
-        ui->txt_ge_rua->setText(query.value(6).toString());
-        ui->txt_ge_numeroEstabelecimento->setText(query.value(7).toString());
-        ui->txt_ge_bairro->setText(query.value(8).toString());
-        ui->txt_nv_porte->setText(query.value(9).toString());
-        ui->txt_ge_ocupacao->setText(query.value(10).toString());
-        ui->txt_ge_tel1->setText(query.value(11).toString());
-        ui->txt_ge_tel1->setText(query.value(12).toString());
+        ui->txt_ge_cnpj->setText(query.value(0).toString());
+        ui->txt_ge_razaoSocial->setText(query.value(1).toString());
+        ui->txt_ge_nomeFantasia->setText(query.value(2).toString());
+        ui->txt_ge_uf->setText(query.value(3).toString());
+        ui->txt_ge_cidade->setText(query.value(4).toString());
+        ui->txt_ge_rua->setText(query.value(5).toString());
+        ui->txt_ge_numeroEstabelecimento->setText(query.value(6).toString());
+        ui->txt_ge_bairro->setText(query.value(7).toString());
+        ui->txt_ge_porte->setText(query.value(8).toString());
+        ui->txt_ge_ocupacao->setText(query.value(9).toString());
+        ui->txt_ge_tel1->setText(query.value(10).toString());
+        ui->txt_ge_tel2->setText(query.value(11).toString());
     }
 }
 
@@ -394,8 +397,8 @@ void frm_gestaofornecedores::on_txt_ge_filtrar_returnPressed()
                         "FROM "
                             "a003_fornecedor "
                         "WHERE "
-                          "a003_razao_social = '%" +txt_filtro+ "%' "
-                          "AND a003_ativo = true                    "
+                          "a003_razao_social LIKE '%" +txt_filtro+ "%' "
+                          "AND a003_ativo = true                       "
                         "ORDER BY "
                             "a003_codigo DESC";
                 break;
@@ -418,8 +421,8 @@ void frm_gestaofornecedores::on_txt_ge_filtrar_returnPressed()
                         "FROM "
                             "a003_fornecedor "
                         "WHERE "
-                          "a003_nome_fantasia = '%" +txt_filtro+ "%' "
-                          "AND a003_ativo = true                     "
+                          "a003_nome_fantasia LIKE '%" +txt_filtro+ "%' "
+                          "AND a003_ativo = true                        "
                         "ORDER BY "
                             "a003_codigo DESC";
                 break;
@@ -442,8 +445,8 @@ void frm_gestaofornecedores::on_txt_ge_filtrar_returnPressed()
                         "FROM "
                             "a003_fornecedor "
                         "WHERE "
-                          "a003_cnpj = '%" +txt_filtro+ "%' "
-                          "AND a003_ativo = true            "
+                          "a003_cnpj LIKE '%" +txt_filtro+ "%' "
+                          "AND a003_ativo = true               "
                         "ORDER BY "
                             "a003_codigo DESC";
                 break;
@@ -466,8 +469,8 @@ void frm_gestaofornecedores::on_txt_ge_filtrar_returnPressed()
                         "FROM "
                             "a003_fornecedor "
                         "WHERE "
-                          "a003_ocupacao = '%" +txt_filtro+ "%' "
-                          "AND a003_ativo = true                "
+                          "a003_ocupacao LIKE '%" +txt_filtro+ "%' "
+                          "AND a003_ativo = true                   "
                         "ORDER BY "
                             "a003_codigo DESC";
                 break;
@@ -490,8 +493,8 @@ void frm_gestaofornecedores::on_txt_ge_filtrar_returnPressed()
                         "FROM "
                             "a003_fornecedor "
                         "WHERE "
-                          "a003_cidade = '%" +txt_filtro+ "%' "
-                          "AND a003_ativo = true              "
+                          "a003_cidade LIKE '%" +txt_filtro+ "%' "
+                          "AND a003_ativo = true                 "
                         "ORDER BY "
                             "a003_codigo DESC";
                 break;
@@ -598,8 +601,6 @@ void frm_gestaofornecedores::on_btn_ge_salvar_clicked()
                                                     ->currentRow(),0)->text();
     QSqlQuery query;
 
-    ClFornecedor fornecedor;
-
     //estudar retringir cnpj
     QString razao_social = ui->txt_nv_razaoSocial->text();
     QString nome_fantasia = ui->txt_nv_nomeFantasia->text();
@@ -615,6 +616,7 @@ void frm_gestaofornecedores::on_btn_ge_salvar_clicked()
     QString telefone1 = ui->txt_nv_tel1->text();
     QString telefone2 = ui->txt_nv_tel2->text();
 
+    //**verificar** está quebrando a o registro quando da update
     query.prepare("UPDATE "
                     "a003_fornecedor "
                   "SET "
@@ -639,7 +641,33 @@ void frm_gestaofornecedores::on_btn_ge_salvar_clicked()
         int linha=ui->tw_ge_listarFornecedores->currentRow();
         //atualizando o table widget com o novo registro
         ui->tw_ge_listarFornecedores->item(linha, 1)->setText( razao_social );
+        ui->tw_ge_listarFornecedores->item(linha, 2)->setText( nome_fantasia );
+        ui->tw_ge_listarFornecedores->item(linha, 3)->setText( cnpj );
+        ui->tw_ge_listarFornecedores->item(linha, 4)->setText( estado );
+        ui->tw_ge_listarFornecedores->item(linha, 5)->setText( cidade );
+        ui->tw_ge_listarFornecedores->item(linha, 6)->setText( rua );
+        ui->tw_ge_listarFornecedores->item(linha, 7)->setText( numero_estabelecimento );
+        ui->tw_ge_listarFornecedores->item(linha, 8)->setText( bairro );
+        ui->tw_ge_listarFornecedores->item(linha, 9)->setText( porte_empresa );
+        ui->tw_ge_listarFornecedores->item(linha, 10)->setText( ocupacao_empresa );
+        ui->tw_ge_listarFornecedores->item(linha, 11)->setText( telefone1 );
+        ui->tw_ge_listarFornecedores->item(linha, 12)->setText( telefone2 );
+
         QMessageBox::information(this, "Atualizado", "Fornecedor atualizado com sucesso!");
+
+        ui->txt_nv_razaoSocial->text();
+        ui->txt_nv_nomeFantasia->text();
+        ui->txt_nv_cnpj->text();
+        //validaCNPJ( cnpj );
+        ui->txt_nv_uf->text();
+        ui->txt_nv_cidade->text();
+        ui->txt_nv_rua->text();
+        ui->txt_nv_numeroEstabelecimento->text();
+        ui->txt_nv_bairro->text();
+        ui->txt_nv_porte->text();
+        ui->txt_nv_ocupacao->text();
+        ui->txt_nv_tel1->text();
+        ui->txt_nv_tel2->text();
     }
     else
     {
@@ -697,13 +725,24 @@ void frm_gestaofornecedores::on_btn_ge_excluir_clicked()
  * Chamada: botão gravar forncedor                                                            |
  *--------------------------------------------------------------------------------------------
  */
-void frm_gestaofornecedores::validaCNPJ( const QString &fornecedor_cnpj )
+void frm_gestaofornecedores::validaCNPJ()
 {
+    QString cnpj;
+
+    if( ui->txt_nv_cnpj->text() != "" )
+    {
+        cnpj = ui->txt_nv_cnpj->text();
+    }
+    else if ( ui->txt_nv_cnpj->text() == "" )
+    {
+        cnpj = ui->txt_ge_cnpj->text();
+    }
+
     QEventLoop waitLoop;
     QNetworkAccessManager manager;
     QNetworkReply *reply = manager.get(
                 QNetworkRequest( QUrl("https://brasilapi.com.br/api/cnpj/v1/"
-                                      + fornecedor_cnpj)) );
+                                      + cnpj)) );
 
     QObject::connect(reply, SIGNAL(finished()), &waitLoop, SLOT(quit()));
     waitLoop.exec();
@@ -732,7 +771,8 @@ void frm_gestaofornecedores::validaCNPJ( const QString &fornecedor_cnpj )
         ui->txt_nv_nomeFantasia->setText(json["nome_fantasia"].toString());
         ui->txt_nv_porte->setText(json["porte"].toString());
         ui->txt_nv_ocupacao->setText(json["cnae_fiscal_descricao"].toString());
-        ui->txt_nv_tel1->setText(json["ddd_telefone_1"].toString());    
+        ui->txt_nv_tel1->setText(json["ddd_telefone_1"].toString());
+        ui->txt_nv_tel2->setText(json["ddd_telefone_2"].toString());
     }
 }
 

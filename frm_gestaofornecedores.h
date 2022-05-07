@@ -30,7 +30,7 @@ public:
     Conexao con;
 
 public slots:
-    void validaCNPJ( const QString &fornecedor_cnpj );
+    void validaCNPJ();
 
 private slots:
     void on_btn_nv_novo_clicked();
@@ -47,13 +47,11 @@ private slots:
 
     void on_btn_ge_filtrar_clicked();
 
-    void on_btn_ge_salvar_2_clicked();
-
-    void on_btn_ge_salvar_2btn_ge_excluir_clicked();
-
     void on_btn_ge_salvar_clicked();
 
     void on_btn_ge_excluir_clicked();
+
+    void on_btn_validacnpj_clicked();
 
 private:
     Ui::frm_gestaofornecedores *ui;
