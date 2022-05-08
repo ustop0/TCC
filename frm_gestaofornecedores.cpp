@@ -312,9 +312,12 @@ void frm_gestaofornecedores::on_tw_ge_listarFornecedores_itemSelectionChanged()
 //filtrar
 void frm_gestaofornecedores::on_txt_ge_filtrar_returnPressed()
 {
-    QString busca; //armazena busca
+
     QString cb_filtro = ui->cb_ge_filtrar->currentText();
     QString txt_filtro = ui->txt_ge_filtrar->text();
+
+    QString busca; //armazena busca
+    QString filtro_sql;
 
     QStringList cb_opc; //Dados do combo box
     cb_opc << "Razão Social" << "Nome Fantasia" << "CNPJ"
@@ -380,128 +383,55 @@ void frm_gestaofornecedores::on_txt_ge_filtrar_returnPressed()
         {
             //Razão Social
             case 0:
-                busca = "SELECT "
-                            "a003_codigo                   "
-                            ",a003_razao_social            "
-                            ",a003_nome_fantasia           "
-                            ",a003_cnpj                    "
-                            ",a003_estado                  "
-                            ",a003_cidade                  "
-                            ",a003_rua                     "
-                            ",a003_numero_estabelecimento  "
-                            ",a003_bairro                  "
-                            ",a003_porte                   "
-                            ",a003_ocupacao                "
-                            ",a003_telefone01              "
-                            ",a003_telefone02              "
-                        "FROM "
-                            "a003_fornecedor "
-                        "WHERE "
-                          "a003_razao_social LIKE '%" +txt_filtro+ "%' "
-                          "AND a003_ativo = true                       "
-                        "ORDER BY "
-                            "a003_codigo DESC";
+
+                filtro_sql = "a003_razao_social LIKE '%" +txt_filtro+ "%' ";
                 break;
             //Nome Fantasia
             case 1:
-                busca = "SELECT "
-                            "a003_codigo                   "
-                            ",a003_razao_social            "
-                            ",a003_nome_fantasia           "
-                            ",a003_cnpj                    "
-                            ",a003_estado                  "
-                            ",a003_cidade                  "
-                            ",a003_rua                     "
-                            ",a003_numero_estabelecimento  "
-                            ",a003_bairro                  "
-                            ",a003_porte                   "
-                            ",a003_ocupacao                "
-                            ",a003_telefone01              "
-                            ",a003_telefone02              "
-                        "FROM "
-                            "a003_fornecedor "
-                        "WHERE "
-                          "a003_nome_fantasia LIKE '%" +txt_filtro+ "%' "
-                          "AND a003_ativo = true                        "
-                        "ORDER BY "
-                            "a003_codigo DESC";
+
+                filtro_sql = "a003_nome_fantasia LIKE '%" +txt_filtro+ "%' ";
                 break;
             //CNPJ
             case 2:
-                busca = "SELECT "
-                            "a003_codigo                   "
-                            ",a003_razao_social            "
-                            ",a003_nome_fantasia           "
-                            ",a003_cnpj                    "
-                            ",a003_estado                  "
-                            ",a003_cidade                  "
-                            ",a003_rua                     "
-                            ",a003_numero_estabelecimento  "
-                            ",a003_bairro                  "
-                            ",a003_porte                   "
-                            ",a003_ocupacao                "
-                            ",a003_telefone01              "
-                            ",a003_telefone02              "
-                        "FROM "
-                            "a003_fornecedor "
-                        "WHERE "
-                          "a003_cnpj LIKE '%" +txt_filtro+ "%' "
-                          "AND a003_ativo = true               "
-                        "ORDER BY "
-                            "a003_codigo DESC";
+
+                filtro_sql = "a003_cnpj LIKE '%" +txt_filtro+ "%' ";
                 break;
             //Ocupação da empresa
             case 3:
-                busca = "SELECT "
-                            "a003_codigo                   "
-                            ",a003_razao_social            "
-                            ",a003_nome_fantasia           "
-                            ",a003_cnpj                    "
-                            ",a003_estado                  "
-                            ",a003_cidade                  "
-                            ",a003_rua                     "
-                            ",a003_numero_estabelecimento  "
-                            ",a003_bairro                  "
-                            ",a003_porte                   "
-                            ",a003_ocupacao                "
-                            ",a003_telefone01              "
-                            ",a003_telefone02              "
-                        "FROM "
-                            "a003_fornecedor "
-                        "WHERE "
-                          "a003_ocupacao LIKE '%" +txt_filtro+ "%' "
-                          "AND a003_ativo = true                   "
-                        "ORDER BY "
-                            "a003_codigo DESC";
+
+                filtro_sql = "a003_ocupacao LIKE '%" +txt_filtro+ "%' ";
                 break;
             //Cidade
             case 4:
-                busca = "SELECT "
-                            "a003_codigo                   "
-                            ",a003_razao_social            "
-                            ",a003_nome_fantasia           "
-                            ",a003_cnpj                    "
-                            ",a003_estado                  "
-                            ",a003_cidade                  "
-                            ",a003_rua                     "
-                            ",a003_numero_estabelecimento  "
-                            ",a003_bairro                  "
-                            ",a003_porte                   "
-                            ",a003_ocupacao                "
-                            ",a003_telefone01              "
-                            ",a003_telefone02              "
-                        "FROM "
-                            "a003_fornecedor "
-                        "WHERE "
-                          "a003_cidade LIKE '%" +txt_filtro+ "%' "
-                          "AND a003_ativo = true                 "
-                        "ORDER BY "
-                            "a003_codigo DESC";
+
+                filtro_sql = "a003_cidade LIKE '%" +txt_filtro+ "%' ";
                 break;
             default:
                 qDebug() << "_Houve um problema ao filtrar realizar o filtro(swith case)";
                 break;
         }
+
+        busca = "SELECT "
+                    "a003_codigo                   "
+                    ",a003_razao_social            "
+                    ",a003_nome_fantasia           "
+                    ",a003_cnpj                    "
+                    ",a003_estado                  "
+                    ",a003_cidade                  "
+                    ",a003_rua                     "
+                    ",a003_numero_estabelecimento  "
+                    ",a003_bairro                  "
+                    ",a003_porte                   "
+                    ",a003_ocupacao                "
+                    ",a003_telefone01              "
+                    ",a003_telefone02              "
+                "FROM "
+                    "a003_fornecedor "
+                "WHERE "
+                    + filtro_sql +
+                    "AND a003_ativo = true "
+                "ORDER BY "
+                    "a003_codigo DESC";
     }
 
     //contador para percorrer linhas
