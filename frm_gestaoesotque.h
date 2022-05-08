@@ -33,6 +33,19 @@ public:
 private slots:
     void on_tabWidget_currentChanged(int index);
 
+    void on_tw_nv_listafornecedores_itemSelectionChanged();
+
+    void on_txt_nv_filtrar_returnPressed();
+
+    void on_btn_nv_filtrar_clicked();
+
+    void on_btn_nv_novo_clicked();
+
+    void on_btn_nv_salvar_clicked();
+
+    //tela de gestão peças
+    void on_tw_ge_listapecas_itemSelectionChanged();
+
 private:
     Ui::frm_gestaoesotque *ui;
 };

@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -133,28 +133,6 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="layoutWidget_2">
-      <property name="geometry">
-       <rect>
-        <x>197</x>
-        <y>92</y>
-        <width>120</width>
-        <height>50</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_5">
-       <item>
-        <widget class="QLabel" name="label_9">
-         <property name="text">
-          <string>Tipo de Peça</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="txt_nv_tipoPeca"/>
-       </item>
-      </layout>
-     </widget>
      <widget class="QWidget" name="layoutWidget_10">
       <property name="geometry">
        <rect>
@@ -173,7 +151,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="cb_nv_posicao_prateleira"/>
+        <widget class="QLineEdit" name="txt_nv_posicao"/>
        </item>
       </layout>
      </widget>
@@ -492,28 +470,6 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="layoutWidget_14">
-      <property name="geometry">
-       <rect>
-        <x>197</x>
-        <y>30</y>
-        <width>120</width>
-        <height>50</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_14">
-       <item>
-        <widget class="QLabel" name="label_14">
-         <property name="text">
-          <string>Tipo de Peça</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="txt_ge_tipoPeca"/>
-       </item>
-      </layout>
-     </widget>
      <widget class="QWidget" name="layoutWidget_15">
       <property name="geometry">
        <rect>
@@ -532,7 +488,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="cb_ge_posicao_prateleira"/>
+        <widget class="QLineEdit" name="txt_ge_posicao"/>
        </item>
       </layout>
      </widget>
