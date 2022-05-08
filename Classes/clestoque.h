@@ -10,11 +10,10 @@ public:
    int nc_peca;
    QString denominacao;
    QString grupo;
+   QString tipo_peca;
    double valor_compra;
    double valor_venda;
-   double margem_lucro;
-   int qtde;
-   QString tipo_peca;
+   int qtde_estoque;
    QString posicao_peca;
 
 public:
