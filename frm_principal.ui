@@ -196,10 +196,17 @@
      <addaction name="actionOrdem_de_Servi_o_2"/>
      <addaction name="actionAgendar_Servi_o_2"/>
     </widget>
+    <widget class="QMenu" name="menuVeiculos">
+     <property name="title">
+      <string>Veiculos</string>
+     </property>
+     <addaction name="actionCadastro_de_veiculos"/>
+     <addaction name="actionVeiculos_de_clientes"/>
+    </widget>
     <addaction name="actionUsuario"/>
     <addaction name="actionClientes"/>
     <addaction name="actionFornecedores"/>
-    <addaction name="actionVeiculos"/>
+    <addaction name="menuVeiculos"/>
     <addaction name="separator"/>
     <addaction name="actionEstoque"/>
     <addaction name="menuVendas"/>
@@ -267,9 +274,14 @@
     <string>Agendar Serviço</string>
    </property>
   </action>
-  <action name="actionVeiculos">
+  <action name="actionCadastro_de_veiculos">
    <property name="text">
-    <string>Veiculos</string>
+    <string>Cadastro de veiculos</string>
+   </property>
+  </action>
+  <action name="actionVeiculos_de_clientes">
+   <property name="text">
+    <string>Veiculos de clientes</string>
    </property>
   </action>
  </widget>

@@ -85,10 +85,10 @@ void frm_gestaousuarios::on_btn_nv_gravar_clicked()
                                      ",a001_usuario         "
                                      ",a001_senha           "
                                      ",a001_tipo_acesso)    "
-                    "VALUES('" +nome     +  "'"
-                          ",'" +usuario  +  "'"
-                          ",'" +senha    +  "'"
-                          ",'" +acesso   +  "') ");
+                  "VALUES('" +nome  +  "'"
+                    ",'" +usuario   +  "'"
+                    ",'" +senha     +  "'"
+                    ",'" +acesso    +  "') ");
 
     if( !query.exec() ) //verifica se a query tem algum erro e executa ela
     {
@@ -96,7 +96,7 @@ void frm_gestaousuarios::on_btn_nv_gravar_clicked()
     }
     else
     {
-        QMessageBox::information(this, "GRAVADO", "Usuario salvo com sucesso");
+        QMessageBox::information(this, "Salvo", "Usuario salvo com sucesso");
         ui->txt_nv_nome->clear(); //armazena o codigo
         ui->txt_nv_usuario->clear();
         ui->txt_nv_senha->clear();
