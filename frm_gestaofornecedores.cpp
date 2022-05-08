@@ -272,8 +272,8 @@ void frm_gestaofornecedores::on_tw_ge_listarFornecedores_itemSelectionChanged()
     //exibe os dados da linha selecionada
     QSqlQuery query;
     query.prepare("SELECT "
-                      "a003_cnpj                    "
-                      ",a003_razao_social             "
+                      "a003_cnpj                     "
+                      ",a003_razao_social            "
                       ",a003_nome_fantasia           "
                       ",a003_estado                  "
                       ",a003_cidade                  "
@@ -518,7 +518,7 @@ void frm_gestaofornecedores::on_btn_ge_filtrar_clicked()
   frm_gestaofornecedores::on_txt_ge_filtrar_returnPressed();
 }
 
-//Gravar alteração no fornecedor
+//edição, salvar alteração no fornecedor
 void frm_gestaofornecedores::on_btn_ge_salvar_clicked()
 {
     if( ui->tw_ge_listarFornecedores->currentRow() == -1 )
@@ -532,36 +532,36 @@ void frm_gestaofornecedores::on_btn_ge_salvar_clicked()
     QSqlQuery query;
 
     //estudar retringir cnpj
-    QString razao_social = ui->txt_nv_razaoSocial->text();
-    QString nome_fantasia = ui->txt_nv_nomeFantasia->text();
-    QString cnpj = ui->txt_nv_cnpj->text();
+    QString razao_social = ui->txt_ge_razaoSocial->text();
+    QString nome_fantasia = ui->txt_ge_nomeFantasia->text();
+    QString cnpj = ui->txt_ge_cnpj->text();
     //validaCNPJ( cnpj );
-    QString estado = ui->txt_nv_uf->text();
-    QString cidade = ui->txt_nv_cidade->text();
-    QString rua = ui->txt_nv_rua->text();
-    QString numero_estabelecimento = ui->txt_nv_numeroEstabelecimento->text();
-    QString bairro = ui->txt_nv_bairro->text();
-    QString porte_empresa = ui->txt_nv_porte->text();
-    QString ocupacao_empresa = ui->txt_nv_ocupacao->text();
-    QString telefone1 = ui->txt_nv_tel1->text();
-    QString telefone2 = ui->txt_nv_tel2->text();
+    QString estado = ui->txt_ge_uf->text();
+    QString cidade = ui->txt_ge_cidade->text();
+    QString rua = ui->txt_ge_rua->text();
+    QString numero_estabelecimento = ui->txt_ge_numeroEstabelecimento->text();
+    QString bairro = ui->txt_ge_bairro->text();
+    QString porte_empresa = ui->txt_ge_porte->text();
+    QString ocupacao_empresa = ui->txt_ge_ocupacao->text();
+    QString telefone1 = ui->txt_ge_tel1->text();
+    QString telefone2 = ui->txt_ge_tel2->text();
 
     //**verificar** está quebrando a o registro quando da update
     query.prepare("UPDATE "
                     "a003_fornecedor "
                   "SET "
-                      "a003_razao_social             ='" +razao_social            + "' "
-                      ",a003_nome_fantasia           ='" +nome_fantasia           + "' "
-                      ",a003_cnpj                    ='" +cnpj                    + "' "
-                      ",a003_estado                  ='" +estado                  + "' "
-                      ",a003_cidade                  ='" +cidade                  + "' "
-                      ",a003_rua                     ='" +rua                     + "' "
-                      ",a003_numero_estabelecimento  ='" +numero_estabelecimento  + "' "
-                      ",a003_bairro                  ='" +bairro                  + "' "
-                      ",a003_porte                   ='" +porte_empresa           + "' "
-                      ",a003_ocupacao                ='" +ocupacao_empresa        + "' "
-                      ",a003_telefone01              ='" +telefone1               + "' "
-                      ",a003_telefone02              ='" +telefone2               + "' "
+                    "a003_razao_social             ='" +razao_social            + "'"
+                    ",a003_nome_fantasia           ='" +nome_fantasia           + "'"
+                    ",a003_cnpj                    ='" +cnpj                    + "'"
+                    ",a003_estado                  ='" +estado                  + "'"
+                    ",a003_cidade                  ='" +cidade                  + "'"
+                    ",a003_rua                     ='" +rua                     + "'"
+                    ",a003_numero_estabelecimento  ='" +numero_estabelecimento  + "'"
+                    ",a003_bairro                  ='" +bairro                  + "'"
+                    ",a003_porte                   ='" +porte_empresa           + "'"
+                    ",a003_ocupacao                ='" +ocupacao_empresa        + "'"
+                    ",a003_telefone01              ='" +telefone1               + "'"
+                    ",a003_telefone02              ='" +telefone2               + "'"
                   "WHERE "
                     "a003_codigo ='" +id+ "'");
 
@@ -585,19 +585,19 @@ void frm_gestaofornecedores::on_btn_ge_salvar_clicked()
 
         QMessageBox::information(this, "Atualizado", "Fornecedor atualizado com sucesso!");
 
-        ui->txt_nv_razaoSocial->text();
-        ui->txt_nv_nomeFantasia->text();
-        ui->txt_nv_cnpj->text();
+        ui->txt_nv_razaoSocial->clear();
+        ui->txt_nv_nomeFantasia->clear();
+        ui->txt_nv_cnpj->clear();
         //validaCNPJ( cnpj );
-        ui->txt_nv_uf->text();
-        ui->txt_nv_cidade->text();
-        ui->txt_nv_rua->text();
-        ui->txt_nv_numeroEstabelecimento->text();
-        ui->txt_nv_bairro->text();
-        ui->txt_nv_porte->text();
-        ui->txt_nv_ocupacao->text();
-        ui->txt_nv_tel1->text();
-        ui->txt_nv_tel2->text();
+        ui->txt_nv_uf->clear();
+        ui->txt_nv_cidade->clear();
+        ui->txt_nv_rua->clear();
+        ui->txt_nv_numeroEstabelecimento->clear();
+        ui->txt_nv_bairro->clear();
+        ui->txt_nv_porte->clear();
+        ui->txt_nv_ocupacao->clear();
+        ui->txt_nv_tel1->clear();
+        ui->txt_nv_tel2->clear();
     }
     else
     {
