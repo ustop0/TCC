@@ -35,14 +35,21 @@ public slots:
 private slots:
     void on_tabWidget_currentChanged(int index);
 
+    //fornecedores
     void on_tw_nv_listafornecedores_itemSelectionChanged();
 
     void on_txt_nv_filtrar_returnPressed();
 
     void on_btn_nv_filtrar_clicked();
 
+    //marcas/modelos
     void on_tw_nv_listamodelos_itemSelectionChanged();
 
+    void on_txt_nv_filtrarModelos_returnPressed();
+
+    void on_btn_nv_filtrarmodelos_clicked();
+
+    //salvando peças
     void on_btn_nv_novo_clicked();
 
     void on_btn_nv_salvar_clicked();

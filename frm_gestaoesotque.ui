@@ -16,7 +16,7 @@
   <widget class="QTabWidget" name="tabWidget">
    <property name="geometry">
     <rect>
-     <x>11</x>
+     <x>10</x>
      <y>10</y>
      <width>761</width>
      <height>630</height>
@@ -371,7 +371,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="cb_nv_filtrar_2"/>
+        <widget class="QComboBox" name="cb_nv_filtrarmodelos"/>
        </item>
       </layout>
      </widget>
@@ -386,10 +386,10 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_5">
        <item>
-        <widget class="QLineEdit" name="txt_nv_filtrar_3"/>
+        <widget class="QLineEdit" name="txt_nv_filtrarModelos"/>
        </item>
        <item>
-        <widget class="QPushButton" name="btn_nv_filtrar_3">
+        <widget class="QPushButton" name="btn_nv_filtrarmodelos">
          <property name="text">
           <string>Filtrar</string>
          </property>
