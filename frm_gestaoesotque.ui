@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -71,7 +71,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>92</y>
+        <y>152</y>
         <width>171</width>
         <height>50</height>
        </rect>
@@ -92,8 +92,8 @@
      <widget class="QWidget" name="layoutWidget_8">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>149</y>
+        <x>197</x>
+        <y>30</y>
         <width>171</width>
         <height>50</height>
        </rect>
@@ -115,7 +115,7 @@
       <property name="geometry">
        <rect>
         <x>196</x>
-        <y>30</y>
+        <y>92</y>
         <width>171</width>
         <height>50</height>
        </rect>
@@ -136,8 +136,8 @@
      <widget class="QWidget" name="layoutWidget_10">
       <property name="geometry">
        <rect>
-        <x>394</x>
-        <y>151</y>
+        <x>530</x>
+        <y>30</y>
         <width>101</width>
         <height>50</height>
        </rect>
@@ -158,8 +158,8 @@
      <widget class="QWidget" name="layoutWidget_7">
       <property name="geometry">
        <rect>
-        <x>393</x>
-        <y>92</y>
+        <x>394</x>
+        <y>149</y>
         <width>61</width>
         <height>50</height>
        </rect>
@@ -181,7 +181,7 @@
       <property name="geometry">
        <rect>
         <x>392</x>
-        <y>30</y>
+        <y>91</y>
         <width>121</width>
         <height>50</height>
        </rect>
@@ -202,8 +202,8 @@
      <widget class="QWidget" name="layoutWidget_4">
       <property name="geometry">
        <rect>
-        <x>197</x>
-        <y>149</y>
+        <x>391</x>
+        <y>31</y>
         <width>121</width>
         <height>50</height>
        </rect>
@@ -221,7 +221,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -247,66 +247,171 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="layoutWidget_14">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>90</y>
+        <width>131</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_21">
+       <item>
+        <widget class="QLabel" name="label_21">
+         <property name="text">
+          <string>Código Modelo:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="txt_nv_codigoModelo">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
-    <widget class="QTableWidget" name="tw_nv_listafornecedores">
-     <property name="geometry">
-      <rect>
-       <x>8</x>
-       <y>71</y>
-       <width>741</width>
-       <height>271</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QWidget" name="layoutWidget_16">
+    <widget class="QGroupBox" name="groupBox_3">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>15</y>
-       <width>141</width>
-       <height>50</height>
+       <y>20</y>
+       <width>401</width>
+       <height>321</height>
       </rect>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_6">
-      <item>
-       <widget class="QLabel" name="label_7">
-        <property name="text">
-         <string>Filtrar por</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="cb_nv_filtrar"/>
-      </item>
-     </layout>
+     <property name="title">
+      <string>Fornecedor:</string>
+     </property>
+     <widget class="QTableWidget" name="tw_nv_listafornecedores">
+      <property name="geometry">
+       <rect>
+        <x>11</x>
+        <y>84</y>
+        <width>380</width>
+        <height>230</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QWidget" name="layoutWidget_16">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>29</y>
+        <width>141</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>Filtrar por</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="cb_nv_filtrar"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget_17">
+      <property name="geometry">
+       <rect>
+        <x>167</x>
+        <y>51</y>
+        <width>223</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLineEdit" name="txt_nv_filtrar"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btn_nv_filtrar">
+         <property name="text">
+          <string>Filtrar</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
-    <widget class="QWidget" name="layoutWidget_17">
+    <widget class="QGroupBox" name="groupBox_4">
      <property name="geometry">
       <rect>
-       <x>416</x>
-       <y>38</y>
-       <width>331</width>
-       <height>27</height>
+       <x>427</x>
+       <y>20</y>
+       <width>321</width>
+       <height>321</height>
       </rect>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QLineEdit" name="txt_nv_filtrar"/>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_nv_filtrar">
-        <property name="text">
-         <string>Filtrar</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <property name="title">
+      <string>Modelo:</string>
+     </property>
+     <widget class="QWidget" name="layoutWidget_23">
+      <property name="geometry">
+       <rect>
+        <x>5</x>
+        <y>30</y>
+        <width>101</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_14">
+       <item>
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>Filtrar por</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="cb_nv_filtrar_2"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget_24">
+      <property name="geometry">
+       <rect>
+        <x>115</x>
+        <y>53</y>
+        <width>200</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item>
+        <widget class="QLineEdit" name="txt_nv_filtrar_3"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btn_nv_filtrar_3">
+         <property name="text">
+          <string>Filtrar</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QTableWidget" name="tw_nv_listamodelos">
+      <property name="geometry">
+       <rect>
+        <x>6</x>
+        <y>84</y>
+        <width>310</width>
+        <height>231</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
+    <zorder>groupBox_4</zorder>
+    <zorder>groupBox_3</zorder>
     <zorder>groupBox</zorder>
     <zorder>layoutWidget_9</zorder>
-    <zorder>tw_nv_listafornecedores</zorder>
-    <zorder>layoutWidget_16</zorder>
-    <zorder>layoutWidget_17</zorder>
    </widget>
    <widget class="QWidget" name="tab_2">
     <attribute name="title">
@@ -408,7 +513,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>30</y>
+        <y>90</y>
         <width>171</width>
         <height>50</height>
        </rect>
@@ -430,7 +535,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>90</y>
+        <y>150</y>
         <width>171</width>
         <height>50</height>
        </rect>
@@ -451,8 +556,8 @@
      <widget class="QWidget" name="layoutWidget_13">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>150</y>
+        <x>198</x>
+        <y>30</y>
         <width>171</width>
         <height>50</height>
        </rect>
@@ -473,7 +578,7 @@
      <widget class="QWidget" name="layoutWidget_15">
       <property name="geometry">
        <rect>
-        <x>360</x>
+        <x>388</x>
         <y>90</y>
         <width>101</width>
         <height>50</height>
@@ -495,7 +600,7 @@
      <widget class="QWidget" name="layoutWidget_20">
       <property name="geometry">
        <rect>
-        <x>360</x>
+        <x>387</x>
         <y>30</y>
         <width>61</width>
         <height>50</height>
@@ -555,6 +660,32 @@
        </item>
        <item>
         <widget class="QLineEdit" name="txt_ge_valorcompra"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="layoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>11</x>
+        <y>30</y>
+        <width>131</width>
+        <height>50</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_20">
+       <item>
+        <widget class="QLabel" name="label_20">
+         <property name="text">
+          <string>Código Peça:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="txt_ge_codigopeca">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

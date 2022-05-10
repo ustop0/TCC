@@ -312,7 +312,6 @@ void frm_gestaofornecedores::on_tw_ge_listarFornecedores_itemSelectionChanged()
 //filtrar
 void frm_gestaofornecedores::on_txt_ge_filtrar_returnPressed()
 {
-
     QString cb_filtro = ui->cb_ge_filtrar->currentText();
     QString txt_filtro = ui->txt_ge_filtrar->text();
 

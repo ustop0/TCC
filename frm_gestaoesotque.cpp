@@ -29,6 +29,11 @@ frm_gestaoesotque::frm_gestaoesotque(QWidget *parent) :
     ui->cb_nv_filtrar->addItem("Ocupação da empresa");
     ui->cb_nv_filtrar->addItem("Cidade");
 
+    //configurando marca modelos
+    ui->cb_nv_filtrar->addItem("-");
+    ui->cb_nv_filtrar->addItem("Modelo");
+    ui->cb_nv_filtrar->addItem("Marca");
+
     //configurando combo box peças
     ui->cb_nv_filtrar->addItem("Nc. Peça");
     ui->cb_nv_filtrar->addItem("Denominação");
@@ -37,14 +42,13 @@ frm_gestaoesotque::frm_gestaoesotque(QWidget *parent) :
 
     //**Estilizando layout dos table widgets**
     //--FORNECEDORES--
-    ui->tw_nv_listafornecedores->setColumnCount(13); //define que o table widget terá duas colunas
-    ui->tw_nv_listafornecedores->setColumnWidth(0, 50); //id colaborador
-    ui->tw_nv_listafornecedores->setColumnWidth(1, 200); //nome colaborador7
+    ui->tw_nv_listafornecedores->setColumnCount(7);
+    ui->tw_nv_listafornecedores->setColumnWidth(0, 50);
+    ui->tw_nv_listafornecedores->setColumnWidth(1, 120);
 
-    //cabeçalhos do table widget
-    QStringList cabecalho1={"Código", "Razão Social", "Nome Fantasia", "CNPJ","Estado"
-                           ,"Cidade", "Rua", "Bairro", "Numero", "Porte"
-                           ,"Ocupação", "Telefone1", "Telefone2"};
+    //cabeçalhos do table widget fornecedores
+    QStringList cabecalho1={"Código", "Razão Social", "Nome Fantasia"
+                           , "CNPJ","Estado", "Cidade", "Ocupação"};
 
     ui->tw_nv_listafornecedores->setHorizontalHeaderLabels(cabecalho1);
     //definindo cor da linha ao ser selecionada
@@ -58,16 +62,37 @@ frm_gestaoesotque::frm_gestaoesotque(QWidget *parent) :
     //desabilitando os indices das linhas
     ui->tw_nv_listafornecedores->verticalHeader()->setVisible(false);
 
+    //--MARCAS/MODELOS--
+    ui->tw_nv_listamodelos->setColumnCount(2);
+    ui->tw_nv_listamodelos->setColumnWidth(0, 152);
+    ui->tw_nv_listamodelos->setColumnWidth(1, 152);
+
+    //cabeçalhos do table widget fornecedores
+    QStringList cabecalho2={"Marca", "Modelo"};
+
+    ui->tw_nv_listamodelos->setHorizontalHeaderLabels(cabecalho2);
+    //definindo cor da linha ao ser selecionada
+    ui->tw_nv_listamodelos->setStyleSheet("QTableView "
+                                      "{selection-background-color:red}");
+
+    //desabilita a edição dos registros pelo table widget
+    ui->tw_nv_listamodelos->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    //selecionar a linha inteira quando clickar em uma celula
+    ui->tw_nv_listamodelos->setSelectionBehavior(QAbstractItemView::SelectRows);
+    //desabilitando os indices das linhas
+    ui->tw_nv_listamodelos->verticalHeader()->setVisible(false);
+
     //--PEÇAS--
-    ui->tw_ge_listapecas->setColumnCount(8); //define que o table widget terá duas colunas
+    ui->tw_ge_listapecas->setColumnCount(9); //define que o table widget terá duas colunas
     ui->tw_ge_listapecas->setColumnWidth(0, 150); //id colaborador
     ui->tw_ge_listapecas->setColumnWidth(1, 220); //nome colaborador
 
     //cabeçalhos do table widget
-    QStringList cabecalho2={"Nc. Peça", "Denominação", "Grupo", "Tipo"
-                            ,"Valor Compra", "Valor Venda", "Qtde", "Posição"};
+    QStringList cabecalho3={"Código", "Fornecedor", "Nc. Peça"
+                            , "Denominação", "Grupo", "Valor Compra"
+                            , "Valor Venda", "Qtde", "Posição"};
 
-    ui->tw_ge_listapecas->setHorizontalHeaderLabels(cabecalho2);
+    ui->tw_ge_listapecas->setHorizontalHeaderLabels(cabecalho3);
     //definindo cor da linha ao ser selecionada
     ui->tw_ge_listapecas->setStyleSheet("QTableView "
                                       "{selection-background-color:red}");
@@ -85,8 +110,8 @@ frm_gestaoesotque::frm_gestaoesotque(QWidget *parent) :
     {
         //inserir linhas dentro do table widget
         int contlinhas=0;
-        //Remover os produtos do table widget
-        QSqlQuery query; //query para listar os colaboradores no table widget
+
+        QSqlQuery query;
         query.prepare("SELECT "
                           "a003_codigo                   "
                           ",a003_razao_social            "
@@ -94,13 +119,7 @@ frm_gestaoesotque::frm_gestaoesotque(QWidget *parent) :
                           ",a003_cnpj                    "
                           ",a003_estado                  "
                           ",a003_cidade                  "
-                          ",a003_rua                     "
-                          ",a003_numero_estabelecimento  "
-                          ",a003_bairro                  "
                           ",a003_porte                   "
-                          ",a003_ocupacao                "
-                          ",a003_telefone01              "
-                          ",a003_telefone02              "
                       "FROM "
                           "a003_fornecedor "
                       "WHERE "
@@ -143,30 +162,6 @@ frm_gestaoesotque::frm_gestaoesotque(QWidget *parent) :
                                             , 6
                                             , new QTableWidgetItem(query.value(6).toString()));
 
-                ui->tw_nv_listafornecedores->setItem(contlinhas
-                                            , 7
-                                            , new QTableWidgetItem(query.value(7).toString()));
-
-                ui->tw_nv_listafornecedores->setItem(contlinhas
-                                            , 8
-                                            , new QTableWidgetItem(query.value(8).toString()));
-
-                ui->tw_nv_listafornecedores->setItem(contlinhas
-                                            , 9
-                                            , new QTableWidgetItem(query.value(9).toString()));
-
-                ui->tw_nv_listafornecedores->setItem(contlinhas
-                                            , 10
-                                            , new QTableWidgetItem(query.value(10).toString()));
-
-                ui->tw_nv_listafornecedores->setItem(contlinhas
-                                            , 11
-                                            , new QTableWidgetItem(query.value(11).toString()));
-
-                ui->tw_nv_listafornecedores->setItem(contlinhas
-                                            , 12
-                                            , new QTableWidgetItem(query.value(12).toString()));
-
                 //definindo o tamanho das linhas
                 ui->tw_nv_listafornecedores->setRowHeight(contlinhas, 20);
                 contlinhas ++;
@@ -177,8 +172,44 @@ frm_gestaoesotque::frm_gestaoesotque(QWidget *parent) :
             QMessageBox::warning(this, "ERRO", "Erro ao listar fornecedores");
         }
 
-    }
+        //listando marcas modelos
+        //listando marcas modelos
+        int contlinhas2 = 0;
+        QSqlQuery query2;
+        query2.prepare("SELECT "
+                          "a012_codigo        "
+                          ",a011_marca_nome   "
+                          ",a012_nome_veiculo "
+                      "FROM "
+                        "a012_modelos "
+                        "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca) "
+                      "WHERE "
+                        "a012_ativo = true");
 
+        if( query2.exec() )
+        {
+            while( query2.next() )
+            {
+                //inserindo com contador de linhas, por index
+                ui->tw_nv_listamodelos->insertRow( contlinhas2 );
+                ui->tw_nv_listamodelos->setItem(contlinhas2
+                                            , 0
+                                            , new QTableWidgetItem(query2.value(0).toString()));
+
+                ui->tw_nv_listamodelos->setItem(contlinhas
+                                            , 1
+                                            , new QTableWidgetItem(query2.value(1).toString()));
+
+                //definindo o tamanho das linhas
+                ui->tw_nv_listamodelos->setRowHeight(contlinhas2, 20);
+                contlinhas2 ++;
+            }
+        }
+        else
+        {
+            QMessageBox::warning(this, "ERRO", "Erro ao listar marcas e modelos");
+        }
+    }
 }
 
 frm_gestaoesotque::~frm_gestaoesotque()//**INICIO** destrutor
@@ -195,9 +226,10 @@ void frm_gestaoesotque::on_tabWidget_currentChanged(int index)
     {
         //limpa as linhas do table widget
         funcoes_globais::removerLinhas( ui->tw_nv_listafornecedores );
+        //limpa as linhas do table widget
+        funcoes_globais::removerLinhas( ui->tw_nv_listamodelos );
         //inserir linhas dentro do table widget
-        int contlinhas=0;
-        //Remover os produtos do table widget
+        int contlinhas = 0;
         QSqlQuery query; //query para listar os colaboradores no table widget
         query.prepare("SELECT "
                           "a003_codigo                   "
@@ -206,13 +238,7 @@ void frm_gestaoesotque::on_tabWidget_currentChanged(int index)
                           ",a003_cnpj                    "
                           ",a003_estado                  "
                           ",a003_cidade                  "
-                          ",a003_rua                     "
-                          ",a003_numero_estabelecimento  "
-                          ",a003_bairro                  "
-                          ",a003_porte                   "
                           ",a003_ocupacao                "
-                          ",a003_telefone01              "
-                          ",a003_telefone02              "
                       "FROM "
                           "a003_fornecedor "
                       "WHERE "
@@ -255,30 +281,6 @@ void frm_gestaoesotque::on_tabWidget_currentChanged(int index)
                                             , 6
                                             , new QTableWidgetItem(query.value(6).toString()));
 
-                ui->tw_nv_listafornecedores->setItem(contlinhas
-                                            , 7
-                                            , new QTableWidgetItem(query.value(7).toString()));
-
-                ui->tw_nv_listafornecedores->setItem(contlinhas
-                                            , 8
-                                            , new QTableWidgetItem(query.value(8).toString()));
-
-                ui->tw_nv_listafornecedores->setItem(contlinhas
-                                            , 9
-                                            , new QTableWidgetItem(query.value(9).toString()));
-
-                ui->tw_nv_listafornecedores->setItem(contlinhas
-                                            , 10
-                                            , new QTableWidgetItem(query.value(10).toString()));
-
-                ui->tw_nv_listafornecedores->setItem(contlinhas
-                                            , 11
-                                            , new QTableWidgetItem(query.value(11).toString()));
-
-                ui->tw_nv_listafornecedores->setItem(contlinhas
-                                            , 12
-                                            , new QTableWidgetItem(query.value(12).toString()));
-
                 //definindo o tamanho das linhas
                 ui->tw_nv_listafornecedores->setRowHeight(contlinhas, 20);
                 contlinhas ++;
@@ -287,6 +289,43 @@ void frm_gestaoesotque::on_tabWidget_currentChanged(int index)
         else
         {
             QMessageBox::warning(this, "ERRO", "Erro ao listar fornecedores");
+        }
+
+        //listando marcas modelos
+        int contlinhas2 = 0;
+        QSqlQuery query2;
+        query2.prepare("SELECT "
+                          "a012_codigo        "
+                          ",a011_marca_nome   "
+                          ",a012_nome_veiculo "
+                      "FROM "
+                        "a012_modelos "
+                        "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca) "
+                      "WHERE "
+                        "a012_ativo = true");
+
+        if( query2.exec() )
+        {
+            while( query2.next() )
+            {
+                //inserindo com contador de linhas, por index
+                ui->tw_nv_listamodelos->insertRow( contlinhas2 );
+                ui->tw_nv_listamodelos->setItem(contlinhas2
+                                            , 0
+                                            , new QTableWidgetItem(query2.value(0).toString()));
+
+                ui->tw_nv_listamodelos->setItem(contlinhas
+                                            , 1
+                                            , new QTableWidgetItem(query2.value(1).toString()));
+
+                //definindo o tamanho das linhas
+                ui->tw_nv_listamodelos->setRowHeight(contlinhas2, 20);
+                contlinhas2 ++;
+            }
+        }
+        else
+        {
+            QMessageBox::warning(this, "ERRO", "Erro ao listar marcas e modelos");
         }
     }
     else if(index == 1)
@@ -299,6 +338,7 @@ void frm_gestaoesotque::on_tabWidget_currentChanged(int index)
         QSqlQuery query; //query para listar os colaboradores no table widget
         query.prepare("SELECT "
                           "a002_codigo          "
+                          ",a003_razao_social   "
                           ",a002_nc_peca        "
                           ",a002_denomicanao    "
                           ",a002_grupo          "
@@ -308,6 +348,7 @@ void frm_gestaoesotque::on_tabWidget_currentChanged(int index)
                           ",a002_posicao_peca   "
                       "FROM "
                           "a002_estoque "
+                          "JOIN a003_fornecedor ON (a003_codigo = a002_fk_codigo_forncedor) "
                       "WHERE "
                         "a002_ativo = true "
                       "ORDER BY "
@@ -351,6 +392,14 @@ void frm_gestaoesotque::on_tabWidget_currentChanged(int index)
                 ui->tw_ge_listapecas->setItem(contlinhas
                                             , 7
                                             , new QTableWidgetItem(query.value(7).toString()));
+
+                ui->tw_ge_listapecas->setItem(contlinhas
+                                            , 8
+                                            , new QTableWidgetItem(query.value(8).toString()));
+
+                ui->tw_ge_listapecas->setItem(contlinhas
+                                            , 9
+                                            , new QTableWidgetItem(query.value(9).toString()));
 
                 //definindo o tamanho das linhas
                 ui->tw_ge_listapecas->setRowHeight(contlinhas, 20);
@@ -401,6 +450,320 @@ void frm_gestaoesotque::on_txt_nv_filtrar_returnPressed()
 
     //remove as linhas o table widget
     funcoes_globais::removerLinhas( ui->tw_nv_listafornecedores );
+
+    //verificando se algo foi digitado no campo de filtro
+    if( ui->txt_ge_filtrar->text() == "" )
+    {
+        if( cb_filtro == "" ) //consulta de acordo com o radio selecionado
+        {
+            busca = "SELECT "
+                        "a003_codigo                   "
+                        ",a003_razao_social            "
+                        ",a003_nome_fantasia           "
+                        ",a003_cnpj                    "
+                        ",a003_estado                  "
+                        ",a003_cidade                  "
+                        ",a003_ocupacao                "
+                    "FROM "
+                        "a003_fornecedor "
+                    "WHERE "
+                      "a003_ativo = true "
+                    "ORDER BY "
+                        "a003_codigo DESC";
+        }
+        else
+        {
+            busca = "SELECT "
+                        "a003_codigo                   "
+                        ",a003_razao_social            "
+                        ",a003_nome_fantasia           "
+                        ",a003_cnpj                    "
+                        ",a003_estado                  "
+                        ",a003_cidade                  "
+                        ",a003_ocupacao                "
+                    "FROM "
+                        "a003_fornecedor "
+                    "WHERE "
+                      "a003_ativo = true "
+                    "ORDER BY "
+                        "a003_codigo DESC";
+        }
+    }
+    else
+    {
+        //consulta de acordo com a seleção do combo box
+        switch( cb_opc.indexOf( cb_filtro ) )
+        {
+            //Razão Social
+            case 0:
+
+                filtro_sql = "a003_razao_social LIKE '%" +txt_filtro+ "%' ";
+                break;
+            //Nome Fantasia
+            case 1:
+
+                filtro_sql = "a003_nome_fantasia LIKE '%" +txt_filtro+ "%' ";
+                break;
+            //CNPJ
+            case 2:
+
+                filtro_sql = "a003_cnpj LIKE '%" +txt_filtro+ "%' ";
+                break;
+            //Ocupação da empresa
+            case 3:
+
+                filtro_sql = "a003_ocupacao LIKE '%" +txt_filtro+ "%' ";
+                break;
+            //Cidade
+            case 4:
+
+                filtro_sql = "a003_cidade LIKE '%" +txt_filtro+ "%' ";
+                break;
+            default:
+                qDebug() << "_Houve um problema ao filtrar realizar o filtro(swith case)";
+                break;
+        }
+
+        busca = "SELECT "
+                    "a003_codigo                   "
+                    ",a003_razao_social            "
+                    ",a003_nome_fantasia           "
+                    ",a003_cnpj                    "
+                    ",a003_estado                  "
+                    ",a003_cidade                  "
+                    ",a003_ocupacao                "
+                "FROM "
+                    "a003_fornecedor "
+                "WHERE "
+                    + filtro_sql +
+                    "AND a003_ativo = true "
+                "ORDER BY "
+                    "a003_codigo DESC";
+    }
+
+    //contador para percorrer linhas
+    int contlinhas=0;
+    QSqlQuery query;
+    query.prepare( busca );
+
+    if( query.exec() ) //executa a query
+    {
+        while( query.next() ) //percorrendo query e preenchendo table widget
+        {
+            //inserindo com contador de linhas, por index
+            ui->tw_nv_listafornecedores->insertRow( contlinhas );
+            ui->tw_nv_listafornecedores->setItem(contlinhas
+                                        , 0
+                                        , new QTableWidgetItem(query.value(0).toString()));
+
+            ui->tw_nv_listafornecedores->setItem(contlinhas
+                                        , 1
+                                        , new QTableWidgetItem(query.value(1).toString()));
+
+            ui->tw_nv_listafornecedores->setItem(contlinhas
+                                        , 2
+                                        , new QTableWidgetItem(query.value(2).toString()));
+
+            ui->tw_nv_listafornecedores->setItem(contlinhas
+                                        , 3
+                                        , new QTableWidgetItem(query.value(3).toString()));
+
+            ui->tw_nv_listafornecedores->setItem(contlinhas
+                                        , 4
+                                        , new QTableWidgetItem(query.value(4).toString()));
+
+            ui->tw_nv_listafornecedores->setItem(contlinhas
+                                        , 5
+                                        , new QTableWidgetItem(query.value(5).toString()));
+
+            ui->tw_nv_listafornecedores->setItem(contlinhas
+                                        , 6
+                                        , new QTableWidgetItem(query.value(6).toString()));
+
+            //definindo o tamanho das linhas
+            ui->tw_nv_listafornecedores->setRowHeight(contlinhas, 20);
+            contlinhas ++;
+        }
+    }
+    else
+    {
+        QMessageBox::warning(this, "ERRO", "Erro ao filtrar Fornecedores");
+    }
+
+    //apagar conteudo do campo txt_ge_filtrar toda vez que clickar em filtrar
+    ui->txt_nv_filtrar->clear();
+    ui->txt_nv_filtrar->setFocus(); //posiciona o cursos no campo novamente
+}
+
+//botão filtrar fornecedores
+void frm_gestaoesotque::on_btn_nv_filtrar_clicked()
+{
+    frm_gestaoesotque::on_txt_nv_filtrar_returnPressed();
+}
+
+//pega linha do tw marcas/modelos
+void frm_gestaoesotque::on_tw_nv_listamodelos_itemSelectionChanged()
+{
+    //pega a linha selecionada
+    int id=ui->tw_nv_listamodelos->item(ui->tw_nv_listamodelos->currentRow()
+                                        , 0) ->text().toInt();
+
+    //exibe os dados da linha selecionada
+    QSqlQuery query;
+    query.prepare("SELECT "
+                      "a012_codigo "
+                  "FROM "
+                    "a012_modelos "
+                    "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca) "
+                  "WHERE "
+                    "a012_codigo = '" +QString::number(id)+ "' ");
+
+    if( query.exec() ) //verifica se a query foi bem sucedida
+    {
+        query.first(); //pega o primeiro
+
+        //considerar inserir um campo para o código
+        ui->txt_nv_codigoModelo->setText(query.value(0).toString());
+    }
+}
+
+//nova peça
+void frm_gestaoesotque::on_btn_nv_novo_clicked()
+{
+    ui->txt_nv_codigoFornecedor->clear();
+    ui->txt_nv_codigoModelo->clear();
+    ui->txt_nv_ncPeca->clear();
+    ui->txt_nv_denominacao->clear();
+    ui->txt_nv_grupo->clear();
+    ui->txt_nv_valorcompra->clear();
+    ui->txt_nv_valorvenda->clear();
+    ui->txt_nv_qtde->clear();
+    ui->txt_nv_posicao->clear();
+}
+
+//salvar dados da nova peça
+void frm_gestaoesotque::on_btn_nv_salvar_clicked()
+{
+    QString aux; //converter campo digitado da UI de ',' para '.'
+
+    QString codigo_fornecedor = ui->txt_nv_codigoFornecedor->text();
+    QString nc_peca = ui->txt_nv_ncPeca->text();
+    QString denominacao = ui->txt_nv_denominacao->text();
+    QString grupo = ui->txt_nv_grupo->text();
+
+    aux=ui->txt_nv_valorcompra->text();
+    std::replace(aux.begin(), aux.end(), ',', '.'); //substitui valores
+    QString valor_compra = aux;
+
+    aux=ui->txt_nv_valorvenda->text();
+    std::replace(aux.begin(), aux.end(), ',', '.'); //substitui valores
+    QString valor_venda = aux;
+
+    QString qtde = ui->txt_nv_qtde->text();
+    QString posicao = ui->txt_nv_posicao->text();
+
+    qDebug() << "Código do fornecedor: " + codigo_fornecedor;
+    //verifica se um fornecedor foi selecionado
+    if( codigo_fornecedor == "" )
+    {
+        QMessageBox::information(this, "Fornecedor", "Selecione um fornecedor");
+    }
+
+    QSqlQuery query;
+    query.prepare("INSERT INTO "
+                    "a002_estoque(a002_nc_peca               "
+                                 ",a002_denomicanao          "
+                                 ",a002_grupo                "
+                                 ",a002_valor_compra         "
+                                 ",a002_valor_venda          "
+                                 ",a002_qtde_estoque         "
+                                 ",a002_posicao_peca         "
+                                 ",a002_fk_codigo_forncedor) "
+                    "VALUES('" +QString::number( nc_peca.toInt() )           +  "'"
+                          ",'" +denominacao                                  +  "'"
+                          ",'" +grupo                                        +  "'"
+                          ",'" +QString::number( valor_compra.toDouble() )   +  "'"
+                          ",'" +QString::number( valor_venda.toDouble() )    +  "'"
+                          ",'" +QString::number( qtde.toInt() )              +  "'"
+                          ",'" +posicao                                      +  "'"
+                          ",'" +QString::number( codigo_fornecedor.toInt() ) +  "') ");
+
+    if( !query.exec() ) //verifica se a query tem algum erro e executa ela
+    {
+        QMessageBox::critical(this, "ERRO", "Erro ao cadastrar peça");
+    }
+    else
+    {
+        ui->txt_nv_codigoFornecedor->clear();
+        ui->txt_nv_ncPeca->clear();
+        ui->txt_nv_denominacao->clear();
+        ui->txt_nv_grupo->clear();
+        ui->txt_nv_valorcompra->clear();
+        ui->txt_nv_valorvenda->clear();
+        ui->txt_nv_qtde->clear();
+        ui->txt_nv_posicao->clear();
+        ui->txt_nv_ncPeca->setFocus();
+    }
+}
+
+//--GESTÃO DE PEÇAS--
+//pega linha do tw peças
+void frm_gestaoesotque::on_tw_ge_listapecas_itemSelectionChanged()
+{
+    //pega a linha selecionada
+    int id=ui->tw_ge_listapecas->item(ui->tw_ge_listapecas->currentRow()
+                                     , 0) ->text().toInt();
+
+    //exibe os dados da linha selecionada
+    QSqlQuery query;
+    query.prepare("SELECT "
+                      "a002_codigo        "
+                      ",a003_razao_social "
+                      ",a002_nc_peca      "
+                      ",a002_denomicanao  "
+                      ",a002_grupo        "
+                      ",a002_valor_compra "
+                      ",a002_valor_venda  "
+                      ",a002_qtde_estoque "
+                      ",a002_posicao_peca "
+                  "FROM "
+                    "a002_estoque "
+                    "JOIN a003_fornecedor ON (a003_codigo = a002_fk_codigo_forncedor) "
+                  "WHERE "
+                    "a002_codigo = '" +QString::number(id)+ "' ");
+
+    if( query.exec() )
+    {
+        query.first();
+
+        //Não pegamos o nome do fornecedor
+        ui->txt_ge_codigopeca->setText(query.value(0).toString());
+        ui->txt_ge_ncPeca->setText(query.value(2).toString());
+        ui->txt_ge_denominacao->setText(query.value(3).toString());
+        ui->txt_ge_grupo->setText(query.value(4).toString());
+        ui->txt_ge_valorcompra->setText(query.value(5).toString());
+        ui->txt_ge_valorvenda->setText(query.value(6).toString());
+        ui->txt_ge_qtde->setText(query.value(7).toString());
+        ui->txt_ge_posicao->setText(query.value(8).toString());
+    }
+}
+
+
+//**DESENVOLVENDO** filtrar peças
+void frm_gestaoesotque::on_txt_ge_filtrar_returnPressed()
+{
+    QString cb_filtro = ui->cb_ge_filtrar->currentText();
+    QString txt_filtro = ui->txt_ge_filtrar->text();
+
+    QString busca; //armazena busca
+    QString filtro_sql;
+
+    QStringList cb_opc; //Dados do combo box
+    cb_opc << "Razão Social" << "Nome Fantasia" << "CNPJ"
+           << "Ocupação da empresa" << "Cidade";
+
+    //remove as linhas o table widget
+    funcoes_globais::removerLinhas( ui->tw_ge_listapecas );
 
     //verificando se algo foi digitado no campo de filtro
     if( ui->txt_ge_filtrar->text() == "" )
@@ -520,61 +883,49 @@ void frm_gestaoesotque::on_txt_nv_filtrar_returnPressed()
         while( query.next() ) //percorrendo query e preenchendo table widget
         {
             //inserindo com contador de linhas, por index
-            ui->tw_nv_listafornecedores->insertRow( contlinhas );
-            ui->tw_nv_listafornecedores->setItem(contlinhas
+            ui->tw_ge_listapecas->insertRow( contlinhas );
+            ui->tw_ge_listapecas->setItem(contlinhas
                                         , 0
                                         , new QTableWidgetItem(query.value(0).toString()));
 
-            ui->tw_nv_listafornecedores->setItem(contlinhas
+            ui->tw_ge_listapecas->setItem(contlinhas
                                         , 1
                                         , new QTableWidgetItem(query.value(1).toString()));
 
-            ui->tw_nv_listafornecedores->setItem(contlinhas
+            ui->tw_ge_listapecas->setItem(contlinhas
                                         , 2
                                         , new QTableWidgetItem(query.value(2).toString()));
 
-            ui->tw_nv_listafornecedores->setItem(contlinhas
+            ui->tw_ge_listapecas->setItem(contlinhas
                                         , 3
                                         , new QTableWidgetItem(query.value(3).toString()));
 
-            ui->tw_nv_listafornecedores->setItem(contlinhas
+            ui->tw_ge_listapecas->setItem(contlinhas
                                         , 4
                                         , new QTableWidgetItem(query.value(4).toString()));
 
-            ui->tw_nv_listafornecedores->setItem(contlinhas
+            ui->tw_ge_listapecas->setItem(contlinhas
                                         , 5
                                         , new QTableWidgetItem(query.value(5).toString()));
 
-            ui->tw_nv_listafornecedores->setItem(contlinhas
+            ui->tw_ge_listapecas->setItem(contlinhas
                                         , 6
                                         , new QTableWidgetItem(query.value(6).toString()));
 
-            ui->tw_nv_listafornecedores->setItem(contlinhas
+            ui->tw_ge_listapecas->setItem(contlinhas
                                         , 7
                                         , new QTableWidgetItem(query.value(7).toString()));
 
-            ui->tw_nv_listafornecedores->setItem(contlinhas
+            ui->tw_ge_listapecas->setItem(contlinhas
                                         , 8
                                         , new QTableWidgetItem(query.value(8).toString()));
 
-            ui->tw_nv_listafornecedores->setItem(contlinhas
+            ui->tw_ge_listapecas->setItem(contlinhas
                                         , 9
                                         , new QTableWidgetItem(query.value(9).toString()));
 
-            ui->tw_nv_listafornecedores->setItem(contlinhas
-                                        , 10
-                                        , new QTableWidgetItem(query.value(10).toString()));
-
-            ui->tw_nv_listafornecedores->setItem(contlinhas
-                                        , 11
-                                        , new QTableWidgetItem(query.value(11).toString()));
-
-            ui->tw_nv_listafornecedores->setItem(contlinhas
-                                        , 12
-                                        , new QTableWidgetItem(query.value(12).toString()));
-
             //definindo o tamanho das linhas
-            ui->tw_nv_listafornecedores->setRowHeight(contlinhas, 20);
+            ui->tw_ge_listapecas->setRowHeight(contlinhas, 20);
             contlinhas ++;
         }
     }
@@ -584,135 +935,22 @@ void frm_gestaoesotque::on_txt_nv_filtrar_returnPressed()
     }
 
     //apagar conteudo do campo txt_ge_filtrar toda vez que clickar em filtrar
-    ui->txt_nv_filtrar->clear();
-    ui->txt_nv_filtrar->setFocus(); //posiciona o cursos no campo novamente
+    ui->txt_ge_filtrar->clear();
+    ui->txt_ge_filtrar->setFocus(); //posiciona o cursos no campo novamente
 }
 
-//botão filtrar fornecedores
-void frm_gestaoesotque::on_btn_nv_filtrar_clicked()
+//botão filtrar peças
+void frm_gestaoesotque::on_btn_ge_filtrar_clicked()
 {
-    frm_gestaoesotque::on_txt_nv_filtrar_returnPressed();
+    frm_gestaoesotque::on_txt_ge_filtrar_returnPressed();
 }
 
-//nova peça
-void frm_gestaoesotque::on_btn_nv_novo_clicked()
+//edição salvar peça
+void frm_gestaoesotque::on_btn_ge_salvar_clicked()
 {
-    ui->txt_nv_codigoFornecedor->clear();
-    ui->txt_nv_ncPeca->clear();
-    ui->txt_nv_denominacao->clear();
-    ui->txt_nv_grupo->clear();
-    ui->txt_nv_valorcompra->clear();
-    ui->txt_nv_valorvenda->clear();
-    ui->txt_nv_qtde->clear();
-    ui->txt_nv_posicao->clear();
+
 }
 
-//salvar dados da nova peça
-void frm_gestaoesotque::on_btn_nv_salvar_clicked()
-{
-    QString aux; //converter campo digitado da UI de ',' para '.'
-
-    QString codigo_fornecedor = ui->txt_nv_codigoFornecedor->text();
-    QString nc_peca = ui->txt_nv_ncPeca->text();
-    QString denominacao = ui->txt_nv_denominacao->text();
-    QString grupo = ui->txt_nv_grupo->text();
-
-    aux=ui->txt_nv_valorcompra->text();
-    std::replace(aux.begin(), aux.end(), ',', '.'); //substitui valores
-    QString valor_compra = aux;
-
-    aux=ui->txt_nv_valorvenda->text();
-    std::replace(aux.begin(), aux.end(), ',', '.'); //substitui valores
-    QString valor_venda = aux;
-
-    QString qtde = ui->txt_nv_qtde->text();
-    QString posicao = ui->txt_nv_posicao->text();
-
-    qDebug() << "Código do fornecedor: " + codigo_fornecedor;
-    //verifica se um fornecedor foi selecionado
-    if( codigo_fornecedor == "" )
-    {
-        QMessageBox::information(this, "Fornecedor", "Selecione um fornecedor");
-    }
-
-    QSqlQuery query;
-    query.prepare("INSERT INTO "
-                    "a002_estoque(a002_nc_peca               "
-                                 ",a002_denomicanao          "
-                                 ",a002_grupo                "
-                                 ",a002_valor_compra         "
-                                 ",a002_valor_venda          "
-                                 ",a002_qtde_estoque         "
-                                 ",a002_posicao_peca         "
-                                 ",a002_fk_codigo_forncedor) "
-                    "VALUES('" +QString::number( nc_peca.toInt() )           +  "'"
-                          ",'" +denominacao                                  +  "'"
-                          ",'" +grupo                                        +  "'"
-                          ",'" +QString::number( valor_compra.toDouble() )   +  "'"
-                          ",'" +QString::number( valor_venda.toDouble() )    +  "'"
-                          ",'" +QString::number( qtde.toInt() )              +  "'"
-                          ",'" +posicao                                      +  "'"
-                          ",'" +QString::number( codigo_fornecedor.toInt() ) +  "') ");
-
-    if( !query.exec() ) //verifica se a query tem algum erro e executa ela
-    {
-        QMessageBox::critical(this, "ERRO", "Erro ao cadastrar peça");
-    }
-    else
-    {
-        ui->txt_nv_codigoFornecedor->clear();
-        ui->txt_nv_ncPeca->clear();
-        ui->txt_nv_denominacao->clear();
-        ui->txt_nv_grupo->clear();
-        ui->txt_nv_valorcompra->clear();
-        ui->txt_nv_valorvenda->clear();
-        ui->txt_nv_qtde->clear();
-        ui->txt_nv_posicao->clear();
-        ui->txt_nv_ncPeca->setFocus();
-    }
-}
-
-
-//--GESTÃO DE PEÇAS--
-//pega linha do tw peças
-void frm_gestaoesotque::on_tw_ge_listapecas_itemSelectionChanged()
-{
-    //pega a linha selecionada
-    int id=ui->tw_nv_listafornecedores->item(ui->tw_nv_listafornecedores->currentRow()
-                                             , 0) ->text().toInt();
-
-    //exibe os dados da linha selecionada
-    QSqlQuery query;
-    query.prepare("SELECT "
-                      ",a002_nc_peca "
-                      ",a002_denomicanao "
-                      ",a002_grupo "
-                      ",a002_valor_compra "
-                      ",a002_valor_venda "
-                      ",a002_qtde_estoque "
-                      ",a002_posicao_peca "
-                  "FROM "
-                    "a002_estoque "
-                  "WHERE "
-                    "a002_codigo = '" +QString::number(id)+ "' ");
-
-    if( query.exec() ) //verifica se a query foi bem sucedida
-    {
-        query.first(); //pega o primeiro
-
-        //considerar inserir um campo para o código
-        ui->txt_ge_ncPeca->setText(query.value(0).toString());
-        ui->txt_ge_denominacao->setText(query.value(1).toString());
-        ui->txt_ge_grupo->setText(query.value(2).toString());
-        ui->txt_ge_valorcompra->setText(query.value(3).toString());
-        ui->txt_ge_valorvenda->setText(query.value(4).toString());
-        ui->txt_ge_qtde->setText(query.value(5).toString());
-
-        //preenchendo o combo box com a posição da prateleira
-        //ui->cb_ge_posicao_prateleira->setText(query.value(7).toString());
-    }
-}
-
-
+//**FUNÇÕES**
 
 

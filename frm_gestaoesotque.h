@@ -30,6 +30,8 @@ public:
     //instanciando conexao com o banco de dados
     Conexao con;
 
+public slots:
+
 private slots:
     void on_tabWidget_currentChanged(int index);
 
@@ -39,12 +41,20 @@ private slots:
 
     void on_btn_nv_filtrar_clicked();
 
+    void on_tw_nv_listamodelos_itemSelectionChanged();
+
     void on_btn_nv_novo_clicked();
 
     void on_btn_nv_salvar_clicked();
 
     //tela de gestão peças
     void on_tw_ge_listapecas_itemSelectionChanged();
+
+    void on_txt_ge_filtrar_returnPressed();
+
+    void on_btn_ge_filtrar_clicked();
+
+    void on_btn_ge_salvar_clicked();
 
 private:
     Ui::frm_gestaoesotque *ui;
