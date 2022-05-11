@@ -89,7 +89,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="txt_vd_peca">
+     <widget class="QLineEdit" name="txt_codigopeca">
       <property name="enabled">
        <bool>false</bool>
       </property>
@@ -198,7 +198,7 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QLineEdit" name="txt_ge_filtrar"/>
+      <widget class="QLineEdit" name="txt_vd_filtrar"/>
      </item>
      <item>
       <widget class="QPushButton" name="btn_pesquisarproduto">
@@ -228,13 +228,26 @@
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="txt_qtdeestoque">
+     <widget class="QLineEdit" name="txt_qtdeEstoque">
       <property name="enabled">
        <bool>false</bool>
       </property>
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QPushButton" name="btn_adicionarItem">
+   <property name="geometry">
+    <rect>
+     <x>400</x>
+     <y>325</y>
+     <width>111</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Adicionar</string>
+   </property>
   </widget>
   <zorder>groupBox_2</zorder>
   <zorder>groupBox</zorder>
@@ -246,6 +259,7 @@
   <zorder>layoutWidget</zorder>
   <zorder>layoutWidget</zorder>
   <zorder>layoutWidget_2</zorder>
+  <zorder>btn_adicionarItem</zorder>
  </widget>
  <resources/>
  <connections/>

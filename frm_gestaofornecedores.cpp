@@ -17,7 +17,8 @@ frm_gestaofornecedores::frm_gestaofornecedores(QWidget *parent) :
         }
     }
 
-    ui->btn_validacnpj->setVisible(false); //or true - later in the code
+    //deixa o botão da validação do cnpj invisivel
+    ui->btn_validacnpj->setVisible(false);
     ui->txt_nv_cnpj->setFocus();
 
     //define o Novo Produto de index(0) como aba padrão(que inicia ao ser aberta a interface)

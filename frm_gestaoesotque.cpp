@@ -938,7 +938,7 @@ void frm_gestaoesotque::on_txt_ge_filtrar_returnPressed()
                     "WHERE "
                         "a002_codigo = true "
                     "ORDER BY "
-                        "a002_codigo DESC";
+                        "a002_ativo DESC";
         }
         else
         {
@@ -958,7 +958,7 @@ void frm_gestaoesotque::on_txt_ge_filtrar_returnPressed()
                         "JOIN a003_fornecedor ON (a003_codigo = a002_fk_codigo_forncedor) "
                         "JOIN a012_modelos ON (a012_codigo = a002_fk_codigo_modelo)       "
                     "WHERE "
-                        "a002_codigo = true "
+                        "a002_ativo = true "
                     "ORDER BY "
                         "a002_codigo DESC";
         }
