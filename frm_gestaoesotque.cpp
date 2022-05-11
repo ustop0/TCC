@@ -35,10 +35,13 @@ frm_gestaoesotque::frm_gestaoesotque(QWidget *parent) :
     ui->cb_nv_filtrarmodelos->addItem("Modelo");
 
     //configurando combo box peças
-    ui->cb_nv_filtrar->addItem("Nc. Peça");
-    ui->cb_nv_filtrar->addItem("Denominação");
-    ui->cb_nv_filtrar->addItem("Grupo");
-    ui->cb_nv_filtrar->addItem("Posição");
+    ui->cb_ge_filtrar->addItem("-");
+    ui->cb_ge_filtrar->addItem("Nc. Peça");
+    ui->cb_ge_filtrar->addItem("Denominação");
+    ui->cb_ge_filtrar->addItem("Grupo");
+    ui->cb_ge_filtrar->addItem("Posição");
+    ui->cb_ge_filtrar->addItem("Fornecedor");
+    ui->cb_ge_filtrar->addItem("Modelo");
 
     //**Estilizando layout dos table widgets**
     //--FORNECEDORES--
@@ -68,7 +71,7 @@ frm_gestaoesotque::frm_gestaoesotque(QWidget *parent) :
     ui->tw_nv_listamodelos->setColumnWidth(1, 117);
     ui->tw_nv_listamodelos->setColumnWidth(2, 120);
 
-    //cabeçalhos do table widget fornecedores
+    //cabeçalhos do table widget marcas/modelos
     QStringList cabecalho2={"Código", "Marca", "Modelo"};
 
     ui->tw_nv_listamodelos->setHorizontalHeaderLabels(cabecalho2);
@@ -84,12 +87,12 @@ frm_gestaoesotque::frm_gestaoesotque(QWidget *parent) :
     ui->tw_nv_listamodelos->verticalHeader()->setVisible(false);
 
     //--PEÇAS--
-    ui->tw_ge_listapecas->setColumnCount(9); //define que o table widget terá duas colunas
-    ui->tw_ge_listapecas->setColumnWidth(0, 150); //id colaborador
-    ui->tw_ge_listapecas->setColumnWidth(1, 220); //nome colaborador
+    ui->tw_ge_listapecas->setColumnCount(10);
+    ui->tw_ge_listapecas->setColumnWidth(0, 40);
+    ui->tw_ge_listapecas->setColumnWidth(1, 220);
 
-    //cabeçalhos do table widget
-    QStringList cabecalho3={"Código", "Fornecedor", "Nc. Peça"
+    //cabeçalhos do table widget peças
+    QStringList cabecalho3={"Código", "Fornecedor", "Modelo", "Nc. Peça"
                             , "Denominação", "Grupo", "Valor Compra"
                             , "Valor Venda", "Qtde", "Posição"};
 
@@ -345,6 +348,7 @@ void frm_gestaoesotque::on_tabWidget_currentChanged(int index)
         query.prepare("SELECT "
                           "a002_codigo          "
                           ",a003_razao_social   "
+                          ",a012_nome_veiculo   "
                           ",a002_nc_peca        "
                           ",a002_denomicanao    "
                           ",a002_grupo          "
@@ -355,6 +359,7 @@ void frm_gestaoesotque::on_tabWidget_currentChanged(int index)
                       "FROM "
                           "a002_estoque "
                           "JOIN a003_fornecedor ON (a003_codigo = a002_fk_codigo_forncedor) "
+                          "JOIN a012_modelos ON (a012_codigo = a002_fk_codigo_modelo) "
                       "WHERE "
                         "a002_ativo = true "
                       "ORDER BY "
@@ -406,6 +411,10 @@ void frm_gestaoesotque::on_tabWidget_currentChanged(int index)
                 ui->tw_ge_listapecas->setItem(contlinhas
                                             , 9
                                             , new QTableWidgetItem(query.value(9).toString()));
+
+                ui->tw_ge_listapecas->setItem(contlinhas
+                                            , 10
+                                            , new QTableWidgetItem(query.value(10).toString()));
 
                 //definindo o tamanho das linhas
                 ui->tw_ge_listapecas->setRowHeight(contlinhas, 20);
@@ -707,9 +716,9 @@ void frm_gestaoesotque::on_txt_nv_filtrarModelos_returnPressed()
                     "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca) "
                 "WHERE "
                   + filtro_sql +
-                  "a012_ativo = true ";
-//                "ORDER BY "
-//                    "a012_codigo DESC";
+                  "a012_ativo = true "
+                "ORDER BY "
+                    "a012_codigo DESC";
 
     }
 
@@ -859,6 +868,7 @@ void frm_gestaoesotque::on_tw_ge_listapecas_itemSelectionChanged()
     query.prepare("SELECT "
                       "a002_codigo        "
                       ",a003_razao_social "
+                      ",a012_nome_veiculo "
                       ",a002_nc_peca      "
                       ",a002_denomicanao  "
                       ",a002_grupo        "
@@ -869,6 +879,7 @@ void frm_gestaoesotque::on_tw_ge_listapecas_itemSelectionChanged()
                   "FROM "
                     "a002_estoque "
                     "JOIN a003_fornecedor ON (a003_codigo = a002_fk_codigo_forncedor) "
+                    "JOIN a012_modelos ON (a012_codigo = a002_fk_codigo_modelo) "
                   "WHERE "
                     "a002_codigo = '" +QString::number(id)+ "' ");
 
@@ -878,16 +889,15 @@ void frm_gestaoesotque::on_tw_ge_listapecas_itemSelectionChanged()
 
         //Não pegamos o nome do fornecedor
         ui->txt_ge_codigopeca->setText(query.value(0).toString());
-        ui->txt_ge_ncPeca->setText(query.value(2).toString());
-        ui->txt_ge_denominacao->setText(query.value(3).toString());
-        ui->txt_ge_grupo->setText(query.value(4).toString());
-        ui->txt_ge_valorcompra->setText(query.value(5).toString());
-        ui->txt_ge_valorvenda->setText(query.value(6).toString());
-        ui->txt_ge_qtde->setText(query.value(7).toString());
-        ui->txt_ge_posicao->setText(query.value(8).toString());
+        ui->txt_ge_ncPeca->setText(query.value(3).toString());
+        ui->txt_ge_denominacao->setText(query.value(4).toString());
+        ui->txt_ge_grupo->setText(query.value(5).toString());
+        ui->txt_ge_valorcompra->setText(query.value(6).toString());
+        ui->txt_ge_valorvenda->setText(query.value(7).toString());
+        ui->txt_ge_qtde->setText(query.value(8).toString());
+        ui->txt_ge_posicao->setText(query.value(9).toString());
     }
 }
-
 
 //**DESENVOLVENDO** filtrar peças
 void frm_gestaoesotque::on_txt_ge_filtrar_returnPressed()
@@ -899,8 +909,8 @@ void frm_gestaoesotque::on_txt_ge_filtrar_returnPressed()
     QString filtro_sql;
 
     QStringList cb_opc; //Dados do combo box
-    cb_opc << "Razão Social" << "Nome Fantasia" << "CNPJ"
-           << "Ocupação da empresa" << "Cidade";
+    cb_opc << "Nc. Peça" << "Denominação" << "Grupo"
+           << "Posição"  << "Fornecedor"  << "Modelo";
 
     //remove as linhas o table widget
     funcoes_globais::removerLinhas( ui->tw_ge_listapecas );
@@ -911,48 +921,46 @@ void frm_gestaoesotque::on_txt_ge_filtrar_returnPressed()
         if( cb_filtro == "" ) //consulta de acordo com o radio selecionado
         {
             busca = "SELECT "
-                        "a003_codigo                   "
-                        ",a003_razao_social            "
-                        ",a003_nome_fantasia           "
-                        ",a003_cnpj                    "
-                        ",a003_estado                  "
-                        ",a003_cidade                  "
-                        ",a003_rua                     "
-                        ",a003_numero_estabelecimento  "
-                        ",a003_bairro                  "
-                        ",a003_porte                   "
-                        ",a003_ocupacao                "
-                        ",a003_telefone01              "
-                        ",a003_telefone02              "
+                        "a002_codigo        "
+                        ",a003_razao_social "
+                        ",a012_nome_veiculo "
+                        ",a002_nc_peca      "
+                        ",a002_denomicanao  "
+                        ",a002_grupo        "
+                        ",a002_valor_compra "
+                        ",a002_valor_venda  "
+                        ",a002_qtde_estoque "
+                        ",a002_posicao_peca "
                     "FROM "
-                        "a003_fornecedor "
+                        "a002_estoque "
+                        "JOIN a003_fornecedor ON (a003_codigo = a002_fk_codigo_forncedor) "
+                        "JOIN a012_modelos ON (a012_codigo = a002_fk_codigo_modelo) "
                     "WHERE "
-                      "a003_ativo = true "
+                        "a002_codigo = true "
                     "ORDER BY "
-                        "a003_codigo DESC";
+                        "a002_codigo DESC";
         }
         else
         {
             busca = "SELECT "
-                        "a003_codigo                   "
-                        ",a003_razao_social            "
-                        ",a003_nome_fantasia           "
-                        ",a003_cnpj                    "
-                        ",a003_estado                  "
-                        ",a003_cidade                  "
-                        ",a003_rua                     "
-                        ",a003_numero_estabelecimento  "
-                        ",a003_bairro                  "
-                        ",a003_porte                   "
-                        ",a003_ocupacao                "
-                        ",a003_telefone01              "
-                        ",a003_telefone02              "
+                        "a002_codigo        "
+                        ",a003_razao_social "
+                        ",a012_nome_veiculo "
+                        ",a002_nc_peca      "
+                        ",a002_denomicanao  "
+                        ",a002_grupo        "
+                        ",a002_valor_compra "
+                        ",a002_valor_venda  "
+                        ",a002_qtde_estoque "
+                        ",a002_posicao_peca "
                     "FROM "
-                        "a003_fornecedor "
+                        "a002_estoque "
+                        "JOIN a003_fornecedor ON (a003_codigo = a002_fk_codigo_forncedor) "
+                        "JOIN a012_modelos ON (a012_codigo = a002_fk_codigo_modelo)       "
                     "WHERE "
-                      "a003_ativo = true "
+                        "a002_codigo = true "
                     "ORDER BY "
-                        "a003_codigo DESC";
+                        "a002_codigo DESC";
         }
     }
     else
@@ -960,30 +968,35 @@ void frm_gestaoesotque::on_txt_ge_filtrar_returnPressed()
         //consulta de acordo com a seleção do combo box
         switch( cb_opc.indexOf( cb_filtro ) )
         {
-            //Razão Social
+            //Nc. Peça
             case 0:
+
+                filtro_sql = "a002_nc_peca LIKE '%" +txt_filtro+ "%' ";
+                break;
+            //Denominação
+            case 1:
+
+                filtro_sql = "a002_denomicanao LIKE '%" +txt_filtro+ "%' ";
+                break;
+            //Grupo
+            case 2:
+
+                filtro_sql = "a002_grupo LIKE '%" +txt_filtro+ "%' ";
+                break;
+            //Posição
+            case 3:
+
+                filtro_sql = "a002_posicao_peca LIKE '%" +txt_filtro+ "%' ";
+                break;
+            //Fornecedor
+            case 4:
 
                 filtro_sql = "a003_razao_social LIKE '%" +txt_filtro+ "%' ";
                 break;
-            //Nome Fantasia
-            case 1:
+            //Modelo
+            case 5:
 
-                filtro_sql = "a003_nome_fantasia LIKE '%" +txt_filtro+ "%' ";
-                break;
-            //CNPJ
-            case 2:
-
-                filtro_sql = "a003_cnpj LIKE '%" +txt_filtro+ "%' ";
-                break;
-            //Ocupação da empresa
-            case 3:
-
-                filtro_sql = "a003_ocupacao LIKE '%" +txt_filtro+ "%' ";
-                break;
-            //Cidade
-            case 4:
-
-                filtro_sql = "a003_cidade LIKE '%" +txt_filtro+ "%' ";
+                filtro_sql = "a012_nome_veiculo LIKE '%" +txt_filtro+ "%' ";
                 break;
             default:
                 qDebug() << "_Houve um problema ao filtrar realizar o filtro(swith case)";
@@ -991,26 +1004,25 @@ void frm_gestaoesotque::on_txt_ge_filtrar_returnPressed()
         }
 
         busca = "SELECT "
-                    "a003_codigo                   "
-                    ",a003_razao_social            "
-                    ",a003_nome_fantasia           "
-                    ",a003_cnpj                    "
-                    ",a003_estado                  "
-                    ",a003_cidade                  "
-                    ",a003_rua                     "
-                    ",a003_numero_estabelecimento  "
-                    ",a003_bairro                  "
-                    ",a003_porte                   "
-                    ",a003_ocupacao                "
-                    ",a003_telefone01              "
-                    ",a003_telefone02              "
+                    "a002_codigo        "
+                    ",a003_razao_social "
+                    ",a012_nome_veiculo "
+                    ",a002_nc_peca      "
+                    ",a002_denomicanao  "
+                    ",a002_grupo        "
+                    ",a002_valor_compra "
+                    ",a002_valor_venda  "
+                    ",a002_qtde_estoque "
+                    ",a002_posicao_peca "
                 "FROM "
-                    "a003_fornecedor "
+                    "a002_estoque "
+                    "JOIN a003_fornecedor ON (a003_codigo = a002_fk_codigo_forncedor) "
+                    "JOIN a012_modelos ON (a012_codigo = a002_fk_codigo_modelo) "
                 "WHERE "
                     + filtro_sql +
-                    "AND a003_ativo = true "
+                    "AND a002_ativo = true "
                 "ORDER BY "
-                    "a003_codigo DESC";
+                    "a002_codigo DESC";
     }
 
     //contador para percorrer linhas
@@ -1064,6 +1076,10 @@ void frm_gestaoesotque::on_txt_ge_filtrar_returnPressed()
                                         , 9
                                         , new QTableWidgetItem(query.value(9).toString()));
 
+//            ui->tw_ge_listapecas->setItem(contlinhas
+//                                        , 10
+//                                        , new QTableWidgetItem(query.value(10).toString()));
+
             //definindo o tamanho das linhas
             ui->tw_ge_listapecas->setRowHeight(contlinhas, 20);
             contlinhas ++;
@@ -1071,7 +1087,7 @@ void frm_gestaoesotque::on_txt_ge_filtrar_returnPressed()
     }
     else
     {
-        QMessageBox::warning(this, "ERRO", "Erro ao filtrar Fornecedores");
+        QMessageBox::warning(this, "ERRO", "Erro ao filtrar peças");
     }
 
     //apagar conteudo do campo txt_ge_filtrar toda vez que clickar em filtrar
@@ -1085,14 +1101,123 @@ void frm_gestaoesotque::on_btn_ge_filtrar_clicked()
     frm_gestaoesotque::on_txt_ge_filtrar_returnPressed();
 }
 
-//edição salvar peça
+//edição salvar alteração dados peças
 void frm_gestaoesotque::on_btn_ge_salvar_clicked()
 {
+    if( ui->tw_ge_listapecas->currentRow() == -1 )
+    {
+        QMessageBox::warning(this, "ERRO", "Selecione uma peça");
+        return;
+    }
 
+    QString id = ui->tw_ge_listapecas->item(ui->tw_ge_listapecas
+                                                    ->currentRow(),0)->text();
+
+    QString aux; //converter campo digitado da UI de ',' para '.'
+
+    QString nc_peca = ui->txt_ge_ncPeca->text();
+    QString denominacao = ui->txt_ge_denominacao->text();
+    QString grupo = ui->txt_ge_grupo->text();
+    QString valor_compra = ui->txt_ge_valorcompra->text();
+    QString valor_venda = ui->txt_ge_valorvenda->text();
+    QString qtde_estoque = ui->txt_ge_qtde->text();
+    QString posicao_peca = ui->txt_ge_posicao->text();
+
+    aux=ui->txt_nv_valorcompra->text();
+    std::replace(aux.begin(), aux.end(), ',', '.'); //substitui valores
+    valor_compra = aux;
+
+    aux=ui->txt_nv_valorvenda->text();
+    std::replace(aux.begin(), aux.end(), ',', '.');
+    valor_venda = aux;
+
+    QSqlQuery query;
+
+    query.prepare("UPDATE "
+                    "a002_estoque "
+                  "SET "
+                    "a002_nc_peca        ='" +QString::number( nc_peca.toInt() )         + "'"
+                    ",a002_denomicanao   ='" +denominacao                                + "'"
+                    ",a002_grupo         ='" +grupo                                      + "'"
+                    ",a002_valor_compra  ='" +QString::number( valor_compra.toDouble() ) + "'"
+                    ",a002_valor_venda   ='" +QString::number( valor_venda.toDouble() )  + "'"
+                    ",a002_qtde_estoque  ='" +QString::number( qtde_estoque.toInt() )    + "'"
+                    ",a002_posicao_peca  ='" +posicao_peca                               + "'"
+                  "WHERE "
+                    "a002_codigo ='" +id+ "'");
+
+    if( query.exec() ) //executa a query
+    {
+        //pega a linha que está selecionada
+        int linha = ui->tw_ge_listapecas->currentRow();
+
+        //atualizando o table widget com o novo registro
+        ui->tw_ge_listapecas->item(linha, 3)->setText( nc_peca );
+        ui->tw_ge_listapecas->item(linha, 4)->setText( denominacao );
+        ui->tw_ge_listapecas->item(linha, 5)->setText( grupo );
+        ui->tw_ge_listapecas->item(linha, 6)->setText( valor_compra );
+        ui->tw_ge_listapecas->item(linha, 7)->setText( valor_venda );
+        ui->tw_ge_listapecas->item(linha, 8)->setText( qtde_estoque );
+        ui->tw_ge_listapecas->item(linha, 9)->setText( posicao_peca );
+
+        QMessageBox::information(this, "Atualizado", "Dados da peça atualizados com sucesso!");
+
+        ui->txt_ge_codigopeca->clear();
+        ui->txt_ge_ncPeca->clear();
+        ui->txt_ge_denominacao->clear();
+        ui->txt_ge_grupo->clear();
+        ui->txt_ge_valorcompra->clear();
+        ui->txt_ge_valorvenda->clear();
+        ui->txt_ge_qtde->clear();
+        ui->txt_ge_posicao->clear();
+        ui->txt_ge_ncPeca->setFocus();
+    }
+    else
+    {
+        QMessageBox::warning(this, "ERRO", "Erro ao atualizar dados da peça");
+    }
+}
+
+//excluir peça selecionada
+void frm_gestaoesotque::on_btn_ge_excluir_clicked()
+{
+    if( ui->tw_ge_listapecas->currentRow() == -1 )
+    {
+        QMessageBox::warning(this, "ERRO", "Selecione uma peça");
+        return;
+    }
+
+    //pergunta se o usuário realmente quer excluir o registro
+    QMessageBox::StandardButton opc =QMessageBox::question(
+                                      this,"Exclusão"
+                                      ,"Confirma exclusão da peça?"
+                                      ,QMessageBox::Yes|QMessageBox::No);
+
+    if( opc == QMessageBox::Yes )
+    {
+        //pegando a linha corrent(atual), no caso o id(index(0))
+        int linha = ui->tw_ge_listapecas->currentRow();
+        QString id = ui->tw_ge_listapecas->item(linha, 0)->text();
+
+        QSqlQuery query;
+
+        query.prepare("UPDATE "
+                        "a002_estoque "
+                      "SET "
+                        "a002_ativo = false "
+                      "WHERE "
+                        "a002_codigo ='" +id+ "'");
+
+        if( query.exec() ) //executa a query
+        {
+            ui->tw_ge_listapecas->removeRow( linha );
+            QMessageBox::information(this, "DELETADO", "Peça excluído com sucesso");
+        }
+        else
+        {
+             QMessageBox::warning(this, "ERRO", "Erro ao excluir peça");
+        }
+    }
 }
 
 //**FUNÇÕES**
-
-
-
-

@@ -617,9 +617,9 @@ void frm_gestaofornecedores::on_btn_ge_excluir_clicked()
     QMessageBox::StandardButton opc =QMessageBox::question(
                                       this,"Exclusão"
                                       ,"Confirma exclusão do fornecedor?"
-                                      ,QMessageBox::Yes|QMessageBox::No); //revisar tabulação
+                                      ,QMessageBox::Yes|QMessageBox::No);
 
-    if( opc == QMessageBox::Yes ) //verificando o botao da caixa question
+    if( opc == QMessageBox::Yes )
     {
         //pegando a linha corrent(atual), no caso o id(index(0))
         int linha = ui->tw_ge_listarFornecedores->currentRow();

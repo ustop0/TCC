@@ -63,6 +63,8 @@ private slots:
 
     void on_btn_ge_salvar_clicked();
 
+    void on_btn_ge_excluir_clicked();
+
 private:
     Ui::frm_gestaoesotque *ui;
 };
