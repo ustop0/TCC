@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -363,7 +363,7 @@
       <item>
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>Filtrar por</string>
+         <string>Filtrar por:</string>
         </property>
        </widget>
       </item>

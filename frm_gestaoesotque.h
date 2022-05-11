@@ -13,7 +13,6 @@
 #include <QJsonObject>
 #include "ConexaoBanco.h"
 #include "funcoes_globais.h"
-#include "fn_validacpf.h"
 
 namespace Ui {
 class frm_gestaoesotque;

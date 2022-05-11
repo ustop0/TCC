@@ -829,8 +829,8 @@ void frm_gestaoesotque::on_btn_nv_salvar_clicked()
                     "VALUES('" +QString::number( nc_peca.toInt() )           +  "'"
                           ",'" +denominacao                                  +  "'"
                           ",'" +grupo                                        +  "'"
-                          ",'" +QString::number( valor_compra.toDouble() )   +  "'"
-                          ",'" +QString::number( valor_venda.toDouble() )    +  "'"
+                          ",'" +QString::number( valor_compra.toFloat() )   +  "'"
+                          ",'" +QString::number( valor_venda.toFloat() )    +  "'"
                           ",'" +QString::number( qtde.toInt() )              +  "'"
                           ",'" +posicao                                      +  "'"
                           ",'" +QString::number( codigo_fornecedor.toInt() ) +  "'"
@@ -1123,13 +1123,13 @@ void frm_gestaoesotque::on_btn_ge_salvar_clicked()
     QString qtde_estoque = ui->txt_ge_qtde->text();
     QString posicao_peca = ui->txt_ge_posicao->text();
 
-    aux=ui->txt_nv_valorcompra->text();
-    std::replace(aux.begin(), aux.end(), ',', '.'); //substitui valores
-    valor_compra = aux;
+//    aux=ui->txt_nv_valorcompra->text();
+//    std::replace(aux.begin(), aux.end(), ',', '.'); //substitui valores
+//    valor_compra = aux;
 
-    aux=ui->txt_nv_valorvenda->text();
-    std::replace(aux.begin(), aux.end(), ',', '.');
-    valor_venda = aux;
+//    aux=ui->txt_nv_valorvenda->text();
+//    std::replace(aux.begin(), aux.end(), ',', '.');
+//    valor_venda = aux;
 
     QSqlQuery query;
 
@@ -1139,8 +1139,8 @@ void frm_gestaoesotque::on_btn_ge_salvar_clicked()
                     "a002_nc_peca        ='" +QString::number( nc_peca.toInt() )         + "'"
                     ",a002_denomicanao   ='" +denominacao                                + "'"
                     ",a002_grupo         ='" +grupo                                      + "'"
-                    ",a002_valor_compra  ='" +QString::number( valor_compra.toDouble() ) + "'"
-                    ",a002_valor_venda   ='" +QString::number( valor_venda.toDouble() )  + "'"
+                    ",a002_valor_compra  ='" +QString::number( valor_compra.toFloat() )  + "'"
+                    ",a002_valor_venda   ='" +QString::number( valor_venda.toFloat() )   + "'"
                     ",a002_qtde_estoque  ='" +QString::number( qtde_estoque.toInt() )    + "'"
                     ",a002_posicao_peca  ='" +posicao_peca                               + "'"
                   "WHERE "
