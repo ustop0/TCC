@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>781</width>
-    <height>669</height>
+    <height>687</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -105,7 +105,7 @@
    <property name="geometry">
     <rect>
      <x>425</x>
-     <y>633</y>
+     <y>651</y>
      <width>347</width>
      <height>31</height>
     </rect>
@@ -253,6 +253,32 @@
     <string>Adicionar</string>
    </property>
   </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>650</y>
+     <width>81</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Total Lucro:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lb_totallucro">
+   <property name="geometry">
+    <rect>
+     <x>113</x>
+     <y>650</y>
+     <width>151</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>R$</string>
+   </property>
+  </widget>
   <zorder>groupBox_2</zorder>
   <zorder>groupBox</zorder>
   <zorder>tw_listapecas</zorder>
@@ -264,6 +290,8 @@
   <zorder>layoutWidget</zorder>
   <zorder>layoutWidget_2</zorder>
   <zorder>btn_adicionarItem</zorder>
+  <zorder>label_5</zorder>
+  <zorder>lb_totallucro</zorder>
  </widget>
  <resources/>
  <connections/>

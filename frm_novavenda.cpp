@@ -9,7 +9,7 @@ QString frm_novavenda::g_valor_total;
 QString frm_novavenda::g_valor_comprado;
 
 //variável global, verifica se um produto foi alterado
-static bool g_alterou;
+bool g_alterou;
 
 frm_novavenda::frm_novavenda(QWidget *parent) :
     QDialog(parent),
@@ -421,8 +421,9 @@ void frm_novavenda::on_btn_adicionarItem_clicked()
     double valor_total;
     double margem_lucro;
     QString qtde_venda;
+    QString qtde_estoque = g_qtde;
 
-//    g_codigo_peca;;
+//    g_codigo_peca;
 //    g_qtde;
 //    g_denominacao;
 //    g_valor_unitario;
@@ -430,68 +431,88 @@ void frm_novavenda::on_btn_adicionarItem_clicked()
 //    QStringList cabecalho2 = {"Código", "Produto", "Valor Un.", "Qtde", "Total", "Lucro"};
 
     //verifica se a quantidade informada é maior que a quantidade em estoque
-    if( ui->txt_qtde->text() > g_qtde || ui->txt_qtde->text() == "")
+    if( ui->txt_qtde->text() > qtde_estoque ||  ui->txt_qtde->text() == "0")
     {
         QMessageBox::information(this
                                  ,"Aviso"
-                                 ,"Valor informado acima do valor do estoque para esse produto");
+                                 ,"Valor informado para o produto"
+                                  "acima do valor do estoque para esse produto");
 
-        ui->txt_qtde->clear();
+        ui->txt_qtde->setText("1");
+        ui->txt_qtde->setFocus();
+    }
+    else if( ui->txt_qtde->text() == "" )
+    {
+        QMessageBox::information(this
+                                 ,"Aviso"
+                                 ,"Não foi informado nenhum valor para a quantidade do produto");
+
+        ui->txt_qtde->setText("1");
         ui->txt_qtde->setFocus();
     }
     else
     {
         qtde_venda = ui->txt_qtde->text();
-    }
 
-    //calculando o valor total do produto(quantidade * valor_venda)
-    valor_total = ui->txt_qtde->text().toDouble() * g_valor_unitario.toDouble();
-    margem_lucro = valor_total - g_valor_comprado.toDouble();
+        //calculando o valor total do produto(quantidade * valor_venda)
+        valor_total = ui->txt_qtde->text().toDouble() * g_valor_unitario.toDouble();
+        margem_lucro = valor_total - g_valor_comprado.toDouble();
 
-    //se valor da query for vazio, produto não encontrado
-    if( g_codigo_peca != "")
-    {
-        //inserindo com contador de linhas, por index
-        ui->tw_listaprodutos->insertRow( contlinhas );
-        ui->tw_listaprodutos->setItem(contlinhas
-                                      , 0
-                                      , new QTableWidgetItem( g_codigo_peca ));
+        //se valor da query for vazio, produto não encontrado
+        if( g_codigo_peca != "")
+        {
+            //inserindo com contador de linhas, por index
+            ui->tw_listaprodutos->insertRow( contlinhas );
+            ui->tw_listaprodutos->setItem(contlinhas
+                                          , 0
+                                          , new QTableWidgetItem( g_codigo_peca ));
 
-        ui->tw_listaprodutos->setItem(contlinhas
-                                      , 1
-                                      , new QTableWidgetItem( g_denominacao ));
+            ui->tw_listaprodutos->setItem(contlinhas
+                                          , 1
+                                          , new QTableWidgetItem( g_denominacao ));
 
-        ui->tw_listaprodutos->setItem(contlinhas
-                                      , 2
-                                      , new QTableWidgetItem( g_valor_unitario ));
+            ui->tw_listaprodutos->setItem(contlinhas
+                                          , 2
+                                          , new QTableWidgetItem( g_valor_unitario ));
 
-        //qtde produtos
-        ui->tw_listaprodutos->setItem(contlinhas
-                                      , 3
-                                      , new QTableWidgetItem( qtde_venda ));
+            //qtde produtos
+            ui->tw_listaprodutos->setItem(contlinhas
+                                          , 3
+                                          , new QTableWidgetItem( qtde_venda ));
 
-        ui->tw_listaprodutos->setItem(contlinhas
-                                      , 4
-                                      , new QTableWidgetItem( QString::number(valor_total) ));
+            ui->tw_listaprodutos->setItem(contlinhas
+                                          , 4
+                                          , new QTableWidgetItem( QString::number(valor_total) ));
 
-        ui->tw_listaprodutos->setItem(contlinhas
-                                      , 5
-                                      , new QTableWidgetItem( QString::number(margem_lucro) ));
+            ui->tw_listaprodutos->setItem(contlinhas
+                                          , 5
+                                          , new QTableWidgetItem( QString::number(margem_lucro) ));
 
-        //definindo o tamanho das linhas
-        ui->tw_listaprodutos->setRowHeight(contlinhas, 20);
-        contlinhas ++;
+            ui->tw_listaprodutos->setRowHeight(contlinhas, 20);
+            contlinhas ++;
 
-         //**DEBUGAR**, o não está retornando um numero em DOUBLE, manipular string
-        //Label que exibe o valor total de todos os produtos(debugar)
-        ui->lb_totalvenda->setText("R$ "+QString::number(
-                                       calculaTotal(ui->tw_listaprodutos, 4))+",00");
+             //**DEBUGAR**, o não está retornando um numero em DOUBLE, manipular string
+            //Label que exibe o valor total de todos os produtos(debugar)
+            ui->lb_totalvenda->setText("R$ "+QString::number(
+                                           calculaTotal(ui->tw_listaprodutos, 4))+",00");
 
-        resetaCampos();
-    }
-    else
-    {
-        QMessageBox::warning(this, "ERRO", "Erro ao inserir novo produto");
+            ui->lb_totallucro->setText("R$ "+QString::number(
+                                           calculaTotal(ui->tw_listaprodutos, 5))+",00");
+
+            resetaCampos();
+
+            //atualiza a quantidade de produtos da tabela estoque(sem UPDATE)
+             int atualiza_qtde;
+             atualiza_qtde = qtde_estoque.toInt() - qtde_venda.toInt();
+
+             //adiciona ao valor da qtde
+             qtde_estoque.toInt();
+             qtde_estoque = atualiza_qtde;
+        }
+        else
+        {
+            QMessageBox::warning(this, "ERRO", "Erro ao inserir novo produto");
+        }
     }
 }
 
