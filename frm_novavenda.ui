@@ -41,7 +41,7 @@
     <rect>
      <x>113</x>
      <y>617</y>
-     <width>31</width>
+     <width>151</width>
      <height>17</height>
     </rect>
    </property>
@@ -67,7 +67,11 @@
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="txt_qtde"/>
+     <widget class="QLineEdit" name="txt_qtde">
+      <property name="text">
+       <string>1</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -187,7 +191,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>360</x>

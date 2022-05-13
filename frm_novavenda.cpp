@@ -1,6 +1,16 @@
 #include "frm_novavenda.h"
 #include "ui_frm_novavenda.h"
 
+QString frm_novavenda::g_codigo_peca;
+QString frm_novavenda::g_denominacao;
+QString frm_novavenda::g_qtde;
+QString frm_novavenda::g_valor_unitario;
+QString frm_novavenda::g_valor_total;
+QString frm_novavenda::g_valor_comprado;
+
+//variável global, verifica se um produto foi alterado
+static bool g_alterou;
+
 frm_novavenda::frm_novavenda(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::frm_novavenda)
@@ -27,18 +37,18 @@ frm_novavenda::frm_novavenda(QWidget *parent) :
     ui->cb_vd_filtrar->addItem("Fornecedor");
     ui->cb_vd_filtrar->addItem("Modelo");
 
-    //**Estilizando layout da table widget**
+    //**Estilizando layout da tw_listapecas**
     //definindo o tamanho das colunas
     ui->tw_listapecas->setColumnCount(10);
     ui->tw_listapecas->setColumnWidth(0, 40);
     ui->tw_listapecas->setColumnWidth(1, 220);
 
-    //cabeçalhos do table widget
-    QStringList cabecalho={"Código", "Fornecedor", "Modelo", "Nc. Peça"
+    //cabeçalhos do table widget, seleção de peças
+    QStringList cabecalho1={"Código", "Fornecedor", "Modelo", "Nc. Peça"
                             , "Denominação", "Grupo", "Valor Compra"
                             , "Valor Venda", "Qtde", "Posição"};
 
-    ui->tw_listapecas->setHorizontalHeaderLabels( cabecalho );
+    ui->tw_listapecas->setHorizontalHeaderLabels( cabecalho1 );
     //definindo cor da linha ao ser selecionada
     ui->tw_listapecas->setStyleSheet("QTableView "
                                       "{selection-background-color:red}");
@@ -54,10 +64,10 @@ frm_novavenda::frm_novavenda(QWidget *parent) :
     //limpa as linhas do table widget
     funcoes_globais::removerLinhas( ui->tw_listapecas );
     //inserir linhas dentro do table widget
-    int contlinhas=0;
+    int contlinhas1 = 0;
     //Remover os produtos do table widget
-    QSqlQuery query; //query para listar os colaboradores no table widget
-    query.prepare("SELECT "
+    QSqlQuery query1; //query para listar os colaboradores no table widget
+    query1.prepare("SELECT "
                       "a002_codigo          "
                       ",a003_razao_social   "
                       ",a012_nome_veiculo   "
@@ -77,62 +87,82 @@ frm_novavenda::frm_novavenda(QWidget *parent) :
                   "ORDER BY "
                       "a002_codigo DESC");
 
-    if( query.exec() ) //verifica se ouve algum erro na execução da query
+    if( query1.exec() ) //verifica se ouve algum erro na execução da query
     {
         //enquanto a query tiver retornando next, insere linhas dentro do table widget
-        while( query.next() )
+        while( query1.next() )
         {
             //inserindo com contador de linhas, por index
-            ui->tw_listapecas->insertRow( contlinhas );
-            ui->tw_listapecas->setItem(contlinhas
+            ui->tw_listapecas->insertRow( contlinhas1 );
+            ui->tw_listapecas->setItem(contlinhas1
                                         , 0
-                                        , new QTableWidgetItem(query.value(0).toString()));
+                                        , new QTableWidgetItem(query1.value(0).toString()));
 
-            ui->tw_listapecas->setItem(contlinhas
+            ui->tw_listapecas->setItem(contlinhas1
                                         , 1
-                                        , new QTableWidgetItem(query.value(1).toString()));
+                                        , new QTableWidgetItem(query1.value(1).toString()));
 
-            ui->tw_listapecas->setItem(contlinhas
+            ui->tw_listapecas->setItem(contlinhas1
                                         , 2
-                                        , new QTableWidgetItem(query.value(2).toString()));
+                                        , new QTableWidgetItem(query1.value(2).toString()));
 
-            ui->tw_listapecas->setItem(contlinhas
+            ui->tw_listapecas->setItem(contlinhas1
                                         , 3
-                                        , new QTableWidgetItem(query.value(3).toString()));
+                                        , new QTableWidgetItem(query1.value(3).toString()));
 
-            ui->tw_listapecas->setItem(contlinhas
+            ui->tw_listapecas->setItem(contlinhas1
                                         , 4
-                                        , new QTableWidgetItem(query.value(4).toString()));
+                                        , new QTableWidgetItem(query1.value(4).toString()));
 
-            ui->tw_listapecas->setItem(contlinhas
+            ui->tw_listapecas->setItem(contlinhas1
                                         , 5
-                                        , new QTableWidgetItem(query.value(5).toString()));
+                                        , new QTableWidgetItem(query1.value(5).toString()));
 
-            ui->tw_listapecas->setItem(contlinhas
+            ui->tw_listapecas->setItem(contlinhas1
                                         , 6
-                                        , new QTableWidgetItem(query.value(6).toString()));
+                                        , new QTableWidgetItem(query1.value(6).toString()));
 
-            ui->tw_listapecas->setItem(contlinhas
+            ui->tw_listapecas->setItem(contlinhas1
                                         , 7
-                                        , new QTableWidgetItem(query.value(7).toString()));
+                                        , new QTableWidgetItem(query1.value(7).toString()));
 
-            ui->tw_listapecas->setItem(contlinhas
+            ui->tw_listapecas->setItem(contlinhas1
                                         , 8
-                                        , new QTableWidgetItem(query.value(8).toString()));
+                                        , new QTableWidgetItem(query1.value(8).toString()));
 
-            ui->tw_listapecas->setItem(contlinhas
+            ui->tw_listapecas->setItem(contlinhas1
                                         , 9
-                                        , new QTableWidgetItem(query.value(9).toString()));
-
-            ui->tw_listapecas->setItem(contlinhas
-                                        , 10
-                                        , new QTableWidgetItem(query.value(10).toString()));
+                                        , new QTableWidgetItem(query1.value(9).toString()));
 
             //definindo o tamanho das linhas
-            ui->tw_listapecas->setRowHeight(contlinhas, 20);
-            contlinhas ++;
+            ui->tw_listapecas->setRowHeight(contlinhas1, 20);
+            contlinhas1 ++;
         }
     }
+
+
+    //**Estilizando layout da tw_listaprodutos**
+    //definindo o tamanho das colunas
+    ui->tw_listaprodutos->setColumnCount(6);
+    ui->tw_listaprodutos->setColumnWidth(0, 40);
+    ui->tw_listaprodutos->setColumnWidth(1, 220);
+
+    //cabeçalhos do table widget, itens venda
+    QStringList cabecalho2 = {"Código", "Produto", "Valor Un.", "Qtde", "Total", "Lucro"};
+
+    ui->tw_listaprodutos->setHorizontalHeaderLabels( cabecalho2 );
+    //definindo cor da linha ao ser selecionada
+    ui->tw_listaprodutos->setStyleSheet("QTableView "
+                                      "{selection-background-color:red}");
+
+    //desabilita a edição dos registros pelo table widget
+    ui->tw_listaprodutos->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    //selecionar a linha inteira quando clickar em uma celula
+    ui->tw_listaprodutos->setSelectionBehavior(QAbstractItemView::SelectRows);
+    //desabilitando os indices das linhas
+    ui->tw_listaprodutos->verticalHeader()->setVisible(false);
+
+    ui->txt_vd_filtrar->setFocus();
 
 } //**Fim construtor
 
@@ -153,13 +183,9 @@ void frm_novavenda::on_tw_listapecas_itemSelectionChanged()
     QSqlQuery query;
     query.prepare("SELECT "
                       "a002_codigo        "
-                      ",a003_razao_social "
-                      ",a012_nome_veiculo "
-                      ",a002_nc_peca      "
                       ",a002_denomicanao  "
-                      ",a002_grupo        "
-                      ",a002_valor_compra "
-                      ",a002_valor_venda  "
+                      ",cast(cast(a002_valor_compra  as decimal) as varchar) "
+                      ",cast(cast(a002_valor_venda  as decimal) as varchar) "
                       ",a002_qtde_estoque "
                       ",a002_posicao_peca "
                   "FROM "
@@ -175,7 +201,16 @@ void frm_novavenda::on_tw_listapecas_itemSelectionChanged()
 
         //Não pegamos o nome do fornecedor
         ui->txt_codigopeca->setText(query.value(0).toString());
-        ui->txt_qtdeEstoque->setText(query.value(8).toString());
+        ui->txt_qtdeEstoque->setText(query.value(4).toString());
+
+        g_codigo_peca = ui->txt_codigopeca->text();
+        g_qtde = ui->txt_qtdeEstoque->text();
+
+        g_denominacao = query.value(1).toString();
+        g_valor_unitario = query.value(3).toString();
+        g_valor_comprado = query.value(2).toString();
+
+        //g_valor_total;
     }
 }
 
@@ -379,3 +414,119 @@ void frm_novavenda::on_btn_pesquisarproduto_clicked()
     frm_novavenda::on_txt_ge_filtrar_returnPressed();
 }
 
+//adicionar produto a lista
+void frm_novavenda::on_btn_adicionarItem_clicked()
+{
+    int contlinhas = 0;
+    double valor_total;
+    double margem_lucro;
+    QString qtde_venda;
+
+//    g_codigo_peca;;
+//    g_qtde;
+//    g_denominacao;
+//    g_valor_unitario;
+//    g_valor_total;
+//    QStringList cabecalho2 = {"Código", "Produto", "Valor Un.", "Qtde", "Total", "Lucro"};
+
+    //verifica se a quantidade informada é maior que a quantidade em estoque
+    if( ui->txt_qtde->text() > g_qtde || ui->txt_qtde->text() == "")
+    {
+        QMessageBox::information(this
+                                 ,"Aviso"
+                                 ,"Valor informado acima do valor do estoque para esse produto");
+
+        ui->txt_qtde->clear();
+        ui->txt_qtde->setFocus();
+    }
+    else
+    {
+        qtde_venda = ui->txt_qtde->text();
+    }
+
+    //calculando o valor total do produto(quantidade * valor_venda)
+    valor_total = ui->txt_qtde->text().toDouble() * g_valor_unitario.toDouble();
+    margem_lucro = valor_total - g_valor_comprado.toDouble();
+
+    //se valor da query for vazio, produto não encontrado
+    if( g_codigo_peca != "")
+    {
+        //inserindo com contador de linhas, por index
+        ui->tw_listaprodutos->insertRow( contlinhas );
+        ui->tw_listaprodutos->setItem(contlinhas
+                                      , 0
+                                      , new QTableWidgetItem( g_codigo_peca ));
+
+        ui->tw_listaprodutos->setItem(contlinhas
+                                      , 1
+                                      , new QTableWidgetItem( g_denominacao ));
+
+        ui->tw_listaprodutos->setItem(contlinhas
+                                      , 2
+                                      , new QTableWidgetItem( g_valor_unitario ));
+
+        //qtde produtos
+        ui->tw_listaprodutos->setItem(contlinhas
+                                      , 3
+                                      , new QTableWidgetItem( qtde_venda ));
+
+        ui->tw_listaprodutos->setItem(contlinhas
+                                      , 4
+                                      , new QTableWidgetItem( QString::number(valor_total) ));
+
+        ui->tw_listaprodutos->setItem(contlinhas
+                                      , 5
+                                      , new QTableWidgetItem( QString::number(margem_lucro) ));
+
+        //definindo o tamanho das linhas
+        ui->tw_listaprodutos->setRowHeight(contlinhas, 20);
+        contlinhas ++;
+
+         //**DEBUGAR**, o não está retornando um numero em DOUBLE, manipular string
+        //Label que exibe o valor total de todos os produtos(debugar)
+        ui->lb_totalvenda->setText("R$ "+QString::number(
+                                       calculaTotal(ui->tw_listaprodutos, 4))+",00");
+
+        resetaCampos();
+    }
+    else
+    {
+        QMessageBox::warning(this, "ERRO", "Erro ao inserir novo produto");
+    }
+}
+
+
+/**FUNÇÕES**/
+/*--------------------------------------------------------------------------------------------
+ * Autor: Thiago Ianzer                                                                       |
+ * Data: 13/05/2022                                                                           |
+ * Propósito: limpar os campos que indicam o codigo e qtde da peça                            |
+ * Chamada:                                                        |
+ *--------------------------------------------------------------------------------------------
+ */
+void frm_novavenda::resetaCampos() //Função para resetar campos
+{
+    //atualizando o valor total da venda e limpando o campo txt_codproduto
+    ui->txt_codigopeca->clear();
+    ui->txt_qtde->setText("1"); //volta quantidade para 1 no campo quantidade
+    ui->txt_vd_filtrar->setFocus();
+}
+/*--------------------------------------------------------------------------------------------
+ * Autor: Thiago Ianzer                                                                       |
+ * Data: 13/05/2022                                                                           |
+ * Propósito: calcular o valor total da venda, no TW e no label                               |
+ * Chamada:                                                           |
+ *--------------------------------------------------------------------------------------------
+ */
+double frm_novavenda::calculaTotal( QTableWidget *tw, int coluna )
+{
+    int totallinhas; //recebe o numero de linhas (Row Count)
+    double total = 0.0; //somatório
+
+    totallinhas = tw->rowCount();
+    for( int i=0; i < totallinhas; i++ )
+    {
+        total += tw->item(i, coluna)->text().toDouble();
+    }
+    return total;
+}
