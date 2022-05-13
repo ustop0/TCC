@@ -532,7 +532,7 @@ void frm_novavenda::on_btn_excluirproduto_clicked()
             int contlinhas = 0;
 
             //removendo o produto selecionado e recalculando o total da venda
-            ui->tw_listaprodutos->removeRow(ui->tw_listaprodutos->currentRow());
+            ui->tw_listaprodutos->removeRow( ui->tw_listaprodutos->currentRow() );
             ui->lb_totalvenda->setText("R$ "
                                        +QString::number(
                                                    calculaTotal(ui->tw_listaprodutos, 4))+",00");
@@ -597,10 +597,10 @@ void frm_novavenda::on_btn_finalizarvenda_clicked()
                                     ",a007_hora_venda         "
                                     ",a007_fk_codigo_usuario  "
                                     ",a007_valor_total)       "
-                      "VALUES('"+data                                    + "'"
-                            ",'"+hora                                    + "'"
+                      "VALUES('"+data                                           + "'"
+                            ",'"+hora                                           + "'"
                             ",'"+QString::number( variaveis_globais::id_colab ) + "'"
-                            ",'"+QString::number( total )                  + "')");
+                            ",'"+QString::number( total )                       + "')");
 
         if( !query.exec() )
         {
