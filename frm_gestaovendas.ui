@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>700</width>
-    <height>580</height>
+    <width>750</width>
+    <height>685</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,37 +39,27 @@
     <string>Mostrar todas as vendas</string>
    </property>
   </widget>
-  <widget class="QTableWidget" name="tw_listaVendas">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>80</y>
-     <width>681</width>
-     <height>192</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QTableWidget" name="tw_listaProdutos">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>281</y>
-     <width>681</width>
+     <x>21</x>
+     <y>374</y>
+     <width>711</width>
      <height>261</height>
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="btn_relatorioPDF">
+  <widget class="QPushButton" name="btn_relatorio">
    <property name="geometry">
     <rect>
-     <x>538</x>
-     <y>550</y>
+     <x>590</x>
+     <y>652</y>
      <width>151</width>
      <height>25</height>
     </rect>
    </property>
    <property name="text">
-    <string>Gerar Relatório PDF</string>
+    <string>Gerar Relatório </string>
    </property>
   </widget>
   <widget class="QWidget" name="layoutWidget">
@@ -116,6 +106,50 @@
     </item>
    </layout>
   </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>67</y>
+     <width>731</width>
+     <height>270</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Vendas:</string>
+   </property>
+   <widget class="QTableWidget" name="tw_listaVendas">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>31</y>
+      <width>711</width>
+      <height>230</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>343</y>
+     <width>731</width>
+     <height>301</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Produtos:</string>
+   </property>
+  </widget>
+  <zorder>groupBox_2</zorder>
+  <zorder>groupBox</zorder>
+  <zorder>btn_filtrar</zorder>
+  <zorder>btn_mostratTodasVendas</zorder>
+  <zorder>tw_listaProdutos</zorder>
+  <zorder>btn_relatorio</zorder>
+  <zorder>layoutWidget</zorder>
+  <zorder>layoutWidget</zorder>
  </widget>
  <resources/>
  <connections/>

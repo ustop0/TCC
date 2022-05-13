@@ -429,7 +429,7 @@ void frm_novavenda::on_btn_adicionarItem_clicked()
 //    g_denominacao;
 //    g_valor_unitario;
 //    g_valor_total;
-//    QStringList cabecalho2 = {"Código", "Produto", "Valor Un.", "Qtde", "Total", "Lucro"};
+//   TW colunas = 6
 
     //verifica se a quantidade informada é maior que a quantidade em estoque
     if( ui->txt_qtde->text() > qtde_estoque )
@@ -555,6 +555,7 @@ void frm_novavenda::on_btn_excluirproduto_clicked()
     }
 }
 
+//botão finaliza vendas
 void frm_novavenda::on_btn_finalizarvenda_clicked()
 {
     /*
@@ -584,11 +585,14 @@ void frm_novavenda::on_btn_finalizarvenda_clicked()
     {
         int idVenda;
 
+        //**ATENÇÃO** foi adicionada a coluna margem de lucro, inserindo lucro
         QString msgFimVenda;
-        double total = calculaTotal(ui->tw_listaprodutos, 4);
         QString data = QDate::currentDate().toString("yyyy-MM-dd");
         //QString data=QDate::currentDate().toString("dd/MM/yyyy"); //data venda
         QString hora = QTime::currentTime().toString("hh:mm:ss");
+        double total = calculaTotal(ui->tw_listaprodutos, 4);
+        double lucro = calculaTotal(ui->tw_listaprodutos, 5);
+
 
         //inserindo dados da venda na tabela de vendas
         QSqlQuery query;
@@ -596,11 +600,13 @@ void frm_novavenda::on_btn_finalizarvenda_clicked()
                         "a007_vendas(a007_data_venda          "
                                     ",a007_hora_venda         "
                                     ",a007_fk_codigo_usuario  "
-                                    ",a007_valor_total)       "
+                                    ",a007_valor_total        "
+                                    ",a007_margem_lucro)      "
                       "VALUES('"+data                                           + "'"
                             ",'"+hora                                           + "'"
                             ",'"+QString::number( variaveis_globais::id_colab ) + "'"
-                            ",'"+QString::number( total )                       + "')");
+                            ",'"+QString::number( total )                       + "'"
+                            ",'"+QString::number( lucro )                       + "')");
 
         if( !query.exec() )
         {
@@ -642,12 +648,12 @@ void frm_novavenda::on_btn_finalizarvenda_clicked()
                 //DEPURAR NÃO ESTÁ REGISTRANDO AS VENDAS NA TABELA DE VENDAS
                 //verificar querys, valores int normal e varchar em '" "'
                 query.prepare("INSERT INTO "
-                                "a006_estoque_vendas(a006_codigo          "
-                                                     ",a006_denomicanao   "
-                                                     ",a006_qtde_vendida  "
-                                                     ",valor_un           "
-                                                     ",valor_total        "
-                                                     ",a006_margem_lucro) "
+                                "a006_estoque_vendas(a006_codigo           "
+                                                     ",a006_denomicanao    "
+                                                     ",a006_qtde_vendida   "
+                                                     ",a006_valor_unitario "
+                                                     ",a006_valor_total    "
+                                                     ",a006_margem_lucro)  "
                               "VALUES('"+QString::number(idVenda)  +"'"
                                     ",'"+denominacao               +"'"
                                     ",'"+qtde_vendida              +"'"
