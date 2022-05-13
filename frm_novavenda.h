@@ -13,6 +13,7 @@
 #include <QJsonObject>
 #include "ConexaoBanco.h"
 #include "funcoes_globais.h"
+#include "variaveis_globais.h"
 
 namespace Ui {
 class frm_novavenda;
@@ -42,6 +43,7 @@ public:
     static QString g_valor_unitario;
     static QString g_valor_total;
     static QString g_valor_comprado;
+    static QString g_margem_lucro;
 
     //variável global, verifica se um produto foi alterado
     static bool g_alterou;
@@ -54,6 +56,10 @@ private slots:
     void on_btn_pesquisarproduto_clicked();
 
     void on_btn_adicionarItem_clicked();
+
+    void on_btn_excluirproduto_clicked();
+
+    void on_btn_finalizarvenda_clicked();
 
 private:
     Ui::frm_novavenda *ui;

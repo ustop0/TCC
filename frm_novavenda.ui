@@ -119,13 +119,6 @@
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="btn_editarproduto">
-      <property name="text">
-       <string>Editar Produto</string>
-      </property>
-     </widget>
-    </item>
-    <item>
      <widget class="QPushButton" name="btn_finalizarvenda">
       <property name="text">
        <string>Finalizar Venda</string>

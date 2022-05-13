@@ -7,6 +7,7 @@ QString frm_novavenda::g_qtde;
 QString frm_novavenda::g_valor_unitario;
 QString frm_novavenda::g_valor_total;
 QString frm_novavenda::g_valor_comprado;
+QString frm_novavenda::g_margem_lucro;
 
 //variável global, verifica se um produto foi alterado
 bool g_alterou;
@@ -431,17 +432,17 @@ void frm_novavenda::on_btn_adicionarItem_clicked()
 //    QStringList cabecalho2 = {"Código", "Produto", "Valor Un.", "Qtde", "Total", "Lucro"};
 
     //verifica se a quantidade informada é maior que a quantidade em estoque
-    if( ui->txt_qtde->text() > qtde_estoque ||  ui->txt_qtde->text() == "0")
+    if( ui->txt_qtde->text() > qtde_estoque )
     {
         QMessageBox::information(this
                                  ,"Aviso"
                                  ,"Valor informado para o produto"
-                                  "acima do valor do estoque para esse produto");
+                                  " acima do valor do estoque para esse produto");
 
         ui->txt_qtde->setText("1");
         ui->txt_qtde->setFocus();
     }
-    else if( ui->txt_qtde->text() == "" )
+    else if( ui->txt_qtde->text() == "" ||  ui->txt_qtde->text() == "0" )
     {
         QMessageBox::information(this
                                  ,"Aviso"
@@ -506,16 +507,173 @@ void frm_novavenda::on_btn_adicionarItem_clicked()
              atualiza_qtde = qtde_estoque.toInt() - qtde_venda.toInt();
 
              //adiciona ao valor da qtde
-             qtde_estoque.toInt();
-             qtde_estoque = atualiza_qtde;
+             g_qtde = QString::number( atualiza_qtde );
         }
         else
         {
-            QMessageBox::warning(this, "ERRO", "Erro ao inserir novo produto");
+            QMessageBox::warning(this, "ERRO", "Erro ao inserir o produto na lista");
         }
     }
 }
 
+//excluir o produto da lista de itens
+void frm_novavenda::on_btn_excluirproduto_clicked()
+{
+    if( ui->tw_listaprodutos->currentColumn() != -1 )
+    {
+        QMessageBox::StandardButton opc =QMessageBox::question(this
+                                                               ,"Exclusão?"
+                                                               ,"Confirma exclusão do produto"
+                                                               ,QMessageBox::Yes|QMessageBox::No);
+
+        if( opc == QMessageBox::Yes )
+        {
+            //**REVISAR ESSA FUNÇÃO
+            int contlinhas = 0;
+
+            //removendo o produto selecionado e recalculando o total da venda
+            ui->tw_listaprodutos->removeRow(ui->tw_listaprodutos->currentRow());
+            ui->lb_totalvenda->setText("R$ "
+                                       +QString::number(
+                                                   calculaTotal(ui->tw_listaprodutos, 4))+",00");
+
+            ui->lb_totalvenda->setText("R$ "
+                                       +QString::number(
+                                                   calculaTotal(ui->tw_listaprodutos, 5))+",00");
+
+            contlinhas--; //excluindo linha depois que o produto é excluido
+
+        }
+        else
+        {
+
+        }
+    }
+    else
+    {
+        QMessageBox::warning(this, "ERRO", "Selecione um produto primeiro");
+    }
+}
+
+void frm_novavenda::on_btn_finalizarvenda_clicked()
+{
+    /*
+    QSqlQuery query;
+
+    query.prepare("UPDATE "
+                    "a002_estoque "
+                  "SET "
+                    "a002_qtde_estoque = '" +g_qtde+ "' "
+                  "WHERE "
+                    "a002_codigo = '" +g_codigo_peca+ "' ");
+
+
+    if( !query.exec() )
+    {
+        QMessageBox::critical(this, "ERRO", "Erro ao atualizar qtde estoque");
+    }
+    else
+    {
+        qDebug() << "Sucesso ao atualizar estoque";
+    }
+    */
+
+    //gravas as informações na tabela de venda e obter o id da venda
+    //verifica se tem produtos no table widget, para realizar uma venda
+    if( ui->tw_listaprodutos->rowCount() > 0 )
+    {
+        int idVenda;
+
+        QString msgFimVenda;
+        double total = calculaTotal(ui->tw_listaprodutos, 4);
+        QString data = QDate::currentDate().toString("yyyy-MM-dd");
+        //QString data=QDate::currentDate().toString("dd/MM/yyyy"); //data venda
+        QString hora = QTime::currentTime().toString("hh:mm:ss");
+
+        //inserindo dados da venda na tabela de vendas
+        QSqlQuery query;
+        query.prepare("INSERT INTO "
+                        "a007_vendas(a007_data_venda          "
+                                    ",a007_hora_venda         "
+                                    ",a007_fk_codigo_usuario  "
+                                    ",a007_valor_total)       "
+                      "VALUES('"+data                                    + "'"
+                            ",'"+hora                                    + "'"
+                            ",'"+QString::number( variaveis_globais::id_colab ) + "'"
+                            ",'"+QString::number( total )                  + "')");
+
+        if( !query.exec() )
+        {
+            QMessageBox::warning(this, "ERRO", "Erro ao registrar nova venda");
+        }
+        else
+        {
+            //obtém o último registro, query limitada a um registro
+            query.prepare("SELECT "
+                            "a007_codigo "
+                          "FROM "
+                            "a007_vendas "
+                          "ORDER BY "
+                            "a007_codigo DESC LIMIT 1");
+
+            query.exec();
+            query.first();
+
+            //obtem o id da venda
+            idVenda = query.value(0).toInt();
+
+            msgFimVenda="ID Venda: " +QString::number(idVenda)
+                                     +"\nValor total da venda: R$ "
+                                     +QString::number(total)+",00";
+
+            //inserindo venda na tabela estoque_vendas
+            //leitura da quantidade total de linhas
+            int totalLinhas = ui->tw_listaprodutos->rowCount();
+            int linha = 0; //linha que está fazendo a leitura
+
+            while( linha < totalLinhas ) //percorre o table widget
+            {
+                QString denominacao = ui->tw_listaprodutos->item(linha,1)->text();
+                QString valor_unitario = ui->tw_listaprodutos->item(linha,2)->text();
+                QString qtde_vendida = ui->tw_listaprodutos->item(linha,3)->text();
+                QString valor_total = ui->tw_listaprodutos->item(linha,4)->text();
+                QString margem_lucro = ui->tw_listaprodutos->item(linha,5)->text();
+
+                //DEPURAR NÃO ESTÁ REGISTRANDO AS VENDAS NA TABELA DE VENDAS
+                //verificar querys, valores int normal e varchar em '" "'
+                query.prepare("INSERT INTO "
+                                "a006_estoque_vendas(a006_codigo          "
+                                                     ",a006_denomicanao   "
+                                                     ",a006_qtde_vendida  "
+                                                     ",valor_un           "
+                                                     ",valor_total        "
+                                                     ",a006_margem_lucro) "
+                              "VALUES('"+QString::number(idVenda)  +"'"
+                                    ",'"+denominacao               +"'"
+                                    ",'"+qtde_vendida              +"'"
+                                    ",'"+valor_unitario            +"'"
+                                    ",'"+valor_total               +"'"
+                                    ",'"+margem_lucro              +"')");
+
+                query.exec(); //executa o sql
+                linha++; //incrementa a variável para a próxima linha
+            }
+
+            QMessageBox::information(this, "Venda Concluída", msgFimVenda);
+            resetaCampos();
+
+            //remove as linhas do table widget
+            funcoes_globais::removerLinhas( ui->tw_listaprodutos );
+            ui->lb_totalvenda->setText("R$ 0,00");
+            ui->lb_totallucro->setText("R$ 0,00");
+        }
+    }
+    else
+    {
+        QMessageBox::warning(this, "ERRO", "Não existem produtos nessa venda\n"
+                                           "Primeiro adicione um produto");
+    }
+}
 
 /**FUNÇÕES**/
 /*--------------------------------------------------------------------------------------------
