@@ -654,12 +654,12 @@ void frm_novavenda::on_btn_finalizarvenda_clicked()
                                                      ",a006_valor_unitario "
                                                      ",a006_valor_total    "
                                                      ",a006_margem_lucro)  "
-                              "VALUES('"+QString::number(idVenda)  +"'"
-                                    ",'"+denominacao               +"'"
-                                    ",'"+qtde_vendida              +"'"
-                                    ",'"+valor_unitario            +"'"
-                                    ",'"+valor_total               +"'"
-                                    ",'"+margem_lucro              +"')");
+                              "VALUES('"+QString::number( idVenda ) +"'"
+                                    ",'" +denominacao               + "'"
+                                    ",'" +qtde_vendida              + "'"
+                                    ",'" +valor_unitario            + "'"
+                                    ",'" +valor_total               + "'"
+                                    ",'" +margem_lucro              + "') ");
 
                 query.exec(); //executa o sql
                 linha++; //incrementa a variável para a próxima linha
@@ -713,5 +713,6 @@ double frm_novavenda::calculaTotal( QTableWidget *tw, int coluna )
     {
         total += tw->item(i, coluna)->text().toDouble();
     }
+
     return total;
 }

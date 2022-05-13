@@ -11,7 +11,7 @@ frm_gestaovendas::frm_gestaovendas(QWidget *parent) :
     //tornar o cabeçalho horizontal visivel
     ui->tw_listaVendas->horizontalHeader()->setVisible(true);
     //definindo numero de colunas, são seis colunas
-    ui->tw_listaVendas->setColumnCount(7);
+    ui->tw_listaVendas->setColumnCount(6);
     QStringList cabe1 = {"Código", "Data", "Hora", "Usuário", "V.Total", "M.Lucro"};
     //nome dos cabeçalhos do table widget
     ui->tw_listaVendas->setHorizontalHeaderLabels(cabe1);
@@ -68,7 +68,7 @@ frm_gestaovendas::frm_gestaovendas(QWidget *parent) :
     //**LISTA PRODUTOS**
     ui->tw_listaProdutos->horizontalHeader()->setVisible(true);
     ui->tw_listaProdutos->setColumnCount(6);
-    QStringList cabe2 = {"Código Mov", "Usuário" "Produto", "Qtde"
+    QStringList cabe2 = {"Código Mov", "Produto", "Qtde"
                          , "Val.Uni", "Val.Total", "M.Lucro"};
 
     ui->tw_listaProdutos->setHorizontalHeaderLabels(cabe2);
@@ -90,7 +90,6 @@ frm_gestaovendas::~frm_gestaovendas() //**INICIO** destrutor
 //lista produtos TW
 void frm_gestaovendas::on_tw_listaProdutos_itemSelectionChanged()
 {
-    //ui->tw_listaVendas->clear();
     //limpando table widget
     ui->tw_listaProdutos->setRowCount(0);
 
@@ -188,12 +187,24 @@ void frm_gestaovendas::on_btn_filtrar_clicked()
     {
         //linha, coluna e item
         ui->tw_listaVendas->insertRow(contlinhas);
-        ui->tw_listaVendas->setItem(contlinhas, 0, new QTableWidgetItem(query.value(0).toString()));
-        ui->tw_listaVendas->setItem(contlinhas, 1, new QTableWidgetItem(query.value(1).toString()));
-        ui->tw_listaVendas->setItem(contlinhas, 2, new QTableWidgetItem(query.value(2).toString()));
-        ui->tw_listaVendas->setItem(contlinhas, 3, new QTableWidgetItem(query.value(3).toString()));
-        ui->tw_listaVendas->setItem(contlinhas, 4, new QTableWidgetItem(query.value(4).toString()));
-        ui->tw_listaVendas->setItem(contlinhas, 5, new QTableWidgetItem(query.value(5).toString()));
+        ui->tw_listaVendas->setItem(contlinhas, 0,
+                                            new QTableWidgetItem(query.value(0).toString()));
+
+        ui->tw_listaVendas->setItem(contlinhas, 1,
+                                            new QTableWidgetItem(query.value(1).toString()));
+
+        ui->tw_listaVendas->setItem(contlinhas, 2,
+                                            new QTableWidgetItem(query.value(2).toString()));
+
+        ui->tw_listaVendas->setItem(contlinhas, 3,
+                                            new QTableWidgetItem(query.value(3).toString()));
+
+        ui->tw_listaVendas->setItem(contlinhas, 4,
+                                            new QTableWidgetItem(query.value(4).toString()));
+
+        ui->tw_listaVendas->setItem(contlinhas, 5,
+                                            new QTableWidgetItem(query.value(5).toString()));
+
         contlinhas++;
     }while( query.next() );
 }
@@ -288,7 +299,7 @@ void frm_gestaovendas::on_btn_relatorio_clicked()
         painter.drawText(25,linha, ui->tw_listaProdutos->item(i, 0)->text());
         painter.drawText(50,linha, ui->tw_listaProdutos->item(i, 1)->text());
         painter.drawText(300,linha, ui->tw_listaProdutos->item(i, 2)->text());
-        linha+=salto;
+        linha += salto;
     }
 
     //adicionando nova página
