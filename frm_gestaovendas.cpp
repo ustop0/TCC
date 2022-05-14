@@ -13,6 +13,7 @@ frm_gestaovendas::frm_gestaovendas(QWidget *parent) :
     //definindo numero de colunas, são seis colunas
     ui->tw_listaVendas->setColumnCount(6);
     QStringList cabe1 = {"Código", "Data", "Hora", "Usuário", "V.Total", "M.Lucro"};
+
     //nome dos cabeçalhos do table widget
     ui->tw_listaVendas->setHorizontalHeaderLabels(cabe1);
     //definindo cor da linha ao ser selecionada
@@ -23,10 +24,13 @@ frm_gestaovendas::frm_gestaovendas(QWidget *parent) :
     ui->tw_listaVendas->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     //coluna
     ui->tw_listaVendas->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    //pegando linha selecionada
-    ui->tw_listaVendas->setSelectionBehavior(QAbstractItemView::SelectRows);
     //bloqueando edição do table widget
     ui->tw_listaVendas->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    //pegando linha selecionada
+    ui->tw_listaVendas->setSelectionBehavior(QAbstractItemView::SelectRows);
+    //desabilitando os indices das linhas
+    ui->tw_listaVendas->verticalHeader()->setVisible(false);
+
 
     //listando vendas
     con.abrir();
@@ -62,6 +66,7 @@ frm_gestaovendas::frm_gestaovendas(QWidget *parent) :
         ui->tw_listaVendas->setItem(contlinhas, 2, new QTableWidgetItem(query.value(2).toString()));
         ui->tw_listaVendas->setItem(contlinhas, 3, new QTableWidgetItem(query.value(3).toString()));
         ui->tw_listaVendas->setItem(contlinhas, 4, new QTableWidgetItem(query.value(4).toString()));
+        ui->tw_listaVendas->setItem(contlinhas, 5, new QTableWidgetItem(query.value(5).toString()));
         contlinhas++;
     }while( query.next() );
 
@@ -77,8 +82,10 @@ frm_gestaovendas::frm_gestaovendas(QWidget *parent) :
 
     ui->tw_listaProdutos->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->tw_listaProdutos->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    ui->tw_listaProdutos->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tw_listaProdutos->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tw_listaProdutos->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tw_listaProdutos->verticalHeader()->setVisible(false);
+
 }
 
 frm_gestaovendas::~frm_gestaovendas() //**INICIO** destrutor
@@ -245,12 +252,23 @@ void frm_gestaovendas::on_btn_mostratTodasVendas_clicked()
     {
         //linha, coluna e item
         ui->tw_listaVendas->insertRow(contlinhas);
-        ui->tw_listaVendas->setItem(contlinhas, 0, new QTableWidgetItem(query.value(0).toString()));
-        ui->tw_listaVendas->setItem(contlinhas, 1, new QTableWidgetItem(query.value(1).toString()));
-        ui->tw_listaVendas->setItem(contlinhas, 2, new QTableWidgetItem(query.value(2).toString()));
-        ui->tw_listaVendas->setItem(contlinhas, 3, new QTableWidgetItem(query.value(3).toString()));
-        ui->tw_listaVendas->setItem(contlinhas, 4, new QTableWidgetItem(query.value(4).toString()));
-        ui->tw_listaVendas->setItem(contlinhas, 5, new QTableWidgetItem(query.value(5).toString()));
+        ui->tw_listaVendas->setItem(contlinhas, 0,
+                                                new QTableWidgetItem(query.value(0).toString()));
+
+        ui->tw_listaVendas->setItem(contlinhas, 1,
+                                                new QTableWidgetItem(query.value(1).toString()));
+
+        ui->tw_listaVendas->setItem(contlinhas, 2,
+                                                new QTableWidgetItem(query.value(2).toString()));
+
+        ui->tw_listaVendas->setItem(contlinhas, 3,
+                                                new QTableWidgetItem(query.value(3).toString()));
+
+        ui->tw_listaVendas->setItem(contlinhas, 4,
+                                                new QTableWidgetItem(query.value(4).toString()));
+
+        ui->tw_listaVendas->setItem(contlinhas, 5,
+                                                new QTableWidgetItem(query.value(5).toString()));
         contlinhas++;
     }while( query.next() );
 }
@@ -274,6 +292,7 @@ void frm_gestaovendas::on_btn_relatorio_clicked()
     QPainter painter;
     if( !painter.begin( &printer ) ) //iniciando o arquivo
     {
+        QMessageBox::information(this, "Erro", "Não foi possível emitir relatório");
         qDebug() << "ERRO ao abrir PDF";
         return; //sai do procedimento e executa a proxima parte do código
     }
