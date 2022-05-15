@@ -31,7 +31,7 @@ public:
     Conexao con;
 
     //função para resetar campos
-    void resetaCampos();
+    inline void resetaCampos();
 
     //função para calculo do valor total
     double calculaTotal( QTableWidget *tw, int coluna );

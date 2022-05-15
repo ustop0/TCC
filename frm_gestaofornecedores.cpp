@@ -34,9 +34,9 @@ frm_gestaofornecedores::frm_gestaofornecedores(QWidget *parent) :
 
     //**Estilizando layout da table widget**
     //definindo o tamanho das colunas
-    ui->tw_ge_listarFornecedores->setColumnCount(13); //define que o table widget terá duas colunas
-    ui->tw_ge_listarFornecedores->setColumnWidth(0, 150); //id colaborador
-    ui->tw_ge_listarFornecedores->setColumnWidth(1, 220); //nome colaborador7
+    ui->tw_ge_listarFornecedores->setColumnCount(13);
+    ui->tw_ge_listarFornecedores->setColumnWidth(0, 40);
+    ui->tw_ge_listarFornecedores->setColumnWidth(1, 200);
 
     //cabeçalhos do table widget
     QStringList cabecalhos={"Código", "Razão Social", "Nome Fantasia", "CNPJ","Estado"

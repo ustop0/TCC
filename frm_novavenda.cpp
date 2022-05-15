@@ -583,7 +583,7 @@ void frm_novavenda::on_btn_finalizarvenda_clicked()
     //verifica se tem produtos no table widget, para realizar uma venda
     if( ui->tw_listaprodutos->rowCount() > 0 )
     {
-        int idVenda;
+        int codigo_venda;
 
         //**ATENÇÃO** foi adicionada a coluna margem de lucro, inserindo lucro
         QString msgFimVenda;
@@ -626,11 +626,11 @@ void frm_novavenda::on_btn_finalizarvenda_clicked()
             query.first();
 
             //obtem o id da venda
-            idVenda = query.value(0).toInt();
+            codigo_venda = query.value(0).toInt();
 
-            msgFimVenda="ID Venda: " +QString::number(idVenda)
+            msgFimVenda="ID Venda: " +QString::number( codigo_venda )
                                      +"\nValor total da venda: R$ "
-                                     +QString::number(total)+",00";
+                                     +QString::number( total )+",00";
 
             //inserindo venda na tabela estoque_vendas
             //leitura da quantidade total de linhas
@@ -648,18 +648,18 @@ void frm_novavenda::on_btn_finalizarvenda_clicked()
                 //DEPURAR NÃO ESTÁ REGISTRANDO AS VENDAS NA TABELA DE VENDAS
                 //verificar querys, valores int normal e varchar em '" "'
                 query.prepare("INSERT INTO "
-                                "a006_estoque_vendas(a006_codigo           "
+                                "a006_estoque_vendas(a006_fk_codigo_venda  "
                                                      ",a006_denomicanao    "
                                                      ",a006_qtde_vendida   "
                                                      ",a006_valor_unitario "
                                                      ",a006_valor_total    "
                                                      ",a006_margem_lucro)  "
-                              "VALUES('"+QString::number( idVenda ) +"'"
-                                    ",'" +denominacao               + "'"
-                                    ",'" +qtde_vendida              + "'"
-                                    ",'" +valor_unitario            + "'"
-                                    ",'" +valor_total               + "'"
-                                    ",'" +margem_lucro              + "') ");
+                              "VALUES('"+QString::number( codigo_venda ) +"'"
+                                    ",'" +denominacao                    + "'"
+                                    ",'" +qtde_vendida                   + "'"
+                                    ",'" +valor_unitario                 + "'"
+                                    ",'" +valor_total                    + "'"
+                                    ",'" +margem_lucro                   + "') ");
 
                 query.exec(); //executa o sql
                 linha++; //incrementa a variável para a próxima linha
@@ -689,10 +689,11 @@ void frm_novavenda::on_btn_finalizarvenda_clicked()
  * Chamada:                                                        |
  *--------------------------------------------------------------------------------------------
  */
-void frm_novavenda::resetaCampos() //Função para resetar campos
+inline void frm_novavenda::resetaCampos() //Função para resetar campos
 {
     //atualizando o valor total da venda e limpando o campo txt_codproduto
     ui->txt_codigopeca->clear();
+    ui->txt_qtdeEstoque->clear();
     ui->txt_qtde->setText("1"); //volta quantidade para 1 no campo quantidade
     ui->txt_vd_filtrar->setFocus();
 }

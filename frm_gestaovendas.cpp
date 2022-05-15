@@ -7,15 +7,27 @@ frm_gestaovendas::frm_gestaovendas(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    //abrindo a conexao com o banco
+    if( !con.abrir() ) //verificando se a conexao foi aberta
+    {
+        if( !con.abrir() )
+        {
+            QMessageBox::warning(this, "ERRO", "Erro ao abrir banco de dados");
+        }
+    }
+
     //**LISTA VENDAS**
     //tornar o cabeçalho horizontal visivel
     ui->tw_listaVendas->horizontalHeader()->setVisible(true);
     //definindo numero de colunas, são seis colunas
     ui->tw_listaVendas->setColumnCount(6);
-    QStringList cabe1 = {"Código", "Data", "Hora", "Usuário", "V.Total", "M.Lucro"};
+    ui->tw_listaVendas->setColumnWidth(0, 40);
+    ui->tw_listaVendas->setColumnWidth(1, 200);
+
+    QStringList cabe1 = {"Código","Usuário", "Data", "Hora","V.Total", "M.Lucro"};
 
     //nome dos cabeçalhos do table widget
-    ui->tw_listaVendas->setHorizontalHeaderLabels(cabe1);
+    ui->tw_listaVendas->setHorizontalHeaderLabels( cabe1 );
     //definindo cor da linha ao ser selecionada
     ui->tw_listaVendas->setStyleSheet("QTableView "
                                       "{selection-background-color:red}");
@@ -33,7 +45,6 @@ frm_gestaovendas::frm_gestaovendas(QWidget *parent) :
 
 
     //listando vendas
-    con.abrir();
     int contlinhas = 0;
     QSqlQuery query;
     query.prepare("SELECT "
@@ -60,13 +71,24 @@ frm_gestaovendas::frm_gestaovendas(QWidget *parent) :
     do
     {
         //linha, coluna e item
-        ui->tw_listaVendas->insertRow(contlinhas);
-        ui->tw_listaVendas->setItem(contlinhas, 0, new QTableWidgetItem(query.value(0).toString()));
-        ui->tw_listaVendas->setItem(contlinhas, 1, new QTableWidgetItem(query.value(1).toString()));
-        ui->tw_listaVendas->setItem(contlinhas, 2, new QTableWidgetItem(query.value(2).toString()));
-        ui->tw_listaVendas->setItem(contlinhas, 3, new QTableWidgetItem(query.value(3).toString()));
-        ui->tw_listaVendas->setItem(contlinhas, 4, new QTableWidgetItem(query.value(4).toString()));
-        ui->tw_listaVendas->setItem(contlinhas, 5, new QTableWidgetItem(query.value(5).toString()));
+        ui->tw_listaVendas->insertRow( contlinhas );
+        ui->tw_listaVendas->setItem(contlinhas, 0,
+                                                new QTableWidgetItem(query.value(0).toString()));
+
+        ui->tw_listaVendas->setItem(contlinhas, 1,
+                                                new QTableWidgetItem(query.value(1).toString()));
+
+        ui->tw_listaVendas->setItem(contlinhas, 2,
+                                                new QTableWidgetItem(query.value(2).toString()));
+
+        ui->tw_listaVendas->setItem(contlinhas, 3,
+                                                new QTableWidgetItem(query.value(3).toString()));
+
+        ui->tw_listaVendas->setItem(contlinhas, 4,
+                                                new QTableWidgetItem(query.value(4).toString()));
+
+        ui->tw_listaVendas->setItem(contlinhas, 5,
+                                                new QTableWidgetItem(query.value(5).toString()));
         contlinhas++;
     }while( query.next() );
 
@@ -98,11 +120,11 @@ frm_gestaovendas::~frm_gestaovendas() //**INICIO** destrutor
 void frm_gestaovendas::on_tw_listaProdutos_itemSelectionChanged()
 {
     //limpando table widget
-    ui->tw_listaProdutos->setRowCount(0);
+     funcoes_globais::removerLinhas( ui->tw_listaProdutos );
 
-    con.abrir();
-    int contlinhas = 0;
     QString codigo_venda = ui->tw_listaVendas->item(ui->tw_listaVendas->currentRow(),0)->text();
+
+    int contlinhas = 0;
 
     QSqlQuery query;
     query.prepare("SELECT "
@@ -114,8 +136,9 @@ void frm_gestaovendas::on_tw_listaProdutos_itemSelectionChanged()
                     ",a006_margem_lucro    "
                   "FROM "
                     "a006_estoque_vendas "
+                    "JOIN a007_vendas on (a007_codigo = a006_fk_codigo_venda) "
                   "WHERE "
-                    "a006_codigo = '" +codigo_venda+ "'");
+                    "a006_fk_codigo_venda = '" +codigo_venda+ "'");
 
     if( !query.exec() )
     {
@@ -129,7 +152,7 @@ void frm_gestaovendas::on_tw_listaProdutos_itemSelectionChanged()
     do
     {
         //linha, coluna e item
-        ui->tw_listaProdutos->insertRow(contlinhas);
+        ui->tw_listaProdutos->insertRow( contlinhas );
         ui->tw_listaProdutos->setItem(contlinhas, 0,
                                                 new QTableWidgetItem(query.value(0).toString()));
 
@@ -156,9 +179,8 @@ void frm_gestaovendas::on_tw_listaProdutos_itemSelectionChanged()
 void frm_gestaovendas::on_btn_filtrar_clicked()
 {
     //limpando table widget
-    ui->tw_listaProdutos->setRowCount(0);
+    funcoes_globais::removerLinhas( ui->tw_listaVendas );
 
-    con.abrir();
     int contlinhas=0;
 
     QString data_inicial = ui->de_datainicial->text();
@@ -221,7 +243,6 @@ void frm_gestaovendas::on_btn_mostratTodasVendas_clicked()
 {
     funcoes_globais::removerLinhas( ui->tw_listaVendas );
 
-    con.abrir();
     int contlinhas = 0;
 
     QSqlQuery query;
@@ -240,7 +261,7 @@ void frm_gestaovendas::on_btn_mostratTodasVendas_clicked()
                   "WHERE "
                       "a007_ativo = true ");
 
-    if(!query.exec()) //verifica se a query tem algum erro e executa ela
+    if(!query.exec())
     {
         QMessageBox::warning(this, "ERRO", "Erro ao listar vendas");
 
