@@ -13,30 +13,17 @@
   <property name="windowTitle">
    <string>Gestão de Vendas</string>
   </property>
-  <widget class="QPushButton" name="btn_filtrar">
-   <property name="geometry">
-    <rect>
-     <x>260</x>
-     <y>35</y>
-     <width>89</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Filtrar</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="btn_mostratTodasVendas">
    <property name="geometry">
     <rect>
-     <x>361</x>
+     <x>609</x>
      <y>35</y>
-     <width>181</width>
+     <width>131</width>
      <height>25</height>
     </rect>
    </property>
    <property name="text">
-    <string>Mostrar todas as vendas</string>
+    <string>Todas as Vendas</string>
    </property>
   </widget>
   <widget class="QTableWidget" name="tw_listaProdutos">
@@ -65,9 +52,9 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>131</x>
      <y>10</y>
-     <width>109</width>
+     <width>111</width>
      <height>51</height>
     </rect>
    </property>
@@ -75,7 +62,7 @@
     <item>
      <widget class="QLabel" name="label">
       <property name="text">
-       <string>Data Inicial</string>
+       <string>Data Inicial:</string>
       </property>
      </widget>
     </item>
@@ -87,7 +74,7 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>140</x>
+     <x>250</x>
      <y>10</y>
      <width>109</width>
      <height>51</height>
@@ -97,7 +84,7 @@
     <item>
      <widget class="QLabel" name="label_2">
       <property name="text">
-       <string>Data Final</string>
+       <string>Data Final:</string>
       </property>
      </widget>
     </item>
@@ -142,6 +129,50 @@
     <string>Produtos:</string>
    </property>
   </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>111</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_3">
+    <item>
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>Filtrar:</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QComboBox" name="cb_filtrar"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>369</x>
+     <y>34</y>
+     <width>231</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QLineEdit" name="lineEdit"/>
+    </item>
+    <item>
+     <widget class="QPushButton" name="btn_filtrar">
+      <property name="text">
+       <string>Filtrar</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
   <zorder>groupBox_2</zorder>
   <zorder>groupBox</zorder>
   <zorder>btn_filtrar</zorder>
@@ -150,6 +181,9 @@
   <zorder>btn_relatorio</zorder>
   <zorder>layoutWidget</zorder>
   <zorder>layoutWidget</zorder>
+  <zorder>cb_filtrar</zorder>
+  <zorder>label_3</zorder>
+  <zorder>lineEdit</zorder>
  </widget>
  <resources/>
  <connections/>

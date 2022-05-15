@@ -117,10 +117,11 @@ frm_gestaovendas::~frm_gestaovendas() //**INICIO** destrutor
 }
 
 //lista produtos TW
-void frm_gestaovendas::on_tw_listaProdutos_itemSelectionChanged()
+
+void frm_gestaovendas::on_tw_listaVendas_itemSelectionChanged()
 {
     //limpando table widget
-     funcoes_globais::removerLinhas( ui->tw_listaProdutos );
+    funcoes_globais::removerLinhas( ui->tw_listaProdutos );
 
     QString codigo_venda = ui->tw_listaVendas->item(ui->tw_listaVendas->currentRow(),0)->text();
 
@@ -245,6 +246,9 @@ void frm_gestaovendas::on_btn_mostratTodasVendas_clicked()
 
     int contlinhas = 0;
 
+//    QStringList cabe2 = {"Código Mov", "Produto", "Qtde"
+//                         , "Val.Uni", "Val.Total", "M.Lucro"};
+
     QSqlQuery query;
 
     //mudar formatação de data no banco de dados, tela novavenda e nos campos de data na interface
@@ -320,25 +324,47 @@ void frm_gestaovendas::on_btn_relatorio_clicked()
 
     //**FORMATANDO PDF**
     //adicionando imagens
-    painter.drawPixmap( 300, 25, QPixmap(":/Imagens/car.png") );
+    //primeiro valor: eixo horizontal
+    //segundo valor: eixo vertical
+    painter.drawPixmap( 200, -100, QPixmap(":/Imagens/car.png") );
 
+    //**DADOS DA VENDA**
     //informando localização, coluna e linha
     int linha = 250;
     int salto = 20;
 
-    //id da venda
-    painter.drawText(25, 200,"Código: " + ui->tw_listaVendas->
-                           item(ui->tw_listaVendas->currentRow(), 0)->text());
-    //data da venda
-    painter.drawText(150,200,"Data: " +  ui->tw_listaVendas->
-                           item(ui->tw_listaVendas->currentRow(), 2)->text());
+    //**itens cabeçalho**
+    QString codigo_venda = ui->tw_listaVendas->item(ui->tw_listaVendas->currentRow(), 0)->text();
+    QString usuario_venda = ui->tw_listaVendas->item(ui->tw_listaVendas->currentRow(), 1)->text();
+    QString data_venda = ui->tw_listaVendas->item(ui->tw_listaVendas->currentRow(), 2)->text();
+    QString hora_venda = ui->tw_listaVendas->item(ui->tw_listaVendas->currentRow(), 3)->text();
+    QString valor_total = ui->tw_listaProdutos->item(ui->tw_listaVendas->currentRow(), 4)->text();
+    QString lucro = ui->tw_listaProdutos->item(ui->tw_listaVendas->currentRow(), 5)->text();
 
-    for( int i=0; i < ui->tw_listaProdutos->rowCount(); i++ )
+    painter.drawText(25, 200,"Código: " + ui->tw_listaVendas->item(ui->tw_listaVendas->currentRow(), 0)->text());
+    painter.drawText(50,200,"Usuário: " + ui->tw_listaVendas->item(ui->tw_listaVendas->currentRow(), 1)->text());
+    //painter.drawText(85,200,"Data: " +  data_venda);
+    //painter.drawText(110,200,"Hora: " +  hora_venda);
+    //painter.drawText(135,200,"Val. Total: " +  valor_total);
+    //painter.drawText(160,200,"Margem Lucro: " +  lucro);
+
+    //**itens relatório
+    //a006_codigo
+    //a006_denomicanao
+    //a006_qtde_vendida
+    //a006_valor_unitario
+    //a006_valor_total
+    //a006_margem_lucro
+
+    for( int i = 0; i < ui->tw_listaProdutos->rowCount(); i++ )
     {
         //produtos da venda
         painter.drawText(25,linha, ui->tw_listaProdutos->item(i, 0)->text());
         painter.drawText(50,linha, ui->tw_listaProdutos->item(i, 1)->text());
-        painter.drawText(300,linha, ui->tw_listaProdutos->item(i, 2)->text());
+        //painter.drawText(200,linha, ui->tw_listaProdutos->item(i, 2)->text());
+        //painter.drawText(300,linha, ui->tw_listaProdutos->item(i, 3)->text());
+        //painter.drawText(400,linha, ui->tw_listaProdutos->item(i, 4)->text());
+        //painter.drawText(550,linha, ui->tw_listaProdutos->item(i, 5)->text());
         linha += salto;
     }
 
@@ -346,9 +372,12 @@ void frm_gestaovendas::on_btn_relatorio_clicked()
     printer.newPage();
     painter.drawText(25, 25, "Relatório de vendas");
 
-    painter.end(); // finaliza e gera o PDF
+    // finaliza e gera o PDF
+    painter.end();
 
     //abrir o arquivo pdf gerado
     QDesktopServices::openUrl(QUrl("file:///" + local + "/" + nome));
 }
+
+
 

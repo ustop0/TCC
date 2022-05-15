@@ -35,13 +35,15 @@ public:
     Conexao con;
 
 private slots:
-    void on_tw_listaProdutos_itemSelectionChanged();
+    void on_tw_listaVendas_itemSelectionChanged();
 
     void on_btn_filtrar_clicked();
 
     void on_btn_mostratTodasVendas_clicked();
 
     void on_btn_relatorio_clicked();
+
+
 
 private:
     Ui::frm_gestaovendas *ui;

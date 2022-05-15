@@ -654,12 +654,12 @@ void frm_novavenda::on_btn_finalizarvenda_clicked()
                                                      ",a006_valor_unitario "
                                                      ",a006_valor_total    "
                                                      ",a006_margem_lucro)  "
-                              "VALUES('"+QString::number( codigo_venda ) +"'"
-                                    ",'" +denominacao                    + "'"
-                                    ",'" +qtde_vendida                   + "'"
-                                    ",'" +valor_unitario                 + "'"
-                                    ",'" +valor_total                    + "'"
-                                    ",'" +margem_lucro                   + "') ");
+                              "VALUES('" +QString::number( codigo_venda ) + "'"
+                                    ",'" +denominacao                     + "'"
+                                    ",'" +qtde_vendida                    + "'"
+                                    ",'" +valor_unitario                  + "'"
+                                    ",'" +valor_total                     + "'"
+                                    ",'" +margem_lucro                    + "') ");
 
                 query.exec(); //executa o sql
                 linha++; //incrementa a variável para a próxima linha
@@ -686,12 +686,11 @@ void frm_novavenda::on_btn_finalizarvenda_clicked()
  * Autor: Thiago Ianzer                                                                       |
  * Data: 13/05/2022                                                                           |
  * Propósito: limpar os campos que indicam o codigo e qtde da peça                            |
- * Chamada:                                                        |
+ * Chamada:                                                                                   |
  *--------------------------------------------------------------------------------------------
  */
-inline void frm_novavenda::resetaCampos() //Função para resetar campos
+inline void frm_novavenda::resetaCampos()
 {
-    //atualizando o valor total da venda e limpando o campo txt_codproduto
     ui->txt_codigopeca->clear();
     ui->txt_qtdeEstoque->clear();
     ui->txt_qtde->setText("1"); //volta quantidade para 1 no campo quantidade
@@ -701,16 +700,16 @@ inline void frm_novavenda::resetaCampos() //Função para resetar campos
  * Autor: Thiago Ianzer                                                                       |
  * Data: 13/05/2022                                                                           |
  * Propósito: calcular o valor total da venda, no TW e no label                               |
- * Chamada:                                                           |
+ * Chamada:                                                                                   |
  *--------------------------------------------------------------------------------------------
  */
 double frm_novavenda::calculaTotal( QTableWidget *tw, int coluna )
 {
-    int totallinhas; //recebe o numero de linhas (Row Count)
+    size_t totallinhas; //recebe o numero de linhas (Row Count)
     double total = 0.0; //somatório
 
     totallinhas = tw->rowCount();
-    for( int i=0; i < totallinhas; i++ )
+    for( size_t i = 0; i < totallinhas; i++ )
     {
         total += tw->item(i, coluna)->text().toDouble();
     }
