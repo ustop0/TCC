@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>750</width>
-    <height>685</height>
+    <width>755</width>
+    <height>672</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,7 +16,7 @@
   <widget class="QPushButton" name="btn_mostratTodasVendas">
    <property name="geometry">
     <rect>
-     <x>609</x>
+     <x>615</x>
      <y>35</y>
      <width>131</width>
      <height>25</height>
@@ -29,8 +29,8 @@
   <widget class="QTableWidget" name="tw_listaProdutos">
    <property name="geometry">
     <rect>
-     <x>21</x>
-     <y>374</y>
+     <x>23</x>
+     <y>363</y>
      <width>711</width>
      <height>261</height>
     </rect>
@@ -40,7 +40,7 @@
    <property name="geometry">
     <rect>
      <x>590</x>
-     <y>652</y>
+     <y>641</y>
      <width>151</width>
      <height>25</height>
     </rect>
@@ -52,7 +52,7 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>131</x>
+     <x>129</x>
      <y>10</y>
      <width>111</width>
      <height>51</height>
@@ -74,7 +74,7 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>250</x>
+     <x>248</x>
      <y>10</y>
      <width>109</width>
      <height>51</height>
@@ -98,8 +98,8 @@
     <rect>
      <x>10</x>
      <y>67</y>
-     <width>731</width>
-     <height>270</height>
+     <width>736</width>
+     <height>260</height>
     </rect>
    </property>
    <property name="title">
@@ -108,10 +108,10 @@
    <widget class="QTableWidget" name="tw_listaVendas">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>13</x>
       <y>31</y>
       <width>711</width>
-      <height>230</height>
+      <height>220</height>
      </rect>
     </property>
    </widget>
@@ -120,8 +120,8 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>343</y>
-     <width>731</width>
+     <y>333</y>
+     <width>736</width>
      <height>301</height>
     </rect>
    </property>
@@ -154,9 +154,9 @@
   <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>369</x>
+     <x>366</x>
      <y>34</y>
-     <width>231</width>
+     <width>241</width>
      <height>27</height>
     </rect>
    </property>
