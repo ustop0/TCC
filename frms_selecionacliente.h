@@ -2,7 +2,19 @@
 #define FRMS_SELECIONACLIENTE_H
 
 #include <QDialog>
+#include <QMessageBox>
 #include <QDebug>
+#include <QString>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QMainWindow>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include "ConexaoBanco.h"
+#include "funcoes_globais.h"
+#include "Classes/clcliente.h"
+#include "Classes/clveiculo.h"
 
 namespace Ui {
 class frms_selecionacliente;
@@ -16,7 +28,11 @@ public:
     explicit frms_selecionacliente(QWidget *parent = nullptr);
     ~frms_selecionacliente();
 
+    //instanciando conexao com o banco de dados
+    Conexao con;
+
 private slots:
+    void on_txt_filtrarCliente_returnPressed();
 
     void on_btn_confirmarCliente_clicked();
 

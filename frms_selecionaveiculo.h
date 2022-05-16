@@ -1,5 +1,5 @@
-#ifndef FRM_AGENDASERVICOS_H
-#define FRM_AGENDASERVICOS_H
+#ifndef FRMS_SELECIONAVEICULO_H
+#define FRMS_SELECIONAVEICULO_H
 
 #include <QDialog>
 #include <QMessageBox>
@@ -16,33 +16,27 @@
 #include "Classes/clcliente.h"
 #include "Classes/clveiculo.h"
 
+
 namespace Ui {
-class frm_agendaservicos;
+class frms_selecionaveiculo;
 }
 
-class frm_agendaservicos : public QDialog
+class frms_selecionaveiculo : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit frm_agendaservicos(QWidget *parent = nullptr);
-    ~frm_agendaservicos();
+    explicit frms_selecionaveiculo(QWidget *parent = nullptr);
+    ~frms_selecionaveiculo();
 
     //instanciando conexao com o banco de dados
     Conexao con;
 
 private slots:
-
-    void on_btn_selecionaCliente_clicked();
-
-    void on_btn_selecionaVeiculo_clicked();
-
-    void on_btn_agendarServico_clicked();
-
-
+    void on_txt_filtrarVeiculo_returnPressed();
 
 private:
-    Ui::frm_agendaservicos *ui;
+    Ui::frms_selecionaveiculo *ui;
 };
 
-#endif // FRM_AGENDASERVICOS_H
+#endif // FRMS_SELECIONAVEICULO_H

@@ -33,6 +33,7 @@ SOURCES += \
     frm_sobre.cpp \
     frms_nv_veiculocliente.cpp \
     frms_selecionacliente.cpp \
+    frms_selecionaveiculo.cpp \
     funcoes_globais.cpp \
     main.cpp \
     frm_principal.cpp
@@ -62,6 +63,7 @@ HEADERS += \
     frm_sobre.h \
     frms_nv_veiculocliente.h \
     frms_selecionacliente.h \
+    frms_selecionaveiculo.h \
     funcoes_globais.h \
     variaveis_globais.h
 
@@ -79,7 +81,8 @@ FORMS += \
     frm_principal.ui \
     frm_sobre.ui \
     frms_nv_veiculocliente.ui \
-    frms_selecionacliente.ui
+    frms_selecionacliente.ui \
+    frms_selecionaveiculo.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

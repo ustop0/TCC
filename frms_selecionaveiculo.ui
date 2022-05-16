@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>frms_selecionacliente</class>
- <widget class="QDialog" name="frms_selecionacliente">
+ <class>frms_selecionaveiculo</class>
+ <widget class="QDialog" name="frms_selecionaveiculo">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,36 +11,45 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Seleção de Clientes</string>
+   <string>Dialog</string>
   </property>
-  <widget class="QTableWidget" name="tw_selecionaCliente">
+  <widget class="QTableWidget" name="tw_selecionaVeiculo">
    <property name="geometry">
     <rect>
      <x>9</x>
-     <y>62</y>
+     <y>63</y>
      <width>590</width>
      <height>275</height>
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="btn_confirmarCliente">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>510</x>
-     <y>349</y>
-     <width>89</width>
-     <height>25</height>
+     <x>328</x>
+     <y>31</y>
+     <width>271</width>
+     <height>27</height>
     </rect>
    </property>
-   <property name="text">
-    <string>Confirmar</string>
-   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QLineEdit" name="txt_filtrarVeiculo"/>
+    </item>
+    <item>
+     <widget class="QPushButton" name="btn_filtrarVeiculo">
+      <property name="text">
+       <string>Filtrar</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget_2">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>7</y>
+     <y>8</y>
      <width>151</width>
      <height>50</height>
     </rect>
@@ -58,27 +67,18 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QPushButton" name="btn_confirmarVeiculo">
    <property name="geometry">
     <rect>
-     <x>328</x>
-     <y>30</y>
-     <width>271</width>
-     <height>27</height>
+     <x>510</x>
+     <y>350</y>
+     <width>89</width>
+     <height>25</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
-     <widget class="QLineEdit" name="txt_filtrarCliente"/>
-    </item>
-    <item>
-     <widget class="QPushButton" name="btn_filtrarCliente">
-      <property name="text">
-       <string>Filtrar</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
+   <property name="text">
+    <string>Confirmar</string>
+   </property>
   </widget>
  </widget>
  <resources/>

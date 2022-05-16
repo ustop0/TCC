@@ -168,7 +168,7 @@ void frm_gestaofornecedores::on_tabWidget_currentChanged(int index)
         //limpa as linhas do table widget
         funcoes_globais::removerLinhas( ui->tw_ge_listarFornecedores );
         //inserir linhas dentro do table widget
-        int contlinhas=0;
+        int contlinhas = 0;
         //Remover os produtos do table widget
         QSqlQuery query; //query para listar os colaboradores no table widget
         query.prepare("SELECT "
