@@ -328,27 +328,46 @@ void frm_gestaovendas::on_btn_relatorio_clicked()
     //segundo valor: eixo vertical
     painter.drawPixmap( 200, -100, QPixmap(":/Imagens/car.png") );
 
-    //**DADOS DA VENDA**
-    //informando localização, coluna e linha
-    int linha = 250;
-    int salto = 20;
+    //**DADOS DA VENDA (a007)**
+    //--Título
+    painter.drawText(340,200,"DADOS VENDA");
 
     //**itens cabeçalho**
+    painter.drawText(25, 250,"Código");
+    painter.drawText(130,250,"Usuário");
+    painter.drawText(295,250,"Data");
+    painter.drawText(415,250,"Hora");
+    painter.drawText(540,250,"Val. Total");
+    painter.drawText(640,250,"Margem Lucro");
+
+    //**itens dados relatorio
     QString codigo_venda = ui->tw_listaVendas->item(ui->tw_listaVendas->currentRow(), 0)->text();
     QString usuario_venda = ui->tw_listaVendas->item(ui->tw_listaVendas->currentRow(), 1)->text();
     QString data_venda = ui->tw_listaVendas->item(ui->tw_listaVendas->currentRow(), 2)->text();
     QString hora_venda = ui->tw_listaVendas->item(ui->tw_listaVendas->currentRow(), 3)->text();
-    QString valor_total = ui->tw_listaProdutos->item(ui->tw_listaVendas->currentRow(), 4)->text();
-    QString lucro = ui->tw_listaProdutos->item(ui->tw_listaVendas->currentRow(), 5)->text();
+    QString valor_total = ui->tw_listaVendas->item(ui->tw_listaVendas->currentRow(), 4)->text();
+    QString lucro = ui->tw_listaVendas->item(ui->tw_listaVendas->currentRow(), 5)->text();
 
-    painter.drawText(25, 200,"Código: " + ui->tw_listaVendas->item(ui->tw_listaVendas->currentRow(), 0)->text());
-    painter.drawText(50,200,"Usuário: " + ui->tw_listaVendas->item(ui->tw_listaVendas->currentRow(), 1)->text());
-    //painter.drawText(85,200,"Data: " +  data_venda);
-    //painter.drawText(110,200,"Hora: " +  hora_venda);
-    //painter.drawText(135,200,"Val. Total: " +  valor_total);
-    //painter.drawText(160,200,"Margem Lucro: " +  lucro);
+    painter.drawText(25, 300, codigo_venda);
+    painter.drawText(130,300, usuario_venda);
+    painter.drawText(295,300, data_venda);
+    painter.drawText(415,300, hora_venda);
+    painter.drawText(540,300, valor_total);
+    painter.drawText(640,300, lucro);
 
-    //**itens relatório
+    //**DADOS DA VENDA ITENS RELATÓRIO (a006)**
+    //--Título
+    painter.drawText(340,400,"ITENS VENDA");
+
+    //**itens cabeçalho**
+    painter.drawText(25, 450,"Código");
+    painter.drawText(130,450,"Produto");
+    painter.drawText(295,450,"Qtde");
+    painter.drawText(415,450,"Val.Uni");
+    painter.drawText(540,450,"Val.Total");
+    painter.drawText(640,450,"M.Lucro");
+
+    //--Itens venda
     //a006_codigo
     //a006_denomicanao
     //a006_qtde_vendida
@@ -356,21 +375,25 @@ void frm_gestaovendas::on_btn_relatorio_clicked()
     //a006_valor_total
     //a006_margem_lucro
 
+    //informando localização, coluna e linha
+    int linha = 500;
+    int salto = 20;
+
     for( int i = 0; i < ui->tw_listaProdutos->rowCount(); i++ )
     {
         //produtos da venda
         painter.drawText(25,linha, ui->tw_listaProdutos->item(i, 0)->text());
-        painter.drawText(50,linha, ui->tw_listaProdutos->item(i, 1)->text());
-        //painter.drawText(200,linha, ui->tw_listaProdutos->item(i, 2)->text());
-        //painter.drawText(300,linha, ui->tw_listaProdutos->item(i, 3)->text());
-        //painter.drawText(400,linha, ui->tw_listaProdutos->item(i, 4)->text());
-        //painter.drawText(550,linha, ui->tw_listaProdutos->item(i, 5)->text());
+        painter.drawText(130,linha, ui->tw_listaProdutos->item(i, 1)->text());
+        painter.drawText(295,linha, ui->tw_listaProdutos->item(i, 2)->text());
+        painter.drawText(415,linha, ui->tw_listaProdutos->item(i, 3)->text());
+        painter.drawText(540,linha, ui->tw_listaProdutos->item(i, 4)->text());
+        painter.drawText(640,linha, ui->tw_listaProdutos->item(i, 5)->text());
         linha += salto;
     }
 
     //adicionando nova página
-    printer.newPage();
-    painter.drawText(25, 25, "Relatório de vendas");
+    //printer.newPage();
+    painter.drawText(25, 1000, "Relatório de vendas");
 
     // finaliza e gera o PDF
     painter.end();
