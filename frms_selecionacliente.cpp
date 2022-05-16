@@ -44,10 +44,10 @@ void frms_selecionacliente::on_btn_confirmarCliente_clicked() //confirmar
    //preenche o campo nome do cliente no formulário de agendamento de serviços
    //objeto instanciado por alocação automática, verificar se não vai causar
    //problemas de memória
-   Ui_frm_agendaservicos uiAgendaServicos;
+   //Ui_frm_agendaservicos uiAgendaServicos;
 
-   QString cliente_selecionado = "provisória"; //recebe do table widget
-   uiAgendaServicos.txt_nomeCliente->setText(cliente_selecionado);
+   //QString cliente_selecionado = "provisória"; //recebe do table widget
+   //uiAgendaServicos.txt_nomeCliente->setText(cliente_selecionado);
 }
 
 

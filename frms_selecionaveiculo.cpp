@@ -30,14 +30,14 @@ frms_selecionaveiculo::frms_selecionaveiculo(QWidget *parent) :
 
     //**Estilizando layout da table widget**
     //definindo o tamanho das colunas
-    ui->tw_selecionaVeiculo->setColumnCount(9);
+    ui->tw_selecionaVeiculo->setColumnCount(7);
     ui->tw_selecionaVeiculo->setColumnWidth(0, 40);
     ui->tw_selecionaVeiculo->setColumnWidth(1, 200);
 
     //cabeçalhos do table widget
     //cabeçalhos do table widget
-    QStringList cabecalhos={"Código", "Nome", "CPF", "Veiculo", "Placa"
-                           ,"Cidade", "Rua","Nro. Casa","Bairro"};
+    QStringList cabecalhos={"Código", "Nome", "CPF", "Marca"
+                           ,"Modelo","Placa", "Observação"};
 
     ui->tw_selecionaVeiculo->setHorizontalHeaderLabels(cabecalhos);
     //definindo cor da linha ao ser selecionada
@@ -59,25 +59,23 @@ frms_selecionaveiculo::frms_selecionaveiculo(QWidget *parent) :
     //Remover os produtos do table widget
     QSqlQuery query; //query para listar os colaboradores no table widget
     query.prepare("SELECT "
-                      "a003_codigo                   "
-                      ",a003_razao_social            "
-                      ",a003_nome_fantasia           "
-                      ",a003_cnpj                    "
-                      ",a003_estado                  "
-                      ",a003_cidade                  "
-                      ",a003_rua                     "
-                      ",a003_numero_estabelecimento  "
-                      ",a003_bairro                  "
-                      ",a003_porte                   "
-                      ",a003_ocupacao                "
-                      ",a003_telefone01              "
-                      ",a003_telefone02              "
+                      "a004_codigo          "
+                      ",a005_nome           "
+                      ",a005_cpf            "
+                      ",a011_marca_nome     "
+                      ",a012_nome_veiculo   "
+                      ",a004_placa_veiculo  "
+                      ",a004_observacao     "
                   "FROM "
-                      "a003_fornecedor "
+                      "a004_veiculos "
+                      "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo)  "
+                      "JOIN a011_marcas ON (a012_codigo = a012_fk_codigo_marca)    "
+                      "JOIN a005_cliente ON (a005_codigo = a004_fk_codigo_cliente) "
                   "WHERE "
-                    "a003_ativo = true "
+                    "a004_ativo = true  "
+                    //"a004_codigo = '" ++ "' "
                   "ORDER BY "
-                      "a003_codigo DESC");
+                      "a004_codigo DESC");
 
     if( query.exec() ) //verifica se ouve algum erro na execução da query
     {
@@ -114,14 +112,6 @@ frms_selecionaveiculo::frms_selecionaveiculo(QWidget *parent) :
                                         , 6
                                         , new QTableWidgetItem(query.value(6).toString()));
 
-            ui->tw_selecionaVeiculo->setItem(contlinhas
-                                        , 7
-                                        , new QTableWidgetItem(query.value(7).toString()));
-
-            ui->tw_selecionaVeiculo->setItem(contlinhas
-                                        , 8
-                                        , new QTableWidgetItem(query.value(8).toString()));
-
             //definindo o tamanho das linhas
             ui->tw_selecionaVeiculo->setRowHeight(contlinhas, 20);
             contlinhas ++;
@@ -139,8 +129,58 @@ frms_selecionaveiculo::~frms_selecionaveiculo()
     delete ui;
 }
 
+
+
+//selecionar veiculo TW
+void frms_selecionaveiculo::on_tw_selecionaVeiculo_itemSelectionChanged()
+{
+    //pega a linha selecionada
+    int id=ui->tw_selecionaVeiculo->item(ui->tw_selecionaVeiculo->currentRow()
+                                             , 0) ->text().toInt();
+
+    //exibe os dados da linha selecionada
+    QSqlQuery query;
+    query.prepare("SELECT "
+                      "a004_codigo          "
+                      ",a005_nome           "
+                      ",a005_cpf            "
+                      ",a011_marca_nome     "
+                      ",a012_nome_veiculo   "
+                      ",a004_placa_veiculo  "
+                      ",a004_observacao     "
+                  "FROM "
+                      "a004_veiculos "
+                      "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo)  "
+                      "JOIN a011_marcas ON (a012_codigo = a012_fk_codigo_marca)    "
+                      "JOIN a005_cliente ON (a005_codigo = a004_fk_codigo_cliente) "
+                  "WHERE "
+                    "a004_codigo = '" +QString::number(id)+ "' ");
+
+    if( query.exec() ) //verifica se a query foi bem sucedida
+    {
+        query.first(); //pega o primeiro
+
+        frm_agendaservicos fm_agendaservicos;
+
+        //fm_agendaservicos.g_nome_veiculo = query.value(4).toString();
+        fm_agendaservicos.g_nome_veiculo = "Veiculo selecionado";
+    }
+}
+
 //filtrando veiculos
 void frms_selecionaveiculo::on_txt_filtrarVeiculo_returnPressed()
+{
+
+}
+
+//botao filtrar veiculos
+void frms_selecionaveiculo::on_btn_filtrarVeiculo_clicked()
+{
+    frms_selecionaveiculo::on_txt_filtrarVeiculo_returnPressed();
+}
+
+//Define o veiculo selecionado
+void frms_selecionaveiculo::on_btn_confirmarVeiculo_clicked()
 {
 
 }

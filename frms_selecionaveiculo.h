@@ -33,7 +33,13 @@ public:
     Conexao con;
 
 private slots:
+    void on_tw_selecionaVeiculo_itemSelectionChanged();
+
     void on_txt_filtrarVeiculo_returnPressed();
+
+    void on_btn_filtrarVeiculo_clicked();
+
+    void on_btn_confirmarVeiculo_clicked();
 
 private:
     Ui::frms_selecionaveiculo *ui;

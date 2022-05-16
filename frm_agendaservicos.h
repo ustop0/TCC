@@ -31,6 +31,12 @@ public:
     //instanciando conexao com o banco de dados
     Conexao con;
 
+    QString g_nome_cliente;
+    QString g_nome_veiculo;
+
+public slots:
+
+
 private slots:
 
     void on_btn_selecionaCliente_clicked();
@@ -38,8 +44,6 @@ private slots:
     void on_btn_selecionaVeiculo_clicked();
 
     void on_btn_agendarServico_clicked();
-
-
 
 private:
     Ui::frm_agendaservicos *ui;

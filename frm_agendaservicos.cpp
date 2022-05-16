@@ -3,6 +3,10 @@
 #include "frms_selecionacliente.h" //formulario de seleção de clientes
 #include "frms_selecionaveiculo.h" //formulario de seleção de veiculos
 
+//globais, recebem dos formulários de seleção
+QString g_nome_cliente;
+QString g_nome_veiculo;
+
 frm_agendaservicos::frm_agendaservicos(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::frm_agendaservicos)
@@ -17,6 +21,7 @@ frm_agendaservicos::frm_agendaservicos(QWidget *parent) :
             QMessageBox::warning(this, "ERRO", "Erro ao abrir banco de dados");
         }
     }
+
 }
 
 frm_agendaservicos::~frm_agendaservicos()//**INICIO** destrutor
@@ -35,10 +40,11 @@ void frm_agendaservicos::on_btn_selecionaCliente_clicked() //frms de seleção d
     //ou .exec();
 }
 
+//abre formulário de seleção de veiculos
 void frm_agendaservicos::on_btn_selecionaVeiculo_clicked()
 {
     frms_selecionaveiculo fmSelecionaVeiculo;
-    fmSelecionaVeiculo.show();
+    fmSelecionaVeiculo.exec();
 }
 
 void frm_agendaservicos::on_btn_agendarServico_clicked()
@@ -56,6 +62,3 @@ void frm_agendaservicos::on_btn_agendarServico_clicked()
     query.prepare("");
 
 }
-
-
-
