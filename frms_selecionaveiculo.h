@@ -26,11 +26,15 @@ class frms_selecionaveiculo : public QDialog
     Q_OBJECT
 
 public:
-    explicit frms_selecionaveiculo(QWidget *parent = nullptr);
+    explicit frms_selecionaveiculo(QWidget *parent = nullptr, QString c_codigo_cliente = "");
     ~frms_selecionaveiculo();
 
     //instanciando conexao com o banco de dados
     Conexao con;
+
+    //recebe nome cliente do agenda serviços
+    QString g_nome_veiculo;
+    QString g_codigo_veiculo;
 
 private slots:
     void on_tw_selecionaVeiculo_itemSelectionChanged();

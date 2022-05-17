@@ -5,9 +5,14 @@
 
 //globais, recebem dos formulários de seleção
 QString g_nome_cliente;
+QString g_codigo_cliente;
 QString g_nome_veiculo;
+QString g_codigo_veiculo;
 
-frm_agendaservicos::frm_agendaservicos(QWidget *parent) :
+frm_agendaservicos::frm_agendaservicos(QWidget *parent, QString c_nome_cliente
+                                                      , QString c_codigo_cliente
+                                                      , QString c_nome_veiculo
+                                                      , QString c_codigo_veiculo) :
     QDialog(parent),
     ui(new Ui::frm_agendaservicos)
 {
@@ -22,6 +27,15 @@ frm_agendaservicos::frm_agendaservicos(QWidget *parent) :
         }
     }
 
+    //enviando dados entre os formulários
+    ui->txt_nomeCliente->setText( c_nome_cliente );
+    g_codigo_cliente = c_codigo_cliente;
+    ui->txt_nomeVeiculo->setText( c_nome_veiculo );
+    g_codigo_veiculo = c_codigo_veiculo;
+
+    //enviando nome do veiculo selecionnado para o campo do modelo no agendaservicos
+    frms_selecionaveiculo fm_selecionaveiculo(this, c_codigo_cliente);
+
 }
 
 frm_agendaservicos::~frm_agendaservicos()//**INICIO** destrutor
@@ -35,27 +49,29 @@ frm_agendaservicos::~frm_agendaservicos()//**INICIO** destrutor
 void frm_agendaservicos::on_btn_selecionaCliente_clicked() //frms de seleção de clientes
 {
     frms_selecionacliente fmSelecionaCliente;
-    fmSelecionaCliente.show();
-
-    //ou .exec();
+    fmSelecionaCliente.exec();
 }
 
 //abre formulário de seleção de veiculos
 void frm_agendaservicos::on_btn_selecionaVeiculo_clicked()
 {
-    frms_selecionaveiculo fmSelecionaVeiculo;
-    fmSelecionaVeiculo.exec();
+    if( ui->txt_nomeCliente->text() == "" )
+    {
+        QMessageBox::information(this, "Aviso", "Informe um cliente antes de "
+                                                "selecionar um veículo");
+
+    }
+    else
+    {
+        frms_selecionaveiculo fmSelecionaVeiculo;
+        fmSelecionaVeiculo.exec();
+    }
 }
 
 void frm_agendaservicos::on_btn_agendarServico_clicked()
 {
     ClCliente cliente;
     ClVeiculo veiculo;
-
-    //cliente.codigo;
-    cliente.nome = ui->txt_nomeCliente->text();
-    //veiculo.marca_veiculo;
-    //veiculo.modelo_veiculo;
 
     QSqlQuery query;
 

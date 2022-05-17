@@ -435,7 +435,7 @@ void frm_gestaofornecedores::on_txt_ge_filtrar_returnPressed()
     }
 
     //contador para percorrer linhas
-    int contlinhas=0;
+    int contlinhas = 0;
     QSqlQuery query;
     query.prepare( busca );
 

@@ -31,12 +31,17 @@ public:
     //instanciando conexao com o banco de dados
     Conexao con;
 
+    QString g_nome_cliente;
+    QString g_codigo_cliente;
+
 private slots:
     void on_txt_filtrarCliente_returnPressed();
 
     void on_btn_confirmarCliente_clicked();
 
     void on_btn_filtrarCliente_clicked();
+
+    void on_tw_selecionaCliente_itemSelectionChanged();
 
 private:
     Ui::frms_selecionacliente *ui;
