@@ -3,6 +3,8 @@
 #include "frm_agendaservicos.h" //formulário de agendamento de serviços
 #include "ui_frm_agendaservicos.h"
 
+QString g_nomeVeiculo;
+QString g_codigoVeiculo;
 
 frms_selecionaveiculo::frms_selecionaveiculo(QWidget *parent, QString c_codigo_cliente) :
     QDialog(parent),
@@ -39,8 +41,8 @@ frms_selecionaveiculo::frms_selecionaveiculo(QWidget *parent, QString c_codigo_c
 
     //cabeçalhos do table widget
     //cabeçalhos do table widget
-    QStringList cabecalhos={"Código", "Nome", "CPF", "Marca"
-                           ,"Modelo","Placa", "Observação"};
+    QStringList cabecalhos={"Código", "Cliente", "CPF", "Marca"
+                           ,"Veiculo", "Placa", "Observação"};
 
     ui->tw_selecionaVeiculo->setHorizontalHeaderLabels(cabecalhos);
     //definindo cor da linha ao ser selecionada
@@ -160,8 +162,8 @@ void frms_selecionaveiculo::on_tw_selecionaVeiculo_itemSelectionChanged()
     {
         query.first(); //pega o primeiro
 
-        g_codigo_veiculo = query.value(0).toString();
-        g_nome_veiculo = query.value(4).toString();
+        g_codigoVeiculo = query.value(0).toString();
+        g_nomeVeiculo = query.value(4).toString();
     }
 }
 
@@ -338,7 +340,7 @@ void frms_selecionaveiculo::on_btn_filtrarVeiculo_clicked()
 void frms_selecionaveiculo::on_btn_confirmarVeiculo_clicked()
 {
     //enviando nome e codigo do veiculo selecionado para o campo do modelo no agendaservicos
-    frm_agendaservicos fm_agendaveiculos(this, g_codigo_veiculo, g_nome_veiculo);
+    frm_agendaservicos fm_agendaveiculos(this, g_codigoVeiculo, g_nomeVeiculo);
     close();
 }
 

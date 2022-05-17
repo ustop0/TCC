@@ -3,10 +3,8 @@
 #include "frm_agendaservicos.h" //formulário de agendamento de serviços
 #include "ui_frm_agendaservicos.h"
 
-//variaveis globais
-QString g_nome_cliente;
-QString g_codigo_cliente;
-
+QString g_codigoCliente;
+QString g_nomeCliente;
 
 frms_selecionacliente::frms_selecionacliente(QWidget *parent) :
     QDialog(parent),
@@ -41,7 +39,7 @@ frms_selecionacliente::frms_selecionacliente(QWidget *parent) :
     ui->tw_selecionaCliente->setColumnWidth(1, 200);
 
     //cabeçalhos do table widget
-    QStringList cabecalhos={"Código", "Nome", "CPF", "CEP", "Estado"
+    QStringList cabecalhos={"Código", "Cliente", "CPF", "CEP", "Estado"
                            ,"Cidade", "Rua","Nro. Casa","Bairro", "Telefone"};
 
     ui->tw_selecionaCliente->setHorizontalHeaderLabels(cabecalhos);
@@ -175,8 +173,11 @@ void frms_selecionacliente::on_tw_selecionaCliente_itemSelectionChanged()
     {
         query.first(); //pega o primeiro
 
-        g_codigo_cliente = query.value(0).toString();
-        g_nome_cliente = query.value(1).toString();
+        g_codigoCliente = query.value(0).toString();
+        g_nomeCliente = query.value(1).toString();
+
+        qDebug() << "Código cliente: " << g_codigoCliente;
+        qDebug() << "Nome cliente: " << g_nomeCliente;
     }
 }
 
@@ -372,6 +373,6 @@ void frms_selecionacliente::on_btn_filtrarCliente_clicked() //filtro
 void frms_selecionacliente::on_btn_confirmarCliente_clicked() //confirmar
 {
     //enviando nome e codigo do cliente selecionado para o campo do modelo no agendaservicos
-    frm_agendaservicos fm_agendaveiculos(this, g_nome_cliente, g_codigo_cliente);
+    frm_agendaservicos fm_agendaveiculos(this, g_codigoCliente, g_nomeCliente, "", "");
     close();
 }

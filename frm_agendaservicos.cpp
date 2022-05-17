@@ -28,13 +28,13 @@ frm_agendaservicos::frm_agendaservicos(QWidget *parent, QString c_nome_cliente
     }
 
     //enviando dados entre os formulários
-    ui->txt_nomeCliente->setText( c_nome_cliente );
+    g_nome_cliente = c_nome_cliente;
+    ui->txt_nomeCliente->setText( g_nome_cliente );
     g_codigo_cliente = c_codigo_cliente;
-    ui->txt_nomeVeiculo->setText( c_nome_veiculo );
-    g_codigo_veiculo = c_codigo_veiculo;
 
-    //enviando nome do veiculo selecionnado para o campo do modelo no agendaservicos
-    frms_selecionaveiculo fm_selecionaveiculo(this, c_codigo_cliente);
+    g_nome_veiculo = c_nome_veiculo;
+    ui->txt_nomeVeiculo->setText( g_codigo_veiculo );
+    g_codigo_veiculo = c_codigo_veiculo;
 
 }
 
@@ -63,18 +63,26 @@ void frm_agendaservicos::on_btn_selecionaVeiculo_clicked()
     }
     else
     {
-        frms_selecionaveiculo fmSelecionaVeiculo;
-        fmSelecionaVeiculo.exec();
+
+        //enviando codigo do cliente para a selecaoveiculo
+        frms_selecionaveiculo fm_selecionaveiculo(this, g_codigo_cliente);
+        fm_selecionaveiculo.exec();
     }
 }
 
 void frm_agendaservicos::on_btn_agendarServico_clicked()
 {
-    ClCliente cliente;
-    ClVeiculo veiculo;
+    if( ui->txt_nomeCliente->text() == "" || ui->txt_nomeCliente->text() == ""
+                                          || g_codigo_cliente == ""
+                                          || g_codigo_veiculo == "")
+    {
+        QMessageBox::information(this, "Erro", "Os campos Nome Cliente e Veiculo Cliente estão vazios");
+    }
+    else
+    {
+        QSqlQuery query;
 
-    QSqlQuery query;
-
-    query.prepare("");
+        query.prepare("");
+    }
 
 }

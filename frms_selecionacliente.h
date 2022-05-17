@@ -31,8 +31,10 @@ public:
     //instanciando conexao com o banco de dados
     Conexao con;
 
-    QString g_nome_cliente;
-    QString g_codigo_cliente;
+    //variaveis globais
+    QString g_codigoCliente;
+    QString g_nomeCliente;
+
 
 private slots:
     void on_txt_filtrarCliente_returnPressed();

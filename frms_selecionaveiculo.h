@@ -33,8 +33,8 @@ public:
     Conexao con;
 
     //recebe nome cliente do agenda serviços
-    QString g_nome_veiculo;
-    QString g_codigo_veiculo;
+    QString g_nomeVeiculo;
+    QString g_codigoVeiculo;
 
 private slots:
     void on_tw_selecionaVeiculo_itemSelectionChanged();

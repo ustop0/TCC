@@ -25,19 +25,20 @@ class frm_agendaservicos : public QDialog
     Q_OBJECT
 
 public:
-    explicit frm_agendaservicos(QWidget *parent = nullptr, QString c_nome_cliente = ""
-                                                         , QString c_codigo_cliente = ""
-                                                         , QString c_nome_veiculo = ""
-                                                         , QString c_codigo_veiculo = "");
+    explicit frm_agendaservicos(QWidget *parent = nullptr, QString c_codigo_cliente = ""
+                                                         , QString c_nome_cliente = ""
+                                                         , QString c_codigo_veiculo = ""
+                                                         , QString c_nome_veiculo = "");
     ~frm_agendaservicos();
 
     //instanciando conexao com o banco de dados
     Conexao con;
 
-    QString g_nome_cliente;
     QString g_codigo_cliente;
-    QString g_nome_veiculo;
+    QString g_nome_cliente;
     QString g_codigo_veiculo;
+    QString g_nome_veiculo;
+
 
 public slots:
 
