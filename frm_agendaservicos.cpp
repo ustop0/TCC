@@ -27,8 +27,6 @@ frm_agendaservicos::frm_agendaservicos(QWidget *parent, QString c_codigo_cliente
         }
     }
 
-    //TESTES
-
     //enviando dados entre os formulários
     ui->txt_nomeCliente->setText( c_nome_cliente );
     g_codigo_cliente = c_codigo_cliente;
@@ -108,3 +106,7 @@ void frm_agendaservicos::on_btn_agendarServico_clicked()
 }
 
 //**FUNÇÕES**
+void frm_agendaservicos::receiveData( QString nomeVeiculo )
+{
+    ui->txt_nomeVeiculo->setText( nomeVeiculo );
+}

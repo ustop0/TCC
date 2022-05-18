@@ -125,7 +125,6 @@ frms_selecionaveiculo::frms_selecionaveiculo(QWidget *parent, QString c_codigoCl
         QMessageBox::warning(this, "ERRO", "Erro ao listar veiculos de clientes");
     }
 
-
 }
 
 frms_selecionaveiculo::~frms_selecionaveiculo()
@@ -344,18 +343,25 @@ void frms_selecionaveiculo::on_btn_filtrarVeiculo_clicked()
 void frms_selecionaveiculo::on_btn_confirmarVeiculo_clicked()
 {
     //enviando nome e codigo do veiculo selecionado para o campo do modelo no agendaservicos
-    frm_agendaservicos *fm_agendaveiculos = new frm_agendaservicos(this, "", "" ,g_codigoVeiculo, g_nomeVeiculo);
+    frm_agendaservicos *fm_agendaservicos = new frm_agendaservicos(this, "", "" ,g_codigoVeiculo, g_nomeVeiculo);
     //fm_agendaveiculos->exec();
 
+    fm_agendaservicos->setModal(true);
+    fm_agendaservicos->show();
+
+    connect(this, SIGNAL( sendData(Qstring) ), fm_agendaservicos, SLOT( receiveData(QString) ) );
+
+    emit sendData( g_nomeVeiculo );
+    //tutorial: https://www.youtube.com/watch?v=HkZXoSt3c7I
 
     //deletando ponteiro
     try
     {
-        delete fm_agendaveiculos;
+        delete fm_agendaservicos;
     }
     catch (...)
     {
-        qDebug() << "__Falha ao deletar ponteiro: fm_agendaveiculos na tela de selecaoveiculo";
+        qDebug() << "__Falha ao deletar ponteiro: fm_agendaservicos na tela de selecaoveiculo";
     }
 
     close();

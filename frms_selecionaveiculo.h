@@ -49,6 +49,9 @@ private slots:
 
     void on_btn_confirmarVeiculo_clicked();
 
+signals:
+    void sendData( QString );
+
 private:
     Ui::frms_selecionaveiculo *ui;
 };

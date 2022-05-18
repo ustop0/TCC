@@ -41,7 +41,8 @@ public:
     QString g_nome_veiculo;
 
 public slots:
-
+    //teste recebendo dados
+    void receiveData( QString nomeVeiculo );
 
 private slots:
 
