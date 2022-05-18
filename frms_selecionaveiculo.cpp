@@ -1,7 +1,6 @@
 #include "frms_selecionaveiculo.h"
 #include "ui_frms_selecionaveiculo.h"
 #include "frm_agendaservicos.h" //formulário de agendamento de serviços
-#include "ui_frm_agendaservicos.h"
 
 QString g_nomeVeiculo;
 QString g_codigoVeiculo;
@@ -343,7 +342,25 @@ void frms_selecionaveiculo::on_btn_filtrarVeiculo_clicked()
 void frms_selecionaveiculo::on_btn_confirmarVeiculo_clicked()
 {
     //enviando nome e codigo do veiculo selecionado para o campo do modelo no agendaservicos
-    frm_agendaservicos fm_agendaveiculos(this, "", "" ,g_codigoVeiculo, g_nomeVeiculo);
+    //frm_agendaservicos fm_agendaveiculos(this, "", "" ,g_codigoVeiculo, g_nomeVeiculo);
+    //fm_agendaveiculos.parent();
+
+
+    frm_agendaservicos *fm_agendaveiculos = new frm_agendaservicos();
+    fm_agendaveiculos->g_nome_veiculo = g_nomeVeiculo;
+    fm_agendaveiculos->g_nome_veiculo = g_nomeVeiculo;
+    //fm_agendaveiculos->show();
+
+    //deletando ponteiro
+    try
+    {
+        delete fm_agendaveiculos;
+    }
+    catch (...)
+    {
+        qDebug() << "__Erro ao deletar ponteiro: fm_agendaveiculos na tela de selecaoveiculo";
+    }
+
     close();
 }
 

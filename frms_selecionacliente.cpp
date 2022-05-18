@@ -374,5 +374,6 @@ void frms_selecionacliente::on_btn_confirmarCliente_clicked() //confirmar
 {
     //enviando nome e codigo do cliente selecionado para o campo do modelo no agendaservicos
     frm_agendaservicos fm_agendaveiculos(this, g_codigoCliente, g_nomeCliente, "", "");
+    fm_agendaveiculos.exec();
     close();
 }

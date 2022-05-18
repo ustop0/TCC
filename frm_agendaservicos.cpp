@@ -4,10 +4,10 @@
 #include "frms_selecionaveiculo.h" //formulario de seleção de veiculos
 
 //globais, recebem dos formulários de seleção
-QString g_nome_cliente;
-QString g_codigo_cliente;
-QString g_nome_veiculo;
-QString g_codigo_veiculo;
+//QString g_nome_cliente;
+//QString g_codigo_cliente;
+//QString g_nome_veiculo;
+//QString g_codigo_veiculo;
 
 frm_agendaservicos::frm_agendaservicos(QWidget *parent, QString c_codigo_cliente
                                                       , QString c_nome_cliente
@@ -31,10 +31,10 @@ frm_agendaservicos::frm_agendaservicos(QWidget *parent, QString c_codigo_cliente
     ui->txt_nomeCliente->setText( c_nome_cliente );
     g_codigo_cliente = c_codigo_cliente;
 
-    ui->txt_nomeCliente->setText( "TESTE" );
-
-    ui->txt_nomeVeiculo->setText( c_nome_veiculo );
-    g_codigo_veiculo = c_codigo_veiculo;
+    //ui->txt_nomeVeiculo->setText( c_nome_veiculo );
+    ui->txt_nomeVeiculo->setText( g_nome_veiculo );
+    //recebendo g_codigo_veiculo da seleção de veiculos
+    //g_codigo_veiculo = c_codigo_veiculo;
 
 }
 
