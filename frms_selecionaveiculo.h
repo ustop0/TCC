@@ -11,6 +11,7 @@
 #include <QMainWindow>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QObject> //sinais entre forms
 #include "ConexaoBanco.h"
 #include "funcoes_globais.h"
 #include "Classes/clcliente.h"

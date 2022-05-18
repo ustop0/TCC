@@ -343,16 +343,19 @@ void frms_selecionaveiculo::on_btn_filtrarVeiculo_clicked()
 void frms_selecionaveiculo::on_btn_confirmarVeiculo_clicked()
 {
     //enviando nome e codigo do veiculo selecionado para o campo do modelo no agendaservicos
-    frm_agendaservicos *fm_agendaservicos = new frm_agendaservicos(this, "", "" ,g_codigoVeiculo, g_nomeVeiculo);
+    //frm_agendaservicos *fm_agendaservicos = new frm_agendaservicos(this, "", "" ,g_codigoVeiculo, g_nomeVeiculo);
     //fm_agendaveiculos->exec();
 
-    fm_agendaservicos->setModal(true);
-    fm_agendaservicos->show();
+    //fm_agendaservicos->setModal(true);
+    //fm_agendaservicos->show();
 
-    connect(this, SIGNAL( sendData(Qstring) ), fm_agendaservicos, SLOT( receiveData(QString) ) );
+    //TESTES SIGNAL
+    frm_agendaservicos *fm_agendaservicos = new frm_agendaservicos();
+
+    connect(this, SIGNAL( sendData( QString ) ), fm_agendaservicos, SLOT( receiveData( QString ) ) );
+
 
     emit sendData( g_nomeVeiculo );
-    //tutorial: https://www.youtube.com/watch?v=HkZXoSt3c7I
 
     //deletando ponteiro
     try
@@ -368,4 +371,7 @@ void frms_selecionaveiculo::on_btn_confirmarVeiculo_clicked()
 }
 
 //**FUNÇÕES**
+//void frms_selecionaveiculo::sendData( QString )
+//{
 
+//}

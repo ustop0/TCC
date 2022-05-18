@@ -11,6 +11,7 @@
 #include <QMainWindow>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QObject> //sinais entre forms
 #include "ConexaoBanco.h"
 #include "funcoes_globais.h"
 #include "Classes/clcliente.h"
@@ -42,7 +43,7 @@ public:
 
 public slots:
     //teste recebendo dados
-    void receiveData( QString nomeVeiculo );
+    void receiveData( QString );
 
 private slots:
 
