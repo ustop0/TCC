@@ -39,7 +39,6 @@ public:
     QString g_codigo_veiculo;
     QString g_nome_veiculo;
 
-
 public slots:
 
 

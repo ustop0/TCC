@@ -26,7 +26,7 @@ class frms_selecionaveiculo : public QDialog
     Q_OBJECT
 
 public:
-    explicit frms_selecionaveiculo(QWidget *parent = nullptr, QString c_codigo_cliente = "");
+    explicit frms_selecionaveiculo(QWidget *parent = nullptr, QString c_codigoCliente = "");
     ~frms_selecionaveiculo();
 
     //instanciando conexao com o banco de dados

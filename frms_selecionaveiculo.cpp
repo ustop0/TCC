@@ -6,7 +6,7 @@
 QString g_nomeVeiculo;
 QString g_codigoVeiculo;
 
-frms_selecionaveiculo::frms_selecionaveiculo(QWidget *parent, QString c_codigo_cliente) :
+frms_selecionaveiculo::frms_selecionaveiculo(QWidget *parent, QString c_codigoCliente) :
     QDialog(parent),
     ui(new Ui::frms_selecionaveiculo)
 {
@@ -77,7 +77,7 @@ frms_selecionaveiculo::frms_selecionaveiculo(QWidget *parent, QString c_codigo_c
                       "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca)      "
                   "WHERE "
                       "a004_ativo = true  "
-                      "a004_codigo = '" +c_codigo_cliente+ "' "
+                      "AND a004_codigo = '" +c_codigoCliente+ "' "
                   "ORDER BY "
                       "a004_codigo DESC");
 
@@ -164,6 +164,9 @@ void frms_selecionaveiculo::on_tw_selecionaVeiculo_itemSelectionChanged()
 
         g_codigoVeiculo = query.value(0).toString();
         g_nomeVeiculo = query.value(4).toString();
+
+        qDebug() << "Código Veículo: " << g_codigoVeiculo;
+        qDebug() << "Nome Veículo: " << g_nomeVeiculo;
     }
 }
 
@@ -340,7 +343,7 @@ void frms_selecionaveiculo::on_btn_filtrarVeiculo_clicked()
 void frms_selecionaveiculo::on_btn_confirmarVeiculo_clicked()
 {
     //enviando nome e codigo do veiculo selecionado para o campo do modelo no agendaservicos
-    frm_agendaservicos fm_agendaveiculos(this, g_codigoVeiculo, g_nomeVeiculo);
+    frm_agendaservicos fm_agendaveiculos(this, "", "" ,g_codigoVeiculo, g_nomeVeiculo);
     close();
 }
 

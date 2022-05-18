@@ -9,10 +9,10 @@ QString g_codigo_cliente;
 QString g_nome_veiculo;
 QString g_codigo_veiculo;
 
-frm_agendaservicos::frm_agendaservicos(QWidget *parent, QString c_nome_cliente
-                                                      , QString c_codigo_cliente
-                                                      , QString c_nome_veiculo
-                                                      , QString c_codigo_veiculo) :
+frm_agendaservicos::frm_agendaservicos(QWidget *parent, QString c_codigo_cliente
+                                                      , QString c_nome_cliente
+                                                      , QString c_codigo_veiculo
+                                                      , QString c_nome_veiculo) :
     QDialog(parent),
     ui(new Ui::frm_agendaservicos)
 {
@@ -28,12 +28,12 @@ frm_agendaservicos::frm_agendaservicos(QWidget *parent, QString c_nome_cliente
     }
 
     //enviando dados entre os formulários
-    g_nome_cliente = c_nome_cliente;
-    ui->txt_nomeCliente->setText( g_nome_cliente );
+    ui->txt_nomeCliente->setText( c_nome_cliente );
     g_codigo_cliente = c_codigo_cliente;
 
-    g_nome_veiculo = c_nome_veiculo;
-    ui->txt_nomeVeiculo->setText( g_codigo_veiculo );
+    ui->txt_nomeCliente->setText( "TESTE" );
+
+    ui->txt_nomeVeiculo->setText( c_nome_veiculo );
     g_codigo_veiculo = c_codigo_veiculo;
 
 }
@@ -43,7 +43,6 @@ frm_agendaservicos::~frm_agendaservicos()//**INICIO** destrutor
     con.fechar(); //fechando conexao com o banco de dados
     delete ui;
 }
-
 
 //abre formulário de seleção de clientes
 void frm_agendaservicos::on_btn_selecionaCliente_clicked() //frms de seleção de clientes
@@ -63,7 +62,8 @@ void frm_agendaservicos::on_btn_selecionaVeiculo_clicked()
     }
     else
     {
-
+        //teste
+        g_codigo_cliente = "2";
         //enviando codigo do cliente para a selecaoveiculo
         frms_selecionaveiculo fm_selecionaveiculo(this, g_codigo_cliente);
         fm_selecionaveiculo.exec();
