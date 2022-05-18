@@ -27,28 +27,40 @@ frm_agendaservicos::frm_agendaservicos(QWidget *parent, QString c_codigo_cliente
         }
     }
 
+    //TESTES
+
     //enviando dados entre os formulários
     ui->txt_nomeCliente->setText( c_nome_cliente );
     g_codigo_cliente = c_codigo_cliente;
 
-    //ui->txt_nomeVeiculo->setText( c_nome_veiculo );
-    ui->txt_nomeVeiculo->setText( g_nome_veiculo );
+    ui->txt_nomeVeiculo->setText( c_nome_veiculo );
+    //ui->txt_nomeVeiculo->setText( recebeNome );
     //recebendo g_codigo_veiculo da seleção de veiculos
-    //g_codigo_veiculo = c_codigo_veiculo;
+    g_codigo_veiculo = c_codigo_veiculo;
 
 }
 
 frm_agendaservicos::~frm_agendaservicos()//**INICIO** destrutor
 {
-    con.fechar(); //fechando conexao com o banco de dados
+    con.fechar();
     delete ui;
 }
 
 //abre formulário de seleção de clientes
 void frm_agendaservicos::on_btn_selecionaCliente_clicked() //frms de seleção de clientes
 {
-    frms_selecionacliente fmSelecionaCliente;
-    fmSelecionaCliente.exec();
+    frms_selecionacliente *fmSelecionaCliente = new frms_selecionacliente();
+    fmSelecionaCliente->exec();
+
+    //deletando ponteiro
+    try
+    {
+        delete fmSelecionaCliente;
+    }
+    catch (...)
+    {
+        qDebug() << "__Falha ao deletar ponteiro: fmSelecionaCliente na tela de agendaserviços";
+    }
 }
 
 //abre formulário de seleção de veiculos
@@ -62,11 +74,19 @@ void frm_agendaservicos::on_btn_selecionaVeiculo_clicked()
     }
     else
     {
-        //teste
-        g_codigo_cliente = "2";
         //enviando codigo do cliente para a selecaoveiculo
-        frms_selecionaveiculo fm_selecionaveiculo(this, g_codigo_cliente);
-        fm_selecionaveiculo.exec();
+        frms_selecionaveiculo *fm_selecionaveiculo = new frms_selecionaveiculo(this, g_codigo_cliente);
+        fm_selecionaveiculo->exec();
+
+        //deletando ponteiro
+        try
+        {
+            delete fm_selecionaveiculo;
+        }
+        catch (...)
+        {
+            qDebug() << "__Falha ao deletar ponteiro: fm_selecionaveiculo na tela de agendaserviços";
+        }
     }
 }
 
@@ -86,3 +106,5 @@ void frm_agendaservicos::on_btn_agendarServico_clicked()
     }
 
 }
+
+//**FUNÇÕES**

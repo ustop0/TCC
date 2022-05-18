@@ -373,7 +373,18 @@ void frms_selecionacliente::on_btn_filtrarCliente_clicked() //filtro
 void frms_selecionacliente::on_btn_confirmarCliente_clicked() //confirmar
 {
     //enviando nome e codigo do cliente selecionado para o campo do modelo no agendaservicos
-    frm_agendaservicos fm_agendaveiculos(this, g_codigoCliente, g_nomeCliente, "", "");
-    fm_agendaveiculos.exec();
+    frm_agendaservicos *fm_agendaservicos = new frm_agendaservicos(this, g_codigoCliente, g_nomeCliente, "", "");
+    fm_agendaservicos->exec();
+
+    //deletando ponteiro
+    try
+    {
+        delete fm_agendaservicos;
+    }
+    catch (...)
+    {
+        qDebug() << "__Falha ao deletar ponteiro: fm_agendaservicos na tela de selecaocliente";
+    }
+
     close();
 }

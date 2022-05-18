@@ -32,8 +32,8 @@ public:
     Conexao con;
 
     //variaveis globais
-    QString g_codigoCliente;
-    QString g_nomeCliente;
+    //QString g_codigoCliente;
+    //QString g_nomeCliente;
 
 
 private slots:
