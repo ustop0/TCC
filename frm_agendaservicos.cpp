@@ -70,9 +70,29 @@ void frm_agendaservicos::on_btn_agendarServico_clicked()
     }
     else
     {
+        QString data = ui->de_dataHora->text();
+        QString servico = ui->txt_tipoServico->text();
+        QString observacao = ui->txt_tipoServico->text();
+        QString codigo_cliente = g_codigo_cliente;
+        QString codigo_veiculo = g_codigo_veiculo;
+
         QSqlQuery query;
 
-        query.prepare("");
+        query.prepare("INSERT INTO "
+                        "a009_agenda_servicos(a009_data_hora           "
+                                             ",a009_servico            "
+                                             ",a009_observacao         "
+                                             ",a009_status             "
+                                             ",a009_ativo boolean      "
+                                             ",a009_fk_codigo_cliente  "
+                                             ",a009_fk_codigo_veiculo) "
+                      "VALUES('" +data           + "'"
+                            ",'" +servico        + "'"
+                            ",'" +observacao     + "'"
+                            ",'1'                  "
+                            ",'" +codigo_cliente + "'"
+                            ",'" +codigo_veiculo + "'"
+                            ",'" +servico        + "')");
     }
 
 }

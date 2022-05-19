@@ -786,7 +786,7 @@ bool frm_gestaoclientes::recebeCPF( const QString &cliente_cpf )
 /*--------------------------------------------------------------------------------------------
  * Autor: Thiago Ianzer                                                                       |
  * Data: 18/04/2022                                                                           |
- * Propósito: receber o cep, e faz a validação via API do BrasilAPI                    |
+ * Propósito: receber o cep, e faz a validação via API do BrasilAPI                           |
  * Chamada: botão gravar cliente                                                              |
  *--------------------------------------------------------------------------------------------
  */

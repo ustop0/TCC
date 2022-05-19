@@ -687,7 +687,7 @@ void frm_gestaofornecedores::validaCNPJ()
                     ui->lb_nv_cnpj->setText("CNPJ") : ui->lb_nv_cnpj->setText("CNPJ: inválido");
 
 
-        //i->lb_nv_cnpj->setText("CNPJ: inválido");
+        //iu->lb_nv_cnpj->setText("CNPJ: inválido");
     }
     else
     {

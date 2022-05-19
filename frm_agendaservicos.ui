@@ -81,7 +81,7 @@
     <item>
      <widget class="QLabel" name="label">
       <property name="text">
-       <string>Tipo de Serviço</string>
+       <string>Serviço</string>
       </property>
      </widget>
     </item>
