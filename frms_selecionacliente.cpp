@@ -3,8 +3,8 @@
 #include "frm_agendaservicos.h" //formulário de agendamento de serviços
 #include "ui_frm_agendaservicos.h"
 
-QString g_codigoCliente;
-QString g_nomeCliente;
+//QString g_codigoCliente;
+//QString g_nomeCliente;
 
 frms_selecionacliente::frms_selecionacliente(QWidget *parent) :
     QDialog(parent),
@@ -32,17 +32,18 @@ frms_selecionacliente::frms_selecionacliente(QWidget *parent) :
     ui->cb_filtrar->addItem("Bairro");
 
 
-    //**Estilizando layout da table widget**
+    //**Estilizando layout da table widget CLIENTES**
     //definindo o tamanho das colunas
     ui->tw_selecionaCliente->setColumnCount(10);
     ui->tw_selecionaCliente->setColumnWidth(0, 40);
-    ui->tw_selecionaCliente->setColumnWidth(1, 200);
+    ui->tw_selecionaCliente->setColumnWidth(1, 150);
+    ui->tw_selecionaCliente->setColumnWidth(6, 150);
 
     //cabeçalhos do table widget
-    QStringList cabecalhos={"Código", "Cliente", "CPF", "CEP", "Estado"
+    QStringList cabecalho1={"Código", "Cliente", "CPF", "CEP", "Estado"
                            ,"Cidade", "Rua","Nro. Casa","Bairro", "Telefone"};
 
-    ui->tw_selecionaCliente->setHorizontalHeaderLabels(cabecalhos);
+    ui->tw_selecionaCliente->setHorizontalHeaderLabels( cabecalho1 );
     //definindo cor da linha ao ser selecionada
     ui->tw_selecionaCliente->setStyleSheet("QTableView "
                                       "{selection-background-color:red}");
@@ -135,6 +136,31 @@ frms_selecionacliente::frms_selecionacliente(QWidget *parent) :
         QMessageBox::warning(this, "ERRO", "Erro ao listar clientes");
     }
 
+    //**Estilizando layout da table widget VEICULOS**
+    //definindo o tamanho das colunas
+    ui->tw_selecionaVeiculo->setColumnCount(8);
+    ui->tw_selecionaVeiculo->setColumnWidth(0, 40);
+    ui->tw_selecionaVeiculo->setColumnWidth(1, 100);
+    ui->tw_selecionaVeiculo->setColumnWidth(2, 100);
+    ui->tw_selecionaVeiculo->setColumnWidth(8, 200);
+
+    //cabeçalhos do table widget
+    //cabeçalhos do table widget
+    QStringList cabecalho2={"Código", "Marca", "Modelo", "Motor"
+                           ,"Chassi", "Placa", "Cor", "Observação"};
+
+    ui->tw_selecionaVeiculo->setHorizontalHeaderLabels(cabecalho2);
+    //definindo cor da linha ao ser selecionada
+    ui->tw_selecionaVeiculo->setStyleSheet("QTableView "
+                                      "{selection-background-color:red}");
+
+    //desabilita a edição dos registros pelo table widget
+    ui->tw_selecionaVeiculo->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    //selecionar a linha inteira quando clickar em uma celula
+    ui->tw_selecionaVeiculo->setSelectionBehavior(QAbstractItemView::SelectRows);
+    //desabilitando os indices das linhas
+    ui->tw_selecionaVeiculo->verticalHeader()->setVisible(false);
+
 }
 
 frms_selecionacliente::~frms_selecionacliente()//**INICIO** destrutor
@@ -144,7 +170,7 @@ frms_selecionacliente::~frms_selecionacliente()//**INICIO** destrutor
 }
 
 
-//seleciona item TW
+//seleciona item TW clientes
 void frms_selecionacliente::on_tw_selecionaCliente_itemSelectionChanged()
 {
     //pega a linha selecionada
@@ -178,6 +204,119 @@ void frms_selecionacliente::on_tw_selecionaCliente_itemSelectionChanged()
 
         qDebug() << "Código cliente: " << g_codigoCliente;
         qDebug() << "Nome cliente: " << g_nomeCliente;
+
+
+        funcoes_globais::removerLinhas( ui->tw_selecionaVeiculo );
+        //inserir linhas dentro do table widget
+        int contlinhas = 0;
+
+        QSqlQuery query;
+        query.prepare("SELECT "
+                          "a004_codigo           "
+                          ",a011_marca_nome      "
+                          ",a012_nome_veiculo    "
+                          ",a004_motor_veiculo   "
+                          ",a004_chassi_veiculo  "
+                          ",a004_placa_veiculo   "
+                          ",a004_cor_veiculo     "
+                          ",a004_observacao      "
+                      "FROM "
+                          "a005_cliente "
+                          "JOIN a004_veiculos ON (a004_fk_codigo_cliente = a005_codigo)  "
+                          "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo)    "
+                          "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca)      "
+                      "WHERE "
+                          "a004_ativo = true  "
+                          "AND a004_codigo = '" +g_codigoCliente+ "' "
+                      "ORDER BY "
+                          "a004_codigo DESC");
+
+        if( query.exec() ) //verifica se ouve algum erro na execução da query
+        {
+            //enquanto a query tiver retornando next, insere linhas dentro do table widget
+            while( query.next() )
+            {
+                //inserindo com contador de linhas, por index
+                ui->tw_selecionaVeiculo->insertRow( contlinhas );
+                ui->tw_selecionaVeiculo->setItem(contlinhas
+                                            , 0
+                                            , new QTableWidgetItem(query.value(0).toString()));
+
+                ui->tw_selecionaVeiculo->setItem(contlinhas
+                                            , 1
+                                            , new QTableWidgetItem(query.value(1).toString()));
+
+                ui->tw_selecionaVeiculo->setItem(contlinhas
+                                            , 2
+                                            , new QTableWidgetItem(query.value(2).toString()));
+
+                ui->tw_selecionaVeiculo->setItem(contlinhas
+                                            , 3
+                                            , new QTableWidgetItem(query.value(3).toString()));
+
+                ui->tw_selecionaVeiculo->setItem(contlinhas
+                                            , 4
+                                            , new QTableWidgetItem(query.value(4).toString()));
+
+                ui->tw_selecionaVeiculo->setItem(contlinhas
+                                            , 5
+                                            , new QTableWidgetItem(query.value(5).toString()));
+
+                ui->tw_selecionaVeiculo->setItem(contlinhas
+                                            , 6
+                                            , new QTableWidgetItem(query.value(6).toString()));
+
+                ui->tw_selecionaVeiculo->setItem(contlinhas
+                                            , 7
+                                            , new QTableWidgetItem(query.value(8).toString()));
+
+                //definindo o tamanho das linhas
+                ui->tw_selecionaVeiculo->setRowHeight(contlinhas, 20);
+                contlinhas ++;
+            }
+        }
+        else
+        {
+            QMessageBox::warning(this, "ERRO", "Erro ao listar veiculos de clientes");
+        }
+    }
+}
+
+//pega valor TW veiculos
+void frms_selecionacliente::on_tw_selecionaVeiculo_itemSelectionChanged()
+{
+    //pega a linha selecionada
+    int id = ui->tw_selecionaVeiculo->item(ui->tw_selecionaVeiculo->currentRow()
+                                           , 0) ->text().toInt();
+
+    //exibe os dados da linha selecionada
+    QSqlQuery query;
+    query.prepare("SELECT "
+                      "a004_codigo           "
+                      ",a011_marca_nome      "
+                      ",a012_nome_veiculo    "
+                      ",a004_motor_veiculo   "
+                      ",a004_chassi_veiculo  "
+                      ",a004_placa_veiculo   "
+                      ",a004_cor_veiculo     "
+                      ",a004_observacao      "
+                  "FROM "
+                      "a005_cliente "
+                      "JOIN a004_veiculos ON (a004_fk_codigo_cliente = a005_codigo)  "
+                      "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo)    "
+                      "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca)      "
+                  "WHERE "
+                    "a004_codigo = '" +QString::number(id)+ "' ");
+
+    if( query.exec() ) //verifica se a query foi bem sucedida
+    {
+        query.first(); //pega o primeiro
+
+        g_codigoVeiculo = query.value(0).toString();
+        g_nomeVeiculo = query.value(2).toString();
+
+        qDebug() << "Código Veículo: " << g_codigoVeiculo;
+        qDebug() << "Nome Veículo: " << g_nomeVeiculo;
     }
 }
 
@@ -369,11 +508,22 @@ void frms_selecionacliente::on_btn_filtrarCliente_clicked() //filtro
     frms_selecionacliente::on_txt_filtrarCliente_returnPressed();
 }
 
-
+//btn confirma dados cliente e veiculos
 void frms_selecionacliente::on_btn_confirmarCliente_clicked() //confirmar
 {
+    if( ui->tw_selecionaCliente->currentRow() == -1 ||  ui->tw_selecionaVeiculo->currentRow() == -1  )
+    {
+        QMessageBox::warning(this, "ERRO", "Selecione um cliente e um veículo");
+        return;
+    }
+
+//    QString id_cliente = ui->tw_selecionaCliente->item(ui->tw_selecionaCliente->currentRow(),0)->text();
+//    QString id_veiculo = ui->tw_selecionaVeiculo->item(ui->tw_selecionaVeiculo->currentRow(),0)->text();
+
     //enviando nome e codigo do cliente selecionado para o campo do modelo no agendaservicos
-    frm_agendaservicos *fm_agendaservicos = new frm_agendaservicos(this, g_codigoCliente, g_nomeCliente, "", "");
+    frm_agendaservicos *fm_agendaservicos = new frm_agendaservicos(this, g_codigoCliente, g_nomeCliente
+                                                                       , g_codigoVeiculo, g_nomeVeiculo);
+
     fm_agendaservicos->exec();
 
     //deletando ponteiro
@@ -388,3 +538,6 @@ void frms_selecionacliente::on_btn_confirmarCliente_clicked() //confirmar
 
     close();
 }
+
+
+

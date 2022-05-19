@@ -1,7 +1,6 @@
 #include "frm_agendaservicos.h"
 #include "ui_frm_agendaservicos.h"
 #include "frms_selecionacliente.h" //formulario de seleção de clientes
-#include "frms_selecionaveiculo.h" //formulario de seleção de veiculos
 
 //globais, recebem dos formulários de seleção
 //QString g_nome_cliente;
@@ -27,15 +26,12 @@ frm_agendaservicos::frm_agendaservicos(QWidget *parent, QString c_codigo_cliente
         }
     }
 
-    //enviando dados entre os formulários
-    //ui->txt_nomeCliente->setText( c_nome_cliente );
-    //g_codigo_cliente = c_codigo_cliente;
-    ui->txt_nomeCliente->setText( "c_nome_cliente" );
-    g_codigo_cliente = "2";
+    //recebendo dados cliente
+    ui->txt_nomeCliente->setText( c_nome_cliente );
+    g_codigo_cliente = c_codigo_cliente;
 
-    ui->txt_nomeVeiculo->setText( g_nome_veiculo );
-    //ui->txt_nomeVeiculo->setText( recebeNome );
-    //recebendo g_codigo_veiculo da seleção de veiculos
+    //recebendo dados veiculo
+    ui->txt_nomeVeiculo->setText( c_nome_veiculo );
     g_codigo_veiculo = c_codigo_veiculo;
 
 }
@@ -63,40 +59,14 @@ void frm_agendaservicos::on_btn_selecionaCliente_clicked() //frms de seleção d
     }
 }
 
-//abre formulário de seleção de veiculos
-void frm_agendaservicos::on_btn_selecionaVeiculo_clicked()
-{
-    if( ui->txt_nomeCliente->text() == "" )
-    {
-        QMessageBox::information(this, "Aviso", "Informe um cliente antes de "
-                                                "selecionar um veículo");
-
-    }
-    else
-    {
-        //enviando codigo do cliente para a selecaoveiculo
-        frms_selecionaveiculo *fm_selecionaveiculo = new frms_selecionaveiculo(this, g_codigo_cliente);
-        fm_selecionaveiculo->exec();
-
-        //deletando ponteiro
-        try
-        {
-            delete fm_selecionaveiculo;
-        }
-        catch (...)
-        {
-            qDebug() << "__Falha ao deletar ponteiro: fm_selecionaveiculo na tela de agendaserviços";
-        }
-    }
-}
-
+//btn agendar serviço
 void frm_agendaservicos::on_btn_agendarServico_clicked()
 {
     if( ui->txt_nomeCliente->text() == "" || ui->txt_nomeCliente->text() == ""
                                           || g_codigo_cliente == ""
                                           || g_codigo_veiculo == "" )
     {
-        QMessageBox::information(this, "Erro", "Os campos Nome Cliente e Veiculo Cliente estão vazios");
+        QMessageBox::information(this, "Erro", "Os campos com os dados do cliente estão vázios");
     }
     else
     {
@@ -105,11 +75,4 @@ void frm_agendaservicos::on_btn_agendarServico_clicked()
         query.prepare("");
     }
 
-}
-
-//**FUNÇÕES**
-void frm_agendaservicos::receiveData( QString p_nomeVeiculo )
-{
-    ui->txt_nomeVeiculo->setText( p_nomeVeiculo );
-    qDebug() << "__Recebendo sinal do selecionaveiculo, nome veiculo: " << p_nomeVeiculo;
 }

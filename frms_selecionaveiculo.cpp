@@ -2,8 +2,8 @@
 #include "ui_frms_selecionaveiculo.h"
 #include "frm_agendaservicos.h" //formulário de agendamento de serviços
 
-QString g_nomeVeiculo;
-QString g_codigoVeiculo;
+//QString g_nomeVeiculo;
+//QString g_codigoVeiculo;
 
 frms_selecionaveiculo::frms_selecionaveiculo(QWidget *parent, QString c_codigoCliente) :
     QDialog(parent),
@@ -21,7 +21,6 @@ frms_selecionaveiculo::frms_selecionaveiculo(QWidget *parent, QString c_codigoCl
     }
 
     //recebendo dados do agendaserviços c_codigo_cliente é recebido do agendaservicos
-
     //deixa o botão da validação do cnpj invisivel
     ui->txt_filtrarVeiculo->setFocus();
 
@@ -354,7 +353,6 @@ void frms_selecionaveiculo::on_btn_confirmarVeiculo_clicked()
 
     connect(this, SIGNAL( sendData( QString ) ), fm_agendaservicos, SLOT( receiveData( QString ) ) );
 
-
     emit sendData( g_nomeVeiculo );
 
     //deletando ponteiro
@@ -371,7 +369,3 @@ void frms_selecionaveiculo::on_btn_confirmarVeiculo_clicked()
 }
 
 //**FUNÇÕES**
-//void frms_selecionaveiculo::sendData( QString )
-//{
-
-//}

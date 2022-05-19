@@ -42,14 +42,9 @@ public:
     QString g_nome_veiculo;
 
 public slots:
-    //teste recebendo dados
-    void receiveData( QString );
 
 private slots:
-
     void on_btn_selecionaCliente_clicked();
-
-    void on_btn_selecionaVeiculo_clicked();
 
     void on_btn_agendarServico_clicked();
 

@@ -38,11 +38,14 @@
      <height>25</height>
     </rect>
    </property>
+   <property name="placeholderText">
+    <string>Nome Cliente</string>
+   </property>
   </widget>
   <widget class="QPushButton" name="btn_selecionaCliente">
    <property name="geometry">
     <rect>
-     <x>122</x>
+     <x>240</x>
      <y>28</y>
      <width>21</width>
      <height>25</height>
@@ -62,14 +65,14 @@
     </rect>
    </property>
    <property name="text">
-    <string>Nome Cliente</string>
+    <string>Dados cliente:</string>
    </property>
   </widget>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>72</y>
+     <y>75</y>
      <width>181</width>
      <height>50</height>
     </rect>
@@ -91,7 +94,7 @@
    <property name="geometry">
     <rect>
      <x>237</x>
-     <y>71</y>
+     <y>74</y>
      <width>150</width>
      <height>51</height>
     </rect>
@@ -126,7 +129,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>156</y>
+     <y>159</y>
      <width>221</width>
      <height>111</height>
     </rect>
@@ -138,37 +141,14 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>238</x>
-     <y>29</y>
+     <x>128</x>
+     <y>28</y>
      <width>113</width>
      <height>25</height>
     </rect>
    </property>
-  </widget>
-  <widget class="QLabel" name="label_5">
-   <property name="geometry">
-    <rect>
-     <x>239</x>
-     <y>4</y>
-     <width>101</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Veiculo Cliente</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btn_selecionaVeiculo">
-   <property name="geometry">
-    <rect>
-     <x>350</x>
-     <y>29</y>
-     <width>21</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>..</string>
+   <property name="placeholderText">
+    <string>Modelo Veículo</string>
    </property>
   </widget>
  </widget>

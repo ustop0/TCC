@@ -6,28 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>608</width>
-    <height>380</height>
+    <width>800</width>
+    <height>640</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Seleção de Clientes</string>
   </property>
-  <widget class="QTableWidget" name="tw_selecionaCliente">
-   <property name="geometry">
-    <rect>
-     <x>9</x>
-     <y>62</y>
-     <width>590</width>
-     <height>275</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QPushButton" name="btn_confirmarCliente">
    <property name="geometry">
     <rect>
-     <x>510</x>
-     <y>349</y>
+     <x>702</x>
+     <y>608</y>
      <width>89</width>
      <height>25</height>
     </rect>
@@ -36,50 +26,99 @@
     <string>Confirmar</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>9</y>
+     <width>781</width>
+     <height>331</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Cliente:</string>
+   </property>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>161</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Filtrar:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cb_filtrar"/>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QTableWidget" name="tw_selecionaCliente">
+    <property name="geometry">
+     <rect>
+      <x>11</x>
+      <y>84</y>
+      <width>760</width>
+      <height>240</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>449</x>
+      <y>53</y>
+      <width>321</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLineEdit" name="txt_filtrarCliente"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_filtrarCliente">
+       <property name="text">
+        <string>Filtrar</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_2">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>7</y>
-     <width>151</width>
-     <height>50</height>
+     <y>346</y>
+     <width>781</width>
+     <height>250</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>Filtrar:</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QComboBox" name="cb_filtrar"/>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="">
-   <property name="geometry">
-    <rect>
-     <x>328</x>
-     <y>30</y>
-     <width>271</width>
-     <height>27</height>
-    </rect>
+   <property name="title">
+    <string>Veiculos Cliente:</string>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
-     <widget class="QLineEdit" name="txt_filtrarCliente"/>
-    </item>
-    <item>
-     <widget class="QPushButton" name="btn_filtrarCliente">
-      <property name="text">
-       <string>Filtrar</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
+   <widget class="QTableWidget" name="tw_selecionaVeiculo">
+    <property name="geometry">
+     <rect>
+      <x>11</x>
+      <y>30</y>
+      <width>760</width>
+      <height>210</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
+  <zorder>groupBox</zorder>
+  <zorder>btn_confirmarCliente</zorder>
+  <zorder>groupBox_2</zorder>
  </widget>
  <resources/>
  <connections/>
