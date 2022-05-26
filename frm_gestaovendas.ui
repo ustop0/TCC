@@ -67,7 +67,11 @@
      </widget>
     </item>
     <item>
-     <widget class="QDateEdit" name="de_datainicial"/>
+     <widget class="QDateEdit" name="de_datainicial">
+      <property name="calendarPopup">
+       <bool>true</bool>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -89,7 +93,11 @@
      </widget>
     </item>
     <item>
-     <widget class="QDateEdit" name="de_datafinal"/>
+     <widget class="QDateEdit" name="de_datafinal">
+      <property name="calendarPopup">
+       <bool>true</bool>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -129,7 +137,7 @@
     <string>Produtos:</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -151,7 +159,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>366</x>
@@ -173,17 +181,15 @@
     </item>
    </layout>
   </widget>
+  <zorder>layoutWidget</zorder>
+  <zorder>layoutWidget</zorder>
   <zorder>groupBox_2</zorder>
   <zorder>groupBox</zorder>
-  <zorder>btn_filtrar</zorder>
   <zorder>btn_mostratTodasVendas</zorder>
   <zorder>tw_listaProdutos</zorder>
   <zorder>btn_relatorio</zorder>
   <zorder>layoutWidget</zorder>
   <zorder>layoutWidget</zorder>
-  <zorder>cb_filtrar</zorder>
-  <zorder>label_3</zorder>
-  <zorder>lineEdit</zorder>
  </widget>
  <resources/>
  <connections/>

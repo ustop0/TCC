@@ -70,16 +70,36 @@ void frm_agendaservicos::on_btn_agendarServico_clicked()
     }
     else
     {
-        QString data = ui->de_dataHora->text();
+        QString aux;
+
+        QString data = ui->de_data->text();
+        QString hora = ui->de_hora->text(); // + ":00";
         QString servico = ui->txt_tipoServico->text();
         QString observacao = ui->txt_tipoServico->text();
         QString codigo_cliente = g_codigo_cliente;
         QString codigo_veiculo = g_codigo_veiculo;
 
+        //QString data2 = QDate::currentDate().toString("yyyy-MM-dd");
+        //QString data=QDate::currentDate().toString("dd/MM/yyyy"); //data venda
+        //hora.toString("hh:mm:ss");
+
+        //a data precisa ser invetida para o padrão do banco de dados
+        aux=data;
+        std::replace(aux.begin(), aux.end(), '/', '-'); //substitui valores
+        data = aux;
+
+        qDebug() << "Data: " + data;
+        qDebug() << "Hora: " + hora;
+        qDebug() << "Serviço: " + servico;
+        qDebug() << "Observação: " + observacao;
+        qDebug() << "Codigo cliente: " + g_codigo_cliente;
+        qDebug() << "Codigo cliente: " + g_codigo_veiculo;
+
         QSqlQuery query;
 
         query.prepare("INSERT INTO "
-                        "a009_agenda_servicos(a009_data_hora           "
+                        "a009_agenda_servicos(a009_data                "
+                                             ",a009_hora               "
                                              ",a009_servico            "
                                              ",a009_observacao         "
                                              ",a009_status             "
@@ -88,6 +108,7 @@ void frm_agendaservicos::on_btn_agendarServico_clicked()
                                              ",a009_fk_codigo_veiculo) "
                       "VALUES('" +data           + "'"
                             ",'" +servico        + "'"
+                            ",'" +hora           + "'"
                             ",'" +observacao     + "'"
                             ",'1'                  "
                             ",'" +codigo_cliente + "'"

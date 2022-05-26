@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>417</width>
-    <height>313</height>
+    <width>382</width>
+    <height>390</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QPushButton" name="btn_agendarServico">
    <property name="geometry">
     <rect>
-     <x>320</x>
-     <y>282</y>
+     <x>280</x>
+     <y>358</y>
      <width>89</width>
      <height>25</height>
     </rect>
@@ -33,7 +33,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>28</y>
+     <y>32</y>
      <width>113</width>
      <height>25</height>
     </rect>
@@ -46,7 +46,7 @@
    <property name="geometry">
     <rect>
      <x>240</x>
-     <y>28</y>
+     <y>32</y>
      <width>21</width>
      <height>25</height>
     </rect>
@@ -59,7 +59,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>5</y>
+     <y>9</y>
      <width>101</width>
      <height>17</height>
     </rect>
@@ -72,7 +72,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>75</y>
+     <y>138</y>
      <width>181</width>
      <height>50</height>
     </rect>
@@ -93,8 +93,8 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>237</x>
-     <y>74</y>
+     <x>10</x>
+     <y>71</y>
      <width>150</width>
      <height>51</height>
     </rect>
@@ -103,12 +103,29 @@
     <item>
      <widget class="QLabel" name="label_2">
       <property name="text">
-       <string>Data e Hora</string>
+       <string>Data</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QDateTimeEdit" name="de_dataHora"/>
+     <widget class="QDateEdit" name="de_data">
+      <property name="maximumTime">
+       <time>
+        <hour>23</hour>
+        <minute>59</minute>
+        <second>59</second>
+       </time>
+      </property>
+      <property name="currentSection">
+       <enum>QDateTimeEdit::DaySection</enum>
+      </property>
+      <property name="displayFormat">
+       <string>dd/MM/yyyy</string>
+      </property>
+      <property name="calendarPopup">
+       <bool>true</bool>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -116,7 +133,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>134</y>
+     <y>198</y>
      <width>81</width>
      <height>17</height>
     </rect>
@@ -129,7 +146,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>159</y>
+     <y>228</y>
      <width>221</width>
      <height>111</height>
     </rect>
@@ -142,7 +159,7 @@
    <property name="geometry">
     <rect>
      <x>128</x>
-     <y>28</y>
+     <y>32</y>
      <width>113</width>
      <height>25</height>
     </rect>
@@ -150,6 +167,65 @@
    <property name="placeholderText">
     <string>Modelo Veículo</string>
    </property>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>71</y>
+     <width>71</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_3">
+    <item>
+     <widget class="QLabel" name="label_5">
+      <property name="text">
+       <string>Hora</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QDateTimeEdit" name="de_hora">
+      <property name="accelerated">
+       <bool>false</bool>
+      </property>
+      <property name="dateTime">
+       <datetime>
+        <hour>3</hour>
+        <minute>0</minute>
+        <second>0</second>
+        <year>2000</year>
+        <month>1</month>
+        <day>12</day>
+       </datetime>
+      </property>
+      <property name="date">
+       <date>
+        <year>2000</year>
+        <month>1</month>
+        <day>12</day>
+       </date>
+      </property>
+      <property name="minimumTime">
+       <time>
+        <hour>3</hour>
+        <minute>0</minute>
+        <second>0</second>
+       </time>
+      </property>
+      <property name="currentSection">
+       <enum>QDateTimeEdit::NoSection</enum>
+      </property>
+      <property name="displayFormat">
+       <string> HH:mm</string>
+      </property>
+      <property name="calendarPopup">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>
