@@ -117,7 +117,6 @@ frm_gestaovendas::~frm_gestaovendas() //**INICIO** destrutor
 }
 
 //lista produtos TW
-
 void frm_gestaovendas::on_tw_listaVendas_itemSelectionChanged()
 {
     //limpando table widget
@@ -294,6 +293,7 @@ void frm_gestaovendas::on_btn_mostratTodasVendas_clicked()
 
         ui->tw_listaVendas->setItem(contlinhas, 5,
                                                 new QTableWidgetItem(query.value(5).toString()));
+
         contlinhas++;
     }while( query.next() );
 }

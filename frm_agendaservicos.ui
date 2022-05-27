@@ -109,6 +109,16 @@
     </item>
     <item>
      <widget class="QDateEdit" name="de_data">
+      <property name="dateTime">
+       <datetime>
+        <hour>23</hour>
+        <minute>0</minute>
+        <second>0</second>
+        <year>2022</year>
+        <month>1</month>
+        <day>1</day>
+       </datetime>
+      </property>
       <property name="maximumTime">
        <time>
         <hour>23</hour>
@@ -168,7 +178,7 @@
     <string>Modelo Veículo</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>170</x>
@@ -186,40 +196,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QDateTimeEdit" name="de_hora">
-      <property name="accelerated">
-       <bool>false</bool>
-      </property>
-      <property name="dateTime">
-       <datetime>
-        <hour>3</hour>
-        <minute>0</minute>
-        <second>0</second>
-        <year>2000</year>
-        <month>1</month>
-        <day>12</day>
-       </datetime>
-      </property>
-      <property name="date">
-       <date>
-        <year>2000</year>
-        <month>1</month>
-        <day>12</day>
-       </date>
-      </property>
-      <property name="minimumTime">
-       <time>
-        <hour>3</hour>
-        <minute>0</minute>
-        <second>0</second>
-       </time>
-      </property>
-      <property name="currentSection">
-       <enum>QDateTimeEdit::NoSection</enum>
-      </property>
-      <property name="displayFormat">
-       <string> HH:mm</string>
-      </property>
+     <widget class="QTimeEdit" name="de_hora">
       <property name="calendarPopup">
        <bool>false</bool>
       </property>
