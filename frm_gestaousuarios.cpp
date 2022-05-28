@@ -20,6 +20,7 @@ frm_gestaousuarios::frm_gestaousuarios(QWidget *parent) :
     ui->cb_nv_acesso->addItem("-");
     ui->cb_nv_acesso->addItem("Administrador");
     ui->cb_nv_acesso->addItem("Funcionário");
+    ui->cb_ge_acesso->addItem("-");
     ui->cb_ge_acesso->addItem("Administrador");
     ui->cb_ge_acesso->addItem("Funcionário");
     ui->txt_nv_nome->setFocus();
@@ -86,9 +87,9 @@ void frm_gestaousuarios::on_btn_nv_gravar_clicked()
                                      ",a001_senha           "
                                      ",a001_tipo_acesso)    "
                   "VALUES('" +nome  +  "'"
-                    ",'" +usuario   +  "'"
-                    ",'" +senha     +  "'"
-                    ",'" +acesso    +  "') ");
+                        ",'" +usuario   +  "'"
+                        ",'" +senha     +  "'"
+                        ",'" +acesso    +  "') ");
 
     if( !query.exec() ) //verifica se a query tem algum erro e executa ela
     {
@@ -153,7 +154,7 @@ void frm_gestaousuarios::on_tabWidget_currentChanged(int index)
     }
 }
 
-//mostrar dados da seleção
+//mostrar dados TW
 void frm_gestaousuarios::on_tw_ge_listausuario_itemSelectionChanged()
 {
     //pega a linha selecionada
@@ -175,7 +176,18 @@ void frm_gestaousuarios::on_tw_ge_listausuario_itemSelectionChanged()
         ui->txt_ge_nome->setText(query.value(1).toString()); //valor 0 é do id
         ui->txt_ge_usuario->setText(query.value(2).toString());
         ui->txt_ge_senha->setText(query.value(3).toString());
-        ui->cb_ge_acesso->setCurrentText(query.value(4).toString());
+        QString verificaStatus = query.value(4).toString();
+
+        //verifica o status do seriço e muda o indice do combo box
+        if( verificaStatus == "A" )
+        {
+            ui->cb_ge_acesso->setCurrentIndex(1);
+            //ui->cb_ge_acesso->currentIndexChanged(1);
+        }
+        else if( verificaStatus == "B" )
+        {
+            ui->cb_ge_acesso->setCurrentIndex(2);
+        }
     }
 }
 

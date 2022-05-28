@@ -204,7 +204,7 @@ void frm_agendaservicos::on_tabWidget_currentChanged(int index)
                         "a009_status = 'Pendente' "
                         "AND a009_ativo = true    "
                       "ORDER BY "
-                          "a009_codigo DESC");
+                          "a009_codigo DESC ");
 
         if( query.exec() ) //verifica se ouve algum erro na execução da query
         {
@@ -305,7 +305,7 @@ void frm_agendaservicos::on_tw_listaservicos_itemSelectionChanged()
         }
         else if( verificaStatus == "Realizado" )
         {
-           ui->cb_ge_status->setCurrentIndex(2);
+            ui->cb_ge_status->setCurrentIndex(2);
         }
         else if( verificaStatus == "Cancelado" )
         {
