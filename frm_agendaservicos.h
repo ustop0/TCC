@@ -47,6 +47,10 @@ private slots:
 
     void on_btn_agendarServico_clicked();
 
+    void on_tabWidget_currentChanged(int index);
+
+    void on_tw_listaservicos_itemSelectionChanged();
+
 private:
     Ui::frm_agendaservicos *ui;
 };
