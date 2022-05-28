@@ -34,6 +34,12 @@ frm_agendaservicos::frm_agendaservicos(QWidget *parent, QString c_codigo_cliente
     ui->cb_ge_filtrar->addItem("Realizado");
     ui->cb_ge_filtrar->addItem("Cancelado");
 
+    //configurando combo box status
+    ui->cb_ge_status->addItem("-");
+    ui->cb_ge_status->addItem("Pendente");
+    ui->cb_ge_status->addItem("Realizado");
+    ui->cb_ge_status->addItem("Cancelado");
+
     //**Estilizando layout da table widget**
     //definindo o tamanho das colunas
     ui->tw_listaservicos->setColumnCount(9);
@@ -290,6 +296,21 @@ void frm_agendaservicos::on_tw_listaservicos_itemSelectionChanged()
         ui->txt_ge_nomeVeiculo->setText(query.value(1).toString());
         ui->txt_ge_tipoServico->setText(query.value(5).toString());
         //ui->Ptxt_ge_observacao->setText(query.value(6).toString());
+        QString verificaStatus = query.value(7).toString();
+
+        //verifica o status do seriço e muda o indice do combo box
+        if( verificaStatus == "Pendente" )
+        {
+            ui->cb_ge_status->setCurrentIndex(1);
+        }
+        else if( verificaStatus == "Realizado" )
+        {
+           ui->cb_ge_status->setCurrentIndex(2);
+        }
+        else if( verificaStatus == "Cancelado" )
+        {
+            ui->cb_ge_status->setCurrentIndex(3);
+        }
     }
 }
 
@@ -511,64 +532,84 @@ void frm_agendaservicos::on_btn_ge_salvar_2_clicked()
     QString nome_cliente = ui->txt_ge_nomeCliente->text();
     QString nome_veiculo = ui->txt_ge_nomeVeiculo->text();
     QString servico = ui->txt_ge_tipoServico->text();
-    QString observacao = ui->Ptxt_ge_observacao->text();
+    QString observacao = ui->txt_ge_tipoServico->text();
+    QString status = ui->cb_ge_status->currentText();
 
-    //**verificar** está quebrando a o registro quando da update
     query.prepare("UPDATE "
-                    "a003_fornecedor "
+                    "a009_agenda_servicos "
                   "SET "
-                    "a003_razao_social             ='" +razao_social            + "'"
-                    ",a003_nome_fantasia           ='" +nome_fantasia           + "'"
-                    ",a003_cnpj                    ='" +cnpj                    + "'"
-                    ",a003_estado                  ='" +estado                  + "'"
-                    ",a003_cidade                  ='" +cidade                  + "'"
-                    ",a003_rua                     ='" +rua                     + "'"
-                    ",a003_numero_estabelecimento  ='" +numero_estabelecimento  + "'"
-                    ",a003_bairro                  ='" +bairro                  + "'"
-                    ",a003_porte                   ='" +porte_empresa           + "'"
-                    ",a003_ocupacao                ='" +ocupacao_empresa        + "'"
-                    ",a003_telefone01              ='" +telefone1               + "'"
-                    ",a003_telefone02              ='" +telefone2               + "'"
+                    "a005_nome             ='" +nome_cliente    + "'"
+                    ",a012_nome_veiculo    ='" +nome_veiculo    + "'"
+                    ",a009_servico         ='" +servico         + "'"
+                    ",a009_observacao      ='" +observacao      + "'"
+                    ",a009_status          ='" +status          + "'"
                   "WHERE "
-                    "a003_codigo ='" +id+ "'");
+                    "a009_codigo ='" +id+ "'");
 
     if( query.exec() ) //executa a query
     {
         //pega a linha que está selecionada
         int linha=ui->tw_listaservicos->currentRow();
         //atualizando o table widget com o novo registro
-        ui->tw_listaservicos->item(linha, 1)->setText( razao_social );
-        ui->tw_listaservicos->item(linha, 2)->setText( nome_fantasia );
-        ui->tw_listaservicos->item(linha, 3)->setText( cnpj );
-        ui->tw_listaservicos->item(linha, 4)->setText( estado );
-        ui->tw_listaservicos->item(linha, 5)->setText( cidade );
-        ui->tw_listaservicos->item(linha, 6)->setText( rua );
-        ui->tw_listaservicos->item(linha, 7)->setText( numero_estabelecimento );
-        ui->tw_listaservicos->item(linha, 8)->setText( bairro );
-        ui->tw_listaservicos->item(linha, 9)->setText( porte_empresa );
-        ui->tw_listaservicos->item(linha, 10)->setText( ocupacao_empresa );
-        ui->tw_listaservicos->item(linha, 11)->setText( telefone1 );
-        ui->tw_listaservicos->item(linha, 12)->setText( telefone2 );
+        ui->tw_listaservicos->item(linha, 1)->setText( nome_cliente );
+        ui->tw_listaservicos->item(linha, 2)->setText( nome_veiculo );
+        ui->tw_listaservicos->item(linha, 5)->setText( servico );
+        ui->tw_listaservicos->item(linha, 6)->setText( observacao );
+        ui->tw_listaservicos->item(linha, 7)->setText( status );
 
         QMessageBox::information(this, "Atualizado", "Serviço atualizado com sucesso!");
 
-        ui->txt_nv_razaoSocial->clear();
-        ui->txt_nv_nomeFantasia->clear();
-        ui->txt_nv_cnpj->clear();
-        //validaCNPJ( cnpj );
-        ui->txt_nv_uf->clear();
-        ui->txt_nv_cidade->clear();
-        ui->txt_nv_rua->clear();
-        ui->txt_nv_numeroEstabelecimento->clear();
-        ui->txt_nv_bairro->clear();
-        ui->txt_nv_porte->clear();
-        ui->txt_nv_ocupacao->clear();
-        ui->txt_nv_tel1->clear();
-        ui->txt_nv_tel2->clear();
+        ui->txt_ge_nomeCliente->clear();
+        ui->txt_ge_nomeVeiculo->clear();
+        ui->txt_ge_tipoServico->clear();
+        ui->Ptxt_ge_observacao->clear();
+        ui->cb_ge_status->clear();
     }
     else
     {
         QMessageBox::warning(this, "ERRO", "Erro ao atualizar serviço");
+    }
+}
+
+//botão excluir
+void frm_agendaservicos::on_btn_ge_excluir_2_clicked()
+{
+    if( ui->tw_listaservicos->currentRow() == -1 )
+    {
+        QMessageBox::warning(this, "ERRO", "Selecione um serviço");
+        return;
+    }
+
+    //pergunta se o usuário realmente quer excluir o registro
+    QMessageBox::StandardButton opc =QMessageBox::question(
+                                      this,"Exclusão"
+                                      ,"Confirma exclusão do serviço?"
+                                      ,QMessageBox::Yes|QMessageBox::No);
+
+    if( opc == QMessageBox::Yes )
+    {
+        //pegando a linha corrent(atual), no caso o id(index(0))
+        int linha = ui->tw_listaservicos->currentRow();
+        QString id = ui->tw_listaservicos->item(linha, 0)->text();
+
+        QSqlQuery query;
+
+        query.prepare("UPDATE "
+                        "a009_fornecedor "
+                      "SET "
+                        "a009_ativo = false "
+                      "WHERE "
+                        "a009_codigo ='" +id+ "'");
+
+        if( query.exec() ) //executa a query
+        {
+            ui->tw_listaservicos->removeRow( linha );
+            QMessageBox::information(this, "DELETADO", "Serviço excluído com sucesso");
+        }
+        else
+        {
+             QMessageBox::warning(this, "ERRO", "Erro ao excluir serviço");
+        }
     }
 }
 

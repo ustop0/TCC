@@ -55,6 +55,10 @@ private slots:
 
     void on_btn_ge_filtrar_clicked();
 
+    void on_btn_ge_salvar_2_clicked();
+
+    void on_btn_ge_excluir_2_clicked();
+
 private:
     Ui::frm_agendaservicos *ui;
 };
