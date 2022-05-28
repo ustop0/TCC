@@ -284,7 +284,6 @@ void frm_gestaomarcas::on_btn_ge_filtrar_clicked()
 //btn salvar alterações marca
 void frm_gestaomarcas::on_btn_ge_salvar_clicked()
 {
-    //**DESENVOLVENDO** a chave estrangeira tem sido um grande problema
     if( ui->tw_listamarcas->currentRow() == -1 )
     {
         QMessageBox::warning(this, "ERRO", "Selecione uma marca");

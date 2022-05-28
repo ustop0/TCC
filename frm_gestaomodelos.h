@@ -29,6 +29,10 @@ private slots:
 
     void on_tw_listamarcas_itemSelectionChanged();
 
+    void on_txt_nv_filtrar_returnPressed();
+
+    void on_btn_nv_filtrar_clicked();
+
     void on_btn_nv_novo_clicked();
 
     void on_btn_nv_salvar_clicked();

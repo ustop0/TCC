@@ -136,7 +136,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="cb_nv_filtro"/>
+       <widget class="QComboBox" name="cb_nv_filtrar"/>
       </item>
      </layout>
     </widget>
