@@ -24,7 +24,7 @@ frm_agendaservicos::frm_agendaservicos(QWidget *parent, QString c_codigo_cliente
     //define o Novo Produto de index(0) como aba padrão(que inicia ao ser aberta a interface)
     ui->tabWidget->setCurrentIndex(0);
 
-    //configurando combo box
+    //configurando combo box filtro
     ui->cb_ge_filtrar->addItem("-");
     ui->cb_ge_filtrar->addItem("Cliente");
     ui->cb_ge_filtrar->addItem("Modelo Veículo");

@@ -48,6 +48,7 @@ frm_gestaoveiculos::frm_gestaoveiculos(QWidget *parent) :
 
 frm_gestaoveiculos::~frm_gestaoveiculos()//**INICIO** destrutor
 {
+    con.fechar();
     delete ui;
 }
 
@@ -302,7 +303,7 @@ void frm_gestaoveiculos::on_txt_ge_filtrar_returnPressed()
     ui->txt_ge_filtrar->setFocus(); //posiciona o cursos no campo novamente
 }
 
-
+//btn filtrar
 void frm_gestaoveiculos::on_btn_ge_filtrar_clicked()
 {
     frm_gestaoveiculos::on_txt_ge_filtrar_returnPressed();

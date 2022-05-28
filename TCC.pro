@@ -24,6 +24,8 @@ SOURCES += \
     frm_gestaoclientes.cpp \
     frm_gestaoesotque.cpp \
     frm_gestaofornecedores.cpp \
+    frm_gestaomarcas.cpp \
+    frm_gestaomodelos.cpp \
     frm_gestaousuarios.cpp \
     frm_gestaoveiculos.cpp \
     frm_gestaovendas.cpp \
@@ -53,6 +55,8 @@ HEADERS += \
     frm_gestaoclientes.h \
     frm_gestaoesotque.h \
     frm_gestaofornecedores.h \
+    frm_gestaomarcas.h \
+    frm_gestaomodelos.h \
     frm_gestaousuarios.h \
     frm_gestaoveiculos.h \
     frm_gestaovendas.h \
@@ -72,6 +76,8 @@ FORMS += \
     frm_gestaoclientes.ui \
     frm_gestaoesotque.ui \
     frm_gestaofornecedores.ui \
+    frm_gestaomarcas.ui \
+    frm_gestaomodelos.ui \
     frm_gestaousuarios.ui \
     frm_gestaoveiculos.ui \
     frm_gestaovendas.ui \

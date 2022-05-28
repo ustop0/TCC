@@ -39,6 +39,10 @@ private slots:
 
     void on_actionFornecedores_triggered();
 
+    void on_actionCadastro_de_marcas_triggered();
+
+    void on_actionCadastro_de_Modelos_triggered();
+
     void on_actionCadastro_de_veiculos_triggered(); //veiculos
 
     void on_actionVeiculos_de_clientes_triggered(); //veiculos

@@ -5,6 +5,8 @@
 #include "frm_gestaofornecedores.h"
 #include "frm_gestaoveiculos.h"
 #include "frm_gestaoesotque.h"
+#include "frm_gestaomarcas.h"
+#include "frm_gestaomodelos.h"
 #include "frms_nv_veiculocliente.h" //estudando
 #include "frm_novavenda.h"
 #include "frm_gestaovendas.h"
@@ -44,11 +46,14 @@ Frm_principal::Frm_principal(QWidget *parent)
 
     ui->lb_nome_usuario->setText( nome_usuario );
     ui->lb_base_dados->setText( base_dados );
+    ui->lb_data->setText( "Data: " + QDate::currentDate().toString("dd/MM/yyyy") );
 
     ui->statusbar->addPermanentWidget( ui->lb_nome_usuario );
     ui->statusbar->addPermanentWidget( ui->line_2 );
     ui->statusbar->addPermanentWidget( ui->lb_base_dados );
     ui->statusbar->addPermanentWidget( ui->line_3 );
+    ui->statusbar->addPermanentWidget( ui->lb_data );
+    ui->statusbar->addPermanentWidget( ui->line_4 );
     ui->statusbar->addPermanentWidget( ui->lb_relogio );
 
     //ui->statusbar->showMessage("TESTE", 4000);
@@ -88,6 +93,20 @@ void Frm_principal::on_actionFornecedores_triggered()
     f_gestaofornecedores.exec();
 }
 
+//abre tela de cadastro de marcas
+void Frm_principal::on_actionCadastro_de_marcas_triggered()
+{
+    frm_gestaomarcas f_gestaomarcas;
+    f_gestaomarcas.exec();
+}
+
+//abre tela de cadastro de modelos
+void Frm_principal::on_actionCadastro_de_Modelos_triggered()
+{
+    frm_modelos f_gestaomodelos;
+    f_gestaomodelos.exec();
+}
+
 //abre tela de cadastro de veiculos
 void Frm_principal::on_actionCadastro_de_veiculos_triggered()
 {
@@ -102,7 +121,8 @@ void Frm_principal::on_actionVeiculos_de_clientes_triggered()
     f_veiculocliente.exec();
 }
 
-void Frm_principal::on_actionEstoque_triggered() //abre a tela de estoque
+//abre a tela de estoque
+void Frm_principal::on_actionEstoque_triggered()
 {
     frm_gestaoesotque f_gestaoesotque;
     f_gestaoesotque.exec();
@@ -158,3 +178,9 @@ void Frm_principal::atualizaRelogio()
 
     ui->lb_relogio->setText(tempoTexto);
 }
+
+
+
+
+
+

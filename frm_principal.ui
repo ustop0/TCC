@@ -101,7 +101,7 @@
    <widget class="QLabel" name="lb_relogio">
     <property name="geometry">
      <rect>
-      <x>450</x>
+      <x>580</x>
       <y>320</y>
       <width>67</width>
       <height>17</height>
@@ -168,6 +168,38 @@
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
+   <widget class="Line" name="line_4">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>300</y>
+      <width>20</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="lineWidth">
+     <number>1</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lb_data">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>320</y>
+      <width>111</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Data</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -200,8 +232,11 @@
      <property name="title">
       <string>Veiculos</string>
      </property>
-     <addaction name="actionCadastro_de_veiculos"/>
+     <addaction name="actionCadastro_de_marcas"/>
+     <addaction name="actionCadastro_de_Modelos"/>
+     <addaction name="separator"/>
      <addaction name="actionVeiculos_de_clientes"/>
+     <addaction name="actionCadastro_de_veiculos"/>
     </widget>
     <addaction name="actionUsuario"/>
     <addaction name="actionClientes"/>
@@ -276,12 +311,22 @@
   </action>
   <action name="actionCadastro_de_veiculos">
    <property name="text">
-    <string>Cadastro de veiculos</string>
+    <string>Cadastro de Veiculos</string>
    </property>
   </action>
   <action name="actionVeiculos_de_clientes">
    <property name="text">
     <string>Veiculos de clientes</string>
+   </property>
+  </action>
+  <action name="actionCadastro_de_marcas">
+   <property name="text">
+    <string>Cadastro de Marcas</string>
+   </property>
+  </action>
+  <action name="actionCadastro_de_Modelos">
+   <property name="text">
+    <string>Cadastro de Modelos</string>
    </property>
   </action>
  </widget>
