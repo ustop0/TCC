@@ -663,7 +663,7 @@ void frm_gestaofornecedores::validaCNPJ()
     {
         cnpj = ui->txt_nv_cnpj->text();
     }
-    else if ( ui->txt_nv_cnpj->text() == "" )
+    else if ( ui->txt_ge_cnpj->text() == "" )
     {
         cnpj = ui->txt_ge_cnpj->text();
     }

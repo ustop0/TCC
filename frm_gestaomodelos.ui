@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -59,7 +59,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="txt_nv_marca"/>
+        <widget class="QLineEdit" name="txt_nv_marca">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -219,7 +223,11 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="txt_ge_marca"/>
+        <widget class="QLineEdit" name="txt_ge_marca">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

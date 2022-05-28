@@ -20,6 +20,10 @@ frm_gestaoclientes::frm_gestaoclientes(QWidget *parent) :
         }
     }
 
+    //deixa o botão da validação do cep invisivel
+    ui->btn_nv_validacepj->setVisible(false);
+    ui->btn_ge_validacep->setVisible(false);
+
     //define o Novo Produto de index(0) como aba padrão(que inicia ao ser aberta a interface)
     ui->tabWidget->setCurrentIndex(0);
 
@@ -149,14 +153,14 @@ void frm_gestaoclientes::on_btn_nv_gravar_clicked() //salvar novo cliente **DESE
 //pressiona campo cep, chama api
 void frm_gestaoclientes::on_txt_nv_cep_returnPressed()
 {
-    ClCliente cliente;
+    frm_gestaoclientes::on_btn_nv_validacepj_clicked();
+}
 
-    cliente.cep = ui->txt_nv_cep->text();
-    validaCEP( cliente.cep ); //validando cep
-    cliente.estado = ui->txt_nv_estado->text();
-    cliente.cidade = ui->txt_nv_cidade->text();
-    cliente.rua = ui->txt_nv_rua->text();
-    cliente.bairro = ui->txt_nv_bairro->text();
+//btn valida cep(fica invisivel)
+void frm_gestaoclientes::on_btn_nv_validacepj_clicked()
+{
+    //validando cep
+    validaCEP();
 }
 
 //tela de cadastro de veiculos
@@ -483,14 +487,13 @@ void frm_gestaoclientes::on_btn_ge_filtrar_clicked()
 //validando cep, gestão clientes
 void frm_gestaoclientes::on_txt_ge_cep_returnPressed()
 {
-    ClCliente cliente;
+    frm_gestaoclientes::on_btn_ge_validacep_clicked();
+}
 
-    cliente.cep = ui->txt_ge_cep->text();
-    validaCEP( cliente.cep ); //validando cep
-    cliente.estado = ui->txt_ge_estado->text();
-    cliente.cidade = ui->txt_ge_cidade->text();
-    cliente.rua = ui->txt_ge_rua->text();
-    cliente.bairro = ui->txt_ge_bairro->text();
+void frm_gestaoclientes::on_btn_ge_validacep_clicked()
+{
+    //validando cep
+    validaCEP();
 }
 
 //salvar dados do cliente editado gestão clientes
@@ -790,12 +793,23 @@ bool frm_gestaoclientes::recebeCPF( const QString &cliente_cpf )
  * Chamada: botão gravar cliente                                                              |
  *--------------------------------------------------------------------------------------------
  */
-void frm_gestaoclientes::validaCEP( const QString &cliente_cep )
+void frm_gestaoclientes::validaCEP()
 {
+    QString cep;
+
+    if( ui->txt_nv_cep->text() != "" )
+    {
+        cep = ui->txt_nv_cep->text();
+    }
+    else if ( ui->txt_ge_cep->text() == "" )
+    {
+        cep = ui->txt_ge_cep->text();
+    }
+
     QEventLoop waitLoop;
     QNetworkAccessManager manager;
     QNetworkReply *reply = manager.get(
-                QNetworkRequest( QUrl("https://brasilapi.com.br/api/cep/v1/" + cliente_cep)) );
+                QNetworkRequest( QUrl("https://brasilapi.com.br/api/cep/v1/" + cep)) );
 
     QObject::connect(reply, SIGNAL(finished()), &waitLoop, SLOT(quit()));
     waitLoop.exec();
@@ -809,17 +823,8 @@ void frm_gestaoclientes::validaCEP( const QString &cliente_cep )
         json["erro"].toBool() ?
                     ui->lb_nv_cep->setText("CEP") : ui->lb_nv_cep->setText("CEP: inválido");
 
-        //limpando os campos
-        ui->txt_nv_estado->clear();
-        ui->txt_nv_cidade->clear();
-        ui->txt_nv_bairro->clear();
-        ui->txt_nv_rua->clear();
-        ui->lb_nv_cep->setText("CEP: inválido");
 
-        ui->txt_ge_estado->clear();
-        ui->txt_ge_cidade->clear();
-        ui->txt_ge_bairro->clear();
-        ui->txt_ge_rua->clear();
+        ui->lb_nv_cep->setText("CEP: inválido");
         ui->lb_ge_cep->setText("CEP: inválido");
     }
     else
@@ -837,11 +842,5 @@ void frm_gestaoclientes::validaCEP( const QString &cliente_cep )
         ui->txt_ge_rua->setText(json["street"].toString());
     }
 }
-
-
-
-
-
-
 
 

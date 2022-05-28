@@ -236,7 +236,6 @@
      <addaction name="actionCadastro_de_Modelos"/>
      <addaction name="separator"/>
      <addaction name="actionVeiculos_de_clientes"/>
-     <addaction name="actionCadastro_de_veiculos"/>
     </widget>
     <addaction name="actionUsuario"/>
     <addaction name="actionClientes"/>
@@ -309,14 +308,9 @@
     <string>Agendar Serviço</string>
    </property>
   </action>
-  <action name="actionCadastro_de_veiculos">
-   <property name="text">
-    <string>Cadastro de Veiculos</string>
-   </property>
-  </action>
   <action name="actionVeiculos_de_clientes">
    <property name="text">
-    <string>Veiculos de clientes</string>
+    <string>Cadastro de Veiculos  de Clientes</string>
    </property>
   </action>
   <action name="actionCadastro_de_marcas">

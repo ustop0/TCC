@@ -27,7 +27,6 @@ SOURCES += \
     frm_gestaomarcas.cpp \
     frm_gestaomodelos.cpp \
     frm_gestaousuarios.cpp \
-    frm_gestaoveiculos.cpp \
     frm_gestaovendas.cpp \
     frm_login.cpp \
     frm_novavenda.cpp \
@@ -58,7 +57,6 @@ HEADERS += \
     frm_gestaomarcas.h \
     frm_gestaomodelos.h \
     frm_gestaousuarios.h \
-    frm_gestaoveiculos.h \
     frm_gestaovendas.h \
     frm_login.h \
     frm_novavenda.h \
@@ -79,7 +77,6 @@ FORMS += \
     frm_gestaomarcas.ui \
     frm_gestaomodelos.ui \
     frm_gestaousuarios.ui \
-    frm_gestaoveiculos.ui \
     frm_gestaovendas.ui \
     frm_login.ui \
     frm_novavenda.ui \

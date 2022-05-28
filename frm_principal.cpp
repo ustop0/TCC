@@ -3,7 +3,6 @@
 #include "frm_gestaousuarios.h"
 #include "frm_gestaoclientes.h"
 #include "frm_gestaofornecedores.h"
-#include "frm_gestaoveiculos.h"
 #include "frm_gestaoesotque.h"
 #include "frm_gestaomarcas.h"
 #include "frm_gestaomodelos.h"
@@ -105,13 +104,6 @@ void Frm_principal::on_actionCadastro_de_Modelos_triggered()
 {
     frm_modelos f_gestaomodelos;
     f_gestaomodelos.exec();
-}
-
-//abre tela de cadastro de veiculos
-void Frm_principal::on_actionCadastro_de_veiculos_triggered()
-{
-    frm_gestaoveiculos f_gestaoveiculos;
-    f_gestaoveiculos.exec();
 }
 
 //abre tela de cadastro de veiculos de clientes

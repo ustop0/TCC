@@ -25,30 +25,30 @@ frms_nv_veiculocliente::frms_nv_veiculocliente(QWidget *parent) :
 
     //**Estilizando layout da table widget**
     //definindo o tamanho das colunas
-    ui->tw_nv_listaveiculosclientes->setColumnCount(9); //define que o table widget terá duas colunas
-    ui->tw_nv_listaveiculosclientes->setColumnWidth(0, 150); //id cliente
-    ui->tw_nv_listaveiculosclientes->setColumnWidth(1, 220); //nome cliente
+    ui->tw_ge_listaveiculosclientes->setColumnCount(9); //define que o table widget terá duas colunas
+    ui->tw_ge_listaveiculosclientes->setColumnWidth(0, 150); //id cliente
+    ui->tw_ge_listaveiculosclientes->setColumnWidth(1, 220); //nome cliente
 
     //cabeçalhos do table widget
     QStringList cabecalhos={"ID", "Nome", "CPF", "CEP", "Estado","Cidade"
                            ,"Rua", "Nro. Casa", "Bairro", "Telefone"};
 
-    ui->tw_nv_listaveiculosclientes->setHorizontalHeaderLabels(cabecalhos);
+    ui->tw_ge_listaveiculosclientes->setHorizontalHeaderLabels(cabecalhos);
     //definindo cor da linha ao ser selecionada
-    ui->tw_nv_listaveiculosclientes->setStyleSheet("QTableView "
+    ui->tw_ge_listaveiculosclientes->setStyleSheet("QTableView "
                                       "{selection-background-color:red}");
 
     //desabilita a edição dos registros pelo table widget
-    ui->tw_nv_listaveiculosclientes->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tw_ge_listaveiculosclientes->setEditTriggers(QAbstractItemView::NoEditTriggers);
     //selecionar a linha inteira quando clickar em uma celula
-    ui->tw_nv_listaveiculosclientes->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tw_ge_listaveiculosclientes->setSelectionBehavior(QAbstractItemView::SelectRows);
     //desabilitando os indices das linhas
-    ui->tw_nv_listaveiculosclientes->verticalHeader()->setVisible(false);
+    ui->tw_ge_listaveiculosclientes->verticalHeader()->setVisible(false);
 
 
     //carregando os clientes no tablewidget
     //limpa as linhas do table widget
-    funcoes_globais::removerLinhas( ui->tw_nv_listaveiculosclientes );
+    funcoes_globais::removerLinhas( ui->tw_ge_listaveiculosclientes );
 
     //inserir linhas dentro do table widget
     int contlinhas=0;
@@ -79,49 +79,49 @@ frms_nv_veiculocliente::frms_nv_veiculocliente(QWidget *parent) :
         while( query.next() )
         {
             //inserindo com contador de linhas, por index
-            ui->tw_nv_listaveiculosclientes->insertRow(contlinhas);
-            ui->tw_nv_listaveiculosclientes->setItem(contlinhas
+            ui->tw_ge_listaveiculosclientes->insertRow(contlinhas);
+            ui->tw_ge_listaveiculosclientes->setItem(contlinhas
                                         , 0
                                         , new QTableWidgetItem(query.value(0).toString()));
 
-            ui->tw_nv_listaveiculosclientes->setItem(contlinhas
+            ui->tw_ge_listaveiculosclientes->setItem(contlinhas
                                         , 1
                                         , new QTableWidgetItem(query.value(1).toString()));
 
-            ui->tw_nv_listaveiculosclientes->setItem(contlinhas
+            ui->tw_ge_listaveiculosclientes->setItem(contlinhas
                                         , 2
                                         , new QTableWidgetItem(query.value(2).toString()));
 
-            ui->tw_nv_listaveiculosclientes->setItem(contlinhas
+            ui->tw_ge_listaveiculosclientes->setItem(contlinhas
                                         , 3
                                         , new QTableWidgetItem(query.value(3).toString()));
 
-            ui->tw_nv_listaveiculosclientes->setItem(contlinhas
+            ui->tw_ge_listaveiculosclientes->setItem(contlinhas
                                         , 4
                                         , new QTableWidgetItem(query.value(4).toString()));
 
-            ui->tw_nv_listaveiculosclientes->setItem(contlinhas
+            ui->tw_ge_listaveiculosclientes->setItem(contlinhas
                                         , 5
                                         , new QTableWidgetItem(query.value(5).toString()));
 
-            ui->tw_nv_listaveiculosclientes->setItem(contlinhas
+            ui->tw_ge_listaveiculosclientes->setItem(contlinhas
                                         , 6
                                         , new QTableWidgetItem(query.value(6).toString()));
 
-            ui->tw_nv_listaveiculosclientes->setItem(contlinhas
+            ui->tw_ge_listaveiculosclientes->setItem(contlinhas
                                         , 7
                                         , new QTableWidgetItem(query.value(7).toString()));
 
-            ui->tw_nv_listaveiculosclientes->setItem(contlinhas
+            ui->tw_ge_listaveiculosclientes->setItem(contlinhas
                                         , 8
                                         , new QTableWidgetItem(query.value(8).toString()));
 
-            ui->tw_nv_listaveiculosclientes->setItem(contlinhas
+            ui->tw_ge_listaveiculosclientes->setItem(contlinhas
                                         , 9
                                         , new QTableWidgetItem(query.value(9).toString()));
 
             //definindo o tamanho das linhas
-            ui->tw_nv_listaveiculosclientes->setRowHeight(contlinhas, 20);
+            ui->tw_ge_listaveiculosclientes->setRowHeight(contlinhas, 20);
             contlinhas ++;
         }
     }
@@ -150,14 +150,14 @@ void frms_nv_veiculocliente::on_tw_nv_listaveiculosclientes_itemSelectionChanged
 {
     ClCliente cliente;
 
-    if( ui->tw_nv_listaveiculosclientes->currentRow() == -1 )
+    if( ui->tw_ge_listaveiculosclientes->currentRow() == -1 )
     {
         QMessageBox::warning(this, "ERRO", "Selecione um veiculo");
         return;
     }
 
     //pega a linha selecionada, no caso o cpf do cliente
-    int id = ui->tw_nv_listaveiculosclientes->item(ui->tw_nv_listaveiculosclientes->currentRow()
+    int id = ui->tw_ge_listaveiculosclientes->item(ui->tw_ge_listaveiculosclientes->currentRow()
                                                    , 0) ->text().toInt();
 
     //pega os dados da linha selecionada

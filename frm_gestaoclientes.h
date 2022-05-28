@@ -34,12 +34,14 @@ public slots:
 
     bool recebeCPF( const QString &cliente_cpf );
 
-    void validaCEP( const QString &cliente_cep );
+    void validaCEP();
 
 private slots:
     void on_btn_nv_gravar_clicked(); //original( void )
 
     void on_txt_nv_cep_returnPressed(); //pressiona campo cep
+
+    void on_btn_nv_validacepj_clicked();
 
     void on_btn_nv_cadastrarveiculo_clicked();
 
@@ -56,6 +58,10 @@ private slots:
     void on_tabWidget_currentChanged(int index);
 
     void on_btn_nv_novo_clicked();
+
+
+
+    void on_btn_ge_validacep_clicked();
 
 private:
     Ui::frm_gestaoclientes *ui;

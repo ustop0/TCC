@@ -249,6 +249,22 @@
       </item>
      </layout>
     </widget>
+    <widget class="QPushButton" name="btn_nv_validacepj">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>270</y>
+       <width>21</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>...</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_2">
     <attribute name="title">
@@ -536,6 +552,22 @@
         </widget>
        </item>
       </layout>
+     </widget>
+     <widget class="QPushButton" name="btn_ge_validacep">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>50</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>...</string>
+      </property>
      </widget>
     </widget>
     <widget class="QPushButton" name="btn_ge_salvar">
