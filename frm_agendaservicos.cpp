@@ -288,6 +288,287 @@ void frm_agendaservicos::on_tw_listaservicos_itemSelectionChanged()
         //considerar inserir um campo para o código
         ui->txt_ge_nomeCliente->setText(query.value(0).toString());
         ui->txt_ge_nomeVeiculo->setText(query.value(1).toString());
+        ui->txt_ge_tipoServico->setText(query.value(5).toString());
+        //ui->Ptxt_ge_observacao->setText(query.value(6).toString());
+    }
+}
+
+//filtrar
+void frm_agendaservicos::on_txt_ge_filtrar_returnPressed()
+{
+    QString cb_filtro = ui->cb_ge_filtrar->currentText();
+    QString txt_filtro = ui->txt_ge_filtrar->text();
+
+    QString busca; //armazena busca
+    QString filtro_sql;
+
+    QStringList cb_opc; //Dados do combo box
+    cb_opc << "Cliente" << "Modelo Veículo" << "Placa Veículo"
+           << "Serviço" << "Pendente" << "Realizado" << "Cancelado";
+
+    //remove as linhas o table widget
+    funcoes_globais::removerLinhas( ui->tw_listaservicos );
+
+    //verificando se algo foi digitado no campo de filtro
+    if( ui->txt_ge_filtrar->text() == "" )
+    {
+        if( cb_filtro == "" ) //consulta de acordo com o radio selecionado
+        {
+            busca = "SELECT "
+                        "a009_codigo           "
+                        ",a005_nome            "
+                        ",a012_nome_veiculo    "
+                        ",a004_placa_veiculo   "
+                        ",a009_data            "
+                        ",a009_hora            "
+                        ",a009_servico         "
+                        ",a009_observacao      "
+                        ",a009_status          "
+                    "FROM "
+                        "a009_agenda_servicos "
+                        "JOIN a005_cliente ON (a005_codigo = a009_fk_codigo_cliente)  "
+                        "JOIN a004_veiculos ON (a004_codigo = a009_fk_codigo_veiculo) "
+                        "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo)   "
+                    "WHERE "
+                      "a009_status = 'Pendente' "
+                      "AND a009_ativo = true    "
+                    "ORDER BY "
+                        "a009_codigo DESC";
+        }
+        else
+        {
+            busca = "SELECT "
+                        "a009_codigo           "
+                        ",a005_nome            "
+                        ",a012_nome_veiculo    "
+                        ",a004_placa_veiculo   "
+                        ",a009_data            "
+                        ",a009_hora            "
+                        ",a009_servico         "
+                        ",a009_observacao      "
+                        ",a009_status          "
+                    "FROM "
+                        "a009_agenda_servicos "
+                        "JOIN a005_cliente ON (a005_codigo = a009_fk_codigo_cliente)  "
+                        "JOIN a004_veiculos ON (a004_codigo = a009_fk_codigo_veiculo) "
+                        "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo)   "
+                    "WHERE "
+                      "a009_status = 'Pendente' "
+                      "AND a009_ativo = true    "
+                    "ORDER BY "
+                        "a009_codigo DESC";
+        }
+    }
+    else
+    {
+        //consulta de acordo com a seleção do combo box
+        switch( cb_opc.indexOf( cb_filtro ) )
+        {
+            //Cliente
+            case 0:
+
+                filtro_sql = "a005_nome LIKE '%" +txt_filtro+ "%' ";
+                break;
+            //Modelo Veículo
+            case 1:
+
+                filtro_sql = "a012_nome_veiculo LIKE '%" +txt_filtro+ "%' ";
+                break;
+            //Placa Veículo
+            case 2:
+
+                filtro_sql = "a004_placa_veiculo LIKE '%" +txt_filtro+ "%' ";
+                break;
+            //Serviço
+            case 3:
+
+                filtro_sql = "a009_servico LIKE '%" +txt_filtro+ "%' ";
+                break;
+            //cancelado
+            case 4:
+
+                filtro_sql = "a009_status LIKE 'Pendente' ";
+                break;
+            //Realizado
+            case 5:
+
+                filtro_sql = "a009_status LIKE 'Realizado' ";
+                break;
+            //Cancelado
+            case 6:
+
+                filtro_sql = "a009_status LIKE 'Cancelado' ";
+                break;
+            default:
+                qDebug() << "_Houve um problema ao filtrar realizar o filtro(swith case)";
+                break;
+        }
+
+        busca = "SELECT "
+                    "a009_codigo           "
+                    ",a005_nome            "
+                    ",a012_nome_veiculo    "
+                    ",a004_placa_veiculo   "
+                    ",a009_data            "
+                    ",a009_hora            "
+                    ",a009_servico         "
+                    ",a009_observacao      "
+                    ",a009_status          "
+                "FROM "
+                    "a009_agenda_servicos "
+                    "JOIN a005_cliente ON (a005_codigo = a009_fk_codigo_cliente)  "
+                    "JOIN a004_veiculos ON (a004_codigo = a009_fk_codigo_veiculo) "
+                    "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo)   "
+                "WHERE "
+                  + filtro_sql +
+                  "AND a009_ativo = true    "
+                "ORDER BY "
+                    "a009_codigo DESC";
+    }
+
+    //contador para percorrer linhas
+    int contlinhas = 0;
+    QSqlQuery query;
+    query.prepare( busca );
+
+    if( query.exec() ) //executa a query
+    {
+        while( query.next() ) //percorrendo query e preenchendo table widget
+        {
+            //inserindo com contador de linhas, por index
+            ui->tw_listaservicos->insertRow( contlinhas );
+            ui->tw_listaservicos->setItem(contlinhas
+                                        , 0
+                                        , new QTableWidgetItem(query.value(0).toString()));
+
+            ui->tw_listaservicos->setItem(contlinhas
+                                        , 1
+                                        , new QTableWidgetItem(query.value(1).toString()));
+
+            ui->tw_listaservicos->setItem(contlinhas
+                                        , 2
+                                        , new QTableWidgetItem(query.value(2).toString()));
+
+            ui->tw_listaservicos->setItem(contlinhas
+                                        , 3
+                                        , new QTableWidgetItem(query.value(3).toString()));
+
+            ui->tw_listaservicos->setItem(contlinhas
+                                        , 4
+                                        , new QTableWidgetItem(query.value(4).toString()));
+
+            ui->tw_listaservicos->setItem(contlinhas
+                                        , 5
+                                        , new QTableWidgetItem(query.value(5).toString()));
+
+            ui->tw_listaservicos->setItem(contlinhas
+                                        , 6
+                                        , new QTableWidgetItem(query.value(6).toString()));
+
+            ui->tw_listaservicos->setItem(contlinhas
+                                        , 7
+                                        , new QTableWidgetItem(query.value(7).toString()));
+
+            ui->tw_listaservicos->setItem(contlinhas
+                                        , 8
+                                        , new QTableWidgetItem(query.value(8).toString()));
+
+            //definindo o tamanho das linhas
+            ui->tw_listaservicos->setRowHeight(contlinhas, 20);
+            contlinhas ++;
+        }
+    }
+    else
+    {
+        QMessageBox::warning(this, "ERRO", "Erro ao filtrar serviços");
+    }
+
+    //apagar conteudo do campo txt_ge_filtrar toda vez que clickar em filtrar
+    ui->txt_ge_filtrar->clear();
+    ui->txt_ge_filtrar->setFocus(); //posiciona o cursos no campo novamente
+}
+
+//btn filtrar
+void frm_agendaservicos::on_btn_ge_filtrar_clicked()
+{
+    frm_agendaservicos::on_txt_ge_filtrar_returnPressed();
+}
+
+//edição, salvar alteração no serviço
+void frm_agendaservicos::on_btn_ge_salvar_2_clicked()
+{
+    if( ui->tw_listaservicos->currentRow() == -1 )
+    {
+        QMessageBox::warning(this, "ERRO", "Selecione um serviço");
+        return;
+    }
+
+    QString id = ui->tw_listaservicos->item(ui->tw_listaservicos
+                                                   ->currentRow(),0)->text();
+    QSqlQuery query;
+
+    //estudar retringir cnpj
+    QString nome_cliente = ui->txt_ge_nomeCliente->text();
+    QString nome_veiculo = ui->txt_ge_nomeVeiculo->text();
+    QString servico = ui->txt_ge_tipoServico->text();
+    QString observacao = ui->Ptxt_ge_observacao->text();
+
+    //**verificar** está quebrando a o registro quando da update
+    query.prepare("UPDATE "
+                    "a003_fornecedor "
+                  "SET "
+                    "a003_razao_social             ='" +razao_social            + "'"
+                    ",a003_nome_fantasia           ='" +nome_fantasia           + "'"
+                    ",a003_cnpj                    ='" +cnpj                    + "'"
+                    ",a003_estado                  ='" +estado                  + "'"
+                    ",a003_cidade                  ='" +cidade                  + "'"
+                    ",a003_rua                     ='" +rua                     + "'"
+                    ",a003_numero_estabelecimento  ='" +numero_estabelecimento  + "'"
+                    ",a003_bairro                  ='" +bairro                  + "'"
+                    ",a003_porte                   ='" +porte_empresa           + "'"
+                    ",a003_ocupacao                ='" +ocupacao_empresa        + "'"
+                    ",a003_telefone01              ='" +telefone1               + "'"
+                    ",a003_telefone02              ='" +telefone2               + "'"
+                  "WHERE "
+                    "a003_codigo ='" +id+ "'");
+
+    if( query.exec() ) //executa a query
+    {
+        //pega a linha que está selecionada
+        int linha=ui->tw_listaservicos->currentRow();
+        //atualizando o table widget com o novo registro
+        ui->tw_listaservicos->item(linha, 1)->setText( razao_social );
+        ui->tw_listaservicos->item(linha, 2)->setText( nome_fantasia );
+        ui->tw_listaservicos->item(linha, 3)->setText( cnpj );
+        ui->tw_listaservicos->item(linha, 4)->setText( estado );
+        ui->tw_listaservicos->item(linha, 5)->setText( cidade );
+        ui->tw_listaservicos->item(linha, 6)->setText( rua );
+        ui->tw_listaservicos->item(linha, 7)->setText( numero_estabelecimento );
+        ui->tw_listaservicos->item(linha, 8)->setText( bairro );
+        ui->tw_listaservicos->item(linha, 9)->setText( porte_empresa );
+        ui->tw_listaservicos->item(linha, 10)->setText( ocupacao_empresa );
+        ui->tw_listaservicos->item(linha, 11)->setText( telefone1 );
+        ui->tw_listaservicos->item(linha, 12)->setText( telefone2 );
+
+        QMessageBox::information(this, "Atualizado", "Serviço atualizado com sucesso!");
+
+        ui->txt_nv_razaoSocial->clear();
+        ui->txt_nv_nomeFantasia->clear();
+        ui->txt_nv_cnpj->clear();
+        //validaCNPJ( cnpj );
+        ui->txt_nv_uf->clear();
+        ui->txt_nv_cidade->clear();
+        ui->txt_nv_rua->clear();
+        ui->txt_nv_numeroEstabelecimento->clear();
+        ui->txt_nv_bairro->clear();
+        ui->txt_nv_porte->clear();
+        ui->txt_nv_ocupacao->clear();
+        ui->txt_nv_tel1->clear();
+        ui->txt_nv_tel2->clear();
+    }
+    else
+    {
+        QMessageBox::warning(this, "ERRO", "Erro ao atualizar serviço");
     }
 }
 
