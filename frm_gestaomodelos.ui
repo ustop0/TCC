@@ -27,7 +27,7 @@
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
-     <string>Nova Modelo</string>
+     <string>Novo Modelo</string>
     </attribute>
     <widget class="QGroupBox" name="groupBox">
      <property name="geometry">
@@ -312,7 +312,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="cb_ge_filtro"/>
+       <widget class="QComboBox" name="cb_ge_filtrar"/>
       </item>
      </layout>
     </widget>

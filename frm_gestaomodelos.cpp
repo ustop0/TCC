@@ -15,6 +15,63 @@ frm_modelos::frm_modelos(QWidget *parent) :
             QMessageBox::warning(this, "ERRO", "Erro ao abrir banco de dados");
         }
     }
+
+    //combo box marcas
+    ui->cb_ge_filtrar->addItem("-");
+    ui->cb_ge_filtrar->addItem("Marca");
+
+    //combo box gestão modelos
+    ui->cb_ge_filtrar->addItem("-");
+    ui->cb_ge_filtrar->addItem("Marca");
+    ui->cb_ge_filtrar->addItem("Modelo");
+    ui->txt_nv_marca->setFocus();
+    ui->txt_ge_marca->setFocus();
+
+    //define o Novo Produto de index(0) como aba padrão(que inicia ao ser aberta a interface)
+    ui->tabWidget->setCurrentIndex(0);
+
+    //**Estilizando layout da table widget LISTAMARCAS**
+    //definindo o tamanho das colunas
+    ui->tw_listamarcas->setColumnCount(2);
+    ui->tw_listamarcas->setColumnWidth(0, 100);
+    ui->tw_listamarcas->setColumnWidth(1, 255);
+
+    //cabeçalhos do table widget
+    QStringList cabecalho1={"Código", "Marca"};
+    ui->tw_listamarcas->setHorizontalHeaderLabels( cabecalho1 );
+    //definindo cor da linha ao ser selecionada
+    ui->tw_listamarcas->setStyleSheet("QTableView "
+                                      "{selection-background-color:red}");
+
+    //desabilita a edição dos registros pelo table widget
+    ui->tw_listamarcas->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    //selecionar a linha inteira quando clickar em uma celula
+    ui->tw_listamarcas->setSelectionBehavior(QAbstractItemView::SelectRows);
+    //desabilitando os indices das linhas
+    ui->tw_listamarcas->verticalHeader()->setVisible(false);
+
+
+    //**Estilizando layout da table widget LISTAMODELOS**
+    //definindo o tamanho das colunas
+    ui->tw_listamodelos->setColumnCount(3);
+    ui->tw_listamodelos->setColumnWidth(0, 100);
+    ui->tw_listamodelos->setColumnWidth(1, 150);
+    ui->tw_listamodelos->setColumnWidth(2, 150);
+
+    //cabeçalhos do table widget
+    QStringList cabecalho2={"Código", "Marca", "Modelo"};
+    ui->tw_listamarcas->setHorizontalHeaderLabels( cabecalho2 );
+    //definindo cor da linha ao ser selecionada
+    ui->tw_listamodelos->setStyleSheet("QTableView "
+                                      "{selection-background-color:red}");
+
+    //desabilita a edição dos registros pelo table widget
+    ui->tw_listamodelos->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    //selecionar a linha inteira quando clickar em uma celula
+    ui->tw_listamodelos->setSelectionBehavior(QAbstractItemView::SelectRows);
+    //desabilitando os indices das linhas
+    ui->tw_listamodelos->verticalHeader()->setVisible(false);
+
 }
 
 frm_modelos::~frm_modelos()
@@ -23,10 +80,181 @@ frm_modelos::~frm_modelos()
     delete ui;
 }
 
+//quando trocar de aba
+void frm_modelos::on_tabWidget_currentChanged(int index)
+{
+    if( index == 0 ) //verifica a interface pelo index das tabs
+    {
+        //limpa as linhas do table widget
+        funcoes_globais::removerLinhas( ui->tw_listamarcas );
+        //inserir linhas dentro do table widget
+        int contlinhas=0;
+        //Remover os produtos do table widget
+        QSqlQuery query; //query para listar os colaboradores no table widget
+        query.prepare("SELECT "
+                          "a011_codigo        "
+                          ",a011_marca_nome   "
+                      "FROM "
+                          "a011_marcas "
+                      "WHERE "
+                          "a011_ativo = true");
+
+        if( query.exec() ) //verifica se ouve algum erro na execução da query
+        {
+            //enquanto a query tiver retornando next, insere linhas dentro do table widget
+            while( query.next() )
+            {
+                //inserindo com contador de linhas, por index
+                ui->tw_listamarcas->insertRow(contlinhas);
+                ui->tw_listamarcas->setItem(contlinhas
+                                            , 0
+                                            , new QTableWidgetItem(query.value(0).toString()));
+
+                ui->tw_listamarcas->setItem(contlinhas
+                                            , 1
+                                            , new QTableWidgetItem(query.value(1).toString()));
+
+                //definindo o tamanho das linhas
+                ui->tw_listamarcas->setRowHeight(contlinhas, 20);
+                contlinhas ++;
+            }
+        }
+        else
+        {
+            QMessageBox::warning(this, "ERRO", "Erro ao listar marcas");
+        }
+    }
+    else if( index == 1 )
+    {
+        //limpa as linhas do table widget
+        funcoes_globais::removerLinhas( ui->tw_listamodelos );
+        //inserir linhas dentro do table widget
+        int contlinhas=0;
+        //Remover os produtos do table widget
+        QSqlQuery query; //query para listar os colaboradores no table widget
+        query.prepare("SELECT "
+                          "a012_codigo          "
+                          "a011_marca_nome      "
+                          ",a012_nome_veiculo   "
+                      "FROM "
+                          "a012_modelos "
+                          "JOIN a011_marcas ON ( a011_codigo = a012_fk_codigo_marca) "
+                      "WHERE "
+                          "a012_ativo = true "
+                      "ORDER BY "
+                          "a012_codigo ASC");
+
+        if( query.exec() ) //verifica se ouve algum erro na execução da query
+        {
+            //enquanto a query tiver retornando next, insere linhas dentro do table widget
+            while( query.next() )
+            {
+                //inserindo com contador de linhas, por index
+                ui->tw_listamodelos->insertRow(contlinhas);
+                ui->tw_listamodelos->setItem(contlinhas
+                                            , 0
+                                            , new QTableWidgetItem(query.value(0).toString()));
+
+                ui->tw_listamodelos->setItem(contlinhas
+                                            , 1
+                                            , new QTableWidgetItem(query.value(1).toString()));
+
+                ui->tw_listamodelos->setItem(contlinhas
+                                            , 2
+                                            , new QTableWidgetItem(query.value(2).toString()));
+
+                //definindo o tamanho das linhas
+                ui->tw_listamodelos->setRowHeight(contlinhas, 20);
+                contlinhas ++;
+            }
+        }
+        else
+        {
+            QMessageBox::warning(this, "ERRO", "Erro ao listar modelos");
+        }
+    }
+}
+
+//pega TW marcas
+void frm_modelos::on_tw_listamarcas_itemSelectionChanged()
+{
+    //pega a linha selecionada
+    int id=ui->tw_listamarcas->item(ui->tw_listamarcas->currentRow()
+                                        , 0) ->text().toInt();
+
+    //exibe os dados da linha selecionada
+    QSqlQuery query;
+    query.prepare("SELECT "
+                    "* "
+                  "FROM "
+                    "a011_marcas "
+                  "WHERE "
+                    "a011_codigo = '" +QString::number(id)+ "' ");
+
+    if( query.exec() )
+    {
+        query.first(); //pega o primeiro
+        g_codigo_marca = query.value(2).toString();
+        ui->txt_nv_marca->setText(query.value(1).toString());
+    }
+    else
+    {
+        qDebug() << "Não foi possível selecionar dado";
+    }
+}
+
 //novo modelo
 void frm_modelos::on_btn_nv_novo_clicked()
 {
     ui->txt_ge_modelo->clear();
     ui->txt_ge_modelo->setFocus();
+}
+
+//salvar modelo
+void frm_modelos::on_btn_nv_salvar_clicked()
+{
+    int incrementaCodigo = 0;
+
+    QSqlQuery query;
+
+    query.prepare("SELECT "
+                    "* "
+                  "FROM "
+                    "a012_modelos "
+                  "ORDER BY "
+                    "a012_codigo DESC LIMIT 1 ");
+
+    if( query.exec() ) //verifica se ouve algum erro na execução da query
+    {
+        //enquanto a query tiver retornando next, insere linhas dentro do table widget
+        while( query.next() )
+        {
+            incrementaCodigo = query.value(0).toInt() + 1;
+        }
+    }
+    else
+    {
+        qDebug() << "__Erro ao pegar codigo do modelo";
+    }
+
+    QString codigoDesc = QString::number( incrementaCodigo );
+
+    QString modelo = ui->txt_nv_modelo->text().toUpper();
+    //inserindo a marca
+    query.prepare("INSERT INTO "
+                    "a012_modelos(a012_codigo, a012_nome_veiculo, a012_fk_codigo_marca) "
+                  "VALUES('" +codigoDesc+ "', '" +modelo+ "', '" +g_codigo_marca+ "') ");
+
+    if( !query.exec() )
+    {
+        QMessageBox::information(this, "ERRO", "Não foi possível salvar dados do modelo");
+    }
+    else
+    {
+        ui->txt_nv_marca->clear();
+        ui->txt_nv_modelo->clear();
+        ui->txt_nv_marca->setFocus();
+        QMessageBox::information(this, "AVISO", "Novo modelo cadastrada com sucesso");
+    }
 }
 
