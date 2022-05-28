@@ -663,7 +663,7 @@ void frm_gestaofornecedores::validaCNPJ()
     {
         cnpj = ui->txt_nv_cnpj->text();
     }
-    else if ( ui->txt_ge_cnpj->text() == "" )
+    else if ( ui->txt_ge_cnpj->text() != "" )
     {
         cnpj = ui->txt_ge_cnpj->text();
     }
@@ -671,8 +671,7 @@ void frm_gestaofornecedores::validaCNPJ()
     QEventLoop waitLoop;
     QNetworkAccessManager manager;
     QNetworkReply *reply = manager.get(
-                QNetworkRequest( QUrl("https://brasilapi.com.br/api/cnpj/v1/"
-                                      + cnpj)) );
+                QNetworkRequest( QUrl("https://brasilapi.com.br/api/cnpj/v1/" + cnpj)) );
 
     QObject::connect(reply, SIGNAL(finished()), &waitLoop, SLOT(quit()));
     waitLoop.exec();

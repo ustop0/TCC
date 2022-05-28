@@ -4,7 +4,6 @@
 #include "Classes/clcliente.h"
 #include "Classes/clveiculo.h"
 
-
 frm_gestaoclientes::frm_gestaoclientes(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::frm_gestaoclientes)
@@ -745,8 +744,7 @@ void frm_gestaoclientes::validaCEP()
     {
         cep = ui->txt_nv_cep->text();
     }
-
-    if (  ui->txt_ge_cep->text() != "" )
+    else if ( ui->txt_ge_cep->text() != "" )
     {
         cep = ui->txt_ge_cep->text();
     }
@@ -768,9 +766,6 @@ void frm_gestaoclientes::validaCEP()
         json["erro"].toBool() ?
                     ui->lb_nv_cep->setText("CEP") : ui->lb_nv_cep->setText("CEP: inválido");
 
-
-        ui->lb_nv_cep->setText("CEP: inválido");
-        ui->lb_ge_cep->setText("CEP: inválido");
     }
     else
     {
@@ -780,11 +775,13 @@ void frm_gestaoclientes::validaCEP()
         ui->txt_nv_bairro->setText(json["neighborhood"].toString());
         ui->txt_nv_rua->setText(json["street"].toString());
 
+        /*
         ui->txt_ge_cep->setText(json["cep"].toString());
         ui->txt_ge_estado->setText(json["state"].toString());
         ui->txt_ge_cidade->setText(json["city"].toString());
         ui->txt_ge_bairro->setText(json["neighborhood"].toString());
         ui->txt_ge_rua->setText(json["street"].toString());
+        */
     }
 }
 
