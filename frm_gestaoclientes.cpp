@@ -68,7 +68,8 @@ frm_gestaoclientes::~frm_gestaoclientes()//**INICIO** destrutor
     delete ui;
 }
 
-void frm_gestaoclientes::on_btn_nv_gravar_clicked() //salvar novo cliente **DESENVOLVENDO**
+//salvar novo cliente **DESENVOLVENDO**
+void frm_gestaoclientes::on_btn_nv_gravar_clicked()
 {
     //**EM DESENVOLVIMENTO
     ClCliente cliente;
@@ -126,7 +127,7 @@ void frm_gestaoclientes::on_btn_nv_gravar_clicked() //salvar novo cliente **DESE
                                           this,"Veículo"
                                           ,"Cliente salvo com sucesso, "
                                            "deseja cadastrar um veículo para este cliente?"
-                                          ,QMessageBox::Yes|QMessageBox::No); //revisar tabulação
+                                          ,QMessageBox::Yes|QMessageBox::No);
 
         if( opc == QMessageBox::Yes ) //verificando o botao da caixa question
         {
@@ -235,9 +236,11 @@ void frm_gestaoclientes::on_tw_ge_listaclientes_itemSelectionChanged()
 //filtrar
 void frm_gestaoclientes::on_txt_ge_filtro_returnPressed()
 {
-    QString busca; //armazena busca
     QString cb_filtro = ui->cb_ge_filtrar->currentText();
     QString txt_filtro = ui->txt_ge_filtro->text();
+
+    QString busca; //armazena busca
+    QString filtro_sql;
 
     QStringList cb_opc; //Dados do combo box
     cb_opc << "Cliente" << "CPF" << "Veiculo" << "Placa Veiculo";
@@ -249,22 +252,22 @@ void frm_gestaoclientes::on_txt_ge_filtro_returnPressed()
         if( cb_filtro == "" ) //consulta de acordo com o radio selecionado
         {
             busca = "SELECT "
-                        "a005_codigo "
-                        ",a005_nome "
-                        ",a005_cpf "
-                        ",a012_nome_veiculo "
+                        "a005_codigo         "
+                        ",a005_nome          "
+                        ",a005_cpf           "
+                        ",a012_nome_veiculo  "
                         ",a004_placa_veiculo "
-                        ",a005_estado "
-                        ",a005_cidade "
-                        ",a005_rua "
-                        ",a005_nro_casa "
-                        ",a005_bairro "
-                        ",a005_telefone "
+                        ",a005_estado        "
+                        ",a005_cidade        "
+                        ",a005_rua           "
+                        ",a005_nro_casa      "
+                        ",a005_bairro        "
+                        ",a005_telefone      "
                     "FROM "
                         "a005_cliente "
                         "JOIN a004_veiculos ON (a005_codigo = a004_fk_codigo_cliente) "
-                        "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo) "
-                        "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca) "
+                        "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo)   "
+                        "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca)     "
                     "WHERE "
                       "a005_ativo = true "
                     "ORDER BY "
@@ -274,22 +277,22 @@ void frm_gestaoclientes::on_txt_ge_filtro_returnPressed()
         else
         {
             busca = "SELECT "
-                        "a005_codigo "
-                        ",a005_nome "
-                        ",a005_cpf "
-                        ",a012_nome_veiculo "
+                        "a005_codigo         "
+                        ",a005_nome          "
+                        ",a005_cpf           "
+                        ",a012_nome_veiculo  "
                         ",a004_placa_veiculo "
-                        ",a005_estado "
-                        ",a005_cidade "
-                        ",a005_rua "
-                        ",a005_nro_casa "
-                        ",a005_bairro "
-                        ",a005_telefone "
+                        ",a005_estado        "
+                        ",a005_cidade        "
+                        ",a005_rua           "
+                        ",a005_nro_casa      "
+                        ",a005_bairro        "
+                        ",a005_telefone      "
                     "FROM "
                         "a005_cliente "
                         "JOIN a004_veiculos ON (a005_codigo = a004_fk_codigo_cliente) "
-                        "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo) "
-                        "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca) "
+                        "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo)   "
+                        "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca)     "
                     "WHERE "
                       "a005_ativo = true "
                     "ORDER BY "
@@ -303,109 +306,50 @@ void frm_gestaoclientes::on_txt_ge_filtro_returnPressed()
         {
             //cliente
             case 0:
-                busca = "SELECT "
-                            "a005_codigo "
-                            ",a005_nome "
-                            ",a005_cpf "
-                            ",a012_nome_veiculo "
-                            ",a004_placa_veiculo "
-                            ",a005_estado "
-                            ",a005_cidade "
-                            ",a005_rua "
-                            ",a005_nro_casa "
-                            ",a005_bairro "
-                            ",a005_telefone "
-                        "FROM "
-                            "a005_cliente "
-                            "JOIN a004_veiculos ON (a005_codigo = a004_fk_codigo_cliente) "
-                            "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo) "
-                            "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca) "
-                        "WHERE "
-                          "a005_nome LIKE '%" +txt_filtro+ "%'"
-                          "AND a005_ativo = true "
-                        "ORDER BY "
-                            "a005_codigo DESC";
+                filtro_sql = "a005_nome LIKE '%" +txt_filtro+ "%' ";
                 break;
             //cpf
             case 1:
-                busca = "SELECT "
-                            "a005_codigo "
-                            ",a005_nome "
-                            ",a005_cpf "
-                            ",a012_nome_veiculo "
-                            ",a004_placa_veiculo "
-                            ",a005_estado "
-                            ",a005_cidade "
-                            ",a005_rua "
-                            ",a005_nro_casa "
-                            ",a005_bairro "
-                            ",a005_telefone "
-                        "FROM "
-                            "a005_cliente "
-                            "JOIN a004_veiculos ON (a005_codigo = a004_fk_codigo_cliente) "
-                            "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo) "
-                            "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca) "
-                        "WHERE "
-                          "a005_cpf LIKE '%" +txt_filtro+ "%'"
-                          "AND a005_ativo = true "
-                        "ORDER BY "
-                            "a005_codigo DESC";
+
+                filtro_sql = "a005_cpf LIKE '%" +txt_filtro+ "%' ";
                 break;
             //Carro
             case 2:
-                busca = "SELECT "
-                            "a005_codigo "
-                            ",a005_nome "
-                            ",a005_cpf "
-                            ",a012_nome_veiculo "
-                            ",a004_placa_veiculo "
-                            ",a005_estado "
-                            ",a005_cidade "
-                            ",a005_rua "
-                            ",a005_nro_casa "
-                            ",a005_bairro "
-                            ",a005_telefone "
-                        "FROM "
-                            "a005_cliente "
-                            "JOIN a004_veiculos ON (a005_codigo = a004_fk_codigo_cliente) "
-                            "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo) "
-                            "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca) "
-                        "WHERE "
-                          "a012_nome_veiculo LIKE '%" +txt_filtro+ "%'"
-                          "AND a005_ativo = true "
-                        "ORDER BY "
-                            "a005_codigo DESC";
+
+                filtro_sql = "a012_nome_veiculo LIKE '%" +txt_filtro+ "%' ";
                 break;
             //Placa
             case 3:
-                busca = "SELECT "
-                            "a005_codigo "
-                            ",a005_nome "
-                            ",a005_cpf "
-                            ",a012_nome_veiculo "
-                            ",a004_placa_veiculo "
-                            ",a005_estado "
-                            ",a005_cidade "
-                            ",a005_rua "
-                            ",a005_nro_casa "
-                            ",a005_bairro "
-                            ",a005_telefone "
-                        "FROM "
-                            "a005_cliente "
-                            "JOIN a004_veiculos ON (a005_codigo = a004_fk_codigo_cliente) "
-                            "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo) "
-                            "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca) "
-                        "WHERE "
-                          "a004_placa_Veiculo LIKE '%" +txt_filtro+ "%'"
-                          "AND a005_ativo = true "
-                        "ORDER BY "
-                            "a005_codigo DESC";
 
+                filtro_sql = "a004_placa_Veiculo LIKE '%" +txt_filtro+ "%' ";
                 break;
             default:
                 qDebug() << "Houve um problema ao filtrar realizar o filtro(swith case)";
                 break;
         }
+
+        busca = "SELECT "
+                    "a005_codigo           "
+                    ",a005_nome            "
+                    ",a005_cpf             "
+                    ",a012_nome_veiculo    "
+                    ",a004_placa_veiculo   "
+                    ",a005_estado          "
+                    ",a005_cidade          "
+                    ",a005_rua             "
+                    ",a005_nro_casa        "
+                    ",a005_bairro          "
+                    ",a005_telefone        "
+                "FROM "
+                    "a005_cliente "
+                    "JOIN a004_veiculos ON (a005_codigo = a004_fk_codigo_cliente) "
+                    "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo)   "
+                    "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca)     "
+                "WHERE "
+                  + filtro_sql +
+                  "AND a005_ativo = true "
+                "ORDER BY "
+                    "a005_codigo DESC";
     }
 
     //contador para percorrer linhas
@@ -801,7 +745,8 @@ void frm_gestaoclientes::validaCEP()
     {
         cep = ui->txt_nv_cep->text();
     }
-    else if ( ui->txt_ge_cep->text() == "" )
+
+    if (  ui->txt_ge_cep->text() != "" )
     {
         cep = ui->txt_ge_cep->text();
     }

@@ -251,7 +251,7 @@
     </widget>
     <widget class="QPushButton" name="btn_nv_validacepj">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="geometry">
       <rect>
@@ -555,12 +555,12 @@
      </widget>
      <widget class="QPushButton" name="btn_ge_validacep">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>
-        <x>700</x>
-        <y>50</y>
+        <x>340</x>
+        <y>40</y>
         <width>21</width>
         <height>21</height>
        </rect>
