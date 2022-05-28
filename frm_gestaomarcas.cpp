@@ -351,7 +351,7 @@ void frm_gestaomarcas::on_btn_ge_excluir_clicked()
         if( query.exec() ) //executa a query
         {
             ui->tw_listamarcas->removeRow( linha );
-            QMessageBox::information(this, "DELETADO", "Marca excluída com sucesso");
+            QMessageBox::information(this, "EXCLUÍDO", "Marca excluída com sucesso");
         }
         else
         {

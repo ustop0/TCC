@@ -56,9 +56,9 @@ frm_modelos::frm_modelos(QWidget *parent) :
     //**Estilizando layout da table widget LISTAMODELOS**
     //definindo o tamanho das colunas
     ui->tw_listamodelos->setColumnCount(3);
-    ui->tw_listamodelos->setColumnWidth(0, 100);
+    ui->tw_listamodelos->setColumnWidth(0, 40);
     ui->tw_listamodelos->setColumnWidth(1, 150);
-    ui->tw_listamodelos->setColumnWidth(2, 150);
+    ui->tw_listamodelos->setColumnWidth(2, 170);
 
     //cabeçalhos do table widget
     QStringList cabecalho2={"Código", "Marca", "Modelo"};
@@ -176,7 +176,7 @@ void frm_modelos::on_tabWidget_currentChanged(int index)
         QSqlQuery query; //query para listar os colaboradores no table widget
         query.prepare("SELECT "
                           "a012_codigo          "
-                          "a011_marca_nome      "
+                          ",a011_marca_nome      "
                           ",a012_nome_veiculo   "
                       "FROM "
                           "a012_modelos "
@@ -351,8 +351,9 @@ void frm_modelos::on_btn_nv_filtrar_clicked()
 //novo modelo
 void frm_modelos::on_btn_nv_novo_clicked()
 {
-    ui->txt_ge_modelo->clear();
-    ui->txt_ge_modelo->setFocus();
+    ui->txt_nv_marca->clear();
+    ui->txt_nv_modelo->clear();
+    ui->txt_nv_modelo->setFocus();
 }
 
 //salvar modelo
@@ -399,7 +400,7 @@ void frm_modelos::on_btn_nv_salvar_clicked()
         ui->txt_nv_marca->clear();
         ui->txt_nv_modelo->clear();
         ui->txt_nv_marca->setFocus();
-        QMessageBox::information(this, "AVISO", "Novo modelo cadastrada com sucesso");
+        QMessageBox::information(this, "AVISO", "Novo modelo cadastrado com sucesso");
     }
 }
 
@@ -413,8 +414,8 @@ void frm_modelos::on_tw_listamodelos_itemSelectionChanged()
     //exibe os dados da linha selecionada
     QSqlQuery query;
     query.prepare("SELECT "
-                    "a011_marca_nome "
-                    "a012_nome_veiculo "
+                    "a011_marca_nome    "
+                    ",a012_nome_veiculo "
                   "FROM "
                     "a012_modelos "
                     "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca)"
@@ -563,7 +564,7 @@ void frm_modelos::on_btn_ge_salvar_clicked()
                                               ,0)->text();
     QSqlQuery query;
 
-    QString modelo = ui->txt_ge_modelo->text();
+    QString modelo = ui->txt_ge_modelo->text().toUpper();
 
     query.prepare("UPDATE "
                     "a012_modelos "
@@ -577,7 +578,7 @@ void frm_modelos::on_btn_ge_salvar_clicked()
         //pega a linha que está selecionada
         int linha=ui->tw_listamodelos->currentRow();
         //atualizando o table widget com o novo registro
-        ui->tw_listamodelos->item(linha, 1)->setText( modelo );
+        ui->tw_listamodelos->item(linha, 2)->setText( modelo );
 
         QMessageBox::information(this, "Atualizado", "Modelo veículo atualizado com sucesso!");
     }
@@ -620,7 +621,7 @@ void frm_modelos::on_btn_ge_excluir_clicked()
         if( query.exec() )
         {
             ui->tw_listamodelos->removeRow( linha );
-            QMessageBox::information(this, "DELETADO", "Modelo excluída com sucesso");
+            QMessageBox::information(this, "EXCLUÍDO", "Modelo excluído com sucesso");
         }
         else
         {

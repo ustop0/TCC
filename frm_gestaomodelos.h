@@ -37,6 +37,16 @@ private slots:
 
     void on_btn_nv_salvar_clicked();
 
+    void on_tw_listamodelos_itemSelectionChanged();
+
+    void on_txt_ge_filtrar_returnPressed();
+
+    void on_btn_ge_filtrar_clicked();
+
+    void on_btn_ge_salvar_clicked();
+
+    void on_btn_ge_excluir_clicked();
+
 private:
     Ui::frm_modelos *ui;
 };
