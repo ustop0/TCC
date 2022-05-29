@@ -20,7 +20,7 @@ frm_gestaoclientes::frm_gestaoclientes(QWidget *parent) :
     }
 
     //deixa o botão da validação do cep invisivel
-    ui->btn_nv_validacepj->setVisible(false);
+    ui->btn_nv_validacep->setVisible(false);
     ui->btn_ge_validacep->setVisible(false);
 
     //define o Novo Produto de index(0) como aba padrão(que inicia ao ser aberta a interface)
@@ -65,6 +65,43 @@ frm_gestaoclientes::~frm_gestaoclientes()//**INICIO** destrutor
 {
     con.fechar(); //fechando conexao com o banco de dados
     delete ui;
+}
+
+//pressiona campo cep, chama api
+void frm_gestaoclientes::on_txt_nv_cep_returnPressed()
+{
+    frm_gestaoclientes::on_btn_nv_validacep_clicked();
+}
+
+//btn valida cep
+void frm_gestaoclientes::on_btn_nv_validacep_clicked()
+{
+    QString cep = ui->txt_nv_cep->text();
+    //validando cep
+    validaCEP( cep );
+}
+
+//tela de cadastro de veiculos
+void frm_gestaoclientes::on_btn_nv_cadastrarveiculo_clicked()
+{
+    frms_nv_veiculocliente f_nv_veiculocliente;
+    f_nv_veiculocliente.exec();
+}
+
+//novo cliente
+void frm_gestaoclientes::on_btn_nv_novo_clicked()
+{
+    //limpando todos os campos
+    ui->txt_nv_nome->clear();
+    ui->txt_nv_cpf->clear();
+    ui->txt_nv_cep->clear();
+    ui->txt_nv_estado->clear();
+    ui->txt_nv_cidade->clear();
+    ui->txt_nv_rua->clear();
+    ui->txt_nv_nrocasa->clear();
+    ui->txt_nv_bairro->clear();
+    ui->txt_nv_telefone->clear();
+    ui->txt_nv_nome->setFocus();
 }
 
 //salvar novo cliente **DESENVOLVENDO**
@@ -150,40 +187,103 @@ void frm_gestaoclientes::on_btn_nv_gravar_clicked()
     }
 }
 
-//pressiona campo cep, chama api
-void frm_gestaoclientes::on_txt_nv_cep_returnPressed()
+//quando trocar o tab widget, atualiza o table widget
+void frm_gestaoclientes::on_tabWidget_currentChanged(int index)
 {
-    frm_gestaoclientes::on_btn_nv_validacepj_clicked();
-}
+    if( index == 1 ) //verifica a interface pelo index das tabs
+    {
+        //carregando os clientes no tablewidget
+        //limpa as linhas do table widget
+        funcoes_globais::removerLinhas( ui->tw_ge_listaclientes );
 
-//btn valida cep(fica invisivel)
-void frm_gestaoclientes::on_btn_nv_validacepj_clicked()
-{
-    //validando cep
-    validaCEP();
-}
+        //inserir linhas dentro do table widget
+        int contlinhas = 0;
 
-//tela de cadastro de veiculos
-void frm_gestaoclientes::on_btn_nv_cadastrarveiculo_clicked()
-{
-    frms_nv_veiculocliente f_nv_veiculocliente;
-    f_nv_veiculocliente.exec();
-}
+        //essa query deve filtrar com base no cliente cadastrado na tela novo cliente
+        QSqlQuery query; //query para listar os colaboradores no table widget
+        query.prepare("SELECT "
+                          "a005_codigo         "
+                          ",a005_nome          "
+                          ",a005_cpf           "
+                          ",a012_nome_veiculo  "
+                          ",a004_placa_Veiculo "
+                          ",a005_estado        "
+                          ",a005_cidade        "
+                          ",a005_rua           "
+                          ",a005_nro_casa      "
+                          ",a005_bairro        "
+                          ",a005_telefone      "
+                      "FROM "
+                          "a005_cliente "
+                          "JOIN a004_veiculos ON (a005_codigo = a004_fk_codigo_cliente) "
+                          "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo)   "
+                          "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca)     "
+                      "WHERE "
+                        "a005_ativo = true "
+                      "ORDER BY "
+                          "a005_codigo DESC");
 
-//novo cliente
-void frm_gestaoclientes::on_btn_nv_novo_clicked()
-{
-    //limpando todos os campos
-    ui->txt_nv_nome->clear();
-    ui->txt_nv_cpf->clear();
-    ui->txt_nv_cep->clear();
-    ui->txt_nv_estado->clear();
-    ui->txt_nv_cidade->clear();
-    ui->txt_nv_rua->clear();
-    ui->txt_nv_nrocasa->clear();
-    ui->txt_nv_bairro->clear();
-    ui->txt_nv_telefone->clear();
-    ui->txt_nv_nome->setFocus();
+        if( query.exec() ) //verifica se ouve algum erro na execução da query
+        {
+            //enquanto a query tiver retornando next, insere linhas dentro do table widget
+            while( query.next() )
+            {
+                //inserindo com contador de linhas, por index
+                ui->tw_ge_listaclientes->insertRow(contlinhas);
+                ui->tw_ge_listaclientes->setItem(contlinhas
+                                            , 0
+                                            , new QTableWidgetItem(query.value(0).toString()));
+
+                ui->tw_ge_listaclientes->setItem(contlinhas
+                                            , 1
+                                            , new QTableWidgetItem(query.value(1).toString()));
+
+                ui->tw_ge_listaclientes->setItem(contlinhas
+                                            , 2
+                                            , new QTableWidgetItem(query.value(2).toString()));
+
+                ui->tw_ge_listaclientes->setItem(contlinhas
+                                            , 3
+                                            , new QTableWidgetItem(query.value(3).toString()));
+
+                ui->tw_ge_listaclientes->setItem(contlinhas
+                                            , 4
+                                            , new QTableWidgetItem(query.value(4).toString()));
+
+                ui->tw_ge_listaclientes->setItem(contlinhas
+                                            , 5
+                                            , new QTableWidgetItem(query.value(5).toString()));
+
+                ui->tw_ge_listaclientes->setItem(contlinhas
+                                            , 6
+                                            , new QTableWidgetItem(query.value(6).toString()));
+
+                ui->tw_ge_listaclientes->setItem(contlinhas
+                                            , 7
+                                            , new QTableWidgetItem(query.value(7).toString()));
+
+                ui->tw_ge_listaclientes->setItem(contlinhas
+                                            , 8
+                                            , new QTableWidgetItem(query.value(8).toString()));
+
+                ui->tw_ge_listaclientes->setItem(contlinhas
+                                            , 9
+                                            , new QTableWidgetItem(query.value(9).toString()));
+
+                ui->tw_ge_listaclientes->setItem(contlinhas
+                                            , 10
+                                            , new QTableWidgetItem(query.value(10).toString()));
+
+                //definindo o tamanho das linhas
+                ui->tw_ge_listaclientes->setRowHeight(contlinhas, 20);
+                contlinhas ++;
+            }
+        }
+        else
+        {
+            QMessageBox::warning(this, "ERRO", "Erro ao listar clientes");
+        }
+    }
 }
 
 //**TAB Gestão clientes**
@@ -197,15 +297,15 @@ void frm_gestaoclientes::on_tw_ge_listaclientes_itemSelectionChanged()
     //pega o cliente selecionado e envia para a tela de edição de clientes
     QSqlQuery query;
     query.prepare("SELECT "
-                      "a005_codigo "
-                      ",a005_nome "
-                      ",a005_cpf "
-                      ",a005_cep "
-                      ",a005_estado "
-                      ",a005_cidade "
-                      ",a005_rua "
+                      "a005_codigo    "
+                      ",a005_nome     "
+                      ",a005_cpf      "
+                      ",a005_cep      "
+                      ",a005_estado   "
+                      ",a005_cidade   "
+                      ",a005_rua      "
                       ",a005_nro_casa "
-                      ",a005_bairro "
+                      ",a005_bairro   "
                       ",a005_telefone "
                   "FROM "
                       "a005_cliente "
@@ -435,8 +535,9 @@ void frm_gestaoclientes::on_txt_ge_cep_returnPressed()
 
 void frm_gestaoclientes::on_btn_ge_validacep_clicked()
 {
+    QString cep = ui->txt_ge_cep->text();
     //validando cep
-    validaCEP();
+    validaCEP( cep );
 }
 
 //salvar dados do cliente editado gestão clientes
@@ -489,17 +590,17 @@ void frm_gestaoclientes::on_btn_ge_salvar_clicked()
     else
     {
         //pega a linha que está selecionada
-        int linha=ui->tw_ge_listaclientes->currentRow();
+        int linha = ui->tw_ge_listaclientes->currentRow();
         //atualizando o table widget com o novo registro
-//        ui->tw_ge_listaclientes->item(linha, 1)->setText(cliente.nome);
-//        ui->tw_ge_listaclientes->item(linha, 2)->setText(cliente.cpf);
-//        ui->tw_ge_listaclientes->item(linha, 3)->setText(cliente.cep);
-//        ui->tw_ge_listaclientes->item(linha, 4)->setText(cliente.estado);
-//        ui->tw_ge_listaclientes->item(linha, 5)->setText(cliente.cidade);
-//        ui->tw_ge_listaclientes->item(linha, 6)->setText(cliente.rua);
-//        ui->tw_ge_listaclientes->item(linha, 7)->setText(cliente.nro_casa);
-//        ui->tw_ge_listaclientes->item(linha, 8)->setText(cliente.bairro);
-//        ui->tw_ge_listaclientes->item(linha, 9)->setText(cliente.telefone1);
+        ui->tw_ge_listaclientes->item(linha, 1)->setText(cliente.nome);
+        //ui->tw_ge_listaclientes->item(linha, 2)->setText(cliente.cpf);
+        //ui->tw_ge_listaclientes->item(linha, 3)->setText(cliente.cep);
+        //ui->tw_ge_listaclientes->item(linha, 4)->setText(cliente.estado);
+        //ui->tw_ge_listaclientes->item(linha, 5)->setText(cliente.cidade);
+        //ui->tw_ge_listaclientes->item(linha, 6)->setText(cliente.rua);
+        //ui->tw_ge_listaclientes->item(linha, 7)->setText(cliente.nro_casa);
+        //ui->tw_ge_listaclientes->item(linha, 8)->setText(cliente.bairro);
+        //ui->tw_ge_listaclientes->item(linha, 9)->setText(cliente.telefone1);
         QMessageBox::information(this, "Atualizado", "Cliente atualizado com sucesso!");
 
         //pergunta se o usuário quer cadastrar um veiculo para o cliente
@@ -544,101 +645,44 @@ void frm_gestaoclientes::on_btn_ge_salvar_clicked()
     }
 }
 
-//quando trocar o tab widget, atualiza o table widget
-void frm_gestaoclientes::on_tabWidget_currentChanged(int index)
+//btn excluir cliente
+void frm_gestaoclientes::on_btn_ge_excluir_clicked()
 {
-    if( index == 1 ) //verifica a interface pelo index das tabs
+    if( ui->tw_ge_listaclientes->currentRow() == -1 )
     {
-        //carregando os clientes no tablewidget
-        //limpa as linhas do table widget
-        funcoes_globais::removerLinhas( ui->tw_ge_listaclientes );
+        QMessageBox::warning(this, "ERRO", "Selecione um cliente");
+        return;
+    }
 
-        //inserir linhas dentro do table widget
-        int contlinhas=0;
+    //pergunta se o usuário realmente quer excluir o registro
+    QMessageBox::StandardButton opc =QMessageBox::question(
+                                      this,"Exclusão"
+                                      ,"Confirma exclusão do cliente?"
+                                      ,QMessageBox::Yes|QMessageBox::No);
 
-        //essa query deve filtrar com base no cliente cadastrado na tela novo cliente
-        QSqlQuery query; //query para listar os colaboradores no table widget
-        query.prepare("SELECT "
-                          "a005_codigo "
-                          ",a005_nome "
-                          ",a005_cpf "
-                          ",a012_nome_veiculo "
-                          ",a004_placa_Veiculo "
-                          ",a005_estado "
-                          ",a005_cidade "
-                          ",a005_rua "
-                          ",a005_nro_casa "
-                          ",a005_bairro "
-                          ",a005_telefone "
-                      "FROM "
-                          "a005_cliente "
-                          "JOIN a004_veiculos ON (a005_codigo = a004_fk_codigo_cliente) "
-                          "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo) "
-                          "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca) "
+    if( opc == QMessageBox::Yes )
+    {
+        //pegando a linha corrent(atual), no caso o id(index(0))
+        int linha = ui->tw_ge_listaclientes->currentRow();
+        QString id = ui->tw_ge_listaclientes->item(linha, 0)->text();
+
+        QSqlQuery query;
+
+        query.prepare("UPDATE "
+                        "a005_cliente "
+                      "SET "
+                        "a005_ativo = false "
                       "WHERE "
-                        "a005_ativo = true "
-                      "ORDER BY "
-                          "a005_codigo DESC");
+                        "a005_codigo ='" +id+ "'");
 
-        if( query.exec() ) //verifica se ouve algum erro na execução da query
+        if( query.exec() ) //executa a query
         {
-            //enquanto a query tiver retornando next, insere linhas dentro do table widget
-            while( query.next() )
-            {
-                //inserindo com contador de linhas, por index
-                ui->tw_ge_listaclientes->insertRow(contlinhas);
-                ui->tw_ge_listaclientes->setItem(contlinhas
-                                            , 0
-                                            , new QTableWidgetItem(query.value(0).toString()));
-
-                ui->tw_ge_listaclientes->setItem(contlinhas
-                                            , 1
-                                            , new QTableWidgetItem(query.value(1).toString()));
-
-                ui->tw_ge_listaclientes->setItem(contlinhas
-                                            , 2
-                                            , new QTableWidgetItem(query.value(2).toString()));
-
-                ui->tw_ge_listaclientes->setItem(contlinhas
-                                            , 3
-                                            , new QTableWidgetItem(query.value(3).toString()));
-
-                ui->tw_ge_listaclientes->setItem(contlinhas
-                                            , 4
-                                            , new QTableWidgetItem(query.value(4).toString()));
-
-                ui->tw_ge_listaclientes->setItem(contlinhas
-                                            , 5
-                                            , new QTableWidgetItem(query.value(5).toString()));
-
-                ui->tw_ge_listaclientes->setItem(contlinhas
-                                            , 6
-                                            , new QTableWidgetItem(query.value(6).toString()));
-
-                ui->tw_ge_listaclientes->setItem(contlinhas
-                                            , 7
-                                            , new QTableWidgetItem(query.value(7).toString()));
-
-                ui->tw_ge_listaclientes->setItem(contlinhas
-                                            , 8
-                                            , new QTableWidgetItem(query.value(8).toString()));
-
-                ui->tw_ge_listaclientes->setItem(contlinhas
-                                            , 9
-                                            , new QTableWidgetItem(query.value(9).toString()));
-
-                ui->tw_ge_listaclientes->setItem(contlinhas
-                                            , 10
-                                            , new QTableWidgetItem(query.value(10).toString()));
-
-                //definindo o tamanho das linhas
-                ui->tw_ge_listaclientes->setRowHeight(contlinhas, 20);
-                contlinhas ++;
-            }
+            ui->tw_ge_listaclientes->removeRow( linha );
+            QMessageBox::information(this, "DELETADO", "Cliente excluído com sucesso");
         }
         else
         {
-            QMessageBox::warning(this, "ERRO", "Erro ao listar clientes");
+             QMessageBox::warning(this, "ERRO", "Erro ao excluir cliente");
         }
     }
 }
@@ -736,10 +780,9 @@ bool frm_gestaoclientes::recebeCPF( const QString &cliente_cpf )
  * Chamada: botão gravar cliente                                                              |
  *--------------------------------------------------------------------------------------------
  */
-void frm_gestaoclientes::validaCEP()
+void frm_gestaoclientes::validaCEP( const QString &cep  )
 {
-    QString cep;
-
+    /*
     if( ui->txt_nv_cep->text() != "" )
     {
         cep = ui->txt_nv_cep->text();
@@ -748,11 +791,12 @@ void frm_gestaoclientes::validaCEP()
     {
         cep = ui->txt_ge_cep->text();
     }
+    */
 
     QEventLoop waitLoop;
     QNetworkAccessManager manager;
     QNetworkReply *reply = manager.get(
-                QNetworkRequest( QUrl("https://brasilapi.com.br/api/cep/v1/" + cep)) );
+                QNetworkRequest( QUrl("https://brasilapi.com.br/api/cep/v1/" + cep) ) );
 
     QObject::connect(reply, SIGNAL(finished()), &waitLoop, SLOT(quit()));
     waitLoop.exec();
@@ -769,11 +813,28 @@ void frm_gestaoclientes::validaCEP()
     }
     else
     {
+        QString cep = json["cep"].toString();
+        QString estado = json["state"].toString();
+        QString cidade = json["city"].toString();
+        QString bairro = json["neighborhood"].toString();
+        QString rua = json["street"].toString();
+
+        qDebug() << "Bairro: " << bairro;
+        qDebug() << "Rua: " << rua;
+
+        ui->txt_nv_cep->setText( cep );
+        ui->txt_nv_estado->setText( estado );
+        ui->txt_nv_cidade->setText( cidade );
+        ui->txt_nv_bairro->setText( bairro );
+        ui->txt_nv_rua->setText( rua );
+
+        /*
         ui->txt_nv_cep->setText(json["cep"].toString());
         ui->txt_nv_estado->setText(json["state"].toString());
         ui->txt_nv_cidade->setText(json["city"].toString());
         ui->txt_nv_bairro->setText(json["neighborhood"].toString());
         ui->txt_nv_rua->setText(json["street"].toString());
+        */
 
         /*
         ui->txt_ge_cep->setText(json["cep"].toString());
@@ -784,5 +845,6 @@ void frm_gestaoclientes::validaCEP()
         */
     }
 }
+
 
 

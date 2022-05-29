@@ -568,7 +568,7 @@ void frm_gestaofornecedores::on_btn_ge_salvar_clicked()
     if( query.exec() ) //executa a query
     {
         //pega a linha que está selecionada
-        int linha=ui->tw_ge_listarFornecedores->currentRow();
+        int linha = ui->tw_ge_listarFornecedores->currentRow();
         //atualizando o table widget com o novo registro
         ui->tw_ge_listarFornecedores->item(linha, 1)->setText( razao_social );
         ui->tw_ge_listarFornecedores->item(linha, 2)->setText( nome_fantasia );

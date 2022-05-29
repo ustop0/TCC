@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -249,16 +249,13 @@
       </item>
      </layout>
     </widget>
-    <widget class="QPushButton" name="btn_nv_validacepj">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
+    <widget class="QPushButton" name="btn_nv_validacep">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>270</y>
-       <width>21</width>
-       <height>21</height>
+       <x>40</x>
+       <y>280</y>
+       <width>16</width>
+       <height>20</height>
       </rect>
      </property>
      <property name="text">
@@ -554,15 +551,12 @@
       </layout>
      </widget>
      <widget class="QPushButton" name="btn_ge_validacep">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
       <property name="geometry">
        <rect>
-        <x>340</x>
-        <y>40</y>
+        <x>230</x>
+        <y>30</y>
         <width>21</width>
-        <height>21</height>
+        <height>20</height>
        </rect>
       </property>
       <property name="text">
@@ -570,18 +564,31 @@
       </property>
      </widget>
     </widget>
-    <widget class="QPushButton" name="btn_ge_salvar">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>663</x>
-       <y>567</y>
-       <width>89</width>
-       <height>25</height>
+       <x>575</x>
+       <y>568</y>
+       <width>177</width>
+       <height>27</height>
       </rect>
      </property>
-     <property name="text">
-      <string>Salvar</string>
-     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <item>
+       <widget class="QPushButton" name="btn_ge_salvar">
+        <property name="text">
+         <string>Salvar</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_ge_excluir">
+        <property name="text">
+         <string>Excluir</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </widget>
   </widget>

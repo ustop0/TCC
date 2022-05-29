@@ -40,9 +40,13 @@ public slots:
     QString crudCliente();
 
 private slots:
+    void on_tabWidget_currentChanged(int index);
+
     void on_tw_nv_listaveiculosclientes_itemSelectionChanged();
 
-    void on_btn_salvarveiculo_clicked();
+    void on_txt_nv_filtrar_returnPressed();
+
+    void on_btn_nv_salvar_clicked();
 
 private:
     Ui::frms_nv_veiculocliente *ui;
