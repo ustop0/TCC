@@ -48,6 +48,8 @@ private slots:
 
     void on_btn_nv_salvar_clicked();
 
+    void on_btn_nv_filtrar_clicked();
+
 private:
     Ui::frms_nv_veiculocliente *ui;
 };

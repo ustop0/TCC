@@ -111,7 +111,7 @@ void frm_agendaservicos::on_btn_agendarServico_clicked()
         QString data = ui->de_data->text();
         QString hora = ui->de_hora->text() + ":00";
         QString servico = ui->txt_tipoServico->text();
-        QString observacao = ui->txt_tipoServico->text();
+        QString observacao = ui->Ptxt_observacao->toPlainText();
         QString status = "Pendente";
         QString codigo_cliente = g_codigo_cliente;
         QString codigo_veiculo = g_codigo_veiculo;
@@ -295,7 +295,7 @@ void frm_agendaservicos::on_tw_listaservicos_itemSelectionChanged()
         ui->txt_ge_nomeCliente->setText(query.value(0).toString());
         ui->txt_ge_nomeVeiculo->setText(query.value(1).toString());
         ui->txt_ge_tipoServico->setText(query.value(5).toString());
-        //ui->Ptxt_ge_observacao->setText(query.value(6).toString());
+        ui->Ptxt_ge_observacao->setPlainText(query.value(6).toString());
         QString verificaStatus = query.value(7).toString();
 
         //verifica o status do seriço e muda o indice do combo box
@@ -532,7 +532,7 @@ void frm_agendaservicos::on_btn_ge_salvar_2_clicked()
     QString nome_cliente = ui->txt_ge_nomeCliente->text();
     QString nome_veiculo = ui->txt_ge_nomeVeiculo->text();
     QString servico = ui->txt_ge_tipoServico->text();
-    QString observacao = ui->txt_ge_tipoServico->text();
+    QString observacao = ui->Ptxt_ge_observacao->toPlainText();
     QString status = ui->cb_ge_status->currentText();
 
     query.prepare("UPDATE "

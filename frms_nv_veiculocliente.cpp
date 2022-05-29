@@ -141,7 +141,7 @@ frms_nv_veiculocliente::frms_nv_veiculocliente(QWidget *parent) :
 
 
     //**Estilizando layout da table widget VEICULOS**
-    //configurando combo box clientes
+    //configurando combo box veiculos
     ui->cb_nv_filtro->addItem("-");
     ui->cb_nv_filtro->addItem("Cliente");
     ui->cb_nv_filtro->addItem("Veiculo");
