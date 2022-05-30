@@ -42,7 +42,7 @@ frm_gestaoclientes::frm_gestaoclientes(QWidget *parent) :
     ui->tw_ge_listaclientes->setColumnWidth(7, 150); //rua cliente
 
     //cabeçalhos do table widget
-    QStringList cabecalhos={"Código", "Nome", "CPF", "Veiculo", "Placa","Estado"
+    QStringList cabecalhos={"Código", "Cliente", "CPF", "Veículo", "Placa","Estado"
                            ,"Cidade", "Rua","Nro. Casa","Bairro", "Telefone"};
 
     ui->tw_ge_listaclientes->setHorizontalHeaderLabels(cabecalhos);
@@ -202,17 +202,17 @@ void frm_gestaoclientes::on_tabWidget_currentChanged(int index)
         //essa query deve filtrar com base no cliente cadastrado na tela novo cliente
         QSqlQuery query; //query para listar os colaboradores no table widget
         query.prepare("SELECT "
-                          "a005_codigo         "
-                          ",a005_nome          "
-                          ",a005_cpf           "
-                          ",a012_nome_veiculo  "
-                          ",a004_placa_Veiculo "
-                          ",a005_estado        "
-                          ",a005_cidade        "
-                          ",a005_rua           "
-                          ",a005_nro_casa      "
-                          ",a005_bairro        "
-                          ",a005_telefone      "
+                          "a005_codigo                               "
+                          ",a005_nome                                "
+                          ",a005_cpf                                 "
+                          ",coalesce(a012_nome_veiculo, '(NENHUM)')  "
+                          ",coalesce(a004_placa_Veiculo, '(NENHUM)') "
+                          ",a005_estado                              "
+                          ",a005_cidade                              "
+                          ",a005_rua                                 "
+                          ",a005_nro_casa                            "
+                          ",a005_bairro                              "
+                          ",a005_telefone                            "
                       "FROM "
                           "a005_cliente "
                           "JOIN a004_veiculos ON (a005_codigo = a004_fk_codigo_cliente) "

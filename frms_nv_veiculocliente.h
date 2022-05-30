@@ -26,8 +26,8 @@ public:
     Conexao con;
 
     //a chave estrangeira é feita por uma query que precisa do cpf para o filtro where
-    static QString veiculo_modelo;
-    static QString cliente_cpf;
+    QString veiculo_modelo; //removido static
+    QString cliente_cpf;
 
 public slots:
 

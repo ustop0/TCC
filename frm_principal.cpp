@@ -64,18 +64,18 @@ Frm_principal::~Frm_principal()//**INICIO** destrutor
 }
 
 //abre a tela de usuários
-void Frm_principal::on_actionUsuario_triggered()
+void Frm_principal::on_actionUsu_rios_triggered()
 {
     //está apresentando erro, conferir
     if(variaveis_globais::acesso_colab != 'A') //verifica a permissao de acesso do colaborador
     {
         frm_gestaousuarios f_gestaousuarios;
         f_gestaousuarios.exec();
-   }
-   else
-   {
-       QMessageBox::information(this, "ACESSO", "Acesso não permitido");
-   }
+    }
+    else
+    {
+        QMessageBox::information(this, "ACESSO", "Acesso não permitido");
+    }
 }
 
 //abre a tela de clientes
@@ -93,7 +93,7 @@ void Frm_principal::on_actionFornecedores_triggered()
 }
 
 //abre tela de cadastro de marcas
-void Frm_principal::on_actionCadastro_de_marcas_triggered()
+void Frm_principal::on_actionCadastro_de_Marcas_triggered()
 {
     frm_gestaomarcas f_gestaomarcas;
     f_gestaomarcas.exec();
@@ -107,7 +107,7 @@ void Frm_principal::on_actionCadastro_de_Modelos_triggered()
 }
 
 //abre tela de cadastro de veiculos de clientes
-void Frm_principal::on_actionVeiculos_de_clientes_triggered()
+void Frm_principal::on_actionCadastro_de_Ve_culos_de_Clientes_triggered()
 {
     frms_nv_veiculocliente f_veiculocliente;
     f_veiculocliente.exec();
@@ -128,30 +128,30 @@ void Frm_principal::on_actionNova_Venda_triggered()
 }
 
 //abre tela de gestão de vendas
-void Frm_principal::on_actionGestao_de_Vendas_triggered()
+void Frm_principal::on_actionGestao_Vendas_triggered()
 {
     frm_gestaovendas f_gestaovendas;
     f_gestaovendas.exec();
 }
 
-//abre tela de ordem de serviço
-void Frm_principal::on_actionOrdem_de_Servi_o_2_triggered()
-{
-    frm_ordemservico f_ordemservico;
-    f_ordemservico.exec();
-}
-
 //abre tela de agendar serviço
-void Frm_principal::on_actionAgendar_Servi_o_2_triggered()
+void Frm_principal::on_actionAgendar_Servi_o_triggered()
 {
     frm_agendaservicos f_agendaservicos;
     f_agendaservicos.exec();
 }
 
+//abre tela de ordem de serviço
+void Frm_principal::on_actionOrdem_de_Servi_o_triggered()
+{
+    frm_ordemservico f_ordemservico;
+    f_ordemservico.exec();
+}
+
 //abre tela de sobre, informações sistema
 void Frm_principal::on_actionSobre_triggered()
 {
-    frm_sobre f_sobre ;
+    frm_sobre f_sobre;
     f_sobre.exec();
 }
 
@@ -170,9 +170,3 @@ void Frm_principal::atualizaRelogio()
 
     ui->lb_relogio->setText(tempoTexto);
 }
-
-
-
-
-
-

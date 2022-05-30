@@ -33,29 +33,27 @@ public slots:
     void atualizaRelogio();
 
 private slots:
-    void on_actionUsuario_triggered();
+    void on_actionUsu_rios_triggered();
 
     void on_actionClientes_triggered();
 
     void on_actionFornecedores_triggered();
 
-    void on_actionCadastro_de_marcas_triggered();
+    void on_actionCadastro_de_Marcas_triggered();
 
     void on_actionCadastro_de_Modelos_triggered();
 
-    void on_actionCadastro_de_veiculos_triggered(); //veiculos
-
-    void on_actionVeiculos_de_clientes_triggered(); //veiculos
+    void on_actionCadastro_de_Ve_culos_de_Clientes_triggered();
 
     void on_actionEstoque_triggered();
 
     void on_actionNova_Venda_triggered();
 
-    void on_actionGestao_de_Vendas_triggered();
+    void on_actionGestao_Vendas_triggered();
 
-    void on_actionOrdem_de_Servi_o_2_triggered();
+    void on_actionAgendar_Servi_o_triggered();
 
-    void on_actionAgendar_Servi_o_2_triggered();
+    void on_actionOrdem_de_Servi_o_triggered();
 
     void on_actionSobre_triggered();
 

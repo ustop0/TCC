@@ -214,68 +214,54 @@
     <property name="title">
      <string>Gestão</string>
     </property>
-    <widget class="QMenu" name="menuVendas">
+    <widget class="QMenu" name="menuVe_culos">
+     <property name="title">
+      <string>Veículos</string>
+     </property>
+     <addaction name="actionCadastro_de_Marcas"/>
+     <addaction name="actionCadastro_de_Modelos"/>
+     <addaction name="separator"/>
+     <addaction name="actionCadastro_de_Ve_culos_de_Clientes"/>
+    </widget>
+    <widget class="QMenu" name="menuVendas_2">
      <property name="title">
       <string>Vendas</string>
      </property>
      <addaction name="actionNova_Venda"/>
-     <addaction name="actionGestao_de_Vendas"/>
+     <addaction name="actionGestao_Vendas"/>
     </widget>
-    <widget class="QMenu" name="menuServi_os">
+    <widget class="QMenu" name="menuServi_os_2">
      <property name="title">
       <string>Serviços</string>
      </property>
-     <addaction name="actionOrdem_de_Servi_o_2"/>
-     <addaction name="actionAgendar_Servi_o_2"/>
+     <addaction name="actionAgendar_Servi_o"/>
+     <addaction name="actionOrdem_de_Servi_o"/>
     </widget>
-    <widget class="QMenu" name="menuVeiculos">
-     <property name="title">
-      <string>Veiculos</string>
-     </property>
-     <addaction name="actionCadastro_de_marcas"/>
-     <addaction name="actionCadastro_de_Modelos"/>
-     <addaction name="separator"/>
-     <addaction name="actionVeiculos_de_clientes"/>
-    </widget>
-    <addaction name="actionUsuario"/>
+    <addaction name="separator"/>
+    <addaction name="actionUsu_rios"/>
     <addaction name="actionClientes"/>
     <addaction name="actionFornecedores"/>
-    <addaction name="menuVeiculos"/>
-    <addaction name="separator"/>
+    <addaction name="menuVe_culos"/>
     <addaction name="actionEstoque"/>
-    <addaction name="menuVendas"/>
-    <addaction name="menuServi_os"/>
+    <addaction name="separator"/>
+    <addaction name="menuVendas_2"/>
+    <addaction name="menuServi_os_2"/>
    </widget>
    <widget class="QMenu" name="menuSistema">
     <property name="title">
      <string>Sistema</string>
     </property>
-    <addaction name="actionSobre"/>
     <addaction name="separator"/>
+    <addaction name="actionSobre"/>
     <addaction name="actionSair"/>
    </widget>
    <addaction name="menuGest_o"/>
    <addaction name="menuSistema"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionUsuario">
+  <action name="actionUsu_rios">
    <property name="text">
-    <string>Usuarios</string>
-   </property>
-  </action>
-  <action name="actionEstoque">
-   <property name="text">
-    <string>Estoque</string>
-   </property>
-  </action>
-  <action name="actionSobre">
-   <property name="text">
-    <string>Sobre</string>
-   </property>
-  </action>
-  <action name="actionSair">
-   <property name="text">
-    <string>Sair</string>
+    <string>Usuários</string>
    </property>
   </action>
   <action name="actionClientes">
@@ -288,32 +274,7 @@
     <string>Fornecedores</string>
    </property>
   </action>
-  <action name="actionNova_Venda">
-   <property name="text">
-    <string>Nova Venda</string>
-   </property>
-  </action>
-  <action name="actionGestao_de_Vendas">
-   <property name="text">
-    <string>Gestao de Vendas</string>
-   </property>
-  </action>
-  <action name="actionOrdem_de_Servi_o_2">
-   <property name="text">
-    <string>Ordem de Serviço</string>
-   </property>
-  </action>
-  <action name="actionAgendar_Servi_o_2">
-   <property name="text">
-    <string>Agendar Serviço</string>
-   </property>
-  </action>
-  <action name="actionVeiculos_de_clientes">
-   <property name="text">
-    <string>Cadastro de Veiculos  de Clientes</string>
-   </property>
-  </action>
-  <action name="actionCadastro_de_marcas">
+  <action name="actionCadastro_de_Marcas">
    <property name="text">
     <string>Cadastro de Marcas</string>
    </property>
@@ -321,6 +282,46 @@
   <action name="actionCadastro_de_Modelos">
    <property name="text">
     <string>Cadastro de Modelos</string>
+   </property>
+  </action>
+  <action name="actionCadastro_de_Ve_culos_de_Clientes">
+   <property name="text">
+    <string>Cadastro de Veículos de Clientes</string>
+   </property>
+  </action>
+  <action name="actionEstoque">
+   <property name="text">
+    <string>Estoque</string>
+   </property>
+  </action>
+  <action name="actionNova_Venda">
+   <property name="text">
+    <string>Nova Venda</string>
+   </property>
+  </action>
+  <action name="actionGestao_Vendas">
+   <property name="text">
+    <string>Gestao Vendas</string>
+   </property>
+  </action>
+  <action name="actionAgendar_Servi_o">
+   <property name="text">
+    <string>Agendar Serviço</string>
+   </property>
+  </action>
+  <action name="actionOrdem_de_Servi_o">
+   <property name="text">
+    <string>Ordem de Serviço</string>
+   </property>
+  </action>
+  <action name="actionSobre">
+   <property name="text">
+    <string>Sobre</string>
+   </property>
+  </action>
+  <action name="actionSair">
+   <property name="text">
+    <string>Sair</string>
    </property>
   </action>
  </widget>
