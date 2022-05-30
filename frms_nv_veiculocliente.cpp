@@ -63,20 +63,20 @@ frms_nv_veiculocliente::frms_nv_veiculocliente(QWidget *parent) :
     //essa query deve filtrar com base no cliente cadastrado na tela novo cliente
     QSqlQuery query; //query para listar os colaboradores no table widget
     query.prepare("SELECT "
-                      "a005_codigo "
-                      ",a005_nome "
-                      ",a005_cpf "
-                      ",a005_cep "
-                      ",a005_estado "
-                      ",a005_cidade "
-                      ",a005_rua "
+                      "a005_codigo    "
+                      ",a005_nome     "
+                      ",a005_cpf      "
+                      ",a005_cep      "
+                      ",a005_estado   "
+                      ",a005_cidade   "
+                      ",a005_rua      "
                       ",a005_nro_casa "
-                      ",a005_bairro "
+                      ",a005_bairro   "
                       ",a005_telefone "
                   "FROM "
                       "a005_cliente "
                   "WHERE "
-                    "a005_ativo = true "
+                      "a005_ativo = true "
                   "ORDER BY "
                       "a005_codigo DESC");
 
@@ -168,10 +168,6 @@ frms_nv_veiculocliente::frms_nv_veiculocliente(QWidget *parent) :
     //desabilitando os indices das linhas
     ui->tw_ge_veiculos->verticalHeader()->setVisible(false);
 
-    //limpa as linhas do table widget
-    funcoes_globais::removerLinhas( ui->tw_ge_veiculos );
-
-
     //chamando função que preenche combo box
     ui->cb_nv_marca->addItem("-");
     ui->cb_nv_modelo->addItem("-");
@@ -207,16 +203,13 @@ void frms_nv_veiculocliente::on_tabWidget_currentChanged(int index)
                           ",a004_placa_Veiculo                     "
                           ",a004_cor_veiculo                       "
                           ",coalesce(a004_observacao, '(NENHUM)')  "
-                          ",a003_ocupacao                          "
-                          ",a003_telefone01                        "
-                          ",a003_telefone02                        "
                       "FROM "
                           "a004_veiculos "
                           "JOIN a005_cliente ON (a005_codigo = a004_fk_codigo_cliente) "
                           "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo)  "
                           "JOIN a011_marcas  ON (a011_codigo = a012_fk_codigo_marca)   "
                       "WHERE "
-                        "a004_ativo = true "
+                          "a004_ativo = true "
                       "ORDER BY "
                           "a004_codigo DESC");
 
