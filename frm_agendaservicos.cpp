@@ -89,7 +89,7 @@ void frm_agendaservicos::on_btn_selecionaCliente_clicked() //frms de seleção d
     {
         delete fmSelecionaCliente;
     }
-    catch (...)
+    catch ( ... )
     {
         qDebug() << "__Falha ao deletar ponteiro: fmSelecionaCliente na tela de agendaserviços";
     }

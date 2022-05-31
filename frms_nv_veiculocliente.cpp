@@ -24,6 +24,8 @@ frms_nv_veiculocliente::frms_nv_veiculocliente(QWidget *parent) :
     //define o Novo Produto de index(0) como aba padrão(que inicia ao ser aberta a interface)
     ui->tabWidget->setCurrentIndex(0);
 
+    ui->txt_nv_filtrar->setFocus();
+
     //**Estilizando layout da table widget CLIENTES**
     //configurando combo box clientes
     ui->cb_nv_filtro->addItem("-");
@@ -284,17 +286,9 @@ void frms_nv_veiculocliente::on_tabWidget_currentChanged(int index)
     }
 }
 
-//pegar dados TW cliente
-void frms_nv_veiculocliente::on_tw_nv_listaveiculosclientes_itemSelectionChanged()
+//pegar item TW cliente
+void frms_nv_veiculocliente::on_tw_nv_clientes_itemSelectionChanged()
 {
-    ClCliente cliente;
-
-    if( ui->tw_nv_clientes->currentRow() == -1 )
-    {
-        QMessageBox::warning(this, "ERRO", "Selecione um veiculo");
-        return;
-    }
-
     //pega a linha selecionada, no caso o cpf do cliente
     int id = ui->tw_nv_clientes->item(ui->tw_nv_clientes->currentRow()
                                                    , 0) ->text().toInt();
@@ -302,195 +296,203 @@ void frms_nv_veiculocliente::on_tw_nv_listaveiculosclientes_itemSelectionChanged
     //pega os dados da linha selecionada
     QSqlQuery query;
     query.prepare("SELECT "
-                    "a005_cpf "
+                      "a005_codigo    "
+                      ",a005_nome     "
+                      ",a005_cpf      "
+                      ",a005_cep      "
+                      ",a005_estado   "
+                      ",a005_cidade   "
+                      ",a005_rua      "
+                      ",a005_nro_casa "
+                      ",a005_bairro   "
+                      ",a005_telefone "
                   "FROM "
-                    "a005_cliente "
+                      "a005_cliente "
                   "WHERE "
-                    "a005_codigo = '" +QString::number(id)+ "' ");
+                      "a005_codigo = '" +QString::number(id)+ "' ");
 
-    if( query.exec() ) //verifica se a query foi bem sucedida
+    //verifica se a query foi bem sucedida
+    if( query.exec() )
     {
-        query.first(); //pega o primeiro
+        query.first();
 
-        cliente_cpf = query.value(0).toString();
+        ui->txt_nv_codcliente->setText( query.value(0).toString() );
     }
     else
     {
         qDebug() << "Erro ao pegar cod_cliente";
     }
-
-    qDebug() << "Cliente CPF: " << cliente_cpf;
 }
 
 //filtro clientes
 void frms_nv_veiculocliente::on_txt_nv_filtrar_returnPressed()
 {
-   QString cb_filtro = ui->cb_nv_filtro->currentText();
-   QString txt_filtro = ui->txt_nv_filtrar->text();
+    QString cb_filtro = ui->cb_nv_filtro->currentText();
+    QString txt_filtro = ui->txt_nv_filtrar->text();
 
-   QString busca; //armazena busca
-   QString filtro_sql;
+    QString busca; //armazena busca
+    QString filtro_sql;
 
-   QStringList cb_opc; //Dados do combo box
-   cb_opc << "Cliente" << "CPF" << "Cidade";
+    QStringList cb_opc; //Dados do combo box
+    cb_opc << "Cliente" << "CPF" << "Cidade";
 
-   //remove as linhas o table widget
-   funcoes_globais::removerLinhas( ui->tw_nv_clientes );
+    //remove as linhas o table widget
+    funcoes_globais::removerLinhas( ui->tw_nv_clientes );
 
-   //verificando se algo foi digitado no campo de filtro
-   if( ui->txt_ge_filtrar->text() == "" )
-   {
-       if( cb_filtro == "" ) //consulta de acordo com o radio selecionado
-       {
-           busca = "SELECT "
-                        "a005_codigo    "
-                        ",a005_nome     "
-                        ",a005_cpf      "
-                        ",a005_cep      "
-                        ",a005_estado   "
-                        ",a005_cidade   "
-                        ",a005_rua      "
-                        ",a005_nro_casa "
-                        ",a005_bairro   "
-                        ",a005_telefone "
-                    "FROM "
-                        "a005_cliente "
-                    "WHERE "
-                        "AND a005_ativo = true "
-                     "ORDER BY "
-                        "a005_codigo DESC";
-       }
-       else
-       {
-           busca = "SELECT "
-                        "a005_codigo    "
-                        ",a005_nome     "
-                        ",a005_cpf      "
-                        ",a005_cep      "
-                        ",a005_estado   "
-                        ",a005_cidade   "
-                        ",a005_rua      "
-                        ",a005_nro_casa "
-                        ",a005_bairro   "
-                        ",a005_telefone "
-                    "FROM "
-                        "a005_cliente "
-                    "WHERE "
-                        "AND a005_ativo = true "
-                     "ORDER BY "
-                        "a005_codigo DESC";
-       }
-   }
-   else
-   {
-       cb_opc << "Cliente" << "CPF" << "Cidade";
-       //consulta de acordo com a seleção do combo box
-       switch( cb_opc.indexOf( cb_filtro ) )
-       {
-           //Cliente
-           case 0:
+    //verificando se algo foi digitado no campo de filtro
+    if( ui->txt_nv_filtrar->text() == "" )
+    {
+      if( cb_filtro == "" ) //consulta de acordo com o radio selecionado
+      {
+          busca = "SELECT "
+                       "a005_codigo    "
+                       ",a005_nome     "
+                       ",a005_cpf      "
+                       ",a005_cep      "
+                       ",a005_estado   "
+                       ",a005_cidade   "
+                       ",a005_rua      "
+                       ",a005_nro_casa "
+                       ",a005_bairro   "
+                       ",a005_telefone "
+                   "FROM "
+                       "a005_cliente "
+                   "WHERE "
+                       "a005_ativo = true "
+                    "ORDER BY "
+                       "a005_codigo DESC";
+      }
+      else
+      {
+          busca = "SELECT "
+                       "a005_codigo    "
+                       ",a005_nome     "
+                       ",a005_cpf      "
+                       ",a005_cep      "
+                       ",a005_estado   "
+                       ",a005_cidade   "
+                       ",a005_rua      "
+                       ",a005_nro_casa "
+                       ",a005_bairro   "
+                       ",a005_telefone "
+                   "FROM "
+                       "a005_cliente "
+                   "WHERE "
+                       "a005_ativo = true "
+                    "ORDER BY "
+                       "a005_codigo DESC";
+      }
+    }
+    else
+    {
+      cb_opc << "Cliente" << "CPF" << "Cidade";
+      //consulta de acordo com a seleção do combo box
+      switch( cb_opc.indexOf( cb_filtro ) )
+      {
+          //Cliente
+          case 0:
 
-               filtro_sql = "a005_nome LIKE '%" +txt_filtro+ "%' ";
-               break;
-           //CPF
-           case 1:
+              filtro_sql = "a005_nome LIKE '%" +txt_filtro+ "%' ";
+              break;
+          //CPF
+          case 1:
 
-               filtro_sql = "a005_cpf LIKE '%" +txt_filtro+ "%' ";
-               break;
-           //Cidade
-           case 2:
+              filtro_sql = "a005_cpf LIKE '%" +txt_filtro+ "%' ";
+              break;
+          //Cidade
+          case 2:
 
-               filtro_sql = "a005_cidade LIKE '%" +txt_filtro+ "%' ";
-               break;
-           default:
-               qDebug() << "_Houve um problema ao filtrar realizar o filtro(swith case)";
-               break;
-       }
+              filtro_sql = "a005_cidade LIKE '%" +txt_filtro+ "%' ";
+              break;
+          default:
+              qDebug() << "_Houve um problema ao filtrar realizar o filtro(swith case)";
+              break;
+      }
 
-       busca = "SELECT "
-                    "a005_codigo    "
-                    ",a005_nome     "
-                    ",a005_cpf      "
-                    ",a005_cep      "
-                    ",a005_estado   "
-                    ",a005_cidade   "
-                    ",a005_rua      "
-                    ",a005_nro_casa "
-                    ",a005_bairro   "
-                    ",a005_telefone "
-                "FROM "
-                    "a005_cliente "
-                "WHERE "
-                    + filtro_sql +
-                    "AND a005_ativo = true "
-                 "ORDER BY "
-                    "a005_codigo DESC";
-   }
+      busca = "SELECT "
+                   "a005_codigo    "
+                   ",a005_nome     "
+                   ",a005_cpf      "
+                   ",a005_cep      "
+                   ",a005_estado   "
+                   ",a005_cidade   "
+                   ",a005_rua      "
+                   ",a005_nro_casa "
+                   ",a005_bairro   "
+                   ",a005_telefone "
+               "FROM "
+                   "a005_cliente "
+               "WHERE "
+                   + filtro_sql +
+                   "AND a005_ativo = true "
+                "ORDER BY "
+                   "a005_codigo DESC";
+    }
 
-   //contador para percorrer linhas
-   int contlinhas = 0;
-   QSqlQuery query;
-   query.prepare( busca );
+    //contador para percorrer linhas
+    int contlinhas = 0;
+    QSqlQuery query;
+    query.prepare( busca );
 
-   if( query.exec() ) //executa a query
-   {
-       while( query.next() ) //percorrendo query e preenchendo table widget
-       {
-           //inserindo com contador de linhas, por index
-           ui->tw_nv_clientes->insertRow( contlinhas );
-           ui->tw_nv_clientes->setItem(contlinhas
-                                       , 0
-                                       , new QTableWidgetItem(query.value(0).toString()));
+    if( query.exec() ) //executa a query
+    {
+      while( query.next() ) //percorrendo query e preenchendo table widget
+      {
+          //inserindo com contador de linhas, por index
+          ui->tw_nv_clientes->insertRow( contlinhas );
+          ui->tw_nv_clientes->setItem(contlinhas
+                                      , 0
+                                      , new QTableWidgetItem(query.value(0).toString()));
 
-           ui->tw_nv_clientes->setItem(contlinhas
-                                       , 1
-                                       , new QTableWidgetItem(query.value(1).toString()));
+          ui->tw_nv_clientes->setItem(contlinhas
+                                      , 1
+                                      , new QTableWidgetItem(query.value(1).toString()));
 
-           ui->tw_nv_clientes->setItem(contlinhas
-                                       , 2
-                                       , new QTableWidgetItem(query.value(2).toString()));
+          ui->tw_nv_clientes->setItem(contlinhas
+                                      , 2
+                                      , new QTableWidgetItem(query.value(2).toString()));
 
-           ui->tw_nv_clientes->setItem(contlinhas
-                                       , 3
-                                       , new QTableWidgetItem(query.value(3).toString()));
+          ui->tw_nv_clientes->setItem(contlinhas
+                                      , 3
+                                      , new QTableWidgetItem(query.value(3).toString()));
 
-           ui->tw_nv_clientes->setItem(contlinhas
-                                       , 4
-                                       , new QTableWidgetItem(query.value(4).toString()));
+          ui->tw_nv_clientes->setItem(contlinhas
+                                      , 4
+                                      , new QTableWidgetItem(query.value(4).toString()));
 
-           ui->tw_nv_clientes->setItem(contlinhas
-                                       , 5
-                                       , new QTableWidgetItem(query.value(5).toString()));
+          ui->tw_nv_clientes->setItem(contlinhas
+                                      , 5
+                                      , new QTableWidgetItem(query.value(5).toString()));
 
-           ui->tw_nv_clientes->setItem(contlinhas
-                                       , 6
-                                       , new QTableWidgetItem(query.value(6).toString()));
+          ui->tw_nv_clientes->setItem(contlinhas
+                                      , 6
+                                      , new QTableWidgetItem(query.value(6).toString()));
 
-           ui->tw_nv_clientes->setItem(contlinhas
-                                       , 7
-                                       , new QTableWidgetItem(query.value(7).toString()));
+          ui->tw_nv_clientes->setItem(contlinhas
+                                      , 7
+                                      , new QTableWidgetItem(query.value(7).toString()));
 
-           ui->tw_nv_clientes->setItem(contlinhas
-                                       , 8
-                                       , new QTableWidgetItem(query.value(8).toString()));
+          ui->tw_nv_clientes->setItem(contlinhas
+                                      , 8
+                                      , new QTableWidgetItem(query.value(8).toString()));
 
-           ui->tw_nv_clientes->setItem(contlinhas
-                                       , 9
-                                       , new QTableWidgetItem(query.value(9).toString()));
+          ui->tw_nv_clientes->setItem(contlinhas
+                                      , 9
+                                      , new QTableWidgetItem(query.value(9).toString()));
 
-           //definindo o tamanho das linhas
-           ui->tw_nv_clientes->setRowHeight(contlinhas, 20);
-           contlinhas ++;
-       }
-   }
-   else
-   {
-       QMessageBox::warning(this, "ERRO", "Erro ao filtrar clientes");
-   }
+          //definindo o tamanho das linhas
+          ui->tw_nv_clientes->setRowHeight(contlinhas, 20);
+          contlinhas ++;
+      }
+    }
+    else
+    {
+      QMessageBox::warning(this, "ERRO", "Erro ao filtrar clientes");
+    }
 
-   //apagar conteudo do campo txt_ge_filtrar toda vez que clickar em filtrar
-   ui->txt_ge_filtrar->clear();
-   ui->txt_ge_filtrar->setFocus(); //posiciona o cursos no campo novamente
+    //apagar conteudo do campo txt_ge_filtrar toda vez que clickar em filtrar
+    ui->txt_ge_filtrar->clear();
+    ui->txt_ge_filtrar->setFocus(); //posiciona o cursos no campo novamente
 }
 
 //btn filtrar clientes
@@ -506,7 +508,6 @@ void frms_nv_veiculocliente::on_btn_nv_salvar_clicked()
     ClCliente cliente;
     ClVeiculo veiculo;
 
-    //devo pegar
     veiculo.marca_veiculo = ui->cb_nv_marca->currentText();
     veiculo.modelo_veiculo = ui->cb_nv_modelo->currentText();
     veiculo.ano_veiculo = ui->txt_nv_ano->text();
@@ -515,22 +516,20 @@ void frms_nv_veiculocliente::on_btn_nv_salvar_clicked()
     veiculo.placa_veiculo = ui->txt_nv_placa->text();
     veiculo.chassi_veiculo = ui->txt_nv_chassi->text();
     veiculo.observacao = ui->ptxt_nv_observacao->toPlainText();
+    QString g_codigo_cliente = ui->txt_nv_codcliente->text();
 
     qDebug() << "Veiculo chassi: " << veiculo.chassi_veiculo;
     qDebug() << "Veiculo placa: " << veiculo.placa_veiculo;
     qDebug() << "Veiculo cor: " << veiculo.cor_veiculo;
     qDebug() << "Veiculo observação: " << veiculo.observacao;
     qDebug() << "Veiculo modelo: " << veiculo.modelo_veiculo;
+    qDebug() << "Codigo cliente: " << g_codigo_cliente;
 
     veiculo_modelo = veiculo.modelo_veiculo;
-
     qDebug() << "Veiculo modelo Global: " << veiculo_modelo;
-    qDebug() << "Cliente cpf global: " << cliente_cpf;
-    QString cod_modelo = crudModelo();
-    QString cod_cliente = crudCliente();
 
+    QString cod_modelo = crudModelo();
     qDebug() << "codigo_modelo: " << cod_modelo;
-    qDebug() << "codigo_cliente: " << cod_cliente;
 
     //pegar o cpf do cliente e o nome do modelo do veiculo
     //Inserindo em veiculos, as chaves estrangeiras(cpf e modelo) no sql imbutido
@@ -543,14 +542,14 @@ void frms_nv_veiculocliente::on_btn_nv_salvar_clicked()
                                      ",a004_observacao "
                                      ",a004_fk_codigo_modelo "
                                      ",a004_fk_codigo_cliente) "
-                     "VALUES('" +veiculo.motor_veiculo           + "'"
-                           ",'" +veiculo.ano_veiculo             + "'"
-                           ",'" +veiculo.chassi_veiculo          + "'"
-                           ",'" +veiculo.placa_veiculo           + "'"
-                           ",'" +veiculo.cor_veiculo             + "'"
-                           ",'" +veiculo.observacao              + "'"
-                           ",'" +cod_modelo                      + "'"
-                           ",'" +cod_cliente                     + "') ");
+                     "VALUES('" +veiculo.motor_veiculo         + "'"
+                           ",'" +veiculo.ano_veiculo           + "'"
+                           ",'" +veiculo.chassi_veiculo        + "'"
+                           ",'" +veiculo.placa_veiculo         + "'"
+                           ",'" +veiculo.cor_veiculo           + "'"
+                           ",'" +veiculo.observacao            + "'"
+                           ",'" +cod_modelo                    + "'"
+                           ",'" +g_codigo_cliente              + "') ");
 
 
     if( !query.exec( ) )
@@ -573,6 +572,42 @@ void frms_nv_veiculocliente::on_btn_nv_salvar_clicked()
     }
 }
 
+//teste cb marca
+void frms_nv_veiculocliente::on_cb_nv_marca_currentIndexChanged(int index)
+{
+    /*
+    if( index > 0 )
+    {
+        QSqlQuery query;
+
+        query.prepare("SELECT "
+                           "a012_nome_veiculo "
+                      "FROM "
+                           "a012_modelos "
+                           "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca) "
+                      "WHERE "
+                           "a011_codigo = '" +g_codigo_marca+ "'"
+                           "AND a012_ativo = true               "
+                      "ORDER BY "
+                           "a012_nome_veiculo ASC");
+
+        if( !query.exec() )
+        {
+            qDebug() << "_Erro  ao realizar consulta: cbFiltro";
+        }
+        else
+        {
+            int modelo = query.record().indexOf("a012_nome_veiculo");
+
+            while( query.next() )
+            {
+                //logica para adicionar itens no combobox, verificar e testar muito
+                ui->cb_nv_modelo->addItem( query.value( modelo ).toString() );
+            }
+        }
+    }*/
+}
+
 //**FUNÇÕES**//
 /*--------------------------------------------------------------------------------------------
  * Autor: Thiago Ianzer                                                                       |
@@ -585,6 +620,7 @@ void frms_nv_veiculocliente::prepararCB()
 {
     QSqlQuery query;
     query.prepare("SELECT "
+                    "a011_codigo     "
                     "a011_marca_nome "
                   "FROM "
                     "a011_marcas "
@@ -603,65 +639,18 @@ void frms_nv_veiculocliente::prepararCB()
 
         //codigo_marca = query.record().indexOf("a011_codigo");
         //int modelo = query.record().indexOf("a012_nome_veiculo");
+        //int marca = query.record().indexOf("a011_marca_nome");
 
         while( query.next() )
         {
-            //logica para adicionar itens no combobox, verificar e testar muito
-            ui->cb_nv_marca->addItem( query.value(0).toString() );
+            g_codigo_marca =  query.value(0).toString();
+            ui->cb_nv_marca->addItem( query.value(1).toString() );
             //ui->cb_nv_modelo->addItem( query.value(modelo).toString() );
         }
     }
 
-    QString codigo_marca;
-    QString nome_marca = ui->cb_nv_marca->currentText();
+    qDebug() << "_Código marca: " << g_codigo_marca;
 
-    query.prepare("SELECT "
-                    "a011_codigo"
-                  "FROM "
-                    "a011_marcas "
-                  "ORDER BY "
-                    "a011_marca_nome = '" +nome_marca+ "' ");
-
-    if( !query.exec() )
-    {
-        qDebug() << "_Erro  ao realizar consulta: prepararCB";
-    }
-    else
-    {
-        while( query.next() )
-        {
-           codigo_marca =  query.value(0).toString();
-        }
-    }
-
-    if( ui->cb_nv_marca->currentText() != "" )
-    {
-        query.prepare("SELECT "
-                           "a012_nome_veiculo "
-                      "FROM "
-                           "a012_modelos "
-                           "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca) "
-                      "WHERE "
-                           "a011_codigo = '" + codigo_marca   + "'"
-                           "AND a012_ativo = true "
-                      "ORDER BY "
-                           "a012_nome_veiculo ASC");
-
-        if( !query.exec() )
-        {
-            qDebug() << "_Erro  ao realizar consulta: cbFiltro";
-        }
-        else
-        {
-            int modelo = query.record().indexOf("a012_nome_veiculo");
-
-            while( query.next() )
-            {
-                //logica para adicionar itens no combobox, verificar e testar muito
-                ui->cb_nv_modelo->addItem( query.value( modelo ).toString() );
-            }
-        }
-    }
     //cbFiltro( codigo_marca );
 
     //Os modelos e seus dados devem ser filtrados de acordo com as marcas
@@ -739,34 +728,4 @@ QString frms_nv_veiculocliente::crudModelo()
     }
 
     return cod_modelo;
-}
-
-QString frms_nv_veiculocliente::crudCliente()
-{
-    QString cod_cliente;
-    QSqlQuery query;
-    //pegar o nome do modelo do veiculo
-    //Inserindo em veiculos, as chaves estrangeiras(cpf e modelo) no sql imbutido
-    query.prepare("SELECT "
-                    "a005_codigo "
-                  "FROM "
-                    "a005_cliente "
-                  "WHERE "
-                    "a005_cpf = '" +cliente_cpf+ "')");
-
-    if( query.exec() )
-    {
-        //QString cod_cliente = QString::number(query.record().indexOf("a005_codigo"));
-        //query.first();
-
-        while( query.next() )
-        {
-            //query.first();
-            qDebug() << query.value(0).toString();
-            cod_cliente = QString::number(query.record().indexOf("a005_codigo"));
-            //cod_cliente = query.value(0).toString();
-        }
-    }
-
-   return cod_cliente;
 }

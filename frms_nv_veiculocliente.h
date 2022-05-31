@@ -27,7 +27,8 @@ public:
 
     //a chave estrangeira é feita por uma query que precisa do cpf para o filtro where
     QString veiculo_modelo; //removido static
-    QString cliente_cpf;
+    QString g_codigo_cliente;
+    QString g_codigo_marca;
 
 public slots:
 
@@ -37,18 +38,18 @@ public slots:
 
     QString crudModelo();
 
-    QString crudCliente();
-
 private slots:
     void on_tabWidget_currentChanged(int index);
 
-    void on_tw_nv_listaveiculosclientes_itemSelectionChanged();
+    void on_tw_nv_clientes_itemSelectionChanged();
 
     void on_txt_nv_filtrar_returnPressed();
 
+    void on_btn_nv_filtrar_clicked();
+
     void on_btn_nv_salvar_clicked();
 
-    void on_btn_nv_filtrar_clicked();
+    void on_cb_nv_marca_currentIndexChanged(int index);
 
 private:
     Ui::frms_nv_veiculocliente *ui;

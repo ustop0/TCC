@@ -267,7 +267,7 @@ void frm_gestaofornecedores::on_tabWidget_currentChanged(int index)
 void frm_gestaofornecedores::on_tw_ge_listarFornecedores_itemSelectionChanged()
 {
     //pega a linha selecionada
-    int id=ui->tw_ge_listarFornecedores->item(ui->tw_ge_listarFornecedores->currentRow()
+    int id = ui->tw_ge_listarFornecedores->item(ui->tw_ge_listarFornecedores->currentRow()
                                              , 0) ->text().toInt();
 
     //exibe os dados da linha selecionada
@@ -290,9 +290,9 @@ void frm_gestaofornecedores::on_tw_ge_listarFornecedores_itemSelectionChanged()
                   "WHERE "
                     "a003_codigo = '" +QString::number(id)+ "' ");
 
-    if( query.exec() ) //verifica se a query foi bem sucedida
+    if( query.exec() )
     {
-        query.first(); //pega o primeiro
+        query.first();
 
         //considerar inserir um campo para o código
         ui->txt_ge_cnpj->setText(query.value(0).toString());
