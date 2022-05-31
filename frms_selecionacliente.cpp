@@ -1,7 +1,6 @@
 #include "frms_selecionacliente.h"
 #include "ui_frms_selecionacliente.h"
-#include "frm_agendaservicos.h" //formulário de agendamento de serviços
-#include "ui_frm_agendaservicos.h"
+#include "frm_agendamentoservicos.h"
 
 //QString g_codigoCliente;
 //QString g_nomeCliente;
@@ -521,19 +520,20 @@ void frms_selecionacliente::on_btn_confirmarCliente_clicked() //confirmar
 //    QString id_veiculo = ui->tw_selecionaVeiculo->item(ui->tw_selecionaVeiculo->currentRow(),0)->text();
 
     //enviando nome e codigo do cliente selecionado para o campo do modelo no agendaservicos
-    frm_agendaservicos *fm_agendaservicos = new frm_agendaservicos(this, g_codigoCliente, g_nomeCliente
-                                                                       , g_codigoVeiculo, g_nomeVeiculo);
-
-    fm_agendaservicos->exec();
+    frm_agendamentoservicos *fm_agendamentoservicos  = new frm_agendamentoservicos(this, g_codigoCliente
+                                                                                       , g_nomeCliente
+                                                                                       , g_codigoVeiculo
+                                                                                       , g_nomeVeiculo);
+    fm_agendamentoservicos->exec();
 
     //deletando ponteiro
     try
     {
-        delete fm_agendaservicos;
+        delete fm_agendamentoservicos;
     }
     catch (...)
     {
-        qDebug() << "__Falha ao deletar ponteiro: fm_agendaservicos na tela de selecaocliente";
+        qDebug() << "__Falha ao deletar ponteiro: fm_agendamentoservicos na tela de selecaocliente";
     }
 
     close();

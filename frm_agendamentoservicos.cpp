@@ -1,14 +1,13 @@
-#include "frm_agendaservicos.h"
-#include "ui_frm_agendaservicos.h"
+#include "frm_agendamentoservicos.h"
+#include "ui_frm_agendamentoservicos.h"
 #include "frms_selecionacliente.h" //formulario de seleção de clientes
 
-
-frm_agendaservicos::frm_agendaservicos(QWidget *parent, QString c_codigo_cliente
-                                                      , QString c_nome_cliente
-                                                      , QString c_codigo_veiculo
-                                                      , QString c_nome_veiculo) :
+frm_agendamentoservicos::frm_agendamentoservicos(QWidget *parent, QString c_codigo_cliente
+                                                                , QString c_nome_cliente
+                                                                , QString c_codigo_veiculo
+                                                                , QString c_nome_veiculo) :
     QDialog(parent),
-    ui(new Ui::frm_agendaservicos)
+    ui(new Ui::frm_agendamentoservicos)
 {
     ui->setupUi(this);
 
@@ -74,14 +73,14 @@ frm_agendaservicos::frm_agendaservicos(QWidget *parent, QString c_codigo_cliente
 
 }
 
-frm_agendaservicos::~frm_agendaservicos()//**INICIO** destrutor
+frm_agendamentoservicos::~frm_agendamentoservicos() //**INICIO** destrutor
 {
     con.fechar();
     delete ui;
 }
 
 //abre formulário de seleção de clientes
-void frm_agendaservicos::on_btn_selecionaCliente_clicked() //frms de seleção de clientes
+void frm_agendamentoservicos::on_btn_selecionaCliente_clicked()
 {
     frms_selecionacliente *fmSelecionaCliente = new frms_selecionacliente();
     fmSelecionaCliente->exec();
@@ -98,7 +97,7 @@ void frm_agendaservicos::on_btn_selecionaCliente_clicked() //frms de seleção d
 }
 
 //btn agendar serviço
-void frm_agendaservicos::on_btn_agendarServico_clicked()
+void frm_agendamentoservicos::on_btn_agendarServico_clicked()
 {
     if( ui->txt_nomeCliente->text() == "" || ui->txt_nomeCliente->text() == ""
                                           || g_codigo_cliente == ""
@@ -173,11 +172,10 @@ void frm_agendaservicos::on_btn_agendarServico_clicked()
             }
         }
     }
-
 }
 
 //alternar entre os tab widgets
-void frm_agendaservicos::on_tabWidget_currentChanged(int index)
+void frm_agendamentoservicos::on_tabWidget_currentChanged(int index)
 {
     if( index == 1 ) //verifica a interface pelo index das tabs
     {
@@ -264,7 +262,7 @@ void frm_agendaservicos::on_tabWidget_currentChanged(int index)
 }
 
 //pega linha do tw
-void frm_agendaservicos::on_tw_listaservicos_itemSelectionChanged()
+void frm_agendamentoservicos::on_tw_listaservicos_itemSelectionChanged()
 {
     //pega a linha selecionada
     int id=ui->tw_listaservicos->item(ui->tw_listaservicos->currentRow()
@@ -319,7 +317,7 @@ void frm_agendaservicos::on_tw_listaservicos_itemSelectionChanged()
 }
 
 //filtrar
-void frm_agendaservicos::on_txt_ge_filtrar_returnPressed()
+void frm_agendamentoservicos::on_txt_ge_filtrar_returnPressed()
 {
     QString cb_filtro = ui->cb_ge_filtrar->currentText();
     QString txt_filtro = ui->txt_ge_filtrar->text();
@@ -514,13 +512,13 @@ void frm_agendaservicos::on_txt_ge_filtrar_returnPressed()
 }
 
 //btn filtrar
-void frm_agendaservicos::on_btn_ge_filtrar_clicked()
+void frm_agendamentoservicos::on_btn_ge_filtrar_clicked()
 {
-    frm_agendaservicos::on_txt_ge_filtrar_returnPressed();
+    frm_agendamentoservicos::on_txt_ge_filtrar_returnPressed();
 }
 
 //edição, salvar alteração no serviço
-void frm_agendaservicos::on_btn_ge_salvar_2_clicked()
+void frm_agendamentoservicos::on_btn_ge_salvar_clicked()
 {
     if( ui->tw_listaservicos->currentRow() == -1 )
     {
@@ -585,7 +583,7 @@ void frm_agendaservicos::on_btn_ge_salvar_2_clicked()
 }
 
 //botão excluir
-void frm_agendaservicos::on_btn_ge_excluir_2_clicked()
+void frm_agendamentoservicos::on_btn_ge_excluir_clicked()
 {
     if( ui->tw_listaservicos->currentRow() == -1 )
     {

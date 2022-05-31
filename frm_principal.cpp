@@ -10,7 +10,7 @@
 #include "frm_novavenda.h"
 #include "frm_gestaovendas.h"
 #include "frm_ordemservico.h"
-#include "frm_agendaservicos.h"
+#include "frm_agendamentoservicos.h"
 #include "frm_sobre.h"
 
 int variaveis_globais::id_colab;
@@ -137,8 +137,8 @@ void Frm_principal::on_actionGestao_Vendas_triggered()
 //abre tela de agendar serviço
 void Frm_principal::on_actionAgendar_Servi_o_triggered()
 {
-    frm_agendaservicos f_agendaservicos;
-    f_agendaservicos.exec();
+    frm_agendamentoservicos f_agendamentoservicos;
+    f_agendamentoservicos.exec();
 }
 
 //abre tela de ordem de serviço

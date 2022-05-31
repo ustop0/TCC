@@ -1,5 +1,5 @@
-#ifndef FRM_AGENDASERVICOS_H
-#define FRM_AGENDASERVICOS_H
+#ifndef FRM_AGENDAMENTOSERVICOS_H
+#define FRM_AGENDAMENTOSERVICOS_H
 
 #include <QDialog>
 #include <QMessageBox>
@@ -18,19 +18,19 @@
 #include "Classes/clveiculo.h"
 
 namespace Ui {
-class frm_agendaservicos;
+class frm_agendamentoservicos;
 }
 
-class frm_agendaservicos : public QDialog
+class frm_agendamentoservicos : public QDialog //frm_agendamentoservicos
 {
     Q_OBJECT
 
 public:
-    explicit frm_agendaservicos(QWidget *parent = nullptr, QString c_codigo_cliente = ""
-                                                         , QString c_nome_cliente = ""
-                                                         , QString c_codigo_veiculo = ""
-                                                         , QString c_nome_veiculo = "");
-    ~frm_agendaservicos();
+    explicit frm_agendamentoservicos(QWidget *parent = nullptr, QString c_codigo_cliente = ""
+                                                              , QString c_nome_cliente = ""
+                                                              , QString c_codigo_veiculo = ""
+                                                              , QString c_nome_veiculo = "");
+    ~frm_agendamentoservicos();
 
     //instanciando conexao com o banco de dados
     Conexao con;
@@ -39,8 +39,6 @@ public:
     QString g_nome_cliente;
     QString g_codigo_veiculo;
     QString g_nome_veiculo;
-
-public slots:
 
 private slots:
     void on_btn_selecionaCliente_clicked();
@@ -55,12 +53,12 @@ private slots:
 
     void on_btn_ge_filtrar_clicked();
 
-    void on_btn_ge_salvar_2_clicked();
+    void on_btn_ge_salvar_clicked();
 
-    void on_btn_ge_excluir_2_clicked();
+    void on_btn_ge_excluir_clicked();
 
 private:
-    Ui::frm_agendaservicos *ui;
+    Ui::frm_agendamentoservicos *ui;
 };
 
-#endif // FRM_AGENDASERVICOS_H
+#endif // FRM_AGENDAMENTOSERVICOS_H

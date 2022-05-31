@@ -20,7 +20,7 @@ SOURCES += \
     Classes/clveiculo.cpp \
     Classes/usuario.cpp \
     fn_validacpf.cpp \
-    frm_agendaservicos.cpp \
+    frm_agendamentoservicos.cpp \
     frm_gestaoclientes.cpp \
     frm_gestaoesotque.cpp \
     frm_gestaofornecedores.cpp \
@@ -50,7 +50,7 @@ HEADERS += \
     Classes/usuario.h \
     ConexaoBanco.h \
     fn_validacpf.h \
-    frm_agendaservicos.h \
+    frm_agendamentoservicos.h \
     frm_gestaoclientes.h \
     frm_gestaoesotque.h \
     frm_gestaofornecedores.h \
@@ -70,7 +70,7 @@ HEADERS += \
     variaveis_globais.h
 
 FORMS += \
-    frm_agendaservicos.ui \
+    frm_agendamentoservicos.ui \
     frm_gestaoclientes.ui \
     frm_gestaoesotque.ui \
     frm_gestaofornecedores.ui \
