@@ -265,13 +265,13 @@ void frm_agendamentoservicos::on_tabWidget_currentChanged(int index)
 void frm_agendamentoservicos::on_tw_listaservicos_itemSelectionChanged()
 {
     //pega a linha selecionada
-    int id=ui->tw_listaservicos->item(ui->tw_listaservicos->currentRow()
+    int id = ui->tw_listaservicos->item(ui->tw_listaservicos->currentRow()
                                         , 0) ->text().toInt();
 
     //exibe os dados da linha selecionada
     QSqlQuery query;
     query.prepare("SELECT "
-                      ",a005_nome                        "
+                      "a005_nome                         "
                       ",a012_nome_veiculo                "
                       ",a004_placa_veiculo               "
                       ",TO_CHAR(a009_data, 'DD/MM/YYYY') "
