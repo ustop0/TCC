@@ -19,7 +19,11 @@ class frms_nv_veiculocliente : public QDialog
     Q_OBJECT
 
 public:
-    explicit frms_nv_veiculocliente(QWidget *parent = nullptr);
+    explicit frms_nv_veiculocliente(QWidget *parent = nullptr, QString c_codigo_marca = ""
+                                                             , QString c_nome_marca = ""
+                                                             , QString c_codigo_modelo = ""
+                                                             , QString c_nome_modelo = "");
+
     ~frms_nv_veiculocliente();
 
     //instanciando conexao com o banco de dados
@@ -28,7 +32,11 @@ public:
     //a chave estrangeira é feita por uma query que precisa do cpf para o filtro where
     QString veiculo_modelo; //removido static
     QString g_codigo_cliente;
+
     QString g_codigo_marca;
+    QString g_nome_marca;
+    QString g_codigo_modelo;
+    QString g_nome_modelo;
 
 public slots:
 
@@ -49,7 +57,7 @@ private slots:
 
     void on_btn_nv_salvar_clicked();
 
-    void on_cb_nv_marca_currentIndexChanged(int index);
+    void on_btn_selecionaCliente_clicked();
 
 private:
     Ui::frms_nv_veiculocliente *ui;

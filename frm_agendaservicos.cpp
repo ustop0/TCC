@@ -24,6 +24,8 @@ frm_agendaservicos::frm_agendaservicos(QWidget *parent, QString c_codigo_cliente
     //define o Novo Produto de index(0) como aba padrão(que inicia ao ser aberta a interface)
     ui->tabWidget->setCurrentIndex(0);
 
+    ui->de_data->setDate( QDate::currentDate() );
+
     //configurando combo box filtro
     ui->cb_ge_filtrar->addItem("-");
     ui->cb_ge_filtrar->addItem("Cliente");
@@ -186,15 +188,15 @@ void frm_agendaservicos::on_tabWidget_currentChanged(int index)
         //Remover os produtos do table widget
         QSqlQuery query; //query para listar os colaboradores no table widget
         query.prepare("SELECT "
-                          "a009_codigo           "
-                          ",a005_nome            "
-                          ",a012_nome_veiculo    "
-                          ",a004_placa_veiculo   "
-                          ",a009_data            "
-                          ",a009_hora            "
-                          ",a009_servico         "
-                          ",a009_observacao      "
-                          ",a009_status          "
+                          "a009_codigo                        "
+                          ",a005_nome                         "
+                          ",a012_nome_veiculo                 "
+                          ",a004_placa_veiculo                "
+                          ",TO_CHAR(a009_data, 'DD/MM/YYYY')  "
+                          ",a009_hora                         "
+                          ",a009_servico                      "
+                          ",a009_observacao                   "
+                          ",a009_status                       "
                       "FROM "
                           "a009_agenda_servicos "
                           "JOIN a005_cliente ON (a005_codigo = a009_fk_codigo_cliente)  "
@@ -271,14 +273,14 @@ void frm_agendaservicos::on_tw_listaservicos_itemSelectionChanged()
     //exibe os dados da linha selecionada
     QSqlQuery query;
     query.prepare("SELECT "
-                      ",a005_nome           "
-                      ",a012_nome_veiculo   "
-                      ",a004_placa_veiculo  "
-                      ",a009_data           "
-                      ",a009_hora           "
-                      ",a009_servico        "
-                      ",a009_observacao     "
-                      ",a009_status         "
+                      ",a005_nome                        "
+                      ",a012_nome_veiculo                "
+                      ",a004_placa_veiculo               "
+                      ",TO_CHAR(a009_data, 'DD/MM/YYYY') "
+                      ",a009_hora                        "
+                      ",a009_servico                     "
+                      ",a009_observacao                  "
+                      ",a009_status                      "
                   "FROM "
                     "a009_agenda_servicos "
                     "JOIN a005_cliente ON (a005_codigo = a009_fk_codigo_cliente)  "
@@ -294,6 +296,8 @@ void frm_agendaservicos::on_tw_listaservicos_itemSelectionChanged()
         //considerar inserir um campo para o código
         ui->txt_ge_nomeCliente->setText(query.value(0).toString());
         ui->txt_ge_nomeVeiculo->setText(query.value(1).toString());
+        ui->de_ge_data->setDate( QDate::fromString( query.value(3).toString() ) );
+        ui->de_ge_hora->setDate( QDate::fromString( query.value(4).toString() ) );
         ui->txt_ge_tipoServico->setText(query.value(5).toString());
         ui->Ptxt_ge_observacao->setPlainText(query.value(6).toString());
         QString verificaStatus = query.value(7).toString();
@@ -336,15 +340,15 @@ void frm_agendaservicos::on_txt_ge_filtrar_returnPressed()
         if( cb_filtro == "" ) //consulta de acordo com o radio selecionado
         {
             busca = "SELECT "
-                        "a009_codigo           "
-                        ",a005_nome            "
-                        ",a012_nome_veiculo    "
-                        ",a004_placa_veiculo   "
-                        ",a009_data            "
-                        ",a009_hora            "
-                        ",a009_servico         "
-                        ",a009_observacao      "
-                        ",a009_status          "
+                        "a009_codigo                        "
+                        ",a005_nome                         "
+                        ",a012_nome_veiculo                 "
+                        ",a004_placa_veiculo                "
+                        ",TO_CHAR(a009_data, 'DD/MM/YYYY')  "
+                        ",a009_hora                         "
+                        ",a009_servico                      "
+                        ",a009_observacao                   "
+                        ",a009_status                       "
                     "FROM "
                         "a009_agenda_servicos "
                         "JOIN a005_cliente ON (a005_codigo = a009_fk_codigo_cliente)  "
@@ -359,15 +363,15 @@ void frm_agendaservicos::on_txt_ge_filtrar_returnPressed()
         else
         {
             busca = "SELECT "
-                        "a009_codigo           "
-                        ",a005_nome            "
-                        ",a012_nome_veiculo    "
-                        ",a004_placa_veiculo   "
-                        ",a009_data            "
-                        ",a009_hora            "
-                        ",a009_servico         "
-                        ",a009_observacao      "
-                        ",a009_status          "
+                        "a009_codigo                        "
+                        ",a005_nome                         "
+                        ",a012_nome_veiculo                 "
+                        ",a004_placa_veiculo                "
+                        ",TO_CHAR(a009_data, 'DD/MM/YYYY')  "
+                        ",a009_hora                         "
+                        ",a009_servico                      "
+                        ",a009_observacao                   "
+                        ",a009_status                       "
                     "FROM "
                         "a009_agenda_servicos "
                         "JOIN a005_cliente ON (a005_codigo = a009_fk_codigo_cliente)  "
@@ -426,15 +430,15 @@ void frm_agendaservicos::on_txt_ge_filtrar_returnPressed()
         }
 
         busca = "SELECT "
-                    "a009_codigo           "
-                    ",a005_nome            "
-                    ",a012_nome_veiculo    "
-                    ",a004_placa_veiculo   "
-                    ",a009_data            "
-                    ",a009_hora            "
-                    ",a009_servico         "
-                    ",a009_observacao      "
-                    ",a009_status          "
+                    "a009_codigo                        "
+                    ",a005_nome                         "
+                    ",a012_nome_veiculo                 "
+                    ",a004_placa_veiculo                "
+                    ",TO_CHAR(a009_data, 'DD/MM/YYYY')  "
+                    ",a009_hora                         "
+                    ",a009_servico                      "
+                    ",a009_observacao                   "
+                    ",a009_status                       "
                 "FROM "
                     "a009_agenda_servicos "
                     "JOIN a005_cliente ON (a005_codigo = a009_fk_codigo_cliente)  "
@@ -531,6 +535,8 @@ void frm_agendaservicos::on_btn_ge_salvar_2_clicked()
     //estudar retringir cnpj
     QString nome_cliente = ui->txt_ge_nomeCliente->text();
     QString nome_veiculo = ui->txt_ge_nomeVeiculo->text();
+    QString data = ui->de_ge_data->text();
+    QString hora = ui->de_ge_hora->text();
     QString servico = ui->txt_ge_tipoServico->text();
     QString observacao = ui->Ptxt_ge_observacao->toPlainText();
     QString status = ui->cb_ge_status->currentText();
@@ -540,11 +546,14 @@ void frm_agendaservicos::on_btn_ge_salvar_2_clicked()
                   "SET "
                     "a005_nome             ='" +nome_cliente    + "'"
                     ",a012_nome_veiculo    ='" +nome_veiculo    + "'"
+                    ",a009_data            ='" +data            + "'"
+                    ",a009_hora            ='" +hora            + "'"
                     ",a009_servico         ='" +servico         + "'"
                     ",a009_observacao      ='" +observacao      + "'"
                     ",a009_status          ='" +status          + "'"
                   "WHERE "
                     "a009_codigo ='" +id+ "'");
+
 
     if( query.exec() ) //executa a query
     {
@@ -553,14 +562,18 @@ void frm_agendaservicos::on_btn_ge_salvar_2_clicked()
         //atualizando o table widget com o novo registro
         ui->tw_listaservicos->item(linha, 1)->setText( nome_cliente );
         ui->tw_listaservicos->item(linha, 2)->setText( nome_veiculo );
-        ui->tw_listaservicos->item(linha, 5)->setText( servico );
-        ui->tw_listaservicos->item(linha, 6)->setText( observacao );
-        ui->tw_listaservicos->item(linha, 7)->setText( status );
+        ui->tw_listaservicos->item(linha, 4)->setText( data );
+        ui->tw_listaservicos->item(linha, 5)->setText( hora );
+        ui->tw_listaservicos->item(linha, 6)->setText( servico );
+        ui->tw_listaservicos->item(linha, 7)->setText( observacao );
+        ui->tw_listaservicos->item(linha, 8)->setText( status );
 
         QMessageBox::information(this, "Atualizado", "Serviço atualizado com sucesso!");
 
         ui->txt_ge_nomeCliente->clear();
         ui->txt_ge_nomeVeiculo->clear();
+        ui->de_ge_data->setDate( QDate::currentDate() );
+        ui->de_ge_hora->setDate( QDate::fromString( "00:00" ) );
         ui->txt_ge_tipoServico->clear();
         ui->Ptxt_ge_observacao->clear();
         ui->cb_ge_status->clear();
@@ -582,7 +595,7 @@ void frm_agendaservicos::on_btn_ge_excluir_2_clicked()
 
     //pergunta se o usuário realmente quer excluir o registro
     QMessageBox::StandardButton opc =QMessageBox::question(
-                                      this,"Exclusão"
+                                      this,"Cancelar"
                                       ,"Confirma exclusão do serviço?"
                                       ,QMessageBox::Yes|QMessageBox::No);
 
@@ -604,11 +617,11 @@ void frm_agendaservicos::on_btn_ge_excluir_2_clicked()
         if( query.exec() ) //executa a query
         {
             ui->tw_listaservicos->removeRow( linha );
-            QMessageBox::information(this, "DELETADO", "Serviço excluído com sucesso");
+            QMessageBox::information(this, "CANCELADO", "Serviço excluído com sucesso");
         }
         else
         {
-             QMessageBox::warning(this, "ERRO", "Erro ao excluir serviço");
+             QMessageBox::warning(this, "CANCELADO", "Erro ao excluir serviço");
         }
     }
 }

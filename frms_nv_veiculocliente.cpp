@@ -3,10 +3,14 @@
 #include "frm_gestaoclientes.h" //gestão dos clientes
 #include "Classes/clcliente.h"
 #include "Classes/clveiculo.h"
+#include "frms_selecionaveiculo.h"
 
 //pegando os valores para as chaves estrangeiras
 
-frms_nv_veiculocliente::frms_nv_veiculocliente(QWidget *parent) :
+frms_nv_veiculocliente::frms_nv_veiculocliente(QWidget *parent, QString c_codigo_marca
+                                                              , QString c_nome_marca
+                                                              , QString c_codigo_modelo
+                                                              , QString c_nome_modelo) :
     QDialog(parent),
     ui(new Ui::frms_nv_veiculocliente)
 {
@@ -170,10 +174,13 @@ frms_nv_veiculocliente::frms_nv_veiculocliente(QWidget *parent) :
     //desabilitando os indices das linhas
     ui->tw_ge_veiculos->verticalHeader()->setVisible(false);
 
-    //chamando função que preenche combo box
-    ui->cb_nv_marca->addItem("-");
-    ui->cb_nv_modelo->addItem("-");
-    prepararCB();
+    //recebendo dados marca
+    ui->txt_nv_marca->setText( c_nome_marca );
+    g_codigo_marca = c_codigo_marca;
+
+    //recebendo dados modelo
+    ui->txt_nv_modelo->setText( c_nome_modelo );
+    g_codigo_modelo = c_codigo_modelo;
 
 }//**FIM** construtor
 
@@ -501,6 +508,22 @@ void frms_nv_veiculocliente::on_btn_nv_filtrar_clicked()
     frms_nv_veiculocliente::on_txt_nv_filtrar_returnPressed();
 }
 
+void frms_nv_veiculocliente::on_btn_selecionaCliente_clicked()
+{
+    frms_selecionaveiculo *fmSelecionaVeiculo = new frms_selecionaveiculo();
+    fmSelecionaVeiculo->exec();
+
+    //deletando ponteiro
+    try
+    {
+        delete fmSelecionaVeiculo;
+    }
+    catch ( ... )
+    {
+        qDebug() << "__Falha ao deletar ponteiro: fmSelecionaVeiculo na tela de agendaserviços";
+    }
+}
+
 //salvar novo veiculo de cliente
 void frms_nv_veiculocliente::on_btn_nv_salvar_clicked()
 {
@@ -508,8 +531,8 @@ void frms_nv_veiculocliente::on_btn_nv_salvar_clicked()
     ClCliente cliente;
     ClVeiculo veiculo;
 
-    veiculo.marca_veiculo = ui->cb_nv_marca->currentText();
-    veiculo.modelo_veiculo = ui->cb_nv_modelo->currentText();
+    //veiculo.marca_veiculo = ui->cb_nv_marca->currentText();
+    //veiculo.modelo_veiculo = ui->cb_nv_modelo->currentText();
     veiculo.ano_veiculo = ui->txt_nv_ano->text();
     veiculo.motor_veiculo = ui->txt_nv_motor->text();
     veiculo.cor_veiculo = ui->txt_nv_cor->text();
@@ -561,8 +584,8 @@ void frms_nv_veiculocliente::on_btn_nv_salvar_clicked()
         qDebug() << "_Dados salvos na tabela a004_veiculos";
 
         //limpando todos os campos
-        ui->cb_nv_marca->clear();
-        ui->cb_nv_modelo->clear();
+        //ui->cb_nv_marca->clear();
+        //ui->cb_nv_modelo->clear();
         ui->txt_nv_ano->clear();
         ui->txt_nv_motor->clear();
         ui->txt_nv_cor->clear();
@@ -572,41 +595,6 @@ void frms_nv_veiculocliente::on_btn_nv_salvar_clicked()
     }
 }
 
-//teste cb marca
-void frms_nv_veiculocliente::on_cb_nv_marca_currentIndexChanged(int index)
-{
-    /*
-    if( index > 0 )
-    {
-        QSqlQuery query;
-
-        query.prepare("SELECT "
-                           "a012_nome_veiculo "
-                      "FROM "
-                           "a012_modelos "
-                           "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca) "
-                      "WHERE "
-                           "a011_codigo = '" +g_codigo_marca+ "'"
-                           "AND a012_ativo = true               "
-                      "ORDER BY "
-                           "a012_nome_veiculo ASC");
-
-        if( !query.exec() )
-        {
-            qDebug() << "_Erro  ao realizar consulta: cbFiltro";
-        }
-        else
-        {
-            int modelo = query.record().indexOf("a012_nome_veiculo");
-
-            while( query.next() )
-            {
-                //logica para adicionar itens no combobox, verificar e testar muito
-                ui->cb_nv_modelo->addItem( query.value( modelo ).toString() );
-            }
-        }
-    }*/
-}
 
 //**FUNÇÕES**//
 /*--------------------------------------------------------------------------------------------
@@ -644,7 +632,7 @@ void frms_nv_veiculocliente::prepararCB()
         while( query.next() )
         {
             g_codigo_marca =  query.value(0).toString();
-            ui->cb_nv_marca->addItem( query.value(1).toString() );
+            //ui->cb_nv_marca->addItem( query.value(1).toString() );
             //ui->cb_nv_modelo->addItem( query.value(modelo).toString() );
         }
     }
@@ -693,7 +681,7 @@ void frms_nv_veiculocliente::cbFiltro( const QString &codigo_marca )
         while( query.next() )
         {
             //logica para adicionar itens no combobox, verificar e testar muito
-            ui->cb_nv_modelo->addItem( query.value(0).toString() );
+            //ui->cb_nv_modelo->addItem( query.value(0).toString() );
         }
     }
 }
