@@ -5,7 +5,9 @@
 frm_ordemservico::frm_ordemservico(QWidget *parent, QString c_codigo_cliente
                                                   , QString c_nome_cliente
                                                   , QString c_codigo_veiculo
-                                                  , QString c_nome_veiculo) :
+                                                  , QString c_nome_veiculo
+                                                  , QString c_placa_veiculo
+                                                  , QString c_cor_veiculo) :
     QDialog(parent),
     ui(new Ui::frm_ordemservico)
 {
@@ -19,6 +21,7 @@ frm_ordemservico::frm_ordemservico(QWidget *parent, QString c_codigo_cliente
             QMessageBox::warning(this, "ERRO", "Erro ao abrir banco de dados");
         }
     }
+
 }
 
 frm_ordemservico::~frm_ordemservico() //**INICIO** destrutor

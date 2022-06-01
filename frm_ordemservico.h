@@ -29,7 +29,9 @@ public:
     explicit frm_ordemservico(QWidget *parent = nullptr, QString c_codigo_cliente = ""
                                                               , QString c_nome_cliente = ""
                                                               , QString c_codigo_veiculo = ""
-                                                              , QString c_nome_veiculo = "");
+                                                              , QString c_nome_veiculo = ""
+                                                              , QString c_placa_veiculo = ""
+                                                              , QString c_cor_veiculo = "");
     ~frm_ordemservico();
 
     //instanciando conexao com o banco de dados
@@ -39,6 +41,8 @@ public:
     QString g_nome_cliente;
     QString g_codigo_veiculo;
     QString g_nome_veiculo;
+    QString g_placa_veiculo;
+    QString g_cor_veiculo;
 
 private:
     Ui::frm_ordemservico *ui;
