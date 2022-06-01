@@ -546,7 +546,6 @@ void frm_gestaofornecedores::on_btn_ge_salvar_clicked()
     QString telefone1 = ui->txt_ge_tel1->text();
     QString telefone2 = ui->txt_ge_tel2->text();
 
-    //**verificar** está quebrando a o registro quando da update
     query.prepare("UPDATE "
                     "a003_fornecedor "
                   "SET "

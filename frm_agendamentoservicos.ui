@@ -432,7 +432,7 @@
        <rect>
         <x>170</x>
         <y>96</y>
-        <width>71</width>
+        <width>88</width>
         <height>51</height>
        </rect>
       </property>
@@ -446,6 +446,9 @@
        </item>
        <item>
         <widget class="QTimeEdit" name="de_ge_hora">
+         <property name="displayFormat">
+          <string>HH:mm:ss</string>
+         </property>
          <property name="calendarPopup">
           <bool>false</bool>
          </property>

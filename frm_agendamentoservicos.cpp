@@ -294,8 +294,8 @@ void frm_agendamentoservicos::on_tw_listaservicos_itemSelectionChanged()
         //considerar inserir um campo para o código
         ui->txt_ge_nomeCliente->setText(query.value(0).toString());
         ui->txt_ge_nomeVeiculo->setText(query.value(1).toString());
-        ui->de_ge_data->setDate( QDate::fromString( query.value(3).toString() ) );
-        ui->de_ge_hora->setDate( QDate::fromString( query.value(4).toString() ) );
+        ui->de_ge_data->setDate( QDate::fromString( query.value(3).toString(), "dd/MM/yyyy" ) );
+        ui->de_ge_hora->setTime( QTime::fromString( query.value(4).toString() ) );
         ui->txt_ge_tipoServico->setText(query.value(5).toString());
         ui->Ptxt_ge_observacao->setPlainText(query.value(6).toString());
         QString verificaStatus = query.value(7).toString();
@@ -530,7 +530,6 @@ void frm_agendamentoservicos::on_btn_ge_salvar_clicked()
                                                    ->currentRow(),0)->text();
     QSqlQuery query;
 
-    //estudar retringir cnpj
     QString nome_cliente = ui->txt_ge_nomeCliente->text();
     QString nome_veiculo = ui->txt_ge_nomeVeiculo->text();
     QString data = ui->de_ge_data->text();
@@ -539,12 +538,11 @@ void frm_agendamentoservicos::on_btn_ge_salvar_clicked()
     QString observacao = ui->Ptxt_ge_observacao->toPlainText();
     QString status = ui->cb_ge_status->currentText();
 
+
     query.prepare("UPDATE "
                     "a009_agenda_servicos "
                   "SET "
-                    "a005_nome             ='" +nome_cliente    + "'"
-                    ",a012_nome_veiculo    ='" +nome_veiculo    + "'"
-                    ",a009_data            ='" +data            + "'"
+                    "a009_data            ='" +data            + "'"
                     ",a009_hora            ='" +hora            + "'"
                     ",a009_servico         ='" +servico         + "'"
                     ",a009_observacao      ='" +observacao      + "'"
@@ -571,10 +569,9 @@ void frm_agendamentoservicos::on_btn_ge_salvar_clicked()
         ui->txt_ge_nomeCliente->clear();
         ui->txt_ge_nomeVeiculo->clear();
         ui->de_ge_data->setDate( QDate::currentDate() );
-        ui->de_ge_hora->setDate( QDate::fromString( "00:00" ) );
+        ui->de_ge_hora->setDate( QDate::fromString( "00:00:00" ) );
         ui->txt_ge_tipoServico->clear();
         ui->Ptxt_ge_observacao->clear();
-        ui->cb_ge_status->clear();
     }
     else
     {
@@ -593,7 +590,7 @@ void frm_agendamentoservicos::on_btn_ge_excluir_clicked()
 
     //pergunta se o usuário realmente quer excluir o registro
     QMessageBox::StandardButton opc =QMessageBox::question(
-                                      this,"Cancelar"
+                                      this,"Excluir"
                                       ,"Confirma exclusão do serviço?"
                                       ,QMessageBox::Yes|QMessageBox::No);
 
@@ -615,11 +612,11 @@ void frm_agendamentoservicos::on_btn_ge_excluir_clicked()
         if( query.exec() ) //executa a query
         {
             ui->tw_listaservicos->removeRow( linha );
-            QMessageBox::information(this, "CANCELADO", "Serviço excluído com sucesso");
+            QMessageBox::information(this, "EXCLUIR", "Serviço excluído com sucesso");
         }
         else
         {
-             QMessageBox::warning(this, "CANCELADO", "Erro ao excluir serviço");
+             QMessageBox::warning(this, "EXCLUIR", "Erro ao excluir serviço");
         }
     }
 }
