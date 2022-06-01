@@ -26,56 +26,12 @@
     <item>
      <widget class="QLabel" name="label">
       <property name="text">
-       <string>Data Inicial</string>
+       <string>Data Entrada</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QDateTimeEdit" name="dateTimeEdit"/>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>80</y>
-     <width>150</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <layout class="QVBoxLayout" name="verticalLayout_2">
-    <item>
-     <widget class="QLabel" name="label_7">
-      <property name="text">
-       <string>Data Final</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QDateTimeEdit" name="dateTimeEdit_2"/>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>140</y>
-     <width>144</width>
-     <height>50</height>
-    </rect>
-   </property>
-   <layout class="QVBoxLayout" name="verticalLayout_3">
-    <item>
-     <widget class="QLabel" name="label_2">
-      <property name="text">
-       <string>Status</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLineEdit" name="lineEdit"/>
+     <widget class="QDateEdit" name="dateEdit"/>
     </item>
    </layout>
   </widget>
