@@ -176,6 +176,14 @@ frm_ordemservico::frm_ordemservico(QWidget *parent, QString c_codigo_cliente
     ui->tw_pecasOS->setSelectionBehavior(QAbstractItemView::SelectRows);
     //desabilitando os indices das linhas
     ui->tw_pecasOS->verticalHeader()->setVisible(false);
+
+
+    //configurando combo box meio pagamento
+    ui->cb_meiopagamento->addItem("-");
+    ui->cb_meiopagamento->addItem("À vista");
+    ui->cb_meiopagamento->addItem("PIX");
+    ui->cb_meiopagamento->addItem("xeque");
+
 }
 
 frm_ordemservico::~frm_ordemservico() //**INICIO** destrutor
@@ -377,56 +385,69 @@ void frm_ordemservico::on_btn_removerItem_clicked()
 }
 
 //Salvar O.S.
-void frm_ordemservico::on_pushButton_3_clicked()
+void frm_ordemservico::on_tb_salvaros_clicked()
 {
     //gravas as informações na tabela de venda e obter o id da venda
     //verifica se tem produtos no table widget, para realizar uma venda
-    int codigo_venda;
+    int codigo_os;
 
     //**ATENÇÃO** foi adicionada a coluna margem de lucro, inserindo lucro
     QString msgFimVenda;
 
-    double total = calculaTotal(ui->tw_pecasOS, 4);
-    double lucro = calculaTotal(ui->tw_pecasOS, 5);
+    QString data = ui->de_entrada->text();
+    QString km_veiculo = ui->txt_kmVeiculo->text();
+    QString meio_pagamento = ui->cb_meiopagamento->currentText();
+    QString valor_mao_obra = ui->txt_valorServico->text();
+    QString valor_pecas = ui->lb_totalvenda->text();
+    QString garantia = ui->Ptxt_garantiaservico->toPlainText();
+
+    double total_servico = valor_mao_obra.toDouble() + valor_pecas.toDouble();
 
 
     //inserindo dados da venda na tabela de vendas
     QSqlQuery query;
     query.prepare("INSERT INTO "
-                    "a007_vendas(a007_data_venda          "
-                                ",a007_hora_venda         "
-                                ",a007_fk_codigo_usuario  "
-                                ",a007_valor_total        "
-                                ",a007_margem_lucro)      "
+                    "a010_OS(a010_data_entrada              "
+                            ",a010_km_veiculo               "
+                            ",a010_valor_mao_obra           "
+                            ",a010_valor_total_mercadorias  "
+                            ",a010_valor_total_servico      "
+                            ",a010_meio_pagamento           "
+                            ",a010_garantia_servico         "
+                            ",a010_fk_codigo_veiculo        "
+                            ",a010_fk_codigo_servico)       "
                   "VALUES('"+data                                           + "'"
-                        ",'"+hora                                           + "'"
-                        ",'"+QString::number( variaveis_globais::id_colab ) + "'"
-                        ",'"+QString::number( total )                       + "'"
-                        ",'"+QString::number( lucro )                       + "')");
+                        ",'"+km_veiculo                                     + "'"
+                        ",'"+meio_pagamento                                 + "'"
+                        ",'"+valor_mao_obra                                 + "'"
+                        ",'"+valor_pecas                                    + "'"
+                        ",'"+QString::number( total_servico )               + "'"
+                        ",'"+garantia                                       + "')");
 
     if( !query.exec() )
     {
-        QMessageBox::warning(this, "ERRO", "Erro ao registrar nova venda");
+        QMessageBox::warning(this, "ERRO", "Erro ao registrar nova O.S.");
     }
     else
     {
         //obtém o último registro, query limitada a um registro
         query.prepare("SELECT "
-                        "a007_codigo "
+                        "a010_codigo "
                       "FROM "
-                        "a007_vendas "
+                        "a010_OS "
                       "ORDER BY "
-                        "a007_codigo DESC LIMIT 1");
+                        "a010_codigo DESC LIMIT 1");
 
         query.exec();
         query.first();
 
         //obtem o id da venda
-        codigo_venda = query.value(0).toInt();
+        codigo_os = query.value(0).toInt();
 
-        msgFimVenda="ID Venda: " +QString::number( codigo_venda )
+        msgFimVenda="ID Venda: " +QString::number( codigo_os )
                                  +"\nValor total da venda: R$ "
-                                 +QString::number( total )+",00";
+                                 +QString::number( total_servico )+",00";
+
 
         //inserindo venda na tabela estoque_vendas
         //leitura da quantidade total de linhas
@@ -435,30 +456,20 @@ void frm_ordemservico::on_pushButton_3_clicked()
 
         while( linha < totalLinhas ) //percorre o table widget
         {
-            QString denominacao = ui->tw_pecasOS->item(linha,1)->text();
-            QString valor_unitario = ui->tw_pecasOS->item(linha,2)->text();
-            QString qtde_vendida = ui->tw_pecasOS->item(linha,3)->text();
-            QString valor_total = ui->tw_pecasOS->item(linha,4)->text();
-            QString margem_lucro = ui->tw_pecasOS->item(linha,5)->text();
+            QString codigo_peca = ui->tw_pecasOS->item(linha,0)->text();
 
             //DEPURAR NÃO ESTÁ REGISTRANDO AS VENDAS NA TABELA DE VENDAS
             //verificar querys, valores int normal e varchar em '" "'
             query.prepare("INSERT INTO "
-                            "a006_estoque_vendas(a006_fk_codigo_venda  "
-                                                 ",a006_denomicanao    "
-                                                 ",a006_qtde_vendida   "
-                                                 ",a006_valor_unitario "
-                                                 ",a006_valor_total    "
-                                                 ",a006_margem_lucro)  "
-                          "VALUES('" +QString::number( codigo_venda ) + "'"
-                                ",'" +denominacao                     + "'"
-                                ",'" +qtde_vendida                    + "'"
-                                ",'" +valor_unitario                  + "'"
-                                ",'" +valor_total                     + "'"
-                                ",'" +margem_lucro                    + "') ");
+                            "a015_os_itens(a015_fk_codigo_os    "
+                                         ",a015_fk_codigo_peca) "
+                          "VALUES('" +QString::number( codigo_os )   + "'"
+                                ",'" +codigo_peca                    + "') ");
 
-            query.exec(); //executa o sql
-            linha++; //incrementa a variável para a próxima linha
+            query.exec();
+
+            //incrementa a variável para a próxima linha
+            linha++;
         }
 
         QMessageBox::information(this, "Venda Concluída", msgFimVenda);
@@ -468,7 +479,6 @@ void frm_ordemservico::on_pushButton_3_clicked()
         funcoes_globais::removerLinhas( ui->tw_pecasOS );
         ui->lb_totalvenda->setText("R$ 0,00");
     }
-
 }
 
 
@@ -507,5 +517,8 @@ double frm_ordemservico::calculaTotal( QTableWidget *tw, int coluna )
 
     return total;
 }
+
+
+
 
 

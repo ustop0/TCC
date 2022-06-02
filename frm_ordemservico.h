@@ -76,7 +76,8 @@ private slots:
 
     void on_btn_removerItem_clicked();
 
-    void on_pushButton_3_clicked();
+
+    void on_tb_salvaros_clicked();
 
 private:
     Ui::frm_ordemservico *ui;

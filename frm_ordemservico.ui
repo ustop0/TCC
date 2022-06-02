@@ -69,7 +69,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QDateEdit" name="dateEdit"/>
+       <widget class="QDateEdit" name="de_entrada"/>
       </item>
      </layout>
     </widget>
@@ -371,46 +371,6 @@
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="layoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>442</y>
-       <width>146</width>
-       <height>108</height>
-      </rect>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_5">
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <item>
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>V. Total Serviço</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="lineEdit_2"/>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_4">
-        <item>
-         <widget class="QLabel" name="label_6">
-          <property name="text">
-           <string>V. Total Peça</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="lineEdit_3"/>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
     <widget class="QLabel" name="lb_total">
      <property name="geometry">
       <rect>
@@ -467,7 +427,7 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QPushButton" name="pushButton_3">
+       <widget class="QPushButton" name="tb_salvaros">
         <property name="text">
          <string>Salvar O.S.</string>
         </property>
@@ -479,6 +439,20 @@
          <string>Gerar O.S.</string>
         </property>
        </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="">
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>V. Total Serviço</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="txt_valorServico"/>
       </item>
      </layout>
     </widget>
@@ -495,7 +469,7 @@
     <zorder>line_2</zorder>
     <zorder>lb_totalvenda</zorder>
     <zorder>pushButton_2</zorder>
-    <zorder>pushButton_3</zorder>
+    <zorder>tb_salvaros</zorder>
    </widget>
    <widget class="QWidget" name="tab_2">
     <attribute name="title">
