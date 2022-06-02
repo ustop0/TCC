@@ -44,6 +44,9 @@ public:
     QString g_placa_veiculo;
     QString g_cor_veiculo;
 
+private slots:
+    void on_btn_selecionaveiculo_clicked();
+
 private:
     Ui::frm_ordemservico *ui;
 };

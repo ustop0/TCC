@@ -34,6 +34,7 @@ SOURCES += \
     frm_sobre.cpp \
     frms_nv_veiculocliente.cpp \
     frms_selecionacliente.cpp \
+    frms_selecionacliente_os.cpp \
     frms_selecionaveiculo.cpp \
     funcoes_globais.cpp \
     main.cpp \
@@ -65,6 +66,7 @@ HEADERS += \
     frm_sobre.h \
     frms_nv_veiculocliente.h \
     frms_selecionacliente.h \
+    frms_selecionacliente_os.h \
     frms_selecionaveiculo.h \
     funcoes_globais.h \
     variaveis_globais.h
@@ -85,6 +87,7 @@ FORMS += \
     frm_sobre.ui \
     frms_nv_veiculocliente.ui \
     frms_selecionacliente.ui \
+    frms_selecionacliente_os.ui \
     frms_selecionaveiculo.ui
 
 # Default rules for deployment.
