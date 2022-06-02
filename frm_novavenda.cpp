@@ -537,7 +537,7 @@ void frm_novavenda::on_btn_excluirproduto_clicked()
                                        +QString::number(
                                                    calculaTotal(ui->tw_listaprodutos, 4))+",00");
 
-            ui->lb_totalvenda->setText("R$ "
+            ui->lb_totallucro->setText("R$ "
                                        +QString::number(
                                                    calculaTotal(ui->tw_listaprodutos, 5))+",00");
 
