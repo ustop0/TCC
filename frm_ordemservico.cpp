@@ -183,10 +183,6 @@ frm_ordemservico::frm_ordemservico(QWidget *parent, QString c_codigo_cliente
     ui->cb_meiopagamento->addItem("À vista");
     ui->cb_meiopagamento->addItem("PIX");
     ui->cb_meiopagamento->addItem("Xeque");
-
-    ui->de_entrada->setDate( QDate::fromString("01/01/2022") );
-    ui->lb_totalvenda->setText("R$ 0,00");
-
 }
 
 frm_ordemservico::~frm_ordemservico() //**INICIO** destrutor
@@ -336,8 +332,6 @@ void frm_ordemservico::on_btn_adicionarItem_clicked()
 
             */
 
-            resetaCampos();
-
             //atualiza a quantidade de produtos da tabela estoque(sem UPDATE)
              int atualiza_qtde;
              atualiza_qtde = qtde_estoque.toInt() - qtde_venda.toInt();
@@ -396,22 +390,22 @@ void frm_ordemservico::on_tb_salvaros_clicked()
 
     //**ATENÇÃO** foi adicionada a coluna margem de lucro, inserindo lucro
     QString aux;
-    QString msgFimVenda;
+    QString msgFimOS;
 
     QString data = ui->de_entrada->text();
     QString km_veiculo = ui->txt_kmVeiculo->text();
     QString meio_pagamento = ui->cb_meiopagamento->currentText();
     QString valor_mao_obra = ui->txt_valorServico->text();
     QString valor_pecas = ui->lb_totalvenda->text();
-    QString garantia = ui->Ptxt_garantiaservico->toPlainText();
+    QString garantia = ui->Ptxt_detalhesServico->toPlainText();
 
     aux = valor_mao_obra;
     std::replace(aux.begin(), aux.end(), ',', '.'); //substitui valores
     valor_mao_obra = aux;
 
-    aux = valor_pecas;
-    std::replace(aux.begin(), aux.end(), ',', '.'); //substitui valores
-    valor_pecas = aux;
+    //aux = valor_pecas;
+    //std::replace(aux.begin(), aux.end(), ',', '.'); //substitui valores
+    //valor_pecas = aux;
 
     double total_servico = valor_mao_obra.toDouble() + valor_pecas.toDouble();
 
@@ -425,7 +419,7 @@ void frm_ordemservico::on_tb_salvaros_clicked()
                             ",a010_valor_total_mercadorias  "
                             ",a010_valor_total_servico      "
                             ",a010_meio_pagamento           "
-                            ",a010_garantia_servico         "
+                            ",a010_detalhes_servico         "
                             ",a010_fk_codigo_veiculo)       "
                   "VALUES('"+data                                 + "'"
                         ",'"+km_veiculo                           + "'"
@@ -456,9 +450,9 @@ void frm_ordemservico::on_tb_salvaros_clicked()
         //obtem o id da venda
         codigo_os = query.value(0).toInt();
 
-        msgFimVenda="ID Venda: " +QString::number( codigo_os )
-                                 +"\nValor total da venda: R$ "
-                                 +QString::number( total_servico )+",00";
+        msgFimOS="ID Venda: " +QString::number( codigo_os )
+                              +"\nValor total da O.S.: R$ "
+                              +QString::number( total_servico )+",00";
 
 
         //inserindo venda na tabela estoque_vendas
@@ -466,37 +460,30 @@ void frm_ordemservico::on_tb_salvaros_clicked()
         int totalLinhas = ui->tw_pecasOS->rowCount();
         int linha = 0; //linha que está fazendo a leitura
 
-        if( query.exec() )
+        while( linha < totalLinhas ) //percorre o table widget
         {
-            while( linha < totalLinhas ) //percorre o table widget
-            {
-                QString codigo_peca = ui->tw_pecasOS->item(linha,0)->text();
+            QString codigo_peca = ui->tw_pecasOS->item(linha,0)->text();
 
-                //DEPURAR NÃO ESTÁ REGISTRANDO AS VENDAS NA TABELA DE VENDAS
-                //verificar querys, valores int normal e varchar em '" "'
-                query.prepare("INSERT INTO "
-                                "a015_os_itens(a015_fk_codigo_os    "
-                                             ",a015_fk_codigo_peca) "
-                              "VALUES('" +QString::number( codigo_os )   + "'"
-                                    ",'" +codigo_peca                    + "') ");
+            //DEPURAR NÃO ESTÁ REGISTRANDO AS VENDAS NA TABELA DE VENDAS
+            //verificar querys, valores int normal e varchar em '" "'
+            query.prepare("INSERT INTO "
+                            "a015_os_itens(a015_fk_codigo_os    "
+                                         ",a015_fk_codigo_peca) "
+                          "VALUES('" +QString::number( codigo_os )   + "'"
+                                ",'" +codigo_peca                    + "') ");
 
-                query.exec();
+            query.exec();
 
-                //incrementa a variável para a próxima linha
-                linha++;
-            }
-
-            QMessageBox::information(this, "Seriço concluído", msgFimVenda);
-            resetaCampos();
-
-            //remove as linhas do table widget
-            funcoes_globais::removerLinhas( ui->tw_listapecas );
-            funcoes_globais::removerLinhas( ui->tw_pecasOS );
+            //incrementa a variável para a próxima linha
+            linha++;
         }
-        else
-        {
-            QMessageBox::warning(this, "ERRO", "Erro ao registrar nova O.S.");
-        }
+
+        QMessageBox::information(this, "O.S. gerada", msgFimOS);
+        resetaCampos();
+
+        //remove as linhas do table widget
+        //funcoes_globais::removerLinhas( ui->tw_listapecas );
+        //funcoes_globais::removerLinhas( ui->tw_pecasOS );
     }
 }
 
@@ -509,7 +496,7 @@ void frm_ordemservico::on_tb_salvaros_clicked()
  * Chamada:                                                                                   |
  *--------------------------------------------------------------------------------------------
  */
-inline void frm_ordemservico::resetaCampos()
+void frm_ordemservico::resetaCampos()
 {
     ui->txt_codigopeca->clear();
     ui->txt_qtdeEstoque->clear();
@@ -519,7 +506,7 @@ inline void frm_ordemservico::resetaCampos()
     ui->txt_kmVeiculo->clear();
     ui->cb_meiopagamento->setCurrentIndex(0);
     ui->txt_valorServico->clear();
-    ui->Ptxt_garantiaservico->toPlainText();
+    ui->Ptxt_detalhesServico->toPlainText();
     ui->lb_totalvenda->setText("R$ 0,00");
 }
 

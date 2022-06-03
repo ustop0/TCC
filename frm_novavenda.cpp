@@ -500,7 +500,7 @@ void frm_novavenda::on_btn_adicionarItem_clicked()
             ui->lb_totallucro->setText("R$ "+QString::number(
                                            calculaTotal(ui->tw_listaprodutos, 5))+",00");
 
-            resetaCampos();
+            //resetaCampos();
 
             //atualiza a quantidade de produtos da tabela estoque(sem UPDATE)
              int atualiza_qtde;

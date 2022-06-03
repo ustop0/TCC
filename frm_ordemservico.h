@@ -39,11 +39,10 @@ public:
     Conexao con;
 
     //função para resetar campos
-    inline void resetaCampos();
+    void resetaCampos();
 
     //função para calculo do valor total
     double calculaTotal( QTableWidget *tw, int coluna );
-
 
     //**cliente/veiculo
     QString g_codigo_cliente;
@@ -75,7 +74,6 @@ private slots:
     void on_btn_adicionarItem_clicked();
 
     void on_btn_removerItem_clicked();
-
 
     void on_tb_salvaros_clicked();
 

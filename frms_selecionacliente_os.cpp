@@ -156,6 +156,7 @@ frms_selecionacliente_os::frms_selecionacliente_os(QWidget *parent) :
     ui->tw_selecionaVeiculo->setSelectionBehavior(QAbstractItemView::SelectRows);
     //desabilitando os indices das linhas
     ui->tw_selecionaVeiculo->verticalHeader()->setVisible(false);
+
 }
 
 frms_selecionacliente_os::~frms_selecionacliente_os() //**INICIO** destrutor
@@ -310,11 +311,6 @@ void frms_selecionacliente_os::on_tw_selecionaVeiculo_itemSelectionChanged()
         g_nome_veiculo = query.value(2).toString();
         g_placa_veiculo = query.value(5).toString();
         g_cor_veiculo = query.value(6).toString();
-
-        qDebug() << "Código Veículo: " << g_codigo_veiculo;
-        qDebug() << "Nome Veículo: " << g_nome_veiculo;
-        qDebug() << "Placa Veículo: " << g_placa_veiculo;
-        qDebug() << "Cor Veículo: " << g_cor_veiculo;
     }
 }
 
@@ -522,7 +518,7 @@ void frms_selecionacliente_os::on_btn_confirmarCliente_clicked()
                                                                   , g_nome_veiculo
                                                                   , g_placa_veiculo
                                                                   , g_cor_veiculo);
-    fm_ordemservico ->exec();
+    fm_ordemservico->exec();
 
     //deletando ponteiro
     try
