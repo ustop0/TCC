@@ -382,7 +382,7 @@ void frm_ordemservico::on_btn_removerItem_clicked()
 }
 
 //Salvar O.S.
-void frm_ordemservico::on_tb_salvaros_clicked()
+void frm_ordemservico::on_btn_salvaros_clicked()
 {
     //gravas as informações na tabela de venda e obter o id da venda
     //verifica se tem produtos no table widget, para realizar uma venda
@@ -397,7 +397,7 @@ void frm_ordemservico::on_tb_salvaros_clicked()
     QString meio_pagamento = ui->cb_meiopagamento->currentText();
     QString valor_mao_obra = ui->txt_valorServico->text();
     QString valor_pecas = ui->lb_totalvenda->text();
-    QString garantia = ui->Ptxt_detalhesServico->toPlainText();
+    QString detalhes = ui->Ptxt_detalhesServico->toPlainText();
 
     aux = valor_mao_obra;
     std::replace(aux.begin(), aux.end(), ',', '.'); //substitui valores
@@ -427,7 +427,7 @@ void frm_ordemservico::on_tb_salvaros_clicked()
                         ",'"+valor_pecas                          + "'"
                         ",'"+QString::number( total_servico )     + "'"
                         ",'"+meio_pagamento                       + "'"
-                        ",'"+garantia                             + "'"
+                        ",'"+detalhes                             + "'"
                         ",'"+g_codigo_veiculo                     + "')");
 
     if( !query.exec() )
@@ -485,6 +485,148 @@ void frm_ordemservico::on_tb_salvaros_clicked()
         //funcoes_globais::removerLinhas( ui->tw_listapecas );
         //funcoes_globais::removerLinhas( ui->tw_pecasOS );
     }
+}
+
+//btn gerar OS PDF
+void frm_ordemservico::on_btn_geraros_clicked()
+{
+    QSqlQuery query;
+    query.prepare("SELECT "
+                    "a010_codigo "
+                  "FROM "
+                    "a010_OS "
+                  "ORDER BY "
+                    "a010_codigo DESC LIMIT 1");
+
+    bool isCodigo = query.exec();
+
+    if( isCodigo == true )
+    {
+        QMessageBox::information(this, "Código OS", "Código OS capturado");
+    }
+
+    QString codigo_os = query.value(0).toString();
+    QString data_os = QDate::currentDate().toString("yyyy-MM-dd");
+
+    //nome da OS de acordo com o id da venda
+    QString nome = codigo_os + "-" + data_os + "_os.pdf";
+
+    //**Verificar** variavel armazena a pasta local do programa
+    QString local = QDir::currentPath() + "/O.S.";
+
+    //definindo formado do arquivo
+    QPrinter printer;
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setOutputFileName(local + "/" + nome);
+
+    //inserindo conteúdo no arquivo PDF
+    QPainter painter;
+    if( !painter.begin( &printer ) ) //iniciando o arquivo
+    {
+        QMessageBox::information(this, "Erro", "Não foi possível gerar a O.S.");
+        qDebug() << "ERRO ao abrir PDF";
+        return; //sai do procedimento e executa a proxima parte do código
+    }
+
+    //**FORMATANDO PDF**
+    //adicionando imagens
+    //primeiro valor: eixo horizontal
+    //segundo valor: eixo vertical
+    //painter.drawPixmap( 200, -100, QPixmap(":/Imagens/car.png") );
+    painter.drawText(200,-100,"AMINCAR: ORDEM DE SERVIÇO");
+
+    //**DADOS DA OS (a010)**
+    //--Título
+    painter.drawText(340,200,"DADOS O.S.");
+
+    //**itens cabeçalho**
+    painter.drawText(25, 250,"Código");
+    painter.drawText(130,250,"Cliente");
+    painter.drawText(295,250,"Veículo");
+    painter.drawText(415,250,"Placa");
+    painter.drawText(540,250,"KM");
+    painter.drawText(540,250,"Data");
+    painter.drawText(540,250,"V. Mão de Obra");
+    painter.drawText(640,250,"V. Total Peças");
+    painter.drawText(640,250,"V. Total Servico");
+    painter.drawText(640,250,"M. Pgto");
+    painter.drawText(640,250,"Detalhes");
+
+    //**Dados OS
+    QString codigo = codigo_os;
+    QString cliente = ui->txt_proprietarioVeiculo->text();
+    QString modelo_veiculo = ui->txt_nomeVeiculo->text();
+    QString placa_veiculo = ui->txt_placaVeiculo->text();
+    QString cor_veiculo = ui->txt_corVeiculo->text();
+
+    QString data_entrada = ui->de_entrada->text();
+    QString km_veiculo = ui->txt_kmVeiculo->text();
+    QString valor_mao_obra = ui->txt_kmVeiculo->text();
+    QString valor_total_pecas = ui->txt_kmVeiculo->text();
+    QString valor_total_servico = ui->txt_kmVeiculo->text();
+    QString meio_pagamento = ui->txt_kmVeiculo->text();
+    QString detalhes = ui->Ptxt_detalhesServico->toPlainText();
+
+
+    painter.drawText(25, 300, codigo);
+    painter.drawText(130,300, cliente);
+    painter.drawText(295,300, modelo_veiculo);
+    painter.drawText(415,300, placa_veiculo);
+    painter.drawText(540,300, cor_veiculo);
+
+    painter.drawText(640,300, data_entrada);
+    painter.drawText(640,300, km_veiculo);
+    painter.drawText(640,300, valor_mao_obra);
+    painter.drawText(640,300, valor_total_pecas);
+    painter.drawText(640,300, valor_total_servico);
+    painter.drawText(640,300, meio_pagamento);
+    painter.drawText(640,300, detalhes);
+
+    //**DADOS DA OS ITENS RELATÓRIO (a015)**
+    //--Título
+    painter.drawText(340,400,"ITENS DO SERVIÇO");
+
+    //**itens cabeçalho**
+    painter.drawText(25, 450,"Código");
+    painter.drawText(130,450,"Produto");
+    painter.drawText(295,450,"Qtde");
+    painter.drawText(415,450,"Val.Uni");
+    painter.drawText(540,450,"Val.Total");
+    painter.drawText(640,450,"M.Lucro");
+
+    //--Itens venda
+    //a006_codigo
+    //a006_denomicanao
+    //a006_qtde_vendida
+    //a006_valor_unitario
+    //a006_valor_total
+    //a006_margem_lucro
+
+    //informando localização, coluna e linha
+    int linha = 500;
+    int salto = 20;
+
+    for( int i = 0; i < ui->tw_listaProdutos->rowCount(); i++ )
+    {
+        //produtos da venda
+        painter.drawText(25,linha, ui->tw_listaProdutos->item(i, 0)->text());
+        painter.drawText(130,linha, ui->tw_listaProdutos->item(i, 1)->text());
+        painter.drawText(295,linha, ui->tw_listaProdutos->item(i, 2)->text());
+        painter.drawText(415,linha, ui->tw_listaProdutos->item(i, 3)->text());
+        painter.drawText(540,linha, ui->tw_listaProdutos->item(i, 4)->text());
+        painter.drawText(640,linha, ui->tw_listaProdutos->item(i, 5)->text());
+        linha += salto;
+    }
+
+    //adicionando nova página
+    //printer.newPage();
+    painter.drawText(25, 1000, "Relatório de vendas");
+
+    // finaliza e gera o PDF
+    painter.end();
+
+    //abrir o arquivo pdf gerado
+    QDesktopServices::openUrl(QUrl("file:///" + local + "/" + nome));
 }
 
 

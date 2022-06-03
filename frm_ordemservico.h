@@ -12,6 +12,10 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QObject> //sinais entre forms
+#include <QPrinter>          //impressora
+#include <QPainter>          //criar relatório pdf
+#include <QDir>              //manipulação de diretórios
+#include <QDesktopServices> //aplicativos desktop
 #include "ConexaoBanco.h"
 #include "funcoes_globais.h"
 #include "variaveis_globais.h"
@@ -75,7 +79,9 @@ private slots:
 
     void on_btn_removerItem_clicked();
 
-    void on_tb_salvaros_clicked();
+    void on_btn_salvaros_clicked();
+
+    void on_btn_geraros_clicked();
 
 private:
     Ui::frm_ordemservico *ui;
