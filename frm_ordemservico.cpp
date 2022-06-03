@@ -414,15 +414,15 @@ void frm_ordemservico::on_tb_salvaros_clicked()
                             ",a010_valor_total_servico      "
                             ",a010_meio_pagamento           "
                             ",a010_garantia_servico         "
-                            ",a010_fk_codigo_veiculo        "
-                            ",a010_fk_codigo_servico)       "
-                  "VALUES('"+data                                           + "'"
-                        ",'"+km_veiculo                                     + "'"
-                        ",'"+meio_pagamento                                 + "'"
-                        ",'"+valor_mao_obra                                 + "'"
-                        ",'"+valor_pecas                                    + "'"
-                        ",'"+QString::number( total_servico )               + "'"
-                        ",'"+garantia                                       + "')");
+                            ",a010_fk_codigo_veiculo)       "
+                  "VALUES('"+data                                 + "'"
+                        ",'"+km_veiculo                           + "'"
+                        ",'"+valor_mao_obra                       + "'"
+                        ",'"+valor_pecas                          + "'"
+                        ",'"+QString::number( total_servico )     + "'"
+                        ",'"+meio_pagamento                       + "'"
+                        ",'"+garantia                             + "'"
+                        ",'"+g_codigo_veiculo                     + "')");
 
     if( !query.exec() )
     {
@@ -472,7 +472,7 @@ void frm_ordemservico::on_tb_salvaros_clicked()
             linha++;
         }
 
-        QMessageBox::information(this, "Venda Concluída", msgFimVenda);
+        QMessageBox::information(this, "Seriço concluído", msgFimVenda);
         resetaCampos();
 
         //remove as linhas do table widget
