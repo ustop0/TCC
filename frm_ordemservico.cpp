@@ -544,13 +544,13 @@ void frm_ordemservico::on_btn_geraros_clicked()
     painter.drawText(130,250,"Cliente");
     painter.drawText(295,250,"Veículo");
     painter.drawText(415,250,"Placa");
+    painter.drawText(415,250,"Cor");
     painter.drawText(540,250,"KM");
-    painter.drawText(540,250,"Data");
-    painter.drawText(540,250,"V. Mão de Obra");
-    painter.drawText(640,250,"V. Total Peças");
-    painter.drawText(640,250,"V. Total Servico");
-    painter.drawText(640,250,"M. Pgto");
-    painter.drawText(640,250,"Detalhes");
+    painter.drawText(620,250,"Data");
+    painter.drawText(720,250,"V. Mão de Obra");
+    painter.drawText(820,250,"V. Total Peças");
+    painter.drawText(920,250,"V. Total Servico");
+    painter.drawText(1020,250,"M. Pgto");
 
     //**Dados OS
     QString codigo = codigo_os;
@@ -565,8 +565,6 @@ void frm_ordemservico::on_btn_geraros_clicked()
     QString valor_total_pecas = ui->txt_kmVeiculo->text();
     QString valor_total_servico = ui->txt_kmVeiculo->text();
     QString meio_pagamento = ui->txt_kmVeiculo->text();
-    QString detalhes = ui->Ptxt_detalhesServico->toPlainText();
-
 
     painter.drawText(25, 300, codigo);
     painter.drawText(130,300, cliente);
@@ -574,53 +572,50 @@ void frm_ordemservico::on_btn_geraros_clicked()
     painter.drawText(415,300, placa_veiculo);
     painter.drawText(540,300, cor_veiculo);
 
-    painter.drawText(640,300, data_entrada);
-    painter.drawText(640,300, km_veiculo);
-    painter.drawText(640,300, valor_mao_obra);
-    painter.drawText(640,300, valor_total_pecas);
-    painter.drawText(640,300, valor_total_servico);
-    painter.drawText(640,300, meio_pagamento);
-    painter.drawText(640,300, detalhes);
+    painter.drawText(540,300, km_veiculo);
+    painter.drawText(620,300, data_entrada);
+    painter.drawText(720,300, valor_mao_obra);
+    painter.drawText(820,300, valor_total_pecas);
+    painter.drawText(920,300, valor_total_servico);
+    painter.drawText(1020,300, meio_pagamento);
+
+    //detalhes do serviço
+    painter.drawText(540,350,"Detalhes do Serviço");
+    QString detalhes = ui->Ptxt_detalhesServico->toPlainText();
+
+    painter.drawText(540,350, detalhes);
 
     //**DADOS DA OS ITENS RELATÓRIO (a015)**
     //--Título
     painter.drawText(340,400,"ITENS DO SERVIÇO");
 
     //**itens cabeçalho**
-    painter.drawText(25, 450,"Código");
-    painter.drawText(130,450,"Produto");
-    painter.drawText(295,450,"Qtde");
-    painter.drawText(415,450,"Val.Uni");
-    painter.drawText(540,450,"Val.Total");
-    painter.drawText(640,450,"M.Lucro");
+    painter.drawText(25, 500,"Código");
+    painter.drawText(130,500,"Mercadoria");
+    painter.drawText(295,500,"Valor Un.");
+    painter.drawText(415,500,"Qtde");
+    painter.drawText(540,500,"Total");
 
-    //--Itens venda
-    //a006_codigo
-    //a006_denomicanao
-    //a006_qtde_vendida
-    //a006_valor_unitario
-    //a006_valor_total
-    //a006_margem_lucro
+    //--Itens venda são pegos do tw_pecasOS
 
     //informando localização, coluna e linha
-    int linha = 500;
+    int linha = 550;
     int salto = 20;
 
-    for( int i = 0; i < ui->tw_listaProdutos->rowCount(); i++ )
+    for( int i = 0; i < ui->tw_pecasOS->rowCount(); i++ )
     {
         //produtos da venda
-        painter.drawText(25,linha, ui->tw_listaProdutos->item(i, 0)->text());
-        painter.drawText(130,linha, ui->tw_listaProdutos->item(i, 1)->text());
-        painter.drawText(295,linha, ui->tw_listaProdutos->item(i, 2)->text());
-        painter.drawText(415,linha, ui->tw_listaProdutos->item(i, 3)->text());
-        painter.drawText(540,linha, ui->tw_listaProdutos->item(i, 4)->text());
-        painter.drawText(640,linha, ui->tw_listaProdutos->item(i, 5)->text());
+        painter.drawText(25,linha, ui->tw_pecasOS->item(i, 0)->text());
+        painter.drawText(130,linha, ui->tw_pecasOS->item(i, 1)->text());
+        painter.drawText(295,linha, ui->tw_pecasOS->item(i, 2)->text());
+        painter.drawText(415,linha, ui->tw_pecasOS->item(i, 3)->text());
+        painter.drawText(540,linha, ui->tw_pecasOS->item(i, 4)->text());
         linha += salto;
     }
 
     //adicionando nova página
     //printer.newPage();
-    painter.drawText(25, 1000, "Relatório de vendas");
+    painter.drawText(25, 1000, "O.S.");
 
     // finaliza e gera o PDF
     painter.end();
