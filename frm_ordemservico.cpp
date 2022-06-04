@@ -652,37 +652,11 @@ void frm_ordemservico::on_tabWidget_currentChanged(int index)
 {
     if( index == 1 ) //verifica a interface pelo index das tabs
     {
-        //configurando combo box
-        ui->cb_ge_filtrar->addItem("-");
-        ui->cb_ge_filtrar->addItem("Cliente");
-        ui->cb_ge_filtrar->addItem("Placa");
-        ui->cb_ge_filtrar->addItem("Status");
-        ui->cb_ge_filtrar->addItem("M.Pgto");
+        //funções que configuram os TWs
+        conf_tw_ge_listaOS();
+        conf_tw_ge_pecasOS();
 
-        //**Estilizando layout da table widget**
-        //definindo o tamanho das colunas
-        ui->tw_listaOS->setColumnCount(13);
-        ui->tw_listaOS->setColumnWidth(0, 40);
-        ui->tw_listaOS->setColumnWidth(1, 150);
-
-        //cabeçalhos do table widget
-        QStringList cabecalhos={"Código", "Cliente", "Veículo", "Placa","Cor"
-                               ,"Km", "Data entrada", "Status", "V.Mão de obra"
-                               , "V.Peças", "V.Total Serviço","M.Pgto", "Detalhes"};
-
-        ui->tw_listaOS->setHorizontalHeaderLabels( cabecalhos );
-        //definindo cor da linha ao ser selecionada
-        ui->tw_listaOS->setStyleSheet("QTableView "
-                                          "{selection-background-color:red}");
-
-        //desabilita a edição dos registros pelo table widget
-        ui->tw_listaOS->setEditTriggers(QAbstractItemView::NoEditTriggers);
-        //selecionar a linha inteira quando clickar em uma celula
-        ui->tw_listaOS->setSelectionBehavior(QAbstractItemView::SelectRows);
-        //desabilitando os indices das linhas
-        ui->tw_listaOS->verticalHeader()->setVisible(false);
-
-        //**PREENCHENDO TW**
+        //**PREENCHENDO TW_listaOS**
         //limpa as linhas do table widget
         funcoes_globais::removerLinhas( ui->tw_listaOS );
         //inserir linhas dentro do table widget
@@ -796,27 +770,29 @@ void frm_ordemservico::on_tw_listaOS_itemSelectionChanged()
     //limpando table widget
     funcoes_globais::removerLinhas( ui->tw_listaPecasOS );
 
-    QString codigo_venda = ui->tw_listaOS->item(ui->tw_listaOS->currentRow(),0)->text();
+    QString codigo_os = ui->tw_listaOS->item(ui->tw_listaOS->currentRow(),0)->text();
 
     int contlinhas = 0;
 
+    //exibe os dados da linha selecionada
     QSqlQuery query;
     query.prepare("SELECT "
-                    "a006_codigo           "
-                    ",a006_denomicanao     "
-                    ",a006_qtde_vendida    "
-                    ",a006_valor_unitario  "
-                    ",a006_valor_total     "
-                    ",a006_margem_lucro    "
+                      "a002_codigo                                           "
+                      ",a002_denomicanao                                     "
+                      ",cast(cast(a002_valor_compra  as decimal) as varchar) "
+                      ",cast(cast(a002_valor_venda  as decimal) as varchar)  "
+                      ",a002_qtde_estoque                                    "
+                      ",a002_posicao_peca                                    "
                   "FROM "
-                    "a006_estoque_vendas "
-                    "JOIN a007_vendas on (a007_codigo = a006_fk_codigo_venda) "
+                    "a010_OS "
+                    "JOIN a015_os_itens ON (a015_fk_codigo_os = a010_codigo)   "
+                    "JOIN a002_estoque ON  (a002_codigo = a015_fk_codigo_peca) "
                   "WHERE "
-                    "a006_fk_codigo_venda = '" +codigo_venda+ "'");
+                    "a015_codigo = '" +codigo_os+ "' ");
 
     if( !query.exec() )
     {
-        QMessageBox::warning(this, "ERRO", "Erro ao listar vendas");
+        QMessageBox::warning(this, "ERRO", "Erro ao listar itens O.S.");
         qDebug() << "ERRO: " << query.lastError().text();
     }
 
@@ -849,6 +825,76 @@ void frm_ordemservico::on_tw_listaOS_itemSelectionChanged()
     }while( query.next() );
 }
 
+
+/**FUNÇÕES**/
+/*--------------------------------------------------------------------------------------------
+ * Autor: Thiago Ianzer                                                                       |
+ * Data: 04/06/2022                                                                           |
+ * Propósito: Essa série de funções servem para configurar os Table widget                    |
+ * Chamada:                                                                                   |
+ *--------------------------------------------------------------------------------------------
+ */
+//configurar tw_listaOS
+void frm_ordemservico::conf_tw_ge_listaOS()
+{
+    //***CONFGIRUANDO tw_listaOS***
+    //configurando combo box
+    ui->cb_ge_filtrar->addItem("-");
+    ui->cb_ge_filtrar->addItem("Cliente");
+    ui->cb_ge_filtrar->addItem("Placa");
+    ui->cb_ge_filtrar->addItem("Status");
+    ui->cb_ge_filtrar->addItem("M.Pgto");
+
+    //**Estilizando layout da table widget**
+    //definindo o tamanho das colunas
+    ui->tw_listaOS->setColumnCount(13);
+    ui->tw_listaOS->setColumnWidth(0, 40);
+    ui->tw_listaOS->setColumnWidth(1, 150);
+
+    //cabeçalhos do table widget
+    QStringList cabecalho1={"Código", "Cliente", "Veículo", "Placa","Cor"
+                           ,"Km", "Data entrada", "Status", "V.Mão de obra"
+                           , "V.Peças", "V.Total Serviço","M.Pgto", "Detalhes"};
+
+    ui->tw_listaOS->setHorizontalHeaderLabels( cabecalho1 );
+    //definindo cor da linha ao ser selecionada
+    ui->tw_listaOS->setStyleSheet("QTableView "
+                                      "{selection-background-color:red}");
+
+    //desabilita a edição dos registros pelo table widget
+    ui->tw_listaOS->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    //selecionar a linha inteira quando clickar em uma celula
+    ui->tw_listaOS->setSelectionBehavior(QAbstractItemView::SelectRows);
+    //desabilitando os indices das linhas
+    ui->tw_listaOS->verticalHeader()->setVisible(false);
+}
+
+//configurar tw_listaPecasOS
+void frm_ordemservico::conf_tw_ge_pecasOS()
+{
+    //***CONFGIRUANDO tw_listaPecasOS***
+    //**Estilizando layout da table widget**
+    //definindo o tamanho das colunas
+    ui->tw_listaPecasOS->setColumnCount(6);
+    ui->tw_listaPecasOS->setColumnWidth(0, 40);
+    ui->tw_listaPecasOS->setColumnWidth(1, 150);
+
+    //cabeçalhos do table widget
+     QStringList cabecalho2 = {"Código", "Produto", "Valor Un."
+                               , "Qtde", "Total", "Pos.Prateleira"};
+
+    ui->tw_listaPecasOS->setHorizontalHeaderLabels( cabecalho2 );
+    //definindo cor da linha ao ser selecionada
+    ui->tw_listaPecasOS->setStyleSheet("QTableView "
+                                      "{selection-background-color:red}");
+
+    //desabilita a edição dos registros pelo table widget
+    ui->tw_listaPecasOS->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    //selecionar a linha inteira quando clickar em uma celula
+    ui->tw_listaPecasOS->setSelectionBehavior(QAbstractItemView::SelectRows);
+    //desabilitando os indices das linhas
+    ui->tw_listaPecasOS->verticalHeader()->setVisible(false);
+}
 
 /**FUNÇÕES**/
 /*--------------------------------------------------------------------------------------------

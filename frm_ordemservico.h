@@ -68,7 +68,10 @@ public:
     //variável global, verifica se um produto foi alterado
     static bool g_alterou;
 
+public slots:
+    void conf_tw_ge_listaOS();
 
+    void conf_tw_ge_pecasOS();
 
 private slots:
     void on_btn_selecionaveiculo_clicked();
@@ -86,6 +89,8 @@ private slots:
     void on_tabWidget_currentChanged(int index);
 
     void on_txt_ge_filtrar_returnPressed();
+
+    void on_tw_listaOS_itemSelectionChanged();
 
 private:
     Ui::frm_ordemservico *ui;
