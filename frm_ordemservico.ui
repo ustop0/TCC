@@ -466,7 +466,7 @@
       <item>
        <widget class="QLabel" name="label_3">
         <property name="text">
-         <string>V. Total Serviço</string>
+         <string>V. Mão de Obra</string>
         </property>
        </widget>
       </item>

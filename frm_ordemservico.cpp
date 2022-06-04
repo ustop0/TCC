@@ -450,7 +450,7 @@ void frm_ordemservico::on_btn_salvaros_clicked()
         //obtem o id da venda
         codigo_os = query.value(0).toInt();
 
-        msgFimOS="ID Venda: " +QString::number( codigo_os )
+        msgFimOS="ID O.S.: " +QString::number( codigo_os )
                               +"\nValor total da O.S.: R$ "
                               +QString::number( total_servico )+",00";
 
@@ -490,22 +490,32 @@ void frm_ordemservico::on_btn_salvaros_clicked()
 //btn gerar OS PDF
 void frm_ordemservico::on_btn_geraros_clicked()
 {
+    //salvar a O.S. antes de gerar
+    frm_ordemservico::on_btn_salvaros_clicked();
+
     QSqlQuery query;
     query.prepare("SELECT "
-                    "a010_codigo "
+                    "a010_codigo                    "
+                    ",a010_valor_mao_obra           "
+                    ",a010_valor_total_mercadorias  "
+                    ",a010_valor_total_servico      "
+                    ",a010_meio_pagamento           "
                   "FROM "
                     "a010_OS "
                   "ORDER BY "
                     "a010_codigo DESC LIMIT 1");
 
-    bool isCodigo = query.exec();
+    //cast(cast(a002_valor_venda  as decimal) as varchar)
 
-    if( isCodigo == true )
-    {
-        QMessageBox::information(this, "Código OS", "Código OS capturado");
-    }
+    query.exec();
+    query.first();
 
+    //obtem o id da venda
     QString codigo_os = query.value(0).toString();
+
+    QMessageBox::information(this, "Código OS", "Código OS capturado"
+                                   + query.value(0).toString());
+
     QString data_os = QDate::currentDate().toString("yyyy-MM-dd");
 
     //nome da OS de acordo com o id da venda
@@ -533,73 +543,88 @@ void frm_ordemservico::on_btn_geraros_clicked()
     //primeiro valor: eixo horizontal
     //segundo valor: eixo vertical
     //painter.drawPixmap( 200, -100, QPixmap(":/Imagens/car.png") );
-    painter.drawText(200,-100,"AMINCAR: ORDEM DE SERVIÇO");
+    painter.drawText(270, 50,"AMINCAR: ORDEM DE SERVIÇO");
 
     //**DADOS DA OS (a010)**
     //--Título
-    painter.drawText(340,200,"DADOS O.S.");
+    painter.drawText(330,200,"DADOS O.S.");
+    painter.drawText(25,220,"-------------------------------------------------------------"
+                            "-------------------------------------------------------------"
+                            "--------------------------------------");
 
+    //*Cliente/Veiculo
     //**itens cabeçalho**
     painter.drawText(25, 250,"Código");
     painter.drawText(130,250,"Cliente");
     painter.drawText(295,250,"Veículo");
     painter.drawText(415,250,"Placa");
-    painter.drawText(415,250,"Cor");
-    painter.drawText(540,250,"KM");
-    painter.drawText(620,250,"Data");
-    painter.drawText(720,250,"V. Mão de Obra");
-    painter.drawText(820,250,"V. Total Peças");
-    painter.drawText(920,250,"V. Total Servico");
-    painter.drawText(1020,250,"M. Pgto");
+    painter.drawText(540,250,"Cor");
+    painter.drawText(640,250,"KM");
 
-    //**Dados OS
     QString codigo = codigo_os;
     QString cliente = ui->txt_proprietarioVeiculo->text();
     QString modelo_veiculo = ui->txt_nomeVeiculo->text();
     QString placa_veiculo = ui->txt_placaVeiculo->text();
     QString cor_veiculo = ui->txt_corVeiculo->text();
-
-    QString data_entrada = ui->de_entrada->text();
     QString km_veiculo = ui->txt_kmVeiculo->text();
-    QString valor_mao_obra = ui->txt_kmVeiculo->text();
-    QString valor_total_pecas = ui->txt_kmVeiculo->text();
-    QString valor_total_servico = ui->txt_kmVeiculo->text();
-    QString meio_pagamento = ui->txt_kmVeiculo->text();
+
+    //esses vetores incrementam as linhas do arquivo automaticamente
 
     painter.drawText(25, 300, codigo);
     painter.drawText(130,300, cliente);
     painter.drawText(295,300, modelo_veiculo);
     painter.drawText(415,300, placa_veiculo);
     painter.drawText(540,300, cor_veiculo);
+    painter.drawText(640,300, km_veiculo);
 
-    painter.drawText(540,300, km_veiculo);
-    painter.drawText(620,300, data_entrada);
-    painter.drawText(720,300, valor_mao_obra);
-    painter.drawText(820,300, valor_total_pecas);
-    painter.drawText(920,300, valor_total_servico);
-    painter.drawText(1020,300, meio_pagamento);
+    //*Informações OS
+    //**itens cabeçalho**
+    painter.drawText(25,370,"Data");
+    painter.drawText(150,370,"V.Mão de Obra");
+    painter.drawText(295,370,"V.Peças");
+    painter.drawText(415,370,"V.Total Servico");
+    painter.drawText(540,370,"M.Pgto");
+
+
+    QString data_entrada = ui->de_entrada->text();
+    QString valor_mao_obra = query.value(1).toString();
+    QString valor_total_pecas = query.value(2).toString();
+    QString valor_total_servico = query.value(3).toString();
+    QString meio_pagamento = query.value(4).toString();;
+
+    painter.drawText(25,410, data_entrada);
+    painter.drawText(150,410, valor_mao_obra);
+    painter.drawText(295,410, valor_total_pecas);
+    painter.drawText(415,410, valor_total_servico);
+    painter.drawText(540,410, meio_pagamento);
 
     //detalhes do serviço
-    painter.drawText(540,350,"Detalhes do Serviço");
+    painter.drawText(25, 460,"Detalhes do Serviço: ");
+
     QString detalhes = ui->Ptxt_detalhesServico->toPlainText();
 
-    painter.drawText(540,350, detalhes);
+    painter.drawText(25, 500, detalhes);
 
     //**DADOS DA OS ITENS RELATÓRIO (a015)**
     //--Título
-    painter.drawText(340,400,"ITENS DO SERVIÇO");
+    painter.drawText(320,610, "ITENS DO SERVIÇO");
+    painter.drawText(25,630,"-------------------------------------------------------------"
+                            "-------------------------------------------------------------"
+                            "--------------------------------------");
+
 
     //**itens cabeçalho**
-    painter.drawText(25, 500,"Código");
-    painter.drawText(130,500,"Mercadoria");
-    painter.drawText(295,500,"Valor Un.");
-    painter.drawText(415,500,"Qtde");
-    painter.drawText(540,500,"Total");
+    //--informações produtos/peças
+    painter.drawText(25, 660, "Código");
+    painter.drawText(130, 660, "Mercadoria");
+    painter.drawText(295, 660, "Valor Un.");
+    painter.drawText(415, 660, "Qtde");
+    painter.drawText(540, 660, "V.Total");
 
     //--Itens venda são pegos do tw_pecasOS
 
     //informando localização, coluna e linha
-    int linha = 550;
+    int linha = 710;
     int salto = 20;
 
     for( int i = 0; i < ui->tw_pecasOS->rowCount(); i++ )
@@ -607,9 +632,9 @@ void frm_ordemservico::on_btn_geraros_clicked()
         //produtos da venda
         painter.drawText(25,linha, ui->tw_pecasOS->item(i, 0)->text());
         painter.drawText(130,linha, ui->tw_pecasOS->item(i, 1)->text());
-        painter.drawText(295,linha, ui->tw_pecasOS->item(i, 2)->text());
+        painter.drawText(295,linha, "R$ " + ui->tw_pecasOS->item(i, 2)->text());
         painter.drawText(415,linha, ui->tw_pecasOS->item(i, 3)->text());
-        painter.drawText(540,linha, ui->tw_pecasOS->item(i, 4)->text());
+        painter.drawText(540,linha, "R$ " + ui->tw_pecasOS->item(i, 4)->text());
         linha += salto;
     }
 
