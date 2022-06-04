@@ -163,7 +163,7 @@ frm_ordemservico::frm_ordemservico(QWidget *parent, QString c_codigo_cliente
     ui->tw_pecasOS->setColumnWidth(1, 220);
 
     //cabeçalhos do table widget, itens venda
-    QStringList cabecalho2 = {"Código", "Produto", "Valor Un.", "Qtde", "Total"};
+    QStringList cabecalho2 = {"Código", "Denominação", "Valor Un.", "Qtde", "Total"};
 
     ui->tw_pecasOS->setHorizontalHeaderLabels( cabecalho2 );
     //definindo cor da linha ao ser selecionada
@@ -779,7 +779,6 @@ void frm_ordemservico::on_tw_listaOS_itemSelectionChanged()
     query.prepare("SELECT "
                       "a002_codigo                                           "
                       ",a002_denomicanao                                     "
-                      ",cast(cast(a002_valor_compra  as decimal) as varchar) "
                       ",cast(cast(a002_valor_venda  as decimal) as varchar)  "
                       ",a002_qtde_estoque                                    "
                       ",a002_posicao_peca                                    "
@@ -790,6 +789,7 @@ void frm_ordemservico::on_tw_listaOS_itemSelectionChanged()
                   "WHERE "
                     "a015_codigo = '" +codigo_os+ "' ");
 
+
     if( !query.exec() )
     {
         QMessageBox::warning(this, "ERRO", "Erro ao listar itens O.S.");
@@ -797,6 +797,8 @@ void frm_ordemservico::on_tw_listaOS_itemSelectionChanged()
     }
 
     query.first();
+
+    double valor_total = query.value(3).toDouble() * query.value(2).toDouble();
 
     //inserindo elementos no table widget
     do
@@ -816,7 +818,7 @@ void frm_ordemservico::on_tw_listaOS_itemSelectionChanged()
                                                new QTableWidgetItem(query.value(3).toString()));
 
         ui->tw_listaPecasOS->setItem(contlinhas, 4,
-                                               new QTableWidgetItem(query.value(4).toString()));
+                                               new QTableWidgetItem( valor_total ));
 
         ui->tw_listaPecasOS->setItem(contlinhas, 5,
                                                 new QTableWidgetItem(query.value(5).toString()));
@@ -824,7 +826,6 @@ void frm_ordemservico::on_tw_listaOS_itemSelectionChanged()
         contlinhas++;
     }while( query.next() );
 }
-
 
 /**FUNÇÕES**/
 /*--------------------------------------------------------------------------------------------
@@ -880,8 +881,8 @@ void frm_ordemservico::conf_tw_ge_pecasOS()
     ui->tw_listaPecasOS->setColumnWidth(1, 150);
 
     //cabeçalhos do table widget
-     QStringList cabecalho2 = {"Código", "Produto", "Valor Un."
-                               , "Qtde", "Total", "Pos.Prateleira"};
+     QStringList cabecalho2 = {"Código", "Denominação", "Valor Un."
+                               , "Qtde", "V.Total", "Pos.Prateleira"};
 
     ui->tw_listaPecasOS->setHorizontalHeaderLabels( cabecalho2 );
     //definindo cor da linha ao ser selecionada
