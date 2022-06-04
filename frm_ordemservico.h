@@ -83,6 +83,10 @@ private slots:
 
     void on_btn_geraros_clicked();
 
+    void on_tabWidget_currentChanged(int index);
+
+    void on_txt_ge_filtrar_returnPressed();
+
 private:
     Ui::frm_ordemservico *ui;
 };

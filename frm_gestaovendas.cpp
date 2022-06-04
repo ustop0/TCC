@@ -116,7 +116,7 @@ frm_gestaovendas::~frm_gestaovendas() //**INICIO** destrutor
     delete ui;
 }
 
-//lista produtos TW
+//pega produtos TW
 void frm_gestaovendas::on_tw_listaVendas_itemSelectionChanged()
 {
     //limpando table widget
@@ -326,7 +326,8 @@ void frm_gestaovendas::on_btn_relatorio_clicked()
     //adicionando imagens
     //primeiro valor: eixo horizontal
     //segundo valor: eixo vertical
-    painter.drawPixmap( 200, -100, QPixmap(":/Imagens/car.png") );
+    //painter.drawPixmap( 200, -100, QPixmap(":/Imagens/car.png") );
+    painter.drawText(270, 50,"AMINCAR: RELATÓRIO DE VENDAS");
 
     //**DADOS DA VENDA (a007)**
     //--Título

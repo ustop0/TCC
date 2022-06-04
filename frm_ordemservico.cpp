@@ -500,6 +500,7 @@ void frm_ordemservico::on_btn_geraros_clicked()
                     ",a010_valor_total_mercadorias  "
                     ",a010_valor_total_servico      "
                     ",a010_meio_pagamento           "
+                    ",a010_km_veiculo               "
                   "FROM "
                     "a010_OS "
                   "ORDER BY "
@@ -512,10 +513,6 @@ void frm_ordemservico::on_btn_geraros_clicked()
 
     //obtem o id da venda
     QString codigo_os = query.value(0).toString();
-
-    QMessageBox::information(this, "Código OS", "Código OS capturado"
-                                   + query.value(0).toString());
-
     QString data_os = QDate::currentDate().toString("yyyy-MM-dd");
 
     //nome da OS de acordo com o id da venda
@@ -523,6 +520,7 @@ void frm_ordemservico::on_btn_geraros_clicked()
 
     //**Verificar** variavel armazena a pasta local do programa
     QString local = QDir::currentPath() + "/O.S.";
+
 
     //definindo formado do arquivo
     QPrinter printer;
@@ -566,7 +564,7 @@ void frm_ordemservico::on_btn_geraros_clicked()
     QString modelo_veiculo = ui->txt_nomeVeiculo->text();
     QString placa_veiculo = ui->txt_placaVeiculo->text();
     QString cor_veiculo = ui->txt_corVeiculo->text();
-    QString km_veiculo = ui->txt_kmVeiculo->text();
+    QString km_veiculo = query.value(5).toString();
 
     //esses vetores incrementam as linhas do arquivo automaticamente
 
@@ -599,11 +597,11 @@ void frm_ordemservico::on_btn_geraros_clicked()
     painter.drawText(540,410, meio_pagamento);
 
     //detalhes do serviço
-    painter.drawText(25, 460,"Detalhes do Serviço: ");
+    painter.drawText(25, 480,"Detalhes do Serviço: ");
 
     QString detalhes = ui->Ptxt_detalhesServico->toPlainText();
 
-    painter.drawText(25, 500, detalhes);
+    painter.drawText(25, 520, detalhes);
 
     //**DADOS DA OS ITENS RELATÓRIO (a015)**
     //--Título
@@ -647,6 +645,208 @@ void frm_ordemservico::on_btn_geraros_clicked()
 
     //abrir o arquivo pdf gerado
     QDesktopServices::openUrl(QUrl("file:///" + local + "/" + nome));
+}
+
+//quando ocorrer mudança na aba do tab widget
+void frm_ordemservico::on_tabWidget_currentChanged(int index)
+{
+    if( index == 1 ) //verifica a interface pelo index das tabs
+    {
+        //configurando combo box
+        ui->cb_ge_filtrar->addItem("-");
+        ui->cb_ge_filtrar->addItem("Cliente");
+        ui->cb_ge_filtrar->addItem("Placa");
+        ui->cb_ge_filtrar->addItem("Status");
+        ui->cb_ge_filtrar->addItem("M.Pgto");
+
+        //**Estilizando layout da table widget**
+        //definindo o tamanho das colunas
+        ui->tw_listaOS->setColumnCount(13);
+        ui->tw_listaOS->setColumnWidth(0, 40);
+        ui->tw_listaOS->setColumnWidth(1, 150);
+
+        //cabeçalhos do table widget
+        QStringList cabecalhos={"Código", "Cliente", "Veículo", "Placa","Cor"
+                               ,"Km", "Data entrada", "Status", "V.Mão de obra"
+                               , "V.Peças", "V.Total Serviço","M.Pgto", "Detalhes"};
+
+        ui->tw_listaOS->setHorizontalHeaderLabels( cabecalhos );
+        //definindo cor da linha ao ser selecionada
+        ui->tw_listaOS->setStyleSheet("QTableView "
+                                          "{selection-background-color:red}");
+
+        //desabilita a edição dos registros pelo table widget
+        ui->tw_listaOS->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        //selecionar a linha inteira quando clickar em uma celula
+        ui->tw_listaOS->setSelectionBehavior(QAbstractItemView::SelectRows);
+        //desabilitando os indices das linhas
+        ui->tw_listaOS->verticalHeader()->setVisible(false);
+
+        //**PREENCHENDO TW**
+        //limpa as linhas do table widget
+        funcoes_globais::removerLinhas( ui->tw_listaOS );
+        //inserir linhas dentro do table widget
+        int contlinhas = 0;
+        //Remover os produtos do table widget
+        QSqlQuery query; //query para listar os colaboradores no table widget
+        query.prepare("SELECT "
+                          "a010_codigo                    "
+                          ",a005_nome                     "
+                          ",a012_nome_veiculo             "
+                          ",a004_placa_veiculo            "
+                          ",a004_cor_veiculo              "
+                          ",a010_km_veiculo               "
+                          ",a010_data_entrada             "
+                          ",a010_status                   "
+                          ",a010_valor_mao_obra           "
+                          ",a010_valor_total_mercadorias  "
+                          ",a010_valor_total_servico      "
+                          ",a010_meio_pagamento           "
+                          ",a010_detalhes_servico         "
+                      "FROM "
+                          "a010_OS "
+                          "JOIN a004_veiculos ON (a004_codigo = a010_fk_codigo_veiculo) "
+                          "JOIN a005_cliente ON (a005_codigo = a004_fk_codigo_cliente)  "
+                          "JOIN a012_modelos ON (a012_Codigo = a004_fk_codigo_modelo)   "
+                      "WHERE "
+                        "a010_ativo = true "
+                      "ORDER BY "
+                          "a010_codigo DESC");
+
+        if( query.exec() ) //verifica se ouve algum erro na execução da query
+        {
+            //enquanto a query tiver retornando next, insere linhas dentro do table widget
+            while( query.next() )
+            {
+                //inserindo com contador de linhas, por index
+                ui->tw_listaOS->insertRow( contlinhas );
+                ui->tw_listaOS->setItem(contlinhas
+                                            , 0
+                                            , new QTableWidgetItem(query.value(0).toString()));
+
+                ui->tw_listaOS->setItem(contlinhas
+                                            , 1
+                                            , new QTableWidgetItem(query.value(1).toString()));
+
+                ui->tw_listaOS->setItem(contlinhas
+                                            , 2
+                                            , new QTableWidgetItem(query.value(2).toString()));
+
+                ui->tw_listaOS->setItem(contlinhas
+                                            , 3
+                                            , new QTableWidgetItem(query.value(3).toString()));
+
+                ui->tw_listaOS->setItem(contlinhas
+                                            , 4
+                                            , new QTableWidgetItem(query.value(4).toString()));
+
+                ui->tw_listaOS->setItem(contlinhas
+                                            , 5
+                                            , new QTableWidgetItem(query.value(5).toString()));
+
+                ui->tw_listaOS->setItem(contlinhas
+                                            , 6
+                                            , new QTableWidgetItem(query.value(6).toString()));
+
+                ui->tw_listaOS->setItem(contlinhas
+                                            , 7
+                                            , new QTableWidgetItem(query.value(7).toString()));
+
+                ui->tw_listaOS->setItem(contlinhas
+                                            , 8
+                                            , new QTableWidgetItem(query.value(8).toString()));
+
+                ui->tw_listaOS->setItem(contlinhas
+                                            , 9
+                                            , new QTableWidgetItem(query.value(9).toString()));
+
+                ui->tw_listaOS->setItem(contlinhas
+                                            , 10
+                                            , new QTableWidgetItem(query.value(10).toString()));
+
+                ui->tw_listaOS->setItem(contlinhas
+                                            , 11
+                                            , new QTableWidgetItem(query.value(11).toString()));
+
+                ui->tw_listaOS->setItem(contlinhas
+                                            , 12
+                                            , new QTableWidgetItem(query.value(12).toString()));
+
+                //definindo o tamanho das linhas
+                ui->tw_listaOS->setRowHeight(contlinhas, 20);
+                contlinhas ++;
+            }
+        }
+        else
+        {
+            QMessageBox::warning(this, "ERRO", "Erro ao listar Ordens de Serviço");
+        }
+    }
+}
+
+//filtrar gestão OS
+void frm_ordemservico::on_txt_ge_filtrar_returnPressed()
+{
+
+}
+
+//Seleciona OS e lista os itens incluidos da OS
+void frm_ordemservico::on_tw_listaOS_itemSelectionChanged()
+{
+    //limpando table widget
+    funcoes_globais::removerLinhas( ui->tw_listaPecasOS );
+
+    QString codigo_venda = ui->tw_listaOS->item(ui->tw_listaOS->currentRow(),0)->text();
+
+    int contlinhas = 0;
+
+    QSqlQuery query;
+    query.prepare("SELECT "
+                    "a006_codigo           "
+                    ",a006_denomicanao     "
+                    ",a006_qtde_vendida    "
+                    ",a006_valor_unitario  "
+                    ",a006_valor_total     "
+                    ",a006_margem_lucro    "
+                  "FROM "
+                    "a006_estoque_vendas "
+                    "JOIN a007_vendas on (a007_codigo = a006_fk_codigo_venda) "
+                  "WHERE "
+                    "a006_fk_codigo_venda = '" +codigo_venda+ "'");
+
+    if( !query.exec() )
+    {
+        QMessageBox::warning(this, "ERRO", "Erro ao listar vendas");
+        qDebug() << "ERRO: " << query.lastError().text();
+    }
+
+    query.first();
+
+    //inserindo elementos no table widget
+    do
+    {
+        //linha, coluna e item
+        ui->tw_listaPecasOS->insertRow( contlinhas );
+        ui->tw_listaPecasOS->setItem(contlinhas, 0,
+                                                new QTableWidgetItem(query.value(0).toString()));
+
+        ui->tw_listaPecasOS->setItem(contlinhas, 1,
+                                               new QTableWidgetItem(query.value(1).toString()));
+
+        ui->tw_listaPecasOS->setItem(contlinhas, 2,
+                                               new QTableWidgetItem(query.value(2).toString()));
+
+        ui->tw_listaPecasOS->setItem(contlinhas, 3,
+                                               new QTableWidgetItem(query.value(3).toString()));
+
+        ui->tw_listaPecasOS->setItem(contlinhas, 4,
+                                               new QTableWidgetItem(query.value(4).toString()));
+
+        ui->tw_listaPecasOS->setItem(contlinhas, 5,
+                                                new QTableWidgetItem(query.value(5).toString()));
+
+        contlinhas++;
+    }while( query.next() );
 }
 
 

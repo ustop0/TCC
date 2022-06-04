@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -492,6 +492,187 @@
     <attribute name="title">
      <string>Gestão O.S.</string>
     </attribute>
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="geometry">
+      <rect>
+       <x>7</x>
+       <y>314</y>
+       <width>761</width>
+       <height>251</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Itens O.S.:</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_6">
+     <property name="geometry">
+      <rect>
+       <x>245</x>
+       <y>7</y>
+       <width>109</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <item>
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>Data Final:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QDateEdit" name="de_ge_datafinal">
+        <property name="calendarPopup">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QPushButton" name="btn_ge_mostratTodasVendas">
+     <property name="geometry">
+      <rect>
+       <x>636</x>
+       <y>32</y>
+       <width>131</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Todas as Vendas</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_7">
+     <property name="geometry">
+      <rect>
+       <x>126</x>
+       <y>7</y>
+       <width>111</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_5">
+      <item>
+       <widget class="QLabel" name="label_11">
+        <property name="text">
+         <string>Data Inicial:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QDateEdit" name="de_ge_datainicial">
+        <property name="calendarPopup">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_8">
+     <property name="geometry">
+      <rect>
+       <x>363</x>
+       <y>31</y>
+       <width>261</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLineEdit" name="txt_ge_filtrar"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_ge_filtrar">
+        <property name="text">
+         <string>Filtrar</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_9">
+     <property name="geometry">
+      <rect>
+       <x>7</x>
+       <y>7</y>
+       <width>111</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_10">
+      <item>
+       <widget class="QLabel" name="label_12">
+        <property name="text">
+         <string>Filtrar:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="cb_ge_filtrar"/>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_4">
+     <property name="geometry">
+      <rect>
+       <x>7</x>
+       <y>64</y>
+       <width>761</width>
+       <height>241</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Vendas:</string>
+     </property>
+     <widget class="QTableWidget" name="tw_listaOS">
+      <property name="geometry">
+       <rect>
+        <x>11</x>
+        <y>31</y>
+        <width>741</width>
+        <height>201</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QTableWidget" name="tw_listaPecasOS">
+     <property name="geometry">
+      <rect>
+       <x>17</x>
+       <y>345</y>
+       <width>741</width>
+       <height>211</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>546</x>
+       <y>585</y>
+       <width>221</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QPushButton" name="btn_ge_geraros">
+        <property name="text">
+         <string>Gerar O.S.</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_ge_excluir">
+        <property name="text">
+         <string>Excluir</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </widget>
   </widget>
  </widget>
