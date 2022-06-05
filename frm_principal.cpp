@@ -13,6 +13,7 @@
 #include "frm_agendamentoservicos.h"
 #include "frm_sobre.h"
 
+
 int variaveis_globais::id_colab;
 QString variaveis_globais::nome_colab;
 QString variaveis_globais::acesso_colab;
