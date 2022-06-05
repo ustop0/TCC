@@ -92,6 +92,10 @@ private slots:
 
     void on_tw_listaOS_itemSelectionChanged();
 
+    void on_btn_ge_filtrar_clicked();
+
+    void on_btn_ge_geraros_clicked();
+
 private:
     Ui::frm_ordemservico *ui;
 };

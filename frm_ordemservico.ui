@@ -505,77 +505,12 @@
       <string>Itens O.S.:</string>
      </property>
     </widget>
-    <widget class="QWidget" name="layoutWidget_6">
-     <property name="geometry">
-      <rect>
-       <x>245</x>
-       <y>7</y>
-       <width>109</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_4">
-      <item>
-       <widget class="QLabel" name="label_6">
-        <property name="text">
-         <string>Data Final:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QDateEdit" name="de_ge_datafinal">
-        <property name="calendarPopup">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QPushButton" name="btn_ge_mostratTodasVendas">
-     <property name="geometry">
-      <rect>
-       <x>636</x>
-       <y>32</y>
-       <width>131</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Todas as Vendas</string>
-     </property>
-    </widget>
-    <widget class="QWidget" name="layoutWidget_7">
-     <property name="geometry">
-      <rect>
-       <x>126</x>
-       <y>7</y>
-       <width>111</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_5">
-      <item>
-       <widget class="QLabel" name="label_11">
-        <property name="text">
-         <string>Data Inicial:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QDateEdit" name="de_ge_datainicial">
-        <property name="calendarPopup">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
     <widget class="QWidget" name="layoutWidget_8">
      <property name="geometry">
       <rect>
-       <x>363</x>
-       <y>31</y>
-       <width>261</width>
+       <x>447</x>
+       <y>30</y>
+       <width>321</width>
        <height>27</height>
       </rect>
      </property>
@@ -597,7 +532,7 @@
       <rect>
        <x>7</x>
        <y>7</y>
-       <width>111</width>
+       <width>171</width>
        <height>50</height>
       </rect>
      </property>
@@ -647,7 +582,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>546</x>
