@@ -402,6 +402,3 @@ void frm_gestaovendas::on_btn_relatorio_clicked()
     //abrir o arquivo pdf gerado
     QDesktopServices::openUrl(QUrl("file:///" + local + "/" + nome));
 }
-
-
-

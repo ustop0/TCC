@@ -96,6 +96,8 @@ private slots:
 
     void on_btn_ge_geraros_clicked();
 
+    void on_btn_ge_excluir_clicked();
+
 private:
     Ui::frm_ordemservico *ui;
 };

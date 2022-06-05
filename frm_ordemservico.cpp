@@ -35,10 +35,10 @@ frm_ordemservico::frm_ordemservico(QWidget *parent, QString c_codigo_cliente
 
 
     //cabeçalhos do table widget
-    QStringList cabecalhos={"Código", "Fornecedor", "Nc. Peça","Denominacao",
+    QStringList cabecalho1={"Código", "Fornecedor", "Nc. Peça","Denominacao",
                             "Grupo", "Val. Compra", "Val. Venda", "Qtde. Estoque", "Pos. Prateleira"};
 
-    ui->tw_listapecas->setHorizontalHeaderLabels(cabecalhos);
+    ui->tw_listapecas->setHorizontalHeaderLabels( cabecalho1 );
     //definindo cor da linha ao ser selecionada
     ui->tw_listapecas->setStyleSheet("QTableView "
                                       "{selection-background-color:red}");
@@ -638,7 +638,7 @@ void frm_ordemservico::on_btn_geraros_clicked()
     query.prepare("UPDATE "
                     "a010_OS "
                   "SET "
-                    "a010_status = CONCLUÍDA "
+                    "a010_status = 'CONCLUÍDA' "
                   "WHERE "
                     "a010_codigo ='" +codigo+ "'");
 
@@ -1041,29 +1041,6 @@ void frm_ordemservico::on_tw_listaOS_itemSelectionChanged()
 //gestão gerar O.S
 void frm_ordemservico::on_btn_ge_geraros_clicked()
 {
-    //salvar a O.S. antes de gerar
-    //frm_ordemservico::on_btn_salvaros_clicked();
-
-    /*
-    QSqlQuery query;
-    query.prepare("SELECT "
-                    "a010_codigo                    "
-                    ",a010_valor_mao_obra           "
-                    ",a010_valor_total_mercadorias  "
-                    ",a010_valor_total_servico      "
-                    ",a010_meio_pagamento           "
-                    ",a010_km_veiculo               "
-                  "FROM "
-                    "a010_OS "
-                  "ORDER BY "
-                    "a010_codigo DESC LIMIT 1");
-                    */
-
-    //cast(cast(a002_valor_venda  as decimal) as varchar)
-
-    //query.exec();
-    //query.first();
-
     //nome da OS de acordo com o id da venda
     QString codigo_os = ui->tw_listaOS->
                   item(ui->tw_listaOS->currentRow(), 0)->text();
@@ -1174,7 +1151,6 @@ void frm_ordemservico::on_btn_ge_geraros_clicked()
     painter.drawText(540, 660, "V.Total");
 
     //--Itens venda são pegos do tw_pecasOS
-
     //informando localização, coluna e linha
     int linha = 710;
     int salto = 20;
@@ -1203,13 +1179,18 @@ void frm_ordemservico::on_btn_ge_geraros_clicked()
     query.prepare("UPDATE "
                     "a010_OS "
                   "SET "
-                    "a010_status = CONCLUÍDA "
+                    "a010_status = 'CONCLUÍDA' "
                   "WHERE "
                     "a010_codigo ='" +codigo+ "'");
 
     if( !query.exec() )
     {
         QMessageBox::information(this, "ERRO", "Não foi possível atualizar o status da O.S.");
+    }
+    else
+    {
+        int linha = ui->tw_listaOS->currentRow();
+        ui->tw_listaOS->item(linha, 7)->setText( "CONCLUÍDA" );
     }
 
     //abrir o arquivo pdf gerado
@@ -1219,7 +1200,43 @@ void frm_ordemservico::on_btn_ge_geraros_clicked()
 // gestão excluir O.S.
 void frm_ordemservico::on_btn_ge_excluir_clicked()
 {
+    if( ui->tw_listaOS->currentRow() == -1 )
+    {
+        QMessageBox::warning(this, "ERRO", "Selecione um fornecedor");
+        return;
+    }
 
+    //pergunta se o usuário realmente quer excluir o registro
+    QMessageBox::StandardButton opc =QMessageBox::question(
+                                      this,"Exclusão"
+                                      ,"Confirma exclusão da O.S.?"
+                                      ,QMessageBox::Yes|QMessageBox::No);
+
+    if( opc == QMessageBox::Yes )
+    {
+        //pegando a linha corrent(atual), no caso o id(index(0))
+        int linha = ui->tw_listaOS->currentRow();
+        QString id = ui->tw_listaOS->item(linha, 0)->text();
+
+        QSqlQuery query;
+
+        query.prepare("UPDATE "
+                        "a010_OS "
+                      "SET "
+                        "a010_ativo = false "
+                      "WHERE "
+                        "a010_codigo ='" +id+ "'");
+
+        if( query.exec() )
+        {
+            ui->tw_listaOS->removeRow( linha );
+            QMessageBox::information(this, "EXCLUÍDA", "Ordem de serviço excluída com sucesso");
+        }
+        else
+        {
+             QMessageBox::warning(this, "ERRO", "Erro ao excluir ordem de serviço");
+        }
+    }
 }
 
 /**FUNÇÕES**/
@@ -1248,11 +1265,11 @@ void frm_ordemservico::conf_tw_ge_listaOS()
     ui->tw_listaOS->setColumnWidth(1, 150);
 
     //cabeçalhos do table widget
-    QStringList cabecalho1={"Código", "Cliente", "Veículo", "Placa","Cor"
+    QStringList cabecalho3={"Código", "Cliente", "Veículo", "Placa","Cor"
                            ,"Km", "Data entrada", "Status", "V.Mão de obra"
                            , "V.Peças", "V.Total Serviço","M.Pgto", "Detalhes"};
 
-    ui->tw_listaOS->setHorizontalHeaderLabels( cabecalho1 );
+    ui->tw_listaOS->setHorizontalHeaderLabels( cabecalho3 );
     //definindo cor da linha ao ser selecionada
     ui->tw_listaOS->setStyleSheet("QTableView "
                                       "{selection-background-color:red}");
@@ -1276,10 +1293,10 @@ void frm_ordemservico::conf_tw_ge_pecasOS()
     ui->tw_listaPecasOS->setColumnWidth(1, 150);
 
     //cabeçalhos do table widget
-     QStringList cabecalho2 = {"Código", "Denominação", "Valor Un."
+     QStringList cabecalho4 = {"Código", "Denominação", "Valor Un."
                                , "Qtde", "V.Total", "Pos.Prateleira"};
 
-    ui->tw_listaPecasOS->setHorizontalHeaderLabels( cabecalho2 );
+    ui->tw_listaPecasOS->setHorizontalHeaderLabels( cabecalho4 );
     //definindo cor da linha ao ser selecionada
     ui->tw_listaPecasOS->setStyleSheet("QTableView "
                                       "{selection-background-color:red}");
@@ -1336,4 +1353,3 @@ double frm_ordemservico::calculaTotal( QTableWidget *tw, int coluna )
 
     return total;
 }
-
