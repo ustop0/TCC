@@ -508,6 +508,7 @@ void frms_nv_veiculocliente::on_btn_nv_filtrar_clicked()
     frms_nv_veiculocliente::on_txt_nv_filtrar_returnPressed();
 }
 
+//bnt seleciona cliente/veiculo
 void frms_nv_veiculocliente::on_btn_selecionaCliente_clicked()
 {
     frms_selecionaveiculo *fmSelecionaVeiculo = new frms_selecionaveiculo();

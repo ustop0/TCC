@@ -168,7 +168,6 @@ frms_selecionacliente::~frms_selecionacliente()//**INICIO** destrutor
     delete ui;
 }
 
-
 //seleciona item TW clientes
 void frms_selecionacliente::on_tw_selecionaCliente_itemSelectionChanged()
 {
@@ -192,7 +191,7 @@ void frms_selecionacliente::on_tw_selecionaCliente_itemSelectionChanged()
                   "FROM "
                       "a005_cliente "
                   "WHERE "
-                    "a005_codigo = '" +QString::number(id)+ "' ");
+                      "a005_codigo = '" +QString::number(id)+ "' ");
 
     if( query.exec() ) //verifica se a query foi bem sucedida
     {
@@ -211,14 +210,14 @@ void frms_selecionacliente::on_tw_selecionaCliente_itemSelectionChanged()
 
         QSqlQuery query;
         query.prepare("SELECT "
-                          "a004_codigo           "
-                          ",a011_marca_nome      "
-                          ",a012_nome_veiculo    "
-                          ",a004_motor_veiculo   "
-                          ",a004_chassi_veiculo  "
-                          ",a004_placa_veiculo   "
-                          ",a004_cor_veiculo     "
-                          ",a004_observacao      "
+                          "a004_codigo                            "
+                          ",a011_marca_nome                       "
+                          ",a012_nome_veiculo                     "
+                          ",a004_motor_veiculo                    "
+                          ",a004_chassi_veiculo                   "
+                          ",a004_placa_veiculo                    "
+                          ",a004_cor_veiculo                      "
+                          ",COALESCE(a004_observacao, '(NENHUM)') "
                       "FROM "
                           "a005_cliente "
                           "JOIN a004_veiculos ON (a004_fk_codigo_cliente = a005_codigo)  "
@@ -291,14 +290,14 @@ void frms_selecionacliente::on_tw_selecionaVeiculo_itemSelectionChanged()
     //exibe os dados da linha selecionada
     QSqlQuery query;
     query.prepare("SELECT "
-                      "a004_codigo           "
-                      ",a011_marca_nome      "
-                      ",a012_nome_veiculo    "
-                      ",a004_motor_veiculo   "
-                      ",a004_chassi_veiculo  "
-                      ",a004_placa_veiculo   "
-                      ",a004_cor_veiculo     "
-                      ",a004_observacao      "
+                      "a004_codigo                            "
+                      ",a011_marca_nome                       "
+                      ",a012_nome_veiculo                     "
+                      ",a004_motor_veiculo                    "
+                      ",a004_chassi_veiculo                   "
+                      ",a004_placa_veiculo                    "
+                      ",a004_cor_veiculo                      "
+                      ",COALESCE(a004_observacao, '(NENHUM)') "
                   "FROM "
                       "a005_cliente "
                       "JOIN a004_veiculos ON (a004_fk_codigo_cliente = a005_codigo)  "
@@ -510,20 +509,19 @@ void frms_selecionacliente::on_btn_filtrarCliente_clicked() //filtro
 //btn confirma dados cliente e veiculos
 void frms_selecionacliente::on_btn_confirmarCliente_clicked() //confirmar
 {
-    if( ui->tw_selecionaCliente->currentRow() == -1 ||  ui->tw_selecionaVeiculo->currentRow() == -1  )
+    if( ui->tw_selecionaCliente->currentRow() == -1 ||
+        ui->tw_selecionaVeiculo->currentRow() == -1  )
     {
         QMessageBox::warning(this, "ERRO", "Selecione um cliente e um veículo");
         return;
     }
 
-//    QString id_cliente = ui->tw_selecionaCliente->item(ui->tw_selecionaCliente->currentRow(),0)->text();
-//    QString id_veiculo = ui->tw_selecionaVeiculo->item(ui->tw_selecionaVeiculo->currentRow(),0)->text();
-
     //enviando nome e codigo do cliente selecionado para o campo do modelo no agendaservicos
-    frm_agendamentoservicos *fm_agendamentoservicos  = new frm_agendamentoservicos(this, g_codigoCliente
-                                                                                       , g_nomeCliente
-                                                                                       , g_codigoVeiculo
-                                                                                       , g_nomeVeiculo);
+    frm_agendamentoservicos *fm_agendamentoservicos =
+                                            new frm_agendamentoservicos(this, g_codigoCliente
+                                                                            , g_nomeCliente
+                                                                            , g_codigoVeiculo
+                                                                            , g_nomeVeiculo);
     fm_agendamentoservicos->exec();
 
     //deletando ponteiro
@@ -533,7 +531,8 @@ void frms_selecionacliente::on_btn_confirmarCliente_clicked() //confirmar
     }
     catch (...)
     {
-        qDebug() << "__Falha ao deletar ponteiro: fm_agendamentoservicos na tela de selecaocliente";
+        qDebug() << "__Falha ao deletar ponteiro: fm_agendamentoservicos na "
+                    "tela de selecaocliente";
     }
 
     close();

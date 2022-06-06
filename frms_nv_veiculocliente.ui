@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -244,7 +244,7 @@
        <string>..</string>
       </property>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -399,7 +399,7 @@
      <widget class="QLabel" name="label_5">
       <property name="geometry">
        <rect>
-        <x>450</x>
+        <x>463</x>
         <y>240</y>
         <width>81</width>
         <height>17</height>
@@ -453,7 +453,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>210</y>
+        <y>194</y>
         <width>401</width>
         <height>52</height>
        </rect>
@@ -514,7 +514,7 @@
      <widget class="QPlainTextEdit" name="ptxt_ge_observacao">
       <property name="geometry">
        <rect>
-        <x>450</x>
+        <x>463</x>
         <y>260</y>
         <width>201</width>
         <height>91</height>
