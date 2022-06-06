@@ -1015,8 +1015,13 @@ void frm_ordemservico::on_tw_listaOS_itemSelectionChanged()
         //calculando valor total
         double calcula_total = query.value(3).toDouble() * query.value(2).toDouble();
 
-        QString valor_unitario  = "R$ " + query.value(2).toString() + ",00";
-        QString valor_total =  "R$ " + QString::number( calcula_total );
+        QString valor_unitario  = "R$ " + query.value(2).toString();
+        QString aux;
+        aux = valor_unitario;
+        std::replace(aux.begin(), aux.end(), '.', ',');
+        valor_unitario = aux;
+
+        QString valor_total = "R$ " + QString::number( calcula_total ) + ",00";
 
         //linha, coluna e item
         ui->tw_listaPecasOS->insertRow( contlinhas );
@@ -1092,8 +1097,8 @@ void frm_ordemservico::on_btn_ge_geraros_clicked()
     painter.drawText(130,250,"Cliente");
     painter.drawText(295,250,"Veículo");
     painter.drawText(415,250,"Placa");
-    painter.drawText(540,250,"Cor");
-    painter.drawText(640,250,"KM");
+    painter.drawText(545,250,"Cor");
+    painter.drawText(645,250,"KM");
 
     QString codigo = ui->tw_listaOS->item(ui->tw_listaOS->currentRow(), 0)->text();
     QString cliente = ui->tw_listaOS->item(ui->tw_listaOS->currentRow(), 1)->text();
@@ -1107,9 +1112,9 @@ void frm_ordemservico::on_btn_ge_geraros_clicked()
     painter.drawText(25, 300, codigo);
     painter.drawText(130,300, cliente);
     painter.drawText(295,300, modelo_veiculo);
-    painter.drawText(415,300, placa_veiculo);
-    painter.drawText(540,300, cor_veiculo);
-    painter.drawText(640,300, km_veiculo);
+    painter.drawText(425,300, placa_veiculo);
+    painter.drawText(545,300, cor_veiculo);
+    painter.drawText(645,300, km_veiculo);
 
     //*Informações OS
     //**itens cabeçalho**
@@ -1152,7 +1157,7 @@ void frm_ordemservico::on_btn_ge_geraros_clicked()
     painter.drawText(130, 660, "Mercadoria");
     painter.drawText(295, 660, "Valor Un.");
     painter.drawText(415, 660, "Qtde");
-    painter.drawText(540, 660, "V.Total");
+    painter.drawText(520, 660, "V.Total");
     painter.drawText(640, 660, "Pos.Prateleira");
 
     //--Itens venda são pegos do tw_pecasOS
@@ -1167,7 +1172,7 @@ void frm_ordemservico::on_btn_ge_geraros_clicked()
         painter.drawText(130,linha, ui->tw_listaPecasOS->item(i, 1)->text());
         painter.drawText(295,linha, ui->tw_listaPecasOS->item(i, 2)->text());
         painter.drawText(415,linha, ui->tw_listaPecasOS->item(i, 3)->text());
-        painter.drawText(540,linha, "R$ " + ui->tw_listaPecasOS->item(i, 4)->text());
+        painter.drawText(520,linha, ui->tw_listaPecasOS->item(i, 4)->text());
         painter.drawText(640,linha, ui->tw_listaPecasOS->item(i, 5)->text());
         linha += salto;
     }
