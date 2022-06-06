@@ -975,7 +975,7 @@ void frm_ordemservico::on_btn_ge_filtrar_clicked()
     frm_ordemservico::on_txt_ge_filtrar_returnPressed();
 }
 
-//Seleciona OS e lista os itens incluidos da OS
+//Seleciona OS e lista os itens(peças) incluidos na OS
 void frm_ordemservico::on_tw_listaOS_itemSelectionChanged()
 {
     //limpando table widget
@@ -1009,30 +1009,34 @@ void frm_ordemservico::on_tw_listaOS_itemSelectionChanged()
 
     query.first();
 
-    double valor_total = query.value(3).toDouble() * query.value(2).toDouble();
-
     //inserindo elementos no table widget
     do
     {
+        //calculando valor total
+        double calcula_total = query.value(3).toDouble() * query.value(2).toDouble();
+
+        QString valor_unitario  = "R$ " + query.value(2).toString() + ",00";
+        QString valor_total =  "R$ " + QString::number( calcula_total );
+
         //linha, coluna e item
         ui->tw_listaPecasOS->insertRow( contlinhas );
         ui->tw_listaPecasOS->setItem(contlinhas, 0,
-                                                new QTableWidgetItem(query.value(0).toString()));
+                                           new QTableWidgetItem(query.value(0).toString()));
 
         ui->tw_listaPecasOS->setItem(contlinhas, 1,
-                                               new QTableWidgetItem(query.value(1).toString()));
+                                          new QTableWidgetItem(query.value(1).toString()));
 
         ui->tw_listaPecasOS->setItem(contlinhas, 2,
-                                               new QTableWidgetItem(query.value(2).toString()));
+                                          new QTableWidgetItem( valor_unitario ));
 
         ui->tw_listaPecasOS->setItem(contlinhas, 3,
-                                               new QTableWidgetItem(query.value(3).toString()));
+                                          new QTableWidgetItem(query.value(3).toString()));
 
         ui->tw_listaPecasOS->setItem(contlinhas, 4,
-                                               new QTableWidgetItem( valor_total ));
+                                          new QTableWidgetItem( valor_total ));
 
         ui->tw_listaPecasOS->setItem(contlinhas, 5,
-                                                new QTableWidgetItem(query.value(5).toString()));
+                                          new QTableWidgetItem(query.value(4).toString()));
 
         contlinhas++;
     }while( query.next() );
@@ -1149,6 +1153,7 @@ void frm_ordemservico::on_btn_ge_geraros_clicked()
     painter.drawText(295, 660, "Valor Un.");
     painter.drawText(415, 660, "Qtde");
     painter.drawText(540, 660, "V.Total");
+    painter.drawText(640, 660, "Pos.Prateleira");
 
     //--Itens venda são pegos do tw_pecasOS
     //informando localização, coluna e linha
@@ -1160,10 +1165,10 @@ void frm_ordemservico::on_btn_ge_geraros_clicked()
         //produtos da venda
         painter.drawText(25,linha, ui->tw_listaPecasOS->item(i, 0)->text());
         painter.drawText(130,linha, ui->tw_listaPecasOS->item(i, 1)->text());
-        painter.drawText(295,linha, "R$ " + ui->tw_listaPecasOS->item(i, 2)->text());
+        painter.drawText(295,linha, ui->tw_listaPecasOS->item(i, 2)->text());
         painter.drawText(415,linha, ui->tw_listaPecasOS->item(i, 3)->text());
         painter.drawText(540,linha, "R$ " + ui->tw_listaPecasOS->item(i, 4)->text());
-        painter.drawText(540,linha, "R$ " + ui->tw_listaPecasOS->item(i, 5)->text());
+        painter.drawText(640,linha, ui->tw_listaPecasOS->item(i, 5)->text());
         linha += salto;
     }
 

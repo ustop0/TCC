@@ -332,13 +332,16 @@ void frm_gestaovendas::on_btn_relatorio_clicked()
     //**DADOS DA VENDA (a007)**
     //--Título
     painter.drawText(340,200,"DADOS VENDA");
+    painter.drawText(25,220,"-------------------------------------------------------------"
+                            "-------------------------------------------------------------"
+                            "--------------------------------------");
 
     //**itens cabeçalho**
     painter.drawText(25, 250,"Código");
     painter.drawText(130,250,"Usuário");
     painter.drawText(295,250,"Data");
     painter.drawText(415,250,"Hora");
-    painter.drawText(540,250,"Val. Total");
+    painter.drawText(540,250,"Val.Total");
     painter.drawText(640,250,"Margem Lucro");
 
     //**itens dados relatorio
@@ -347,6 +350,8 @@ void frm_gestaovendas::on_btn_relatorio_clicked()
     QString data_venda = ui->tw_listaVendas->item(ui->tw_listaVendas->currentRow(), 2)->text();
     QString hora_venda = ui->tw_listaVendas->item(ui->tw_listaVendas->currentRow(), 3)->text();
     QString valor_total = ui->tw_listaVendas->item(ui->tw_listaVendas->currentRow(), 4)->text();
+    valor_total = "R$ " + valor_total + ",00";
+
     QString lucro = ui->tw_listaVendas->item(ui->tw_listaVendas->currentRow(), 5)->text();
 
     painter.drawText(25, 300, codigo_venda);
@@ -359,6 +364,9 @@ void frm_gestaovendas::on_btn_relatorio_clicked()
     //**DADOS DA VENDA ITENS RELATÓRIO (a006)**
     //--Título
     painter.drawText(340,400,"ITENS VENDA");
+    painter.drawText(25,420,"-------------------------------------------------------------"
+                            "-------------------------------------------------------------"
+                            "--------------------------------------");
 
     //**itens cabeçalho**
     painter.drawText(25, 450,"Código");
@@ -386,9 +394,9 @@ void frm_gestaovendas::on_btn_relatorio_clicked()
         painter.drawText(25,linha, ui->tw_listaProdutos->item(i, 0)->text());
         painter.drawText(130,linha, ui->tw_listaProdutos->item(i, 1)->text());
         painter.drawText(295,linha, ui->tw_listaProdutos->item(i, 2)->text());
-        painter.drawText(415,linha, ui->tw_listaProdutos->item(i, 3)->text());
-        painter.drawText(540,linha, ui->tw_listaProdutos->item(i, 4)->text());
-        painter.drawText(640,linha, ui->tw_listaProdutos->item(i, 5)->text());
+        painter.drawText(415,linha, "R$ " + ui->tw_listaProdutos->item(i, 3)->text() + ",00");
+        painter.drawText(540,linha, "R$ " + ui->tw_listaProdutos->item(i, 4)->text() + ",00");
+        painter.drawText(640,linha, "R$ " + ui->tw_listaProdutos->item(i, 5)->text() + ",00");
         linha += salto;
     }
 
