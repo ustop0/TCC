@@ -1155,7 +1155,7 @@ void frm_ordemservico::on_btn_ge_geraros_clicked()
     int linha = 710;
     int salto = 20;
 
-    for( int i = 0; i < ui->tw_pecasOS->rowCount(); i++ )
+    for( int i = 0; i < ui->tw_listaPecasOS->rowCount(); i++ )
     {
         //produtos da venda
         painter.drawText(25,linha, ui->tw_listaPecasOS->item(i, 0)->text());
