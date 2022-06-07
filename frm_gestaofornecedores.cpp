@@ -86,18 +86,18 @@ void frm_gestaofornecedores::on_btn_nv_salvar_clicked()
 {
     ClFornecedor fornecedor;
 
-    fornecedor.cnpj = ui->txt_nv_cnpj->text(); //armazena o codigo
-    fornecedor.estado = ui->txt_nv_uf->text();
-    fornecedor.cidade = ui->txt_nv_cidade->text();
-    fornecedor.rua = ui->txt_nv_rua->text();
-    fornecedor.numero_estabelecimento = ui->txt_nv_numeroEstabelecimento->text();
-    fornecedor.bairro = ui->txt_nv_bairro->text();
-    fornecedor.razao_social = ui->txt_nv_razaoSocial->text();
-    fornecedor.nome_fantasia = ui->txt_nv_nomeFantasia->text();
-    fornecedor.porte_empresa = ui->txt_nv_porte->text();
-    fornecedor.ocupacao_empresa = ui->txt_nv_ocupacao->text();
-    fornecedor.telefone1 = ui->txt_nv_tel1->text();
-    fornecedor.telefone2 = ui->txt_nv_tel2->text();
+    fornecedor.cnpj = ui->txt_nv_cnpj->text().toUpper();
+    fornecedor.estado = ui->txt_nv_uf->text().toUpper();
+    fornecedor.cidade = ui->txt_nv_cidade->text().toUpper();
+    fornecedor.rua = ui->txt_nv_rua->text().toUpper();
+    fornecedor.numero_estabelecimento = ui->txt_nv_numeroEstabelecimento->text().toUpper();
+    fornecedor.bairro = ui->txt_nv_bairro->text().toUpper();
+    fornecedor.razao_social = ui->txt_nv_razaoSocial->text().toUpper();
+    fornecedor.nome_fantasia = ui->txt_nv_nomeFantasia->text().toUpper();
+    fornecedor.porte_empresa = ui->txt_nv_porte->text().toUpper();
+    fornecedor.ocupacao_empresa = ui->txt_nv_ocupacao->text().toUpper();
+    fornecedor.telefone1 = ui->txt_nv_tel1->text().toUpper();
+    fornecedor.telefone2 = ui->txt_nv_tel2->text().toUpper();
 
     QSqlQuery query;
     query.prepare("INSERT INTO "
@@ -532,19 +532,19 @@ void frm_gestaofornecedores::on_btn_ge_salvar_clicked()
     QSqlQuery query;
 
     //estudar retringir cnpj
-    QString razao_social = ui->txt_ge_razaoSocial->text();
-    QString nome_fantasia = ui->txt_ge_nomeFantasia->text();
-    QString cnpj = ui->txt_ge_cnpj->text();
+    QString razao_social = ui->txt_ge_razaoSocial->text().toUpper();
+    QString nome_fantasia = ui->txt_ge_nomeFantasia->text().toUpper();
+    QString cnpj = ui->txt_ge_cnpj->text().toUpper();
     //validaCNPJ( cnpj );
-    QString estado = ui->txt_ge_uf->text();
-    QString cidade = ui->txt_ge_cidade->text();
-    QString rua = ui->txt_ge_rua->text();
-    QString numero_estabelecimento = ui->txt_ge_numeroEstabelecimento->text();
-    QString bairro = ui->txt_ge_bairro->text();
-    QString porte_empresa = ui->txt_ge_porte->text();
-    QString ocupacao_empresa = ui->txt_ge_ocupacao->text();
-    QString telefone1 = ui->txt_ge_tel1->text();
-    QString telefone2 = ui->txt_ge_tel2->text();
+    QString estado = ui->txt_ge_uf->text().toUpper();
+    QString cidade = ui->txt_ge_cidade->text().toUpper();
+    QString rua = ui->txt_ge_rua->text().toUpper();
+    QString numero_estabelecimento = ui->txt_ge_numeroEstabelecimento->text().toUpper();
+    QString bairro = ui->txt_ge_bairro->text().toUpper();
+    QString porte_empresa = ui->txt_ge_porte->text().toUpper();
+    QString ocupacao_empresa = ui->txt_ge_ocupacao->text().toUpper();
+    QString telefone1 = ui->txt_ge_tel1->text().toUpper();
+    QString telefone2 = ui->txt_ge_tel2->text().toUpper();
 
     query.prepare("UPDATE "
                     "a003_fornecedor "
@@ -637,7 +637,7 @@ void frm_gestaofornecedores::on_btn_ge_excluir_clicked()
         if( query.exec() ) //executa a query
         {
             ui->tw_ge_listarFornecedores->removeRow( linha );
-            QMessageBox::information(this, "DELETADO", "Fornecedor excluído com sucesso");
+            QMessageBox::information(this, "EXCLUÍDO", "Fornecedor excluído com sucesso");
         }
         else
         {

@@ -42,7 +42,7 @@ frms_nv_veiculocliente::frms_nv_veiculocliente(QWidget *parent, QString c_codigo
     ui->tw_nv_clientes->setColumnWidth(1, 150); //nome cliente
 
     //cabeçalhos do table widget
-    QStringList cabecalho1={"ID", "Cliente", "CPF", "CEP", "Estado", "Cidade"
+    QStringList cabecalho1={"Código", "Cliente", "CPF", "CEP", "Estado", "Cidade"
                            ,"Rua", "Nro. Casa", "Bairro", "Telefone"};
 
     ui->tw_nv_clientes->setHorizontalHeaderLabels( cabecalho1 );
@@ -410,12 +410,12 @@ void frms_nv_veiculocliente::on_btn_nv_salvar_clicked()
 
     //veiculo.marca_veiculo = ui->cb_nv_marca->currentText();
     //veiculo.modelo_veiculo = ui->cb_nv_modelo->currentText();
-    QString ano_veiculo = ui->txt_nv_ano->text();
-    QString motor_veiculo = ui->txt_nv_motor->text();
-    QString cor_veiculo = ui->txt_nv_cor->text();
-    QString placa_veiculo = ui->txt_nv_placa->text();
-    QString chassi_veiculo = ui->txt_nv_chassi->text();
-    QString observacao = ui->ptxt_nv_observacao->toPlainText();
+    QString ano_veiculo = ui->txt_nv_ano->text().toUpper();
+    QString motor_veiculo = ui->txt_nv_motor->text().toUpper();
+    QString cor_veiculo = ui->txt_nv_cor->text().toUpper();
+    QString placa_veiculo = ui->txt_nv_placa->text().toUpper();
+    QString chassi_veiculo = ui->txt_nv_chassi->text().toUpper();
+    QString observacao = ui->ptxt_nv_observacao->toPlainText().toUpper();
     QString codigo_modelo = g_codigo_modelo;
     QString codigo_cliente = ui->txt_nv_codcliente->text();
 
@@ -619,10 +619,10 @@ void frms_nv_veiculocliente::on_tw_ge_veiculos_itemSelectionChanged()
 //filtrar tela de gestão
 void frms_nv_veiculocliente::on_txt_ge_filtrar_returnPressed()
 {
-    QString cb_filtro = ui->cb_nv_filtro->currentText();
-    QString txt_filtro = ui->txt_nv_filtrar->text();
+    QString cb_filtro = ui->cb_ge_filtro->currentText();
+    QString txt_filtro = ui->txt_ge_filtrar->text().toUpper();
 
-    QString busca; //armazena busca
+    QString busca;
     QString filtro_sql;
 
     QStringList cb_opc; //Dados do combo box
@@ -817,6 +817,116 @@ void frms_nv_veiculocliente::on_btn_ge_filtrar_clicked()
     frms_nv_veiculocliente::on_txt_ge_filtrar_returnPressed();
 }
 
+//btn edição, salvar alteração no fornecedor
+void frms_nv_veiculocliente::on_btn_ge_salvar_clicked()
+{
+    if( ui->tw_ge_veiculos->currentRow() == -1 )
+    {
+        QMessageBox::warning(this, "ERRO", "Selecione um veículo");
+        return;
+    }
+
+    QString id = ui->tw_ge_veiculos->item(ui->tw_ge_veiculos
+                                               ->currentRow(),0)->text();
+    QSqlQuery query;
+
+    QString motor_veiculo = ui->txt_nv_motor->text().toUpper();
+    QString ano_veiculo = ui->txt_nv_ano->text().toUpper();
+    QString cor_veiculo = ui->txt_nv_cor->text().toUpper();
+    QString placa_veiculo = ui->txt_nv_placa->text().toUpper();
+    QString chassi_veiculo = ui->txt_nv_chassi->text().toUpper();
+    QString observacao = ui->ptxt_nv_observacao->toPlainText().toUpper();
+    QString codigo_modelo = g_codigo_modelo;
+    QString codigo_cliente = ui->txt_nv_codcliente->text();
+
+    query.prepare("UPDATE "
+                    "a004_veiculos "
+                  "SET "
+                    "a004_motor_veiculo      ='" +motor_veiculo   + "'"
+                    ",a004_ano_veiculo       ='" +ano_veiculo     + "'"
+                    ",a004_chassi_veiculo    ='" +chassi_veiculo  + "'"
+                    ",a004_placa_veiculo     ='" +placa_veiculo   + "'"
+                    ",a004_cor_veiculo       ='" +cor_veiculo     + "'"
+                    ",a004_observacao        ='" +observacao      + "'"
+                    ",a004_fk_codigo_modelo  ='" +codigo_modelo   + "'"
+                    ",a004_fk_codigo_cliente ='" +codigo_cliente  + "'"
+                  "WHERE "
+                    "a004_codigo ='" +id+ "'");
+
+    if( !query.exec( ) )
+    {
+        QMessageBox::critical(this, "ERRO", "Não foi possível salvar os dados do veiculo");
+    }
+    else
+    {
+        //pega a linha que está selecionada
+        int linha = ui->tw_ge_veiculos->currentRow();
+        //atualizando o table widget com o novo registro
+        ui->tw_ge_veiculos->item(linha, 1)->setText( motor_veiculo );
+        ui->tw_ge_veiculos->item(linha, 2)->setText( ano_veiculo );
+        ui->tw_ge_veiculos->item(linha, 3)->setText( chassi_veiculo );
+        ui->tw_ge_veiculos->item(linha, 4)->setText( placa_veiculo );
+        ui->tw_ge_veiculos->item(linha, 5)->setText( cor_veiculo );
+        ui->tw_ge_veiculos->item(linha, 6)->setText( observacao );
+        ui->tw_ge_veiculos->item(linha, 7)->setText( codigo_modelo );
+        ui->tw_ge_veiculos->item(linha, 8)->setText( codigo_cliente );
+
+        QMessageBox::information(this, "Atualizado", "Veículo atualizado com sucesso!");
+
+        //limpando todos os campos
+        ui->txt_ge_codcliente->clear();
+        ui->txt_ge_marca->clear();
+        ui->txt_ge_modelo->clear();
+        ui->txt_ge_ano->clear();
+        ui->txt_ge_motor->clear();
+        ui->txt_ge_cor->clear();
+        ui->txt_ge_placa->clear();
+        ui->txt_ge_chassi->clear();
+        ui->ptxt_ge_observacao->clear();
+    }
+}
+
+//btn excluir veículo
+void frms_nv_veiculocliente::on_btn_ge_excluir_clicked()
+{
+    if( ui->tw_ge_veiculos->currentRow() == -1 )
+    {
+        QMessageBox::warning(this, "ERRO", "Selecione um veículo");
+        return;
+    }
+
+    //pergunta se o usuário realmente quer excluir o registro
+    QMessageBox::StandardButton opc =QMessageBox::question(
+                                      this,"Exclusão"
+                                      ,"Confirma exclusão do veículo?"
+                                      ,QMessageBox::Yes|QMessageBox::No);
+
+    if( opc == QMessageBox::Yes )
+    {
+        //pegando a linha corrent(atual), no caso o id(index(0))
+        int linha = ui->tw_ge_veiculos->currentRow();
+        QString id = ui->tw_ge_veiculos->item(linha, 0)->text();
+
+        QSqlQuery query;
+
+        query.prepare("UPDATE "
+                        "a004_fornecedor "
+                      "SET "
+                        "a004_ativo = false "
+                      "WHERE "
+                        "a004_codigo ='" +id+ "'");
+
+        if( query.exec() ) //executa a query
+        {
+            ui->tw_ge_veiculos->removeRow( linha );
+            QMessageBox::information(this, "EXCLUÍDO", "Fornecedor excluído com sucesso");
+        }
+        else
+        {
+             QMessageBox::warning(this, "ERRO", "Erro ao excluir veículo");
+        }
+    }
+}
 
 //**FUNÇÕES**//
 /*--------------------------------------------------------------------------------------------
@@ -981,6 +1091,5 @@ QString frms_nv_veiculocliente::crudModelo()
 
     return cod_modelo;
 }
-
 
 
