@@ -19,7 +19,7 @@ class frms_nv_veiculocliente : public QDialog
     Q_OBJECT
 
 public:
-    explicit frms_nv_veiculocliente(QWidget *parent = nullptr, QString c_codigo_marca = ""
+    explicit frms_nv_veiculocliente(QWidget *parent = nullptr, QString c_codigo_cliente = ""
                                                              , QString c_nome_marca = ""
                                                              , QString c_codigo_modelo = ""
                                                              , QString c_nome_modelo = "");
@@ -39,6 +39,7 @@ public:
     QString g_nome_modelo;
 
 public slots:
+    void conf_tw_ge_veiculos();
 
     void prepararCB();
 
@@ -47,17 +48,23 @@ public slots:
     QString crudModelo();
 
 private slots:
-    void on_tabWidget_currentChanged(int index);
-
     void on_tw_nv_clientes_itemSelectionChanged();
 
     void on_txt_nv_filtrar_returnPressed();
 
     void on_btn_nv_filtrar_clicked();
 
+    void on_btn_selecionaVeiculo_clicked();
+
     void on_btn_nv_salvar_clicked();
 
-    void on_btn_selecionaCliente_clicked();
+    void on_tabWidget_currentChanged(int index);
+
+    void on_tw_ge_veiculos_itemSelectionChanged();
+
+    void on_txt_ge_filtrar_returnPressed();
+
+    void on_btn_ge_filtrar_clicked();
 
 private:
     Ui::frms_nv_veiculocliente *ui;

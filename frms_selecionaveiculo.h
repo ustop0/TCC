@@ -34,9 +34,11 @@ public:
     Conexao con;
 
     //recebe nome cliente do agenda serviços
-    QString g_nomeVeiculo;
-    QString g_codigoVeiculo;
+    QString g_codigo_cliente;
 
+    QString g_nomeMarca;
+    QString g_codigoVeiculo;
+    QString g_nomeVeiculo;
 
 public slots:
 
