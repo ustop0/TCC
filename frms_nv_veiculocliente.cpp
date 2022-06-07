@@ -212,7 +212,7 @@ void frms_nv_veiculocliente::on_tw_nv_clientes_itemSelectionChanged()
 void frms_nv_veiculocliente::on_txt_nv_filtrar_returnPressed()
 {
     QString cb_filtro = ui->cb_nv_filtro->currentText();
-    QString txt_filtro = ui->txt_nv_filtrar->text();
+    QString txt_filtro = ui->txt_nv_filtrar->text().toUpper();
 
     QString busca; //armazena busca
     QString filtro_sql;
@@ -910,7 +910,7 @@ void frms_nv_veiculocliente::on_btn_ge_excluir_clicked()
         QSqlQuery query;
 
         query.prepare("UPDATE "
-                        "a004_fornecedor "
+                        "a004_veiculos "
                       "SET "
                         "a004_ativo = false "
                       "WHERE "
@@ -927,6 +927,7 @@ void frms_nv_veiculocliente::on_btn_ge_excluir_clicked()
         }
     }
 }
+
 
 //**FUNÇÕES**//
 /*--------------------------------------------------------------------------------------------
