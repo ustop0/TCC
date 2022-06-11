@@ -42,12 +42,6 @@ public:
     //instanciando conexao com o banco de dados
     Conexao con;
 
-    //função para resetar campos
-    void resetaCampos();
-
-    //função para calculo do valor total
-    double calculaTotal( QTableWidget *tw, int coluna );
-
     //**cliente/veiculo
     QString g_codigo_cliente;
     QString g_nome_cliente;
@@ -67,6 +61,12 @@ public:
 
     //variável global, verifica se um produto foi alterado
     static bool g_alterou;
+
+    //função para resetar campos
+    void resetaCampos();
+
+    //função para calculo do valor total
+    double calculaTotal( QTableWidget *tw, int coluna );
 
 public slots:
     void conf_tw_ge_listaOS();

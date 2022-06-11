@@ -26,7 +26,8 @@ public:
     //conexao com o banco
     bool logado;
     Conexao con;
-    QString nome, acesso;
+    QString nome;
+    QString acesso;
     int id;
 
     //mostrar splashscreen

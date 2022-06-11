@@ -17,8 +17,9 @@ bool fn_validaCpf::validaCPF( int *cpf )
 
     Os 9 primeiros algarismos são multiplicados pela sequência 10, 9, 8, 7, 6, 5, 4, 3, 2
     (o primeiro por 10, o segundo por 9, e assim por diante);
-    Em seguida, calcula-se o resto “r1″ da divisão da soma dos resultados das multiplicações por 11,
-    e se o resto for zero ou 1, digito é zero, caso contrário digito = (11-r1) */
+    Em seguida, calcula-se o resto “r1″ da divisão da soma dos resultados das
+    multiplicações por 11, e se o resto for zero ou 1, digito é zero,
+    caso contrário digito = (11-r1) */
     for(unsigned char i = 0; i < 9; i++)
     {
         temp += (cpf[i] * (10 - i));

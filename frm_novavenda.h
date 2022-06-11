@@ -30,12 +30,6 @@ public:
     //instanciando conexao com o banco de dados
     Conexao con;
 
-    //função para resetar campos
-    inline void resetaCampos();
-
-    //função para calculo do valor total
-    double calculaTotal( QTableWidget *tw, int coluna );
-
     //variáveis globais para a edição de produtos em nova venda
     static QString g_codigo_peca;
     static QString g_denominacao;
@@ -47,6 +41,12 @@ public:
 
     //variável global, verifica se um produto foi alterado
     static bool g_alterou;
+
+    //função para resetar campos
+    inline void resetaCampos();
+
+    //função para calculo do valor total
+    double calculaTotal( QTableWidget *tw, int coluna );
 
 private slots:
     void on_tw_listapecas_itemSelectionChanged();

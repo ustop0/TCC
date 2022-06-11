@@ -43,8 +43,6 @@ private slots:
 
     void on_btn_relatorio_clicked();
 
-
-
 private:
     Ui::frm_gestaovendas *ui;
 };
