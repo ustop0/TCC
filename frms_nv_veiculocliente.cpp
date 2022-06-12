@@ -1074,7 +1074,7 @@ QString frms_nv_veiculocliente::crudModelo()
                   "FROM "
                     "a012_modelos "
                   "WHERE "
-                    "a012_nome_veiculo = '" +veiculo_modelo+ "')");
+                    "a012_nome_veiculo = '" +g_veiculo_modelo+ "')");
 
     if( query.exec() )
     {

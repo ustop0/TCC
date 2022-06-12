@@ -30,7 +30,7 @@ public:
     Conexao con;
 
     //a chave estrangeira é feita por uma query que precisa do cpf para o filtro where
-    QString veiculo_modelo; //removido static
+    QString g_veiculo_modelo; //removido static
     QString g_codigo_cliente;
 
     QString g_codigo_marca;

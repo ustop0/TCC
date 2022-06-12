@@ -38,8 +38,6 @@ public:
     QString g_codigoVeiculo;
     QString g_nomeVeiculo;
 
-
-
 private slots:
     void on_tw_selecionaCliente_itemSelectionChanged();
 

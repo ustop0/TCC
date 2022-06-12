@@ -59,8 +59,6 @@ public:
     QString g_valor_total;
     QString g_margem_lucro;
 
-    //variável global, verifica se um produto foi alterado
-    static bool g_alterou;
 
     //função para resetar campos
     void resetaCampos();
