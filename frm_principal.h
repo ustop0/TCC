@@ -1,6 +1,7 @@
 #ifndef FRM_PRINCIPAL_H
 #define FRM_PRINCIPAL_H
 
+#include <cstdlib>
 #include <QMainWindow>
 #include <QDialog>
 #include <QMainWindow>
@@ -8,6 +9,7 @@
 #include <QMessageBox>
 #include <QTime> //relogio do sistema
 #include <QDateTime>
+#include <QCloseEvent> //chama um evento durante o fechamento da janela
 #include "ConexaoBanco.h" //banco
 #include "funcoes_globais.h" //funcoes globais
 #include "variaveis_globais.h"
@@ -31,6 +33,9 @@ public slots:
 
     //relógio da barra de status do sistema
     void atualizaRelogio();
+
+    //backup do banco de dados do sistema
+    //void closeEvent( QCloseEvent *event );
 
 private slots:
     void on_actionUsu_rios_triggered();

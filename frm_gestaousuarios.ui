@@ -277,13 +277,6 @@
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QPushButton" name="btn_ge_vervendas">
-          <property name="text">
-           <string>Ver vendas</string>
-          </property>
-         </widget>
-        </item>
        </layout>
       </item>
      </layout>

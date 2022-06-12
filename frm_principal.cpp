@@ -171,3 +171,35 @@ void Frm_principal::atualizaRelogio()
 
     ui->lb_relogio->setText(tempoTexto);
 }
+/*
+ *--------------------------------------------------------------------------------------------
+ * Autor: Thiago Ianzer                                                                       |
+ * Data: 12/06/2022                                                                           |
+ * Propósito: Faz um backup do banco de dados quando o programa for fechado                   |
+ * Chamada: quando fechar frm principal                                                       |
+ *--------------------------------------------------------------------------------------------
+void Frm_principal::closeEvent( QCloseEvent *event )
+{
+    QMessageBox::StandardButton resposta = QMessageBox::question(
+                this,
+                tr("Saindo do sistema"),
+                tr("Você deseja fazer um backup do banco de dados?"),
+                QMessageBox::Yes | QMessageBox::No);
+
+    if( resposta == QMessageBox::Yes )
+    {
+        QString bk = "cd /home/ustop/QTProjects/build-TCC-Desktop_Qt_6_2_2_GCC_64bit-Debug/ "
+                     "bkBanco && ./scriptBk.sh";
+
+        QProcess::execute( bk );
+
+        event->accept();
+    }
+    else
+    {
+        close();
+        //event->ignore();
+    }
+}
+*/
+
