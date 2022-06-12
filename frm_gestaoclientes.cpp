@@ -117,13 +117,13 @@ void frm_gestaoclientes::on_btn_nv_gravar_clicked()
         qDebug() << "cpf inválido para sql";
     }
 
-    cliente.cep = ui->txt_nv_cep->text();
-    cliente.estado = ui->txt_nv_estado->text();
-    cliente.cidade = ui->txt_nv_cidade->text();
-    cliente.rua = ui->txt_nv_rua->text();
-    cliente.nro_casa = ui->txt_nv_nrocasa->text();
-    cliente.bairro = ui->txt_nv_bairro->text();
-    cliente.telefone1 = ui->txt_nv_telefone->text();
+    cliente.cep = ui->txt_nv_cep->text().toUpper();
+    cliente.estado = ui->txt_nv_estado->text().toUpper();
+    cliente.cidade = ui->txt_nv_cidade->text().toUpper();
+    cliente.rua = ui->txt_nv_rua->text().toUpper();
+    cliente.nro_casa = ui->txt_nv_nrocasa->text().toUpper();
+    cliente.bairro = ui->txt_nv_bairro->text().toUpper();
+    cliente.telefone1 = ui->txt_nv_telefone->text().toUpper();
 
     //DESENVOLVENDO CRUD COM O BANCO
     QSqlQuery query;
@@ -215,7 +215,7 @@ void frm_gestaoclientes::on_tabWidget_currentChanged(int index)
                           ",a005_telefone                            "
                       "FROM "
                           "a005_cliente "
-                          "JOIN a004_veiculos ON (a005_codigo = a004_fk_codigo_cliente) "
+                          "JOIN a004_veiculos ON (a005_codigo = a.toUpper()004_fk_codigo_cliente) "
                           "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo)   "
                           "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca)     "
                       "WHERE "
@@ -336,7 +336,7 @@ void frm_gestaoclientes::on_tw_ge_listaclientes_itemSelectionChanged()
 void frm_gestaoclientes::on_txt_ge_filtro_returnPressed()
 {
     QString cb_filtro = ui->cb_ge_filtrar->currentText();
-    QString txt_filtro = ui->txt_ge_filtro->text();
+    QString txt_filtro = ui->txt_ge_filtro->text().toUpper();
 
     QString busca; //armazena busca
     QString filtro_sql;
@@ -546,21 +546,21 @@ void frm_gestaoclientes::on_btn_ge_salvar_clicked()
     //**EM DESENVOLVIMENTO
     ClCliente cliente;
 
-    cliente.codigo = ui->txt_ge_codigo->text();
-    cliente.nome = ui->txt_ge_nome->text();
-    cliente.cpf = ui->txt_ge_cpf->text();
+    cliente.codigo = ui->txt_ge_codigo->text().toUpper();
+    cliente.nome = ui->txt_ge_nome->text().toUpper();
+    cliente.cpf = ui->txt_ge_cpf->text().toUpper();
     if( recebeCPF( cliente.cpf ) == false ) //**EM TESTES**recebendo e tratando o cpf
     {
         qDebug() << "cpf inválido para sql";
     }
 
-    cliente.cep = ui->txt_ge_cep->text();
-    cliente.estado = ui->txt_ge_estado->text();
-    cliente.cidade = ui->txt_ge_cidade->text();
-    cliente.rua = ui->txt_ge_rua->text();
-    cliente.nro_casa = ui->txt_ge_nrocasa->text();
-    cliente.bairro = ui->txt_ge_bairro->text();
-    cliente.telefone1 = ui->txt_ge_telefone->text();
+    cliente.cep = ui->txt_ge_cep->text().toUpper();
+    cliente.estado = ui->txt_ge_estado->text().toUpper();
+    cliente.cidade = ui->txt_ge_cidade->text().toUpper();
+    cliente.rua = ui->txt_ge_rua->text().toUpper();
+    cliente.nro_casa = ui->txt_ge_nrocasa->text().toUpper();
+    cliente.bairro = ui->txt_ge_bairro->text().toUpper();
+    cliente.telefone1 = ui->txt_ge_telefone->text().toUpper();
 
 
     //DESENVOLVENDO CRUD COM O BANCO
@@ -593,14 +593,15 @@ void frm_gestaoclientes::on_btn_ge_salvar_clicked()
         int linha = ui->tw_ge_listaclientes->currentRow();
         //atualizando o table widget com o novo registro
         ui->tw_ge_listaclientes->item(linha, 1)->setText(cliente.nome);
-        //ui->tw_ge_listaclientes->item(linha, 2)->setText(cliente.cpf);
-        //ui->tw_ge_listaclientes->item(linha, 3)->setText(cliente.cep);
-        //ui->tw_ge_listaclientes->item(linha, 4)->setText(cliente.estado);
-        //ui->tw_ge_listaclientes->item(linha, 5)->setText(cliente.cidade);
-        //ui->tw_ge_listaclientes->item(linha, 6)->setText(cliente.rua);
-        //ui->tw_ge_listaclientes->item(linha, 7)->setText(cliente.nro_casa);
-        //ui->tw_ge_listaclientes->item(linha, 8)->setText(cliente.bairro);
-        //ui->tw_ge_listaclientes->item(linha, 9)->setText(cliente.telefone1);
+        ui->tw_ge_listaclientes->item(linha, 2)->setText(cliente.cpf);
+        ui->tw_ge_listaclientes->item(linha, 3)->setText(cliente.cep);
+        ui->tw_ge_listaclientes->item(linha, 4)->setText(cliente.estado);
+        ui->tw_ge_listaclientes->item(linha, 5)->setText(cliente.cidade);
+        ui->tw_ge_listaclientes->item(linha, 6)->setText(cliente.rua);
+        ui->tw_ge_listaclientes->item(linha, 7)->setText(cliente.nro_casa);
+        ui->tw_ge_listaclientes->item(linha, 8)->setText(cliente.bairro);
+        ui->tw_ge_listaclientes->item(linha, 9)->setText(cliente.telefone1);
+
         QMessageBox::information(this, "Atualizado", "Cliente atualizado com sucesso!");
 
         //pergunta se o usuário quer cadastrar um veiculo para o cliente
@@ -612,8 +613,18 @@ void frm_gestaoclientes::on_btn_ge_salvar_clicked()
 
         if( opc == QMessageBox::Yes ) //verificando o botao da caixa question
         {
-            frms_nv_veiculocliente f_nv_veiculocliente;
-            f_nv_veiculocliente.exec();
+            frms_nv_veiculocliente *f_nv_veiculocliente = new frms_nv_veiculocliente();
+
+            f_nv_veiculocliente->exec();
+
+            try
+            {
+                delete f_nv_veiculocliente;
+            }
+            catch ( ... )
+            {
+                qDebug() << "__Erro ao deletar objeto f_nv_veiculocliente";
+            }
         }
         else
         {
