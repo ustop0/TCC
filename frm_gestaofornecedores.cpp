@@ -261,6 +261,24 @@ void frm_gestaofornecedores::on_tabWidget_currentChanged(int index)
             QMessageBox::warning(this, "ERRO", "Erro ao listar fornecedores");
         }
     }
+    else if( index == 0 )
+    {
+        funcoes_globais::removerLinhas( ui->tw_ge_listarFornecedores );
+
+        ui->txt_nv_cnpj->clear();
+        ui->txt_nv_uf->clear();
+        ui->txt_nv_cidade->clear();
+        ui->txt_nv_rua->clear();
+        ui->txt_nv_numeroEstabelecimento->clear();
+        ui->txt_nv_bairro->clear();
+        ui->txt_nv_razaoSocial->clear();
+        ui->txt_nv_nomeFantasia->clear();
+        ui->txt_nv_porte->clear();
+        ui->txt_nv_ocupacao->clear();
+        ui->txt_nv_tel1->clear();
+        ui->txt_nv_tel2->clear();
+        ui->cb_ge_filtrar->setCurrentIndex(0);
+    }
 }
 
 //pega linha do tw

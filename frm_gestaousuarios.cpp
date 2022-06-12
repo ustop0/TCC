@@ -17,6 +17,7 @@ frm_gestaousuarios::frm_gestaousuarios(QWidget *parent) :
         }
     }
 
+    //COMBO BOX ACESSO DOS USUÁRIOS
     ui->cb_nv_acesso->addItem("-");
     ui->cb_nv_acesso->addItem("Administrador");
     ui->cb_nv_acesso->addItem("Funcionário");
@@ -30,13 +31,14 @@ frm_gestaousuarios::frm_gestaousuarios(QWidget *parent) :
 
     //**Estilizando layout da table widget**
     //definindo o tamanho das colunas
-    ui->tw_ge_listausuario->setColumnCount(2); //define que o table widget terá duas colunas
-    ui->tw_ge_listausuario->setColumnWidth(0, 150); //id colaborador
+    ui->tw_ge_listausuario->setColumnCount(3); //define que o table widget terá duas colunas
+    ui->tw_ge_listausuario->setColumnWidth(0, 40); //id colaborador
     ui->tw_ge_listausuario->setColumnWidth(1, 220); //nome colaborador
+    ui->tw_ge_listausuario->setColumnWidth(2, 202); //nome usuario
 
     //cabeçalhos do table widget
     QStringList cabecalhos={"Código", "Nome", "Usuario", "Senha", "Tipo de Acesso"};
-    ui->tw_ge_listausuario->setHorizontalHeaderLabels(cabecalhos);
+    ui->tw_ge_listausuario->setHorizontalHeaderLabels( cabecalhos );
     //definindo cor da linha ao ser selecionada
     ui->tw_ge_listausuario->setStyleSheet("QTableView "
                                       "{selection-background-color:red}");
@@ -82,11 +84,11 @@ void frm_gestaousuarios::on_btn_nv_gravar_clicked()
 
     //inserir
     query.prepare("INSERT INTO "
-                    "a001_usuarios(a001_nome                "
-                                     ",a001_usuario         "
-                                     ",a001_senha           "
-                                     ",a001_tipo_acesso)    "
-                  "VALUES('" +nome  +  "'"
+                    "a001_usuarios(a001_nome            "
+                                 ",a001_usuario         "
+                                 ",a001_senha           "
+                                 ",a001_tipo_acesso)    "
+                  "VALUES('" +nome      +  "'"
                         ",'" +usuario   +  "'"
                         ",'" +senha     +  "'"
                         ",'" +acesso    +  "') ");
@@ -111,6 +113,13 @@ void frm_gestaousuarios::on_tabWidget_currentChanged(int index)
 {
     if( index == 1 ) //verifica a interface pelo index das tabs
     {
+        //configurando combo box filtro
+        ui->cb_ge_filtrar->addItem("-");
+        ui->cb_ge_filtrar->addItem("Nome");
+        ui->cb_ge_filtrar->addItem("Usuário");
+
+        ui->txt_ge_filtrar->setFocus();
+
         //limpa as linhas do table widget
         funcoes_globais::removerLinhas( ui->tw_ge_listausuario );
         //inserir linhas dentro do table widget
@@ -118,8 +127,9 @@ void frm_gestaousuarios::on_tabWidget_currentChanged(int index)
         //Remover os produtos do table widget
         QSqlQuery query; //query para listar os colaboradores no table widget
         query.prepare("SELECT "
-                          "a001_codigo "
-                          ",a001_nome  "
+                          "a001_codigo    "
+                          ",a001_nome     "
+                          ",a001_usuario  "
                       "FROM "
                           "a001_usuarios "
                       "WHERE "
@@ -142,6 +152,10 @@ void frm_gestaousuarios::on_tabWidget_currentChanged(int index)
                                             , 1
                                             , new QTableWidgetItem(query.value(1).toString()));
 
+                ui->tw_ge_listausuario->setItem(contlinhas
+                                            , 2
+                                            , new QTableWidgetItem(query.value(2).toString()));
+
                 //definindo o tamanho das linhas
                 ui->tw_ge_listausuario->setRowHeight(contlinhas, 20);
                 contlinhas ++;
@@ -151,6 +165,15 @@ void frm_gestaousuarios::on_tabWidget_currentChanged(int index)
         {
             QMessageBox::warning(this, "ERRO", "Erro ao listar usuarios");
         }
+    }
+    else if( index == 0 )
+    {
+        funcoes_globais::removerLinhas( ui->tw_ge_listausuario );
+
+        ui->txt_ge_nome->clear();
+        ui->txt_ge_usuario->clear();
+        ui->txt_ge_senha->clear();
+        ui->cb_ge_acesso->setCurrentIndex(0);
     }
 }
 
@@ -194,101 +217,118 @@ void frm_gestaousuarios::on_tw_ge_listausuario_itemSelectionChanged()
 //filtrar registros
 void frm_gestaousuarios::on_txt_ge_filtro_returnPressed()
 {
-    QString busca; //armazena busca
-    funcoes_globais::removerLinhas( ui->tw_ge_listausuario ); //remove as linhas o table widget
+    QString cb_filtro = ui->cb_ge_filtrar->currentText();
+    QString txt_filtro = ui->txt_ge_filtrar->text();
 
-    if( ui->txt_ge_filtro->text() == "" ) //verificando se algo foi digitado no campo de filtro
+    QString busca; //armazena busca
+    QString filtro_sql;
+
+    QStringList cb_opc; //Dados do combo box
+    cb_opc << "Nome" << "Usuário";
+
+
+    //remove as linhas o table widget
+    funcoes_globais::removerLinhas( ui->tw_ge_listausuario );
+
+    //verificando se algo foi digitado no campo de filtro
+    if( ui->txt_ge_filtrar->text() == "" )
     {
-        if( ui->rb_ge_id_usuario->isChecked() ) //consulta de acordo com o radio selecionado
+        if( cb_filtro == "" ) //consulta de acordo com o radio selecionado
         {
-            busca = "SELECT " //verificar o DESC
-                        "a001_codigo "
-                        ",a001_nome "
-                    "FROM "
-                        "a001_usuarios "
-                    "WHERE "
-                        "a001_ativo = true "
-                    "ORDER BY "
-                        "a001_codigo DESC";
+            busca = "SELECT "
+                       "a001_codigo       "
+                       ",a001_nome        "
+                       ",a001_usuario     "
+                   "FROM "
+                       "a001_usuarios "
+                   "WHERE "
+                       "a001_ativo = true "
+                   "ORDER BY "
+                       "a001_codigo DESC";
         }
         else
         {
-            busca = "SELECT " //verificar o DESC
-                        "a001_codigo "
-                        ",a001_nome "
-                    "FROM "
-                        "a001_usuarios "
-                    "WHERE "
-                        "a001_ativo = true "
-                    "ORDER BY "
-                        "a001_codigo DESC";
+            busca = "SELECT "
+                       "a001_codigo       "
+                       ",a001_nome        "
+                       ",a001_usuario     "
+                   "FROM "
+                       "a001_usuarios "
+                   "WHERE "
+                       "a001_ativo = true "
+                   "ORDER BY "
+                       "a001_codigo DESC";
         }
     }
     else
     {
-        if( ui->rb_ge_id_usuario->isChecked() ) //consulta de acordo com o radio selecionado
+        cb_opc << "Nome" << "Usuário" << "Tipo Acesso";
+        //consulta de acordo com a seleção do combo box
+        switch( cb_opc.indexOf( cb_filtro ) )
         {
-            //pega o id do produto pelo txt_ge_filtro
-            busca = "SELECT "
-                        "a001_codigo "
-                        ",a001_nome "
-                    "FROM "
-                        "a001_usuarios "
-                    "WHERE "
-                        "a001_codigo ='" +ui->txt_ge_filtro->text()+ "' "
-                        "AND a001_ativo = true "
-                    "ORDER BY "
-                        "a001_codigo DESC";
+            //Nome
+            case 0:
+
+                filtro_sql = "a001_nome LIKE '%" +txt_filtro+ "%' ";
+                break;
+            //Usuário
+            case 1:
+
+                filtro_sql = "a001_usuario LIKE '%" +txt_filtro+ "%' ";
+                break;
+            default:
+                qDebug() << "_Houve um problema ao filtrar realizar o filtro(swith case)";
+                break;
         }
-        else
-        {
-            //filtro personalizado com LIKE
-            busca = "SELECT "
-                        "a001_codigo "
-                        ",a001_nome "
-                    "FROM "
-                        "a001_usuarios "
-                    "WHERE "
-                        "a001_nome "
-                    "LIKE "
-                        "'%" +ui->txt_ge_filtro->text()+ "%' "
-                        "AND a001_ativo = true "
-                    "ORDER BY "
-                        "a001_codigo DESC";
-        }
+
+        busca = "SELECT "
+                   "a001_codigo       "
+                   ",a001_nome        "
+                   ",a001_usuario     "
+               "FROM "
+                   "a001_usuarios "
+               "WHERE "
+                   + filtro_sql +
+                   "AND a001_ativo = true "
+               "ORDER BY "
+                   "a001_codigo DESC";
     }
+
     //contador para percorrer linhas
-    int contlinhas=0;
+    int contlinhas = 0;
     QSqlQuery query;
-    query.prepare(busca);
+    query.prepare( busca );
 
     if( query.exec() ) //executa a query
-    {
-        while( query.next() ) //percorrendo query e preenchendo table widget
-        {
-            //inserindo com contador de linhas, por index
-            ui->tw_ge_listausuario->insertRow(contlinhas);
-            ui->tw_ge_listausuario->setItem(contlinhas
-                                        , 0
-                                        , new QTableWidgetItem(query.value(0).toString()));
+       {
+           while( query.next() ) //percorrendo query e preenchendo table widget
+           {
+               //inserindo com contador de linhas, por index
+               ui->tw_ge_listausuario->insertRow(contlinhas);
+               ui->tw_ge_listausuario->setItem(contlinhas
+                                           , 0
+                                           , new QTableWidgetItem(query.value(0).toString()));
 
-            ui->tw_ge_listausuario->setItem(contlinhas
-                                        , 1
-                                        , new QTableWidgetItem(query.value(1).toString()));
+               ui->tw_ge_listausuario->setItem(contlinhas
+                                           , 1
+                                           , new QTableWidgetItem(query.value(1).toString()));
 
-            //definindo o tamanho das linhas
-            ui->tw_ge_listausuario->setRowHeight(contlinhas, 20);
-            contlinhas ++;
-        }
-    }
-    else
-    {
-        QMessageBox::warning(this, "ERRO", "Erro ao filtrar usuários");
-    }
+               ui->tw_ge_listausuario->setItem(contlinhas
+                                           , 2
+                                           , new QTableWidgetItem(query.value(2).toString()));
 
-    //apagar conteudo do campo txt_ge_filtrar toda vez que clickar em filtrar
-    ui->txt_ge_filtro->clear();
-    ui->txt_ge_filtro->setFocus(); //posiciona o cursos no campo novamente
+               //definindo o tamanho das linhas
+               ui->tw_ge_listausuario->setRowHeight(contlinhas, 20);
+               contlinhas ++;
+           }
+       }
+       else
+       {
+           QMessageBox::warning(this, "ERRO", "Erro ao filtrar usuários");
+       }
+
+       ui->txt_ge_filtrar->clear();
+       ui->txt_ge_filtrar->setFocus();
 }
 
 //botao filtrar registros

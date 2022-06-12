@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>692</width>
-    <height>509</height>
+    <width>522</width>
+    <height>620</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,10 +16,10 @@
   <widget class="QTabWidget" name="tabWidget">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>11</x>
      <y>10</y>
-     <width>671</width>
-     <height>491</height>
+     <width>501</width>
+     <height>601</height>
     </rect>
    </property>
    <property name="currentIndex">
@@ -32,8 +32,8 @@
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>403</x>
-       <y>424</y>
+       <x>231</x>
+       <y>537</y>
        <width>257</width>
        <height>27</height>
       </rect>
@@ -55,82 +55,97 @@
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="layoutWidget">
+    <widget class="QGroupBox" name="groupBox">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>231</width>
-       <height>222</height>
+       <x>8</x>
+       <y>8</y>
+       <width>481</width>
+       <height>261</height>
       </rect>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_27">
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_26">
-            <item>
-             <widget class="QLabel" name="label_18">
-              <property name="text">
-               <string>Nome</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="txt_nv_nome"/>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_19">
-            <property name="text">
-             <string>Usuário</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="txt_nv_usuario"/>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_28">
-          <item>
-           <widget class="QLabel" name="label_20">
-            <property name="text">
-             <string>Senha</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="txt_nv_senha">
-            <property name="echoMode">
-             <enum>QLineEdit::Password</enum>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="QLabel" name="label_21">
-          <property name="text">
-           <string>Tipo de Acesso</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="cb_nv_acesso"/>
-        </item>
-       </layout>
-      </item>
-     </layout>
+     <property name="title">
+      <string>Dados Usuário</string>
+     </property>
+     <widget class="QWidget" name="">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>31</y>
+        <width>291</width>
+        <height>222</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_9">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_27">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_26">
+             <item>
+              <widget class="QLabel" name="label_18">
+               <property name="text">
+                <string>Nome</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txt_nv_nome"/>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_19">
+             <property name="text">
+              <string>Usuário</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="txt_nv_usuario"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_28">
+           <item>
+            <widget class="QLabel" name="label_20">
+             <property name="text">
+              <string>Senha</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="txt_nv_senha">
+             <property name="echoMode">
+              <enum>QLineEdit::Password</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QLabel" name="label_21">
+           <property name="text">
+            <string>Tipo de Acesso</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cb_nv_acesso"/>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
     </widget>
+    <zorder>groupBox</zorder>
+    <zorder>layoutWidget</zorder>
    </widget>
    <widget class="QWidget" name="tab_novocolaborador">
     <attribute name="title">
@@ -139,32 +154,162 @@
     <widget class="QTableWidget" name="tw_ge_listausuario">
      <property name="geometry">
       <rect>
-       <x>300</x>
-       <y>130</y>
-       <width>361</width>
-       <height>321</height>
+       <x>8</x>
+       <y>65</y>
+       <width>481</width>
+       <height>181</height>
       </rect>
      </property>
     </widget>
-    <widget class="QWidget" name="layoutWidget_8">
+    <widget class="QGroupBox" name="groupBox_2">
      <property name="geometry">
       <rect>
-       <x>440</x>
-       <y>40</y>
-       <width>221</width>
-       <height>81</height>
+       <x>7</x>
+       <y>251</y>
+       <width>481</width>
+       <height>261</height>
       </rect>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_31">
+     <property name="title">
+      <string>Dados Usuário</string>
+     </property>
+     <widget class="QWidget" name="">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>291</width>
+        <height>222</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_8">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_33">
+           <item>
+            <widget class="QLabel" name="label_3">
+             <property name="text">
+              <string>Nome</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="txt_ge_nome"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_34">
+           <item>
+            <widget class="QLabel" name="label_23">
+             <property name="text">
+              <string>Usuário</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="txt_ge_usuario"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_35">
+           <item>
+            <widget class="QLabel" name="label_24">
+             <property name="text">
+              <string>Senha</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="txt_ge_senha">
+             <property name="echoMode">
+              <enum>QLineEdit::Password</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_37">
+         <item>
+          <widget class="QLabel" name="label_25">
+           <property name="text">
+            <string>Tipo de Acesso</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cb_ge_acesso"/>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_16">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>8</y>
+       <width>151</width>
+       <height>50</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
       <item>
-       <widget class="QLabel" name="label_22">
+       <widget class="QLabel" name="label">
         <property name="text">
-         <string>Filtro</string>
+         <string>Filtrar por:</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="txt_ge_filtro"/>
+       <widget class="QComboBox" name="cb_ge_filtrar"/>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>228</x>
+       <y>536</y>
+       <width>261</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_11">
+      <item>
+       <widget class="QPushButton" name="btn_ge_salvar">
+        <property name="text">
+         <string>Salvar</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_ge_excluir">
+        <property name="text">
+         <string>Excluir</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>197</x>
+       <y>31</y>
+       <width>291</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLineEdit" name="txt_ge_filtrar"/>
       </item>
       <item>
        <widget class="QPushButton" name="btn_ge_filtrar">
@@ -175,151 +320,11 @@
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="layoutWidget_9">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>281</width>
-       <height>431</height>
-      </rect>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_32">
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_33">
-        <item>
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>Nome</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="txt_ge_nome"/>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_34">
-        <item>
-         <widget class="QLabel" name="label_23">
-          <property name="text">
-           <string>Usuário</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="txt_ge_usuario"/>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_35">
-        <item>
-         <widget class="QLabel" name="label_24">
-          <property name="text">
-           <string>Senha</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="txt_ge_senha">
-          <property name="echoMode">
-           <enum>QLineEdit::Password</enum>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_36"/>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_37">
-        <item>
-         <widget class="QLabel" name="label_25">
-          <property name="text">
-           <string>Tipo de Acesso</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="cb_ge_acesso"/>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <spacer name="verticalSpacer_6">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_11">
-        <item>
-         <widget class="QPushButton" name="btn_ge_salvar">
-          <property name="text">
-           <string>Salvar</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="btn_ge_excluir">
-          <property name="text">
-           <string>Excluir</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QGroupBox" name="groupBox_3">
-     <property name="geometry">
-      <rect>
-       <x>300</x>
-       <y>20</y>
-       <width>131</width>
-       <height>101</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>Filtrar por:</string>
-     </property>
-     <widget class="QWidget" name="layoutWidget_10">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>30</y>
-        <width>114</width>
-        <height>61</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_38">
-       <item>
-        <widget class="QRadioButton" name="rb_ge_id_usuario">
-         <property name="text">
-          <string>ID Usuario.</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="rb_ge_nome_usuario">
-         <property name="text">
-          <string>Nome</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </widget>
+    <zorder>groupBox_2</zorder>
+    <zorder>tw_ge_listausuario</zorder>
+    <zorder>layoutWidget_8</zorder>
+    <zorder>layoutWidget_9</zorder>
+    <zorder>layoutWidget_16</zorder>
    </widget>
   </widget>
  </widget>
