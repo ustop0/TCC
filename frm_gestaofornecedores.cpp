@@ -46,7 +46,7 @@ frm_gestaofornecedores::frm_gestaofornecedores(QWidget *parent) :
     ui->tw_ge_listarFornecedores->setHorizontalHeaderLabels(cabecalhos);
     //definindo cor da linha ao ser selecionada
     ui->tw_ge_listarFornecedores->setStyleSheet("QTableView "
-                                      "{selection-background-color:red}");
+                                      "{selection-background-color:#F7BA4D}");
 
     //desabilita a edição dos registros pelo table widget
     ui->tw_ge_listarFornecedores->setEditTriggers(QAbstractItemView::NoEditTriggers);

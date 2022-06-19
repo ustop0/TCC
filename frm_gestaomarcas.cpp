@@ -35,7 +35,7 @@ frm_gestaomarcas::frm_gestaomarcas(QWidget *parent) :
     ui->tw_listamarcas->setHorizontalHeaderLabels(cabecalhos);
     //definindo cor da linha ao ser selecionada
     ui->tw_listamarcas->setStyleSheet("QTableView "
-                                      "{selection-background-color:red}");
+                                      "{selection-background-color:#F7BA4D}");
 
     //desabilita a edição dos registros pelo table widget
     ui->tw_listamarcas->setEditTriggers(QAbstractItemView::NoEditTriggers);

@@ -41,7 +41,7 @@ frm_gestaousuarios::frm_gestaousuarios(QWidget *parent) :
     ui->tw_ge_listausuario->setHorizontalHeaderLabels( cabecalhos );
     //definindo cor da linha ao ser selecionada
     ui->tw_ge_listausuario->setStyleSheet("QTableView "
-                                      "{selection-background-color:red}");
+                                      "{selection-background-color:#F7BA4D}");
 
     //desabilita a edição dos registros pelo table widget
     ui->tw_ge_listausuario->setEditTriggers(QAbstractItemView::NoEditTriggers);

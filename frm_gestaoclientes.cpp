@@ -48,7 +48,7 @@ frm_gestaoclientes::frm_gestaoclientes(QWidget *parent) :
     ui->tw_ge_listaclientes->setHorizontalHeaderLabels(cabecalhos);
     //definindo cor da linha ao ser selecionada
     ui->tw_ge_listaclientes->setStyleSheet("QTableView "
-                                      "{selection-background-color:red}");
+                                      "{selection-background-color:#F7BA4D}");
 
     //desabilita a edição dos registros pelo table widget
     ui->tw_ge_listaclientes->setEditTriggers(QAbstractItemView::NoEditTriggers);

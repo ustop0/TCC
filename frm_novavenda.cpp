@@ -52,7 +52,7 @@ frm_novavenda::frm_novavenda(QWidget *parent) :
     ui->tw_listapecas->setHorizontalHeaderLabels( cabecalho1 );
     //definindo cor da linha ao ser selecionada
     ui->tw_listapecas->setStyleSheet("QTableView "
-                                      "{selection-background-color:red}");
+                                      "{selection-background-color:#F7BA4D}");
 
     //desabilita a edição dos registros pelo table widget
     ui->tw_listapecas->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -154,7 +154,7 @@ frm_novavenda::frm_novavenda(QWidget *parent) :
     ui->tw_listaprodutos->setHorizontalHeaderLabels( cabecalho2 );
     //definindo cor da linha ao ser selecionada
     ui->tw_listaprodutos->setStyleSheet("QTableView "
-                                      "{selection-background-color:red}");
+                                      "{selection-background-color:#F7BA4D}");
 
     //desabilita a edição dos registros pelo table widget
     ui->tw_listaprodutos->setEditTriggers(QAbstractItemView::NoEditTriggers);

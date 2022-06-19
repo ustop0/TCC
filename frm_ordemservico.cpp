@@ -41,7 +41,7 @@ frm_ordemservico::frm_ordemservico(QWidget *parent, QString c_codigo_cliente
     ui->tw_listapecas->setHorizontalHeaderLabels( cabecalho1 );
     //definindo cor da linha ao ser selecionada
     ui->tw_listapecas->setStyleSheet("QTableView "
-                                      "{selection-background-color:red}");
+                                      "{selection-background-color:#F7BA4D}");
 
     //desabilita a edição dos registros pelo table widget
     ui->tw_listapecas->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -159,7 +159,7 @@ frm_ordemservico::frm_ordemservico(QWidget *parent, QString c_codigo_cliente
     ui->tw_pecasOS->setHorizontalHeaderLabels( cabecalho2 );
     //definindo cor da linha ao ser selecionada
     ui->tw_pecasOS->setStyleSheet("QTableView "
-                                      "{selection-background-color:red}");
+                                      "{selection-background-color:#F7BA4D}");
 
     //desabilita a edição dos registros pelo table widget
     ui->tw_pecasOS->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -1284,7 +1284,7 @@ void frm_ordemservico::conf_tw_ge_listaOS()
     ui->tw_listaOS->setHorizontalHeaderLabels( cabecalho3 );
     //definindo cor da linha ao ser selecionada
     ui->tw_listaOS->setStyleSheet("QTableView "
-                                      "{selection-background-color:red}");
+                                      "{selection-background-color:#F7BA4D}");
 
     //desabilita a edição dos registros pelo table widget
     ui->tw_listaOS->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -1311,7 +1311,7 @@ void frm_ordemservico::conf_tw_ge_pecasOS()
     ui->tw_listaPecasOS->setHorizontalHeaderLabels( cabecalho4 );
     //definindo cor da linha ao ser selecionada
     ui->tw_listaPecasOS->setStyleSheet("QTableView "
-                                      "{selection-background-color:red}");
+                                      "{selection-background-color:#F7BA4D}");
 
     //desabilita a edição dos registros pelo table widget
     ui->tw_listaPecasOS->setEditTriggers(QAbstractItemView::NoEditTriggers);

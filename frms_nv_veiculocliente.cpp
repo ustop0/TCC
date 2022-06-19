@@ -48,7 +48,7 @@ frms_nv_veiculocliente::frms_nv_veiculocliente(QWidget *parent, QString c_codigo
     ui->tw_nv_clientes->setHorizontalHeaderLabels( cabecalho1 );
     //definindo cor da linha ao ser selecionada
     ui->tw_nv_clientes->setStyleSheet("QTableView "
-                                      "{selection-background-color:red}");
+                                      "{selection-background-color:#F7BA4D}");
 
     //desabilita a edição dos registros pelo table widget
     ui->tw_nv_clientes->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -962,7 +962,7 @@ void frms_nv_veiculocliente::conf_tw_ge_veiculos()
     ui->tw_ge_veiculos->setHorizontalHeaderLabels(cabecalho2);
     //definindo cor da linha ao ser selecionada
     ui->tw_ge_veiculos->setStyleSheet("QTableView "
-                                      "{selection-background-color:red}");
+                                      "{selection-background-color:#F7BA4D}");
 
     //desabilita a edição dos registros pelo table widget
     ui->tw_ge_veiculos->setEditTriggers(QAbstractItemView::NoEditTriggers);

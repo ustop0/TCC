@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QMainWindow>
+#include <QDebug>
 #include <QtSql> //banco de dados
 #include <QMessageBox>
 #include <QSplashScreen> //usar splash screens

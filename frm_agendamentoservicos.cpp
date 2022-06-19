@@ -54,7 +54,7 @@ frm_agendamentoservicos::frm_agendamentoservicos(QWidget *parent, QString c_codi
     ui->tw_listaservicos->setHorizontalHeaderLabels(cabecalhos);
     //definindo cor da linha ao ser selecionada
     ui->tw_listaservicos->setStyleSheet("QTableView "
-                                      "{selection-background-color:red}");
+                                      "{selection-background-color:#F7BA4D}");
 
     //desabilita a edição dos registros pelo table widget
     ui->tw_listaservicos->setEditTriggers(QAbstractItemView::NoEditTriggers);

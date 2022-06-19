@@ -84,6 +84,17 @@ void Frm_login::splashScreen()
     auto w = new Frm_principal();
     w->setAttribute(Qt::WA_DeleteOnClose);
 
-    QTimer::singleShot(2000, telaSplash, SLOT(close())); //define o tempo de duração do splash
-    QTimer::singleShot(2000, w, SLOT(show())); //define o tempo para mostrar o formulario principal
+    //define o tempo de duração do splash
+    QTimer::singleShot(2000, telaSplash, SLOT(close()));
+    //define o tempo para mostrar o formulario principal
+    QTimer::singleShot(2000, w, SLOT(show()));
+
+    try
+    {
+       delete telaSplash;
+    }
+    catch ( ... )
+    {
+        qDebug() << "__Falha ao deletar ponteiro: telaSplash na tela de login";
+    }
 }

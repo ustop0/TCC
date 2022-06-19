@@ -42,7 +42,7 @@ frms_selecionacliente_os::frms_selecionacliente_os(QWidget *parent) :
     ui->tw_selecionaCliente->setHorizontalHeaderLabels( cabecalho1 );
     //definindo cor da linha ao ser selecionada
     ui->tw_selecionaCliente->setStyleSheet("QTableView "
-                                      "{selection-background-color:red}");
+                                      "{selection-background-color:#F7BA4D}");
 
     //desabilita a edição dos registros pelo table widget
     ui->tw_selecionaCliente->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -148,7 +148,7 @@ frms_selecionacliente_os::frms_selecionacliente_os(QWidget *parent) :
     ui->tw_selecionaVeiculo->setHorizontalHeaderLabels(cabecalho2);
     //definindo cor da linha ao ser selecionada
     ui->tw_selecionaVeiculo->setStyleSheet("QTableView "
-                                      "{selection-background-color:red}");
+                                      "{selection-background-color:#F7BA4D}");
 
     //desabilita a edição dos registros pelo table widget
     ui->tw_selecionaVeiculo->setEditTriggers(QAbstractItemView::NoEditTriggers);

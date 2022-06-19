@@ -46,7 +46,7 @@ frms_selecionaveiculo::frms_selecionaveiculo(QWidget *parent, QString c_codigoCl
     ui->tw_selecionaVeiculo->setHorizontalHeaderLabels(cabecalhos);
     //definindo cor da linha ao ser selecionada
     ui->tw_selecionaVeiculo->setStyleSheet("QTableView "
-                                      "{selection-background-color:red}");
+                                      "{selection-background-color:#F7BA4D}");
 
     //desabilita a edição dos registros pelo table widget
     ui->tw_selecionaVeiculo->setEditTriggers(QAbstractItemView::NoEditTriggers);

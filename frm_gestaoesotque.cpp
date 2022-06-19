@@ -56,7 +56,7 @@ frm_gestaoesotque::frm_gestaoesotque(QWidget *parent) :
     ui->tw_nv_listafornecedores->setHorizontalHeaderLabels(cabecalho1);
     //definindo cor da linha ao ser selecionada
     ui->tw_nv_listafornecedores->setStyleSheet("QTableView "
-                                      "{selection-background-color:red}");
+                                      "{selection-background-color:#F7BA4D}");
 
     //desabilita a edição dos registros pelo table widget
     ui->tw_nv_listafornecedores->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -77,7 +77,7 @@ frm_gestaoesotque::frm_gestaoesotque(QWidget *parent) :
     ui->tw_nv_listamodelos->setHorizontalHeaderLabels(cabecalho2);
     //definindo cor da linha ao ser selecionada
     ui->tw_nv_listamodelos->setStyleSheet("QTableView "
-                                      "{selection-background-color:red}");
+                                      "{selection-background-color:#F7BA4D}");
 
     //desabilita a edição dos registros pelo table widget
     ui->tw_nv_listamodelos->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -99,7 +99,7 @@ frm_gestaoesotque::frm_gestaoesotque(QWidget *parent) :
     ui->tw_ge_listapecas->setHorizontalHeaderLabels(cabecalho3);
     //definindo cor da linha ao ser selecionada
     ui->tw_ge_listapecas->setStyleSheet("QTableView "
-                                      "{selection-background-color:red}");
+                                      "{selection-background-color:#F7BA4D}");
 
     //desabilita a edição dos registros pelo table widget
     ui->tw_ge_listapecas->setEditTriggers(QAbstractItemView::NoEditTriggers);

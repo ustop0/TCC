@@ -171,6 +171,8 @@ void Frm_principal::atualizaRelogio()
 
     ui->lb_relogio->setText(tempoTexto);
 }
+
+/**FUNÇÕES**/
 /*
  *--------------------------------------------------------------------------------------------
  * Autor: Thiago Ianzer                                                                       |

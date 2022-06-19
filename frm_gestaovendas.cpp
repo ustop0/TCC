@@ -30,7 +30,7 @@ frm_gestaovendas::frm_gestaovendas(QWidget *parent) :
     ui->tw_listaVendas->setHorizontalHeaderLabels( cabe1 );
     //definindo cor da linha ao ser selecionada
     ui->tw_listaVendas->setStyleSheet("QTableView "
-                                      "{selection-background-color:red}");
+                                      "{selection-background-color:#F7BA4D}");
 
     //redimenciona de acordo com o tamanho do conteúdo
     ui->tw_listaVendas->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
@@ -100,7 +100,7 @@ frm_gestaovendas::frm_gestaovendas(QWidget *parent) :
 
     ui->tw_listaProdutos->setHorizontalHeaderLabels(cabe2);
     ui->tw_listaProdutos->setStyleSheet("QTableView "
-                                      "{selection-background-color:red}");
+                                      "{selection-background-color:#F7BA4D}");
 
     ui->tw_listaProdutos->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->tw_listaProdutos->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);

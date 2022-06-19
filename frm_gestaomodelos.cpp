@@ -43,7 +43,7 @@ frm_modelos::frm_modelos(QWidget *parent) :
     ui->tw_listamarcas->setHorizontalHeaderLabels( cabecalho1 );
     //definindo cor da linha ao ser selecionada
     ui->tw_listamarcas->setStyleSheet("QTableView "
-                                      "{selection-background-color:red}");
+                                      "{selection-background-color:#F7BA4D}");
 
     //desabilita a edição dos registros pelo table widget
     ui->tw_listamarcas->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -65,7 +65,7 @@ frm_modelos::frm_modelos(QWidget *parent) :
     ui->tw_listamodelos->setHorizontalHeaderLabels( cabecalho2 );
     //definindo cor da linha ao ser selecionada
     ui->tw_listamodelos->setStyleSheet("QTableView "
-                                      "{selection-background-color:red}");
+                                      "{selection-background-color:#F7BA4D}");
 
     //desabilita a edição dos registros pelo table widget
     ui->tw_listamodelos->setEditTriggers(QAbstractItemView::NoEditTriggers);
