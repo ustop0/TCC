@@ -96,7 +96,27 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-    Imagens/splash.png
+    Imagens/splash.png \
+    bkBanco/dbAmincar \
+    bkBanco/tables/a000_relacionamentos.sql \
+    bkBanco/tables/a001_usuario.sql \
+    bkBanco/tables/a002_estoque.sql \
+    bkBanco/tables/a003_fornecedor.sql \
+    bkBanco/tables/a004_veiculos.sql \
+    bkBanco/tables/a005_cliente.sql \
+    bkBanco/tables/a006_estoque_vendas.sql \
+    bkBanco/tables/a007_vendas.sql \
+    bkBanco/tables/a008_tempos_movimentos.sql \
+    bkBanco/tables/a009_agenda_servicos.sql \
+    bkBanco/tables/a010_OS.sql \
+    bkBanco/tables/a011_marcas.sql \
+    bkBanco/tables/a012_modelos.sql \
+    bkBanco/tables/a013_estado.sql \
+    bkBanco/tables/a014_cidade.sql \
+    bkBanco/tables/a015_condutores.sql \
+    bkBanco/tables/comandos.sql \
+    bkBanco/tables/dbAmincar \
+    bkBanco/tables/imp.txt
 
 RESOURCES += \
     Imagens.qrc

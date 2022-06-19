@@ -46,8 +46,9 @@ frm_gestaoesotque::frm_gestaoesotque(QWidget *parent) :
     //**Estilizando layout dos table widgets**
     //--FORNECEDORES--
     ui->tw_nv_listafornecedores->setColumnCount(7);
-    ui->tw_nv_listafornecedores->setColumnWidth(0, 100);
-    ui->tw_nv_listafornecedores->setColumnWidth(1, 100);
+    ui->tw_nv_listafornecedores->setColumnWidth(0, 40);
+    ui->tw_nv_listafornecedores->setColumnWidth(1, 150);
+    ui->tw_nv_listafornecedores->setColumnWidth(2, 150);
 
     //cabeçalhos do table widget fornecedores
     QStringList cabecalho1={"Código", "Razão Social", "Nome Fantasia"

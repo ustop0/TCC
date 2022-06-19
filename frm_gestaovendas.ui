@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>755</width>
-    <height>672</height>
+    <height>632</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,17 +30,17 @@
    <property name="geometry">
     <rect>
      <x>23</x>
-     <y>363</y>
+     <y>345</y>
      <width>711</width>
-     <height>261</height>
+     <height>231</height>
     </rect>
    </property>
   </widget>
   <widget class="QPushButton" name="btn_relatorio">
    <property name="geometry">
     <rect>
-     <x>590</x>
-     <y>641</y>
+     <x>596</x>
+     <y>600</y>
      <width>151</width>
      <height>25</height>
     </rect>
@@ -107,7 +107,7 @@
      <x>10</x>
      <y>67</y>
      <width>736</width>
-     <height>260</height>
+     <height>241</height>
     </rect>
    </property>
    <property name="title">
@@ -119,7 +119,7 @@
       <x>13</x>
       <y>31</y>
       <width>711</width>
-      <height>220</height>
+      <height>201</height>
      </rect>
     </property>
    </widget>
@@ -128,9 +128,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>333</y>
+     <y>315</y>
      <width>736</width>
-     <height>301</height>
+     <height>271</height>
     </rect>
    </property>
    <property name="title">
