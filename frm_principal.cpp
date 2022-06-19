@@ -29,7 +29,8 @@ Frm_principal::Frm_principal(QWidget *parent)
 {
     ui->setupUi(this);
 
-    Conexao dadosBanco; //instanciando banco
+    //**Desabilita a maximixação do formulário
+    setFixedSize(this->geometry().width(),this->geometry().height());
 
     //**ATENÇÃO** Função atualiza relógio não pode ser chamada diretamento
     //atualizaRelogio();
@@ -40,9 +41,8 @@ Frm_principal::Frm_principal(QWidget *parent)
 
 
     //barra de status, utilizando variaveis_globais e atributos da ConexaoBanco
-
     QString nome_usuario = "Usuário: " + variaveis_globais::username_colab;
-    QString base_dados = "Base de dados: " + dadosBanco.banco_nome;
+    QString base_dados = "Base de dados: " + con.banco_nome;
 
     ui->lb_nome_usuario->setText( nome_usuario );
     ui->lb_base_dados->setText( base_dados );
@@ -64,6 +64,9 @@ Frm_principal::Frm_principal(QWidget *parent)
 
 
     //ui->statusbar->showMessage("TESTE", 4000);
+
+    //Configuranto TW
+    conf_tw_listaservicos();
 }
 
 Frm_principal::~Frm_principal()//**INICIO** destrutor
@@ -170,7 +173,14 @@ void Frm_principal::on_actionSair_triggered()
 }
 
 /**FUNÇÕES**/
-//relógio da barra de status do sistema
+/*
+ *--------------------------------------------------------------------------------------------
+ * Autor: Thiago Ianzer                                                                       |
+ * Data: 13/03/2022                                                                           |
+ * Propósito: Relógio da barra de status do sistema                                           |
+ * Chamada: Construtor da classe                                                              |
+ *--------------------------------------------------------------------------------------------
+ */
 void Frm_principal::atualizaRelogio()
 {
     QTime tempoAtual = QTime::currentTime();
@@ -178,8 +188,141 @@ void Frm_principal::atualizaRelogio()
 
     ui->lb_relogio->setText("Relógio: " +tempoTexto);
 }
+/*
+ *--------------------------------------------------------------------------------------------
+ * Autor: Thiago Ianzer                                                                       |
+ * Data: 19/06/2022                                                                           |
+ * Propósito: Configurar tw_listaservicos                                                     |
+ * Chamada: Construtor da classe                                                              |
+ *--------------------------------------------------------------------------------------------
+ */
+void Frm_principal::conf_tw_listaservicos()
+{
+    //**Estilizando layout da table widget**
+    //definindo o tamanho das colunas
+    ui->tw_listaservicos->setColumnCount(9);
+    ui->tw_listaservicos->setColumnWidth(0, 40);
+    ui->tw_listaservicos->setColumnWidth(1, 150);
+    ui->tw_listaservicos->setColumnWidth(4, 150);
+    ui->tw_listaservicos->setColumnWidth(5, 150);
+    ui->tw_listaservicos->setColumnWidth(7, 200);
+    ui->tw_listaservicos->setColumnWidth(8, 130); //status
 
-/**FUNÇÕES**/
+    //cabeçalhos do table widget
+    QStringList cabecalhos={"Código", "Cliente","Data", "Hora", "Serviço"
+                            ,"Modelo Veículo", "Placa Veículo", "Observação", "Status"};
+
+    ui->tw_listaservicos->setHorizontalHeaderLabels(cabecalhos);
+    //definindo cor da linha ao ser selecionada
+    ui->tw_listaservicos->setStyleSheet("QTableView "
+                                      "{selection-background-color:#F7BA4D}");
+
+    //desabilita a edição dos registros pelo table widget
+    ui->tw_listaservicos->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    //selecionar a linha inteira quando clickar em uma celula
+    ui->tw_listaservicos->setSelectionBehavior(QAbstractItemView::SelectRows);
+    //desabilitando os indices das linhas
+    ui->tw_listaservicos->verticalHeader()->setVisible(false);
+
+
+    //abrindo a conexao com o banco
+    if( !con.abrir() )
+    {
+        if( !con.abrir() )
+        {
+            QMessageBox::warning(this, "ERRO", "Erro ao abrir banco de dados");
+        }
+    }
+
+    //**Listando serviços no TW**
+    //limpa as linhas do table widget
+    funcoes_globais::removerLinhas( ui->tw_listaservicos );
+
+    //inserir linhas dentro do table widget
+    int contlinhas = 0;
+    //Remover os produtos do table widget
+
+    //filtra pelas datas equivalentes a um período de 7 dias
+    QSqlQuery query;
+    query.prepare("SELECT "
+                      "a009_codigo                        "
+                      ",a005_nome                         "
+                      ",TO_CHAR(a009_data, 'DD/MM/YYYY')  "
+                      ",a009_hora                         "
+                      ",a009_servico                      "
+                      ",a012_nome_veiculo                 "
+                      ",a004_placa_veiculo                "
+                      ",a009_observacao                   "
+                      ",a009_status                       "
+                  "FROM "
+                      "a009_agenda_servicos "
+                      "JOIN a005_cliente ON (a005_codigo = a009_fk_codigo_cliente)  "
+                      "JOIN a004_veiculos ON (a004_codigo = a009_fk_codigo_veiculo) "
+                      "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo)   "
+                  "WHERE "
+                    "a009_data BETWEEN CURRENT_DATE - 20  AND   CURRENT_DATE + 6 "
+                    "AND a009_status = 'Pendente'                           "
+                    "AND a009_ativo = true                                  "
+                  "ORDER BY "
+                      "a009_codigo DESC ");
+
+    if( query.exec() ) //verifica se ouve algum erro na execução da query
+    {
+        //enquanto a query tiver retornando next, insere linhas dentro do table widget
+        while( query.next() )
+        {
+            //inserindo com contador de linhas, por index
+            ui->tw_listaservicos->insertRow( contlinhas );
+            ui->tw_listaservicos->setItem(contlinhas
+                                        , 0
+                                        , new QTableWidgetItem(query.value(0).toString()));
+
+            ui->tw_listaservicos->setItem(contlinhas
+                                        , 1
+                                        , new QTableWidgetItem(query.value(1).toString()));
+
+            ui->tw_listaservicos->setItem(contlinhas
+                                        , 2
+                                        , new QTableWidgetItem(query.value(2).toString()));
+
+            ui->tw_listaservicos->setItem(contlinhas
+                                        , 3
+                                        , new QTableWidgetItem(query.value(3).toString()));
+
+            ui->tw_listaservicos->setItem(contlinhas
+                                        , 4
+                                        , new QTableWidgetItem(query.value(4).toString()));
+
+            ui->tw_listaservicos->setItem(contlinhas
+                                        , 5
+                                        , new QTableWidgetItem(query.value(5).toString()));
+
+            ui->tw_listaservicos->setItem(contlinhas
+                                        , 6
+                                        , new QTableWidgetItem(query.value(6).toString()));
+
+            ui->tw_listaservicos->setItem(contlinhas
+                                        , 7
+                                        , new QTableWidgetItem(query.value(7).toString()));
+
+            ui->tw_listaservicos->setItem(contlinhas
+                                        , 8
+                                        , new QTableWidgetItem(query.value(8).toString()));
+
+            //definindo o tamanho das linhas
+            ui->tw_listaservicos->setRowHeight(contlinhas, 20);
+            contlinhas ++;
+        }
+    }
+    else
+    {
+        QMessageBox::warning(this, "ERRO", "Erro ao listar serviços");
+    }
+
+    //fechando conexao
+    con.fechar();
+}
+
 /*
  *--------------------------------------------------------------------------------------------
  * Autor: Thiago Ianzer                                                                       |

@@ -177,7 +177,7 @@
     <widget class="QPlainTextEdit" name="Ptxt_detalhesServico">
      <property name="geometry">
       <rect>
-       <x>13</x>
+       <x>11</x>
        <y>514</y>
        <width>201</width>
        <height>91</height>
@@ -187,7 +187,7 @@
     <widget class="QLabel" name="label_5">
      <property name="geometry">
       <rect>
-       <x>13</x>
+       <x>12</x>
        <y>494</y>
        <width>121</width>
        <height>17</height>
@@ -239,7 +239,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Peças O.S.</string>
+       <string>Peças O.S.:</string>
       </property>
      </widget>
      <widget class="QLabel" name="lbl_pecasModelo">
@@ -497,7 +497,7 @@
       <rect>
        <x>7</x>
        <y>314</y>
-       <width>761</width>
+       <width>791</width>
        <height>251</height>
       </rect>
      </property>
@@ -554,7 +554,7 @@
       <rect>
        <x>7</x>
        <y>64</y>
-       <width>761</width>
+       <width>791</width>
        <height>241</height>
       </rect>
      </property>
@@ -566,7 +566,7 @@
        <rect>
         <x>11</x>
         <y>31</y>
-        <width>741</width>
+        <width>771</width>
         <height>201</height>
        </rect>
       </property>
@@ -575,9 +575,9 @@
     <widget class="QTableWidget" name="tw_listaPecasOS">
      <property name="geometry">
       <rect>
-       <x>17</x>
+       <x>98</x>
        <y>345</y>
-       <width>741</width>
+       <width>610</width>
        <height>211</height>
       </rect>
      </property>

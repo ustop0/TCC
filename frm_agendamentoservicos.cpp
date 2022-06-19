@@ -45,7 +45,10 @@ frm_agendamentoservicos::frm_agendamentoservicos(QWidget *parent, QString c_codi
     //definindo o tamanho das colunas
     ui->tw_listaservicos->setColumnCount(9);
     ui->tw_listaservicos->setColumnWidth(0, 40);
-    ui->tw_listaservicos->setColumnWidth(1, 200);
+    ui->tw_listaservicos->setColumnWidth(1, 150);
+    ui->tw_listaservicos->setColumnWidth(2, 150);
+    ui->tw_listaservicos->setColumnWidth(6, 150);
+    ui->tw_listaservicos->setColumnWidth(7, 200);
 
     //cabeçalhos do table widget
     QStringList cabecalhos={"Código", "Cliente", "Modelo Veículo", "Placa Veículo"

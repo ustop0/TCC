@@ -34,6 +34,9 @@ public slots:
     //relógio da barra de status do sistema
     void atualizaRelogio();
 
+    //configura TW lista serviços
+    void conf_tw_listaservicos();
+
     //backup do banco de dados do sistema
     //void closeEvent( QCloseEvent *event );
 

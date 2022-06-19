@@ -1273,8 +1273,8 @@ void frm_ordemservico::conf_tw_ge_listaOS()
     ui->tw_listaOS->setColumnCount(13);
     ui->tw_listaOS->setColumnWidth(0, 40);
     ui->tw_listaOS->setColumnWidth(1, 150);
-    ui->tw_listaOS->setColumnWidth(8, 150); //status
-    ui->tw_listaOS->setColumnWidth(13, 400); //detalhes
+    ui->tw_listaOS->setColumnWidth(7, 130); //status
+    ui->tw_listaOS->setColumnWidth(12, 300); //detalhes
 
     //cabeçalhos do table widget
     QStringList cabecalho3={"Código", "Cliente", "Veículo", "Placa","Cor"

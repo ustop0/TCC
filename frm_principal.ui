@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>780</width>
+    <width>900</width>
     <height>540</height>
    </rect>
   </property>
@@ -17,8 +17,8 @@
    <widget class="QLabel" name="lb_base_dados">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>400</y>
+      <x>160</x>
+      <y>450</y>
       <width>101</width>
       <height>20</height>
      </rect>
@@ -36,8 +36,8 @@
    <widget class="QLabel" name="lb_nome_usuario">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>400</y>
+      <x>20</x>
+      <y>450</y>
       <width>67</width>
       <height>17</height>
      </rect>
@@ -49,8 +49,8 @@
    <widget class="QLabel" name="lb_relogio">
     <property name="geometry">
      <rect>
-      <x>580</x>
-      <y>400</y>
+      <x>440</x>
+      <y>450</y>
       <width>67</width>
       <height>17</height>
      </rect>
@@ -62,8 +62,8 @@
    <widget class="Line" name="line_2">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>380</y>
+      <x>100</x>
+      <y>430</y>
       <width>20</width>
       <height>41</height>
      </rect>
@@ -81,8 +81,8 @@
    <widget class="Line" name="line_3">
     <property name="geometry">
      <rect>
-      <x>410</x>
-      <y>380</y>
+      <x>270</x>
+      <y>430</y>
       <width>20</width>
       <height>41</height>
      </rect>
@@ -100,8 +100,8 @@
    <widget class="Line" name="line_4">
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>380</y>
+      <x>400</x>
+      <y>430</y>
       <width>20</width>
       <height>41</height>
      </rect>
@@ -119,8 +119,8 @@
    <widget class="QLabel" name="lb_data">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>400</y>
+      <x>290</x>
+      <y>450</y>
       <width>111</width>
       <height>17</height>
      </rect>
@@ -145,13 +145,35 @@
      <pixmap resource="Imagens.qrc">:/Imagens/logo_menu.png</pixmap>
     </property>
    </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>20</y>
+      <width>561</width>
+      <height>351</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:700;&quot;&gt;Serviços da semana:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTableWidget" name="tw_listaservicos"/>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>780</width>
+     <width>900</width>
      <height>22</height>
     </rect>
    </property>
