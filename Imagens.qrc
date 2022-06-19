@@ -1,7 +1,9 @@
 <RCC>
     <qresource prefix="/Imagens"/>
     <qresource prefix="/">
-        <file>Imagens/splash.png</file>
         <file>Imagens/car.png</file>
+        <file>Imagens/splash.png</file>
+        <file>Imagens/logo_login.png</file>
+        <file>Imagens/logo_menu.png</file>
     </qresource>
 </RCC>

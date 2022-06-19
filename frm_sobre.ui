@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>389</width>
-    <height>266</height>
+    <height>299</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,21 +16,24 @@
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>130</x>
-     <y>30</y>
-     <width>121</width>
-     <height>71</height>
+     <x>100</x>
+     <y>20</y>
+     <width>201</width>
+     <height>91</height>
     </rect>
    </property>
    <property name="text">
-    <string>LOGO</string>
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="Imagens.qrc">:/Imagens/logo_login.png</pixmap>
    </property>
   </widget>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>15</x>
-     <y>140</y>
+     <x>17</x>
+     <y>162</y>
      <width>351</width>
      <height>111</height>
     </rect>
@@ -67,6 +70,8 @@
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="Imagens.qrc"/>
+ </resources>
  <connections/>
 </ui>

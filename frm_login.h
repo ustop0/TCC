@@ -12,6 +12,7 @@
 #include "funcoes_globais.h"
 #include "variaveis_globais.h" //variaveis globais do programa
 
+
 namespace Ui {
 class Frm_login;
 }

@@ -55,6 +55,7 @@ Frm_principal::Frm_principal(QWidget *parent)
     ui->statusbar->addPermanentWidget( ui->lb_data );
     ui->statusbar->addPermanentWidget( ui->line_4 );
     ui->statusbar->addPermanentWidget( ui->lb_relogio );
+    ui->statusbar->addPermanentWidget( ui->line );
 
     //ui->statusbar->showMessage("TESTE", 4000);
 }
@@ -169,7 +170,7 @@ void Frm_principal::atualizaRelogio()
     QTime tempoAtual = QTime::currentTime();
     QString tempoTexto = tempoAtual.toString("hh:mm:ss");
 
-    ui->lb_relogio->setText(tempoTexto);
+    ui->lb_relogio->setText("Relógio: " +tempoTexto);
 }
 
 /**FUNÇÕES**/

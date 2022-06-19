@@ -6,71 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>668</width>
-    <height>409</height>
+    <width>780</width>
+    <height>580</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Menu</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>89</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>PushButton</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_2">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>20</y>
-      <width>89</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>PushButton</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_3">
-    <property name="geometry">
-     <rect>
-      <x>190</x>
-      <y>20</y>
-      <width>89</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>PushButton</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_4">
-    <property name="geometry">
-     <rect>
-      <x>280</x>
-      <y>20</y>
-      <width>89</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>PushButton</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="lb_base_dados">
     <property name="geometry">
      <rect>
       <x>300</x>
-      <y>320</y>
+      <y>400</y>
       <width>101</width>
       <height>20</height>
      </rect>
@@ -89,7 +37,7 @@
     <property name="geometry">
      <rect>
       <x>160</x>
-      <y>320</y>
+      <y>400</y>
       <width>67</width>
       <height>17</height>
      </rect>
@@ -102,7 +50,7 @@
     <property name="geometry">
      <rect>
       <x>580</x>
-      <y>320</y>
+      <y>400</y>
       <width>67</width>
       <height>17</height>
      </rect>
@@ -115,9 +63,9 @@
     <property name="geometry">
      <rect>
       <x>-2</x>
-      <y>359</y>
-      <width>700</width>
-      <height>10</height>
+      <y>437</y>
+      <width>751</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="frameShadow">
@@ -134,7 +82,7 @@
     <property name="geometry">
      <rect>
       <x>240</x>
-      <y>300</y>
+      <y>380</y>
       <width>20</width>
       <height>41</height>
      </rect>
@@ -153,7 +101,7 @@
     <property name="geometry">
      <rect>
       <x>410</x>
-      <y>300</y>
+      <y>380</y>
       <width>20</width>
       <height>41</height>
      </rect>
@@ -172,7 +120,7 @@
     <property name="geometry">
      <rect>
       <x>540</x>
-      <y>300</y>
+      <y>380</y>
       <width>20</width>
       <height>41</height>
      </rect>
@@ -191,7 +139,7 @@
     <property name="geometry">
      <rect>
       <x>430</x>
-      <y>320</y>
+      <y>400</y>
       <width>111</width>
       <height>17</height>
      </rect>
@@ -200,13 +148,29 @@
      <string>Data</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>70</y>
+      <width>301</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="Imagens.qrc">:/Imagens/logo_menu.png</pixmap>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>668</width>
+     <width>780</width>
      <height>22</height>
     </rect>
    </property>
@@ -325,6 +289,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="Imagens.qrc"/>
+ </resources>
  <connections/>
 </ui>
