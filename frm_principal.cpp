@@ -48,6 +48,12 @@ Frm_principal::Frm_principal(QWidget *parent)
     ui->lb_base_dados->setText( base_dados );
     ui->lb_data->setText( "Data: " + QDate::currentDate().toString("dd/MM/yyyy") );
 
+    ui->line_2->setStyleSheet("color: grey");
+    ui->line_3->setStyleSheet("color: grey");
+    ui->line_4->setStyleSheet("color: grey");
+
+    //teste estilo
+    ui->statusbar->setStyleSheet("QStatusBar{border-top: 1px outset grey; border: 1px outset grey;}");
     ui->statusbar->addPermanentWidget( ui->lb_nome_usuario );
     ui->statusbar->addPermanentWidget( ui->line_2 );
     ui->statusbar->addPermanentWidget( ui->lb_base_dados );
@@ -55,7 +61,7 @@ Frm_principal::Frm_principal(QWidget *parent)
     ui->statusbar->addPermanentWidget( ui->lb_data );
     ui->statusbar->addPermanentWidget( ui->line_4 );
     ui->statusbar->addPermanentWidget( ui->lb_relogio );
-    ui->statusbar->addPermanentWidget( ui->line );
+
 
     //ui->statusbar->showMessage("TESTE", 4000);
 }
