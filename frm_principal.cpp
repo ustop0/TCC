@@ -32,15 +32,15 @@ Frm_principal::Frm_principal(QWidget *parent)
     //**Desabilita a maximixação do formulário
     setFixedSize(this->geometry().width(),this->geometry().height());
 
-    //**ATENÇÃO** Função atualiza relógio não pode ser chamada diretamento
-    //atualizaRelogio();
+
+     //**Barra de status**
+    //**ATENÇÃO** Função atualizaRelogio() não pode ser chamada diretamento
     //--Configurando barra de status--
     tempo = new QTimer(this);
     connect( tempo, SIGNAL( timeout() ),this, SLOT( atualizaRelogio() ) );
     tempo->start( 1000 );
 
-
-    //barra de status, utilizando variaveis_globais e atributos da ConexaoBanco
+    //utilizando variaveis_globais e atributos da ConexaoBanco
     QString nome_usuario = "Usuário: " + variaveis_globais::username_colab;
     QString base_dados = "Base de dados: " + con.banco_nome;
 
@@ -52,7 +52,6 @@ Frm_principal::Frm_principal(QWidget *parent)
     ui->line_3->setStyleSheet("color: grey");
     ui->line_4->setStyleSheet("color: grey");
 
-    //teste estilo
     ui->statusbar->setStyleSheet("QStatusBar{border-top: 1px outset grey; border: 1px outset grey;}");
     ui->statusbar->addPermanentWidget( ui->lb_nome_usuario );
     ui->statusbar->addPermanentWidget( ui->line_2 );
@@ -62,10 +61,9 @@ Frm_principal::Frm_principal(QWidget *parent)
     ui->statusbar->addPermanentWidget( ui->line_4 );
     ui->statusbar->addPermanentWidget( ui->lb_relogio );
 
-
     //ui->statusbar->showMessage("TESTE", 4000);
 
-    //Configuranto TW
+    //**Configuranto TW**
     conf_tw_listaservicos();
 }
 
@@ -78,7 +76,7 @@ Frm_principal::~Frm_principal()//**INICIO** destrutor
 void Frm_principal::on_actionUsu_rios_triggered()
 {
     //está apresentando erro, conferir
-    if(variaveis_globais::acesso_colab != 'A') //verifica a permissao de acesso do colaborador
+    if(variaveis_globais::acesso_colab == 'A') //verifica a permissao de acesso do colaborador
     {
         frm_gestaousuarios f_gestaousuarios;
         f_gestaousuarios.exec();
