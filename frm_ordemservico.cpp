@@ -23,6 +23,8 @@ frm_ordemservico::frm_ordemservico(QWidget *parent, QString c_codigo_cliente
         }
     }
 
+    //configurando datas
+    ui->de_entrada->setDate( QDate::currentDate() );
 
     //define o Novo Produto de index(0) como aba padrão(que inicia ao ser aberta a interface)
     ui->tabWidget->setCurrentIndex(0);

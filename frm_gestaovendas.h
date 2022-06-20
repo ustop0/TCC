@@ -37,6 +37,8 @@ public:
 private slots:
     void on_tw_listaVendas_itemSelectionChanged();
 
+    void on_lineEdit_returnPressed();
+
     void on_btn_filtrar_clicked();
 
     void on_btn_mostratTodasVendas_clicked();

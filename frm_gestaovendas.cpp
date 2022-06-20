@@ -17,6 +17,18 @@ frm_gestaovendas::frm_gestaovendas(QWidget *parent) :
     }
 
     //**LISTA VENDAS**
+
+    //definindo campo de foco
+    ui->txt_filtrar->setFocus();
+
+    //configurando combo box
+    ui->cb_filtro->addItem("-");
+    ui->cb_filtro->addItem("Usuário");
+
+    //configurando data
+    ui->de_datainicial->setDate( QDate::currentDate() );
+    ui->de_datafinal->setDate( QDate::currentDate() );
+
     //tornar o cabeçalho horizontal visivel
     ui->tw_listaVendas->horizontalHeader()->setVisible(true);
     //definindo numero de colunas, são seis colunas
@@ -58,7 +70,9 @@ frm_gestaovendas::frm_gestaovendas(QWidget *parent) :
                     "a007_vendas "
                     "JOIN a001_usuarios ON (a001_codigo = a007_fk_codigo_usuario) "
                   "WHERE "
-                    "a007_ativo = true");
+                    "a007_ativo = true "
+                  "ORDER BY "
+                    "a007_codigo DESC");
 
     if( !query.exec() ) //verifica se a query tem algum erro e executa ela
     {
@@ -175,67 +189,155 @@ void frm_gestaovendas::on_tw_listaVendas_itemSelectionChanged()
     }while( query.next() );
 }
 
+void frm_gestaovendas::on_lineEdit_returnPressed()
+{
+    frm_gestaovendas::on_btn_filtrar_clicked();
+}
+
 //btn filtrar vendas por data
 void frm_gestaovendas::on_btn_filtrar_clicked()
 {
-    //limpando table widget
-    funcoes_globais::removerLinhas( ui->tw_listaVendas );
-
-    int contlinhas=0;
-
+    //dados filtro
+    QString cb_filtro = ui->cb_filtro->currentText();
+    QString txt_filtrar = ui->txt_filtrar->text();
     QString data_inicial = ui->de_datainicial->text();
     QString data_final = ui->de_datafinal->text();
 
+    QString busca; //armazena busca
+    QString filtro_sql;
+
+    QStringList cb_opc; //Dados do combo box
+    cb_opc << "-" << "Usuário";
+
+    //limpando table widget
+    funcoes_globais::removerLinhas( ui->tw_listaVendas );
+
+    //verificando se algo foi digitado no campo de filtro
+    if( ui->txt_filtrar->text() == "" )
+    {
+        if( cb_filtro == "" ) //consulta de acordo com o radio selecionado
+        {
+            busca = "SELECT "
+                        "a007_codigo                              "
+                        ",a001_nome                               "
+                        ",TO_CHAR(a007_data_venda, 'DD/MM/YYYY')  "
+                        ",a007_hora_venda                         "
+                        ",a007_valor_total                        "
+                        ",a007_margem_lucro                       "
+                    "FROM "
+                        "a007_vendas "
+                        "JOIN a001_usuarios ON (a001_codigo = a007_fk_codigo_usuario) "
+                    "WHERE "
+                        "a007_ativo = true "
+                    "ORDER BY "
+                        "a007_codigo DESC";
+        }
+        else
+        {
+            busca = "SELECT "
+                        "a007_codigo                              "
+                        ",a001_nome                               "
+                        ",TO_CHAR(a007_data_venda, 'DD/MM/YYYY')  "
+                        ",a007_hora_venda                         "
+                        ",a007_valor_total                        "
+                        ",a007_margem_lucro                       "
+                    "FROM "
+                        "a007_vendas "
+                        "JOIN a001_usuarios ON (a001_codigo = a007_fk_codigo_usuario) "
+                    "WHERE "
+                        "a007_ativo = true "
+                    "ORDER BY "
+                        "a007_codigo DESC";
+        }
+    }
+    else
+    {
+        //consulta de acordo com a seleção do combo box
+        switch( cb_opc.indexOf( cb_filtro ) )
+        {
+            // "-"
+            case 0:
+
+                filtro_sql = "a007_data_venda BETWEEN '" +data_inicial+ "' AND '" +data_final+ "' ";
+                break;
+            //usuário
+            case 1:
+                filtro_sql = "a001_nome LIKE '%" +txt_filtrar+ "%' "
+                             "AND a007_data_venda BETWEEN '" +data_inicial+ "' AND '" +data_final+ "' ";
+
+                break;
+            default:
+                qDebug() << "_Houve um problema ao filtrar realizar o filtro(swith case)";
+                break;
+        }
+
+        busca = "SELECT "
+                    "a007_codigo                              "
+                    ",a001_nome                               "
+                    ",TO_CHAR(a007_data_venda, 'DD/MM/YYYY')  "
+                    ",a007_hora_venda                         "
+                    ",a007_valor_total                        "
+                    ",a007_margem_lucro                       "
+                "FROM "
+                    "a007_vendas "
+                    "JOIN a001_usuarios ON (a001_codigo = a007_fk_codigo_usuario) "
+                "WHERE "
+                    + filtro_sql +
+                    "AND a007_ativo = true "
+                "ORDER BY "
+                    "a007_codigo DESC";
+    }
+
+    int contlinhas = 0;
     QSqlQuery query;
-
     //mudar formatação de data no banco de dados, tela novavenda e nos campos de data na interface
-    query.prepare("SELECT "
-                      "a007_codigo                              "
-                      ",a001_nome                               "
-                      ",TO_CHAR(a007_data_venda, 'DD/MM/YYYY')  "
-                      ",a007_hora_venda                         "
-                      ",a007_valor_total                        "
-                      ",a007_margem_lucro                       "
-                 "FROM "
-                     "a007_vendas "
-                     "JOIN a001_usuarios ON (a001_codigo = a007_fk_codigo_usuario) "
-                 "WHERE "
-                    "a007_ativo = true "
-                    "AND a007_data_venda "
-                  "BETWEEN '" +data_inicial+ "' AND '" +data_final+ "'");
+    query.prepare( busca );
 
-    if( !query.exec() )
+    if( query.exec() ) //executa a query
+    {
+        while( query.next() ) //percorrendo query e preenchendo table widget
+        {
+            //inserindo com contador de linhas, por index
+            ui->tw_listaVendas->insertRow( contlinhas );
+            ui->tw_listaVendas->setItem(contlinhas
+                                        , 0
+                                        , new QTableWidgetItem(query.value(0).toString()));
+
+            ui->tw_listaVendas->setItem(contlinhas
+                                        , 1
+                                        , new QTableWidgetItem(query.value(1).toString()));
+
+            ui->tw_listaVendas->setItem(contlinhas
+                                        , 2
+                                        , new QTableWidgetItem(query.value(2).toString()));
+
+            ui->tw_listaVendas->setItem(contlinhas
+                                        , 3
+                                        , new QTableWidgetItem(query.value(3).toString()));
+
+            ui->tw_listaVendas->setItem(contlinhas
+                                        , 4
+                                        , new QTableWidgetItem(query.value(4).toString()));
+
+            ui->tw_listaVendas->setItem(contlinhas
+                                        , 5
+                                        , new QTableWidgetItem(query.value(5).toString()));
+
+            //definindo o tamanho das linhas
+            ui->tw_listaVendas->setRowHeight(contlinhas, 20);
+            contlinhas ++;
+        }
+    }
+    else
     {
         QMessageBox::warning(this, "ERRO", "Erro ao filtrar vendas");
-
     }
-    query.first();
 
-    //inserindo elementos no table widget
-    do
-    {
-        //linha, coluna e item
-        ui->tw_listaVendas->insertRow(contlinhas);
-        ui->tw_listaVendas->setItem(contlinhas, 0,
-                                            new QTableWidgetItem(query.value(0).toString()));
-
-        ui->tw_listaVendas->setItem(contlinhas, 1,
-                                            new QTableWidgetItem(query.value(1).toString()));
-
-        ui->tw_listaVendas->setItem(contlinhas, 2,
-                                            new QTableWidgetItem(query.value(2).toString()));
-
-        ui->tw_listaVendas->setItem(contlinhas, 3,
-                                            new QTableWidgetItem(query.value(3).toString()));
-
-        ui->tw_listaVendas->setItem(contlinhas, 4,
-                                            new QTableWidgetItem(query.value(4).toString()));
-
-        ui->tw_listaVendas->setItem(contlinhas, 5,
-                                            new QTableWidgetItem(query.value(5).toString()));
-
-        contlinhas++;
-    }while( query.next() );
+    //apagar conteudo do campo txt_ge_filtrar toda vez que clickar em filtrar
+    ui->de_datainicial->setDate( QDate::currentDate() );
+    ui->de_datafinal->setDate( QDate::currentDate() );
+    ui->txt_filtrar->clear();
+    ui->txt_filtrar->setFocus(); //posiciona o cursos no campo novamente
 }
 
 //btn mostra todas as vendas
@@ -244,9 +346,6 @@ void frm_gestaovendas::on_btn_mostratTodasVendas_clicked()
     funcoes_globais::removerLinhas( ui->tw_listaVendas );
 
     int contlinhas = 0;
-
-//    QStringList cabe2 = {"Código Mov", "Produto", "Qtde"
-//                         , "Val.Uni", "Val.Total", "M.Lucro"};
 
     QSqlQuery query;
 
@@ -262,7 +361,9 @@ void frm_gestaovendas::on_btn_mostratTodasVendas_clicked()
                       "a007_vendas "
                       "JOIN a001_usuarios ON (a001_codigo = a007_fk_codigo_usuario) "
                   "WHERE "
-                      "a007_ativo = true ");
+                      "a007_ativo = true "
+                  "ORDER BY "
+                    "a007_codigo DESC");
 
     if(!query.exec())
     {

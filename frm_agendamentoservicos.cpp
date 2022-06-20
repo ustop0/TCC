@@ -41,6 +41,9 @@ frm_agendamentoservicos::frm_agendamentoservicos(QWidget *parent, QString c_codi
     ui->cb_ge_status->addItem("Realizado");
     ui->cb_ge_status->addItem("Cancelado");
 
+    //configurando datas
+    ui->de_data->setDate( QDate::currentDate() );
+
     //**Estilizando layout da table widget**
     //definindo o tamanho das colunas
     ui->tw_listaservicos->setColumnCount(9);
