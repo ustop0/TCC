@@ -36,10 +36,10 @@ public slots:
 
     void validaCEP( const QString &cep );
 
-private slots:
-    void on_txt_nv_cep_returnPressed(); //pressiona campo cep
-
+private slots:    
     void on_btn_nv_validacep_clicked();
+
+    void on_txt_nv_cep_returnPressed(); //pressiona campo cep
 
     void on_btn_nv_cadastrarveiculo_clicked();
 

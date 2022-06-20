@@ -67,18 +67,18 @@ frm_gestaoclientes::~frm_gestaoclientes()//**INICIO** destrutor
     delete ui;
 }
 
-//pressiona campo cep, chama api
-void frm_gestaoclientes::on_txt_nv_cep_returnPressed()
-{
-    frm_gestaoclientes::on_btn_nv_validacep_clicked();
-}
-
 //btn valida cep
 void frm_gestaoclientes::on_btn_nv_validacep_clicked()
 {
     QString cep = ui->txt_nv_cep->text();
     //validando cep
     validaCEP( cep );
+}
+
+//pressiona campo cep, chama api
+void frm_gestaoclientes::on_txt_nv_cep_returnPressed()
+{
+    frm_gestaoclientes::on_btn_nv_validacep_clicked();
 }
 
 //tela de cadastro de veiculos
@@ -190,7 +190,8 @@ void frm_gestaoclientes::on_btn_nv_gravar_clicked()
 //quando trocar o tab widget, atualiza o table widget
 void frm_gestaoclientes::on_tabWidget_currentChanged(int index)
 {
-    if( index == 1 ) //verifica a interface pelo index das tabs
+    //verifica a interface pelo index das tabs
+    if( index == 1 )
     {
         //carregando os clientes no tablewidget
         //limpa as linhas do table widget
@@ -215,7 +216,7 @@ void frm_gestaoclientes::on_tabWidget_currentChanged(int index)
                           ",a005_telefone                            "
                       "FROM "
                           "a005_cliente "
-                          "JOIN a004_veiculos ON (a005_codigo = a.toUpper()004_fk_codigo_cliente) "
+                          "JOIN a004_veiculos ON (a005_codigo = a004_fk_codigo_cliente) "
                           "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo)   "
                           "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca)     "
                       "WHERE "
@@ -814,6 +815,7 @@ void frm_gestaoclientes::validaCEP( const QString &cep  )
 
     QJsonDocument doc(QJsonDocument::fromJson(reply->readAll()));
     QJsonObject json(doc.object());
+
 
     //validando o cep, e tratando erros
     if( json.find("erro") != json.end() )
