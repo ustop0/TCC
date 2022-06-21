@@ -258,7 +258,7 @@ void Frm_principal::conf_tw_listaservicos()
                       "JOIN a004_veiculos ON (a004_codigo = a009_fk_codigo_veiculo) "
                       "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo)   "
                   "WHERE "
-                    "a009_data BETWEEN CURRENT_DATE - 20  AND   CURRENT_DATE + 6 "
+                    "a009_data BETWEEN CURRENT_DATE  AND   CURRENT_DATE + 6 "
                     "AND a009_status = 'Pendente'                           "
                     "AND a009_ativo = true                                  "
                   "ORDER BY "

@@ -450,6 +450,7 @@ void frms_nv_veiculocliente::on_btn_nv_salvar_clicked()
     else
     {
         qDebug() << "_Dados salvos na tabela a004_veiculos";
+        QMessageBox::information(this, "CADASTRADO", "Veículo cadastrado com sucesso");
 
         //limpando todos os campos
         ui->txt_nv_codcliente->clear();

@@ -456,7 +456,7 @@ void frm_gestaoesotque::on_tw_nv_listafornecedores_itemSelectionChanged()
 void frm_gestaoesotque::on_txt_nv_filtrar_returnPressed()
 {
     QString cb_filtro = ui->cb_nv_filtrar->currentText();
-    QString txt_filtro = ui->txt_nv_filtrar->text();
+    QString txt_filtro = ui->txt_nv_filtrar->text().toUpper();
 
     QString busca; //armazena busca
     QString filtro_sql;
@@ -649,7 +649,7 @@ void frm_gestaoesotque::on_tw_nv_listamodelos_itemSelectionChanged()
 void frm_gestaoesotque::on_txt_nv_filtrarModelos_returnPressed()
 {
     QString cb_filtro = ui->cb_nv_filtrarmodelos->currentText();
-    QString txt_filtro = ui->txt_nv_filtrarModelos->text();
+    QString txt_filtro = ui->txt_nv_filtrarModelos->text().toUpper();
 
     QString busca; //armazena busca
     QString filtro_sql;
@@ -843,6 +843,8 @@ void frm_gestaoesotque::on_btn_nv_salvar_clicked()
     }
     else
     {
+        QMessageBox::information(this, "CADASTRADA", "Peça cadastrada com sucesso");
+
         ui->txt_nv_codigoFornecedor->clear();
         ui->txt_nv_codigoModelo->clear();
         ui->txt_nv_ncPeca->clear();

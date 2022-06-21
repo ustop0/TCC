@@ -220,7 +220,7 @@ void frm_gestaoclientes::on_tabWidget_currentChanged(int index)
                           "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo)   "
                           "JOIN a011_marcas ON (a011_codigo = a012_fk_codigo_marca)     "
                       "WHERE "
-                        "a005_ativo = true "
+                          "a005_ativo = true "
                       "ORDER BY "
                           "a005_codigo DESC");
 
@@ -764,7 +764,6 @@ bool frm_gestaoclientes::recebeCPF( const QString &cliente_cpf )
         }
         else
         {
-            //**DESENVOLVENDO**
             qDebug() << "_O CPF digitado NÃO É VÁLIDO" << "\n";
             QMessageBox::warning(this, "Erro", "O CPF digitado é inválido");
 
