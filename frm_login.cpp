@@ -16,7 +16,7 @@ Frm_login::~Frm_login()
 
 void Frm_login::on_btn_logar_clicked()
 {
-    if(!con.abrir()) //verifica a conexao com o banco de dados
+    if( !con.abrir() ) //verifica a conexao com o banco de dados
     {
         QMessageBox::warning(this, "ERRO", "Não foi possível se conectar ao banco de dados");
     }
@@ -61,7 +61,7 @@ void Frm_login::on_btn_logar_clicked()
             }
             else
             {
-                QMessageBox::warning(this, "ERRO", "Usuário não encontrado");
+                QMessageBox::warning(this, "ERRO", "Usuário ou senha não encontrados");
             }
         }
         else

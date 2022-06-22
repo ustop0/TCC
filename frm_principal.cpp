@@ -78,8 +78,21 @@ void Frm_principal::on_actionUsu_rios_triggered()
     //está apresentando erro, conferir
     if(variaveis_globais::acesso_colab == 'A') //verifica a permissao de acesso do colaborador
     {
-        frm_gestaousuarios f_gestaousuarios;
-        f_gestaousuarios.exec();
+        //frm_gestaousuarios f_gestaousuarios;
+        //f_gestaousuarios.exec();
+
+        frm_gestaousuarios *f_gestaousuarios = new frm_gestaousuarios();
+        f_gestaousuarios->exec();
+
+        try
+        {
+            delete f_gestaousuarios;
+            qDebug() << "Deletando ponteiro";
+        }
+        catch ( ... )
+        {
+            qDebug() << "__Falha ao deletar ponteiro: f_gestaousuarios na tela principal";
+        }
     }
     else
     {
@@ -90,78 +103,188 @@ void Frm_principal::on_actionUsu_rios_triggered()
 //abre a tela de clientes
 void Frm_principal::on_actionClientes_triggered()
 {
-    frm_gestaoclientes f_gestaoclientes ;
-    f_gestaoclientes.exec();
+    frm_gestaoclientes *f_gestaoclientes = new frm_gestaoclientes();
+    f_gestaoclientes->exec();
+
+    try
+    {
+        delete f_gestaoclientes;
+        qDebug() << "Deletando ponteiro";
+    }
+    catch ( ... )
+    {
+        qDebug() << "__Falha ao deletar ponteiro: f_gestaoclientes na tela principal";
+    }
 }
 
 //abre a tela de fornecedores
 void Frm_principal::on_actionFornecedores_triggered()
-{
-    frm_gestaofornecedores f_gestaofornecedores;
-    f_gestaofornecedores.exec();
+{    
+    frm_gestaofornecedores *f_gestaofornecedores = new frm_gestaofornecedores();
+    f_gestaofornecedores->exec();
+
+    try
+    {
+        delete f_gestaofornecedores;
+        qDebug() << "Deletando ponteiro";
+    }
+    catch ( ... )
+    {
+        qDebug() << "__Falha ao deletar ponteiro: f_gestaofornecedores na tela principal";
+    }
 }
 
 //abre tela de cadastro de marcas
 void Frm_principal::on_actionCadastro_de_Marcas_triggered()
-{
-    frm_gestaomarcas f_gestaomarcas;
-    f_gestaomarcas.exec();
+{   
+    frm_gestaomarcas *f_gestaomarcas = new frm_gestaomarcas();
+    f_gestaomarcas->exec();
+
+    try
+    {
+        delete f_gestaomarcas;
+        qDebug() << "Deletando ponteiro";
+    }
+    catch ( ... )
+    {
+        qDebug() << "__Falha ao deletar ponteiro: f_gestaomarcas na tela principal";
+    }
 }
 
 //abre tela de cadastro de modelos
 void Frm_principal::on_actionCadastro_de_Modelos_triggered()
-{
-    frm_modelos f_gestaomodelos;
-    f_gestaomodelos.exec();
+{   
+    frm_modelos *f_gestaomodelos = new frm_modelos();
+    f_gestaomodelos->exec();
+
+    try
+    {
+        delete f_gestaomodelos;
+        qDebug() << "Deletando ponteiro";
+    }
+    catch ( ... )
+    {
+        qDebug() << "__Falha ao deletar ponteiro: f_gestaomodelos na tela principal";
+    }
 }
 
 //abre tela de cadastro de veiculos de clientes
 void Frm_principal::on_actionCadastro_de_Ve_culos_de_Clientes_triggered()
-{
-    frms_nv_veiculocliente f_veiculocliente;
-    f_veiculocliente.exec();
+{   
+    frms_nv_veiculocliente *f_veiculocliente = new frms_nv_veiculocliente();
+    f_veiculocliente->exec();
+
+    try
+    {
+        delete f_veiculocliente;
+        qDebug() << "Deletando ponteiro";
+    }
+    catch ( ... )
+    {
+        qDebug() << "__Falha ao deletar ponteiro: f_veiculocliente na tela principal";
+    }
 }
 
 //abre a tela de estoque
 void Frm_principal::on_actionEstoque_triggered()
-{
-    frm_gestaoesotque f_gestaoesotque;
-    f_gestaoesotque.exec();
+{   
+    frm_gestaoesotque *f_gestaoesotque = new frm_gestaoesotque();
+    f_gestaoesotque->exec();
+
+    try
+    {
+        delete f_gestaoesotque;
+        qDebug() << "Deletando ponteiro";
+    }
+    catch ( ... )
+    {
+        qDebug() << "__Falha ao deletar ponteiro: f_gestaoesotque na tela principal";
+    }
 }
 
 //abre tela de nova venda
 void Frm_principal::on_actionNova_Venda_triggered()
-{
-    frm_novavenda f_novavenda;
-    f_novavenda.exec();
+{   
+    frm_novavenda *f_novavenda = new frm_novavenda();
+    f_novavenda->exec();
+
+    try
+    {
+        delete f_novavenda;
+        qDebug() << "Deletando ponteiro";
+    }
+    catch ( ... )
+    {
+        qDebug() << "__Falha ao deletar ponteiro: f_novavenda na tela principal";
+    }
 }
 
 //abre tela de gestão de vendas
 void Frm_principal::on_actionGestao_Vendas_triggered()
-{
-    frm_gestaovendas f_gestaovendas;
-    f_gestaovendas.exec();
+{    
+    frm_gestaovendas *f_gestaovendas = new frm_gestaovendas();
+    f_gestaovendas->exec();
+
+    try
+    {
+        delete f_gestaovendas;
+        qDebug() << "Deletando ponteiro";
+    }
+    catch ( ... )
+    {
+        qDebug() << "__Falha ao deletar ponteiro: f_gestaovendas na tela principal";
+    }
 }
 
 //abre tela de agendar serviço
 void Frm_principal::on_actionAgendar_Servi_o_triggered()
-{
-    frm_agendamentoservicos f_agendamentoservicos;
-    f_agendamentoservicos.exec();
+{    
+    frm_agendamentoservicos *f_agendamentoservicos = new frm_agendamentoservicos();
+    f_agendamentoservicos->exec();
+
+    try
+    {
+        delete f_agendamentoservicos;
+        qDebug() << "Deletando ponteiro";
+    }
+    catch ( ... )
+    {
+        qDebug() << "__Falha ao deletar ponteiro: f_agendamentoservicos na tela principal";
+    }
 }
 
 //abre tela de ordem de serviço
 void Frm_principal::on_actionOrdem_de_Servi_o_triggered()
-{
-    frm_ordemservico f_ordemservico;
-    f_ordemservico.exec();
+{    
+    frm_ordemservico *f_ordemservico = new frm_ordemservico();
+    f_ordemservico->exec();
+
+    try
+    {
+        delete f_ordemservico;
+        qDebug() << "Deletando ponteiro";
+    }
+    catch ( ... )
+    {
+        qDebug() << "__Falha ao deletar ponteiro: f_ordemservico na tela principal";
+    }
 }
 
 //abre tela de sobre, informações sistema
 void Frm_principal::on_actionSobre_triggered()
-{
-    frm_sobre f_sobre;
-    f_sobre.exec();
+{    
+    frm_sobre *f_sobre = new frm_sobre();
+    f_sobre->exec();
+
+    try
+    {
+        delete f_sobre;
+        qDebug() << "Deletando ponteiro";
+    }
+    catch ( ... )
+    {
+        qDebug() << "__Falha ao deletar ponteiro: f_sobre na tela principal";
+    }
 }
 
 //sair do sistema
@@ -262,7 +385,7 @@ void Frm_principal::conf_tw_listaservicos()
                     "AND a009_status = 'Pendente'                           "
                     "AND a009_ativo = true                                  "
                   "ORDER BY "
-                      "a009_codigo DESC ");
+                      "a009_data ASC, a009_hora ASC");
 
     if( query.exec() ) //verifica se ouve algum erro na execução da query
     {
