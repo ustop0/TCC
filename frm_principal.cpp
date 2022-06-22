@@ -75,7 +75,6 @@ Frm_principal::~Frm_principal()//**INICIO** destrutor
 //abre a tela de usuários
 void Frm_principal::on_actionUsu_rios_triggered()
 {
-    //está apresentando erro, conferir
     if(variaveis_globais::acesso_colab == 'A') //verifica a permissao de acesso do colaborador
     {
         //frm_gestaousuarios f_gestaousuarios;
@@ -87,7 +86,6 @@ void Frm_principal::on_actionUsu_rios_triggered()
         try
         {
             delete f_gestaousuarios;
-            qDebug() << "Deletando ponteiro";
         }
         catch ( ... )
         {

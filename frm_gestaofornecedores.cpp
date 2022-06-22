@@ -37,6 +37,8 @@ frm_gestaofornecedores::frm_gestaofornecedores(QWidget *parent) :
     ui->tw_ge_listarFornecedores->setColumnCount(13);
     ui->tw_ge_listarFornecedores->setColumnWidth(0, 40);
     ui->tw_ge_listarFornecedores->setColumnWidth(1, 200);
+    ui->tw_ge_listarFornecedores->setColumnWidth(2, 200);
+    ui->tw_ge_listarFornecedores->setColumnWidth(3, 130);
 
     //cabeçalhos do table widget
     QStringList cabecalhos={"Código", "Razão Social", "Nome Fantasia", "CNPJ","Estado"
@@ -132,6 +134,8 @@ void frm_gestaofornecedores::on_btn_nv_salvar_clicked()
     }
     else
     {
+        QMessageBox::information(this, "CADASTRADO", "Fornecedor cadastrado com sucesso");
+
         ui->txt_nv_cnpj->clear();
         ui->txt_nv_uf->clear();
         ui->txt_nv_cidade->clear();

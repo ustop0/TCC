@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -242,7 +242,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Peças O.S.:</string>
+       <string>Peças O.S:</string>
       </property>
      </widget>
      <widget class="QLabel" name="lbl_pecasModelo">
@@ -255,7 +255,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Peças:</string>
+       <string>Seleção de Peças:</string>
       </property>
      </widget>
      <widget class="QWidget" name="layoutWidget_2">

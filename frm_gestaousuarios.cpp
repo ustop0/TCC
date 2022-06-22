@@ -262,7 +262,6 @@ void frm_gestaousuarios::on_txt_ge_filtro_returnPressed()
     }
     else
     {
-        cb_opc << "Nome" << "Usuário" << "Tipo Acesso";
         //consulta de acordo com a seleção do combo box
         switch( cb_opc.indexOf( cb_filtro ) )
         {
