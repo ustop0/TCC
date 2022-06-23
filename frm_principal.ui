@@ -145,7 +145,7 @@
      <pixmap resource="Imagens.qrc">:/Imagens/logo_menu.png</pixmap>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>330</x>
@@ -243,17 +243,17 @@
   </action>
   <action name="actionCadastro_de_Marcas">
    <property name="text">
-    <string>Cadastro de Marcas</string>
+    <string>Gestao de Marcas</string>
    </property>
   </action>
   <action name="actionCadastro_de_Modelos">
    <property name="text">
-    <string>Cadastro de Modelos</string>
+    <string>Gestao de Modelos</string>
    </property>
   </action>
   <action name="actionCadastro_de_Ve_culos_de_Clientes">
    <property name="text">
-    <string>Cadastro de Veículos de Clientes</string>
+    <string>Gestao de Veículos de Clientes</string>
    </property>
   </action>
   <action name="actionEstoque">

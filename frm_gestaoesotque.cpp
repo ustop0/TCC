@@ -830,12 +830,12 @@ void frm_gestaoesotque::on_btn_nv_salvar_clicked()
                     "VALUES('" +QString::number( nc_peca.toInt() )           +  "'"
                           ",'" +denominacao                                  +  "'"
                           ",'" +grupo                                        +  "'"
-                          ",'" +QString::number( valor_compra.toFloat() )   +  "'"
-                          ",'" +QString::number( valor_venda.toFloat() )    +  "'"
+                          ",'" +QString::number( valor_compra.toFloat() )    +  "'"
+                          ",'" +QString::number( valor_venda.toFloat() )     +  "'"
                           ",'" +QString::number( qtde.toInt() )              +  "'"
                           ",'" +posicao                                      +  "'"
                           ",'" +QString::number( codigo_fornecedor.toInt() ) +  "'"
-                          ",'" +QString::number( codigo_modelo.toInt() ) +  "') ");
+                          ",'" +QString::number( codigo_modelo.toInt() )     +  "') ");
 
     if( !query.exec() ) //verifica se a query tem algum erro e executa ela
     {
@@ -1135,7 +1135,6 @@ void frm_gestaoesotque::on_btn_ge_salvar_clicked()
 //    valor_venda = aux;
 
     QSqlQuery query;
-
     query.prepare("UPDATE "
                     "a002_estoque "
                   "SET "

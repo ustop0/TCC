@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Seleção de Marca e Modelo</string>
   </property>
   <widget class="QTableWidget" name="tw_selecionaVeiculo">
    <property name="geometry">

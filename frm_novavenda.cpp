@@ -645,7 +645,7 @@ void frm_novavenda::on_btn_finalizarvenda_clicked()
                 QString valor_total = ui->tw_listaprodutos->item(linha,4)->text();
                 QString margem_lucro = ui->tw_listaprodutos->item(linha,5)->text();
 
-                //DEPURAR NÃO ESTÁ REGISTRANDO AS VENDAS NA TABELA DE VENDAS
+
                 //verificar querys, valores int normal e varchar em '" "'
                 query.prepare("INSERT INTO "
                                 "a006_estoque_vendas(a006_fk_codigo_venda  "

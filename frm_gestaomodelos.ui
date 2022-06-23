@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -41,7 +41,7 @@
      <property name="title">
       <string>Dados Modelo:</string>
      </property>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -67,7 +67,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>170</x>
@@ -144,7 +144,7 @@
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>206</x>
@@ -170,11 +170,8 @@
       </item>
      </layout>
     </widget>
+    <zorder>layoutWidget</zorder>
     <zorder>groupBox</zorder>
-    <zorder>txt_nv_marca</zorder>
-    <zorder>label</zorder>
-    <zorder>btn_nv_novo</zorder>
-    <zorder>btn_nv_salvar</zorder>
     <zorder>tw_listamarcas</zorder>
     <zorder>layoutWidget_3</zorder>
     <zorder>layoutWidget_4</zorder>
@@ -203,7 +200,7 @@
       </rect>
      </property>
      <property name="title">
-      <string>Dados Marca:</string>
+      <string>Dados Modelo:</string>
      </property>
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
@@ -254,7 +251,7 @@
       </layout>
      </widget>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>223</x>
@@ -280,7 +277,7 @@
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>159</x>
@@ -302,7 +299,7 @@
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>10</x>
