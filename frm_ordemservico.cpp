@@ -1084,7 +1084,7 @@ void frm_ordemservico::on_btn_ge_geraros_clicked()
     //primeiro valor: eixo horizontal
     //segundo valor: eixo vertical
     //painter.drawPixmap( 200, -100, QPixmap(":/Imagens/car.png") );
-    painter.drawText(270, 50,"AMINCAR: ORDEM DE SERVIÇO");
+    painter.drawText(305, 50,"ORDEM DE SERVIÇO");
 
     //**DADOS DA OS (a010)**
     //--Título

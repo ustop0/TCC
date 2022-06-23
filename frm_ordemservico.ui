@@ -210,7 +210,7 @@
       </rect>
      </property>
      <property name="title">
-      <string>Mercadorias</string>
+      <string>Produtos</string>
      </property>
      <widget class="QTableWidget" name="tw_listapecas">
       <property name="geometry">
