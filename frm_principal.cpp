@@ -364,15 +364,15 @@ void Frm_principal::conf_tw_listaservicos()
     //filtra pelas datas equivalentes a um período de 7 dias
     QSqlQuery query;
     query.prepare("SELECT "
-                      "a009_codigo                        "
-                      ",a005_nome                         "
-                      ",TO_CHAR(a009_data, 'DD/MM/YYYY')  "
-                      ",a009_hora                         "
-                      ",a009_servico                      "
-                      ",a012_nome_veiculo                 "
-                      ",a004_placa_veiculo                "
-                      ",a009_observacao                   "
-                      ",a009_status                       "
+                      "a009_codigo                            "
+                      ",a005_nome                             "
+                      ",TO_CHAR(a009_data, 'DD/MM/YYYY')      "
+                      ",a009_hora                             "
+                      ",a009_servico                          "
+                      ",a012_nome_veiculo                     "
+                      ",a004_placa_veiculo                    "
+                      ",COALESCE(a009_observacao, '(NENHUM)') "
+                      ",a009_status                           "
                   "FROM "
                       "a009_agenda_servicos "
                       "JOIN a005_cliente ON (a005_codigo = a009_fk_codigo_cliente)  "
@@ -473,4 +473,3 @@ void Frm_principal::closeEvent( QCloseEvent *event )
     }
 }
 */
-

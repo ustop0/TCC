@@ -676,7 +676,7 @@ void frm_ordemservico::on_tabWidget_currentChanged(int index)
                           ",a004_placa_veiculo                          "
                           ",a004_cor_veiculo                            "
                           ",a010_km_veiculo                             "
-                          ",a010_data_entrada                           "
+                          ",TO_CHAR(a010_data_entrada, 'DD/MM/YYYY')    "
                           ",a010_status                                 "
                           ",a010_valor_mao_obra                         "
                           ",a010_valor_total_mercadorias                "
@@ -691,7 +691,7 @@ void frm_ordemservico::on_tabWidget_currentChanged(int index)
                       "WHERE "
                         "a010_ativo = true "
                       "ORDER BY "
-                          "a010_codigo DESC");
+                          "a010_data_entrada DESC");
 
         if( query.exec() ) //verifica se ouve algum erro na execução da query
         {
@@ -786,39 +786,13 @@ void frm_ordemservico::on_txt_ge_filtrar_returnPressed()
         if( cb_filtro == "" ) //consulta de acordo com o radio selecionado
         {
             busca = "SELECT "
-                        "a010_codigo                    "
-                        ",a005_nome                     "
-                        ",a012_nome_veiculo             "
-                        ",a004_placa_veiculo            "
-                        ",a004_cor_veiculo              "
-                        ",a010_km_veiculo               "
-                        ",a010_data_entrada             "
-                        ",a010_status                   "
-                        ",a010_valor_mao_obra           "
-                        ",a010_valor_total_mercadorias  "
-                        ",a010_valor_total_servico      "
-                        ",a010_meio_pagamento           "
-                        ",COALESCE(a010_detalhes_servico, '(NENHUM)') "
-                    "FROM "
-                        "a010_OS "
-                        "JOIN a004_veiculos ON (a004_codigo = a010_fk_codigo_veiculo) "
-                        "JOIN a005_cliente ON (a005_codigo = a004_fk_codigo_cliente)  "
-                        "JOIN a012_modelos ON (a012_Codigo = a004_fk_codigo_modelo)   "
-                    "WHERE "
-                        "a010_ativo = true "
-                    "ORDER BY "
-                        "a010_codigo DESC";
-        }
-        else
-        {
-            busca = "SELECT "
                         "a010_codigo                                  "
                         ",a005_nome                                   "
                         ",a012_nome_veiculo                           "
                         ",a004_placa_veiculo                          "
                         ",a004_cor_veiculo                            "
                         ",a010_km_veiculo                             "
-                        ",a010_data_entrada                           "
+                        ",TO_CHAR(a010_data_entrada, 'DD/MM/YYYY')    "
                         ",a010_status                                 "
                         ",a010_valor_mao_obra                         "
                         ",a010_valor_total_mercadorias                "
@@ -833,7 +807,33 @@ void frm_ordemservico::on_txt_ge_filtrar_returnPressed()
                     "WHERE "
                         "a010_ativo = true "
                     "ORDER BY "
-                        "a010_codigo DESC";
+                        "a010_data_entrada DESC";
+        }
+        else
+        {
+            busca = "SELECT "
+                        "a010_codigo                                  "
+                        ",a005_nome                                   "
+                        ",a012_nome_veiculo                           "
+                        ",a004_placa_veiculo                          "
+                        ",a004_cor_veiculo                            "
+                        ",a010_km_veiculo                             "
+                        ",TO_CHAR(a010_data_entrada, 'DD/MM/YYYY')    "
+                        ",a010_status                                 "
+                        ",a010_valor_mao_obra                         "
+                        ",a010_valor_total_mercadorias                "
+                        ",a010_valor_total_servico                    "
+                        ",a010_meio_pagamento                         "
+                        ",COALESCE(a010_detalhes_servico, '(NENHUM)') "
+                    "FROM "
+                        "a010_OS "
+                        "JOIN a004_veiculos ON (a004_codigo = a010_fk_codigo_veiculo) "
+                        "JOIN a005_cliente ON (a005_codigo = a004_fk_codigo_cliente)  "
+                        "JOIN a012_modelos ON (a012_Codigo = a004_fk_codigo_modelo)   "
+                    "WHERE "
+                        "a010_ativo = true "
+                    "ORDER BY "
+                        "a010_data_entrada DESC";
         }
     }
     else
@@ -874,7 +874,7 @@ void frm_ordemservico::on_txt_ge_filtrar_returnPressed()
                     ",a004_placa_veiculo                          "
                     ",a004_cor_veiculo                            "
                     ",a010_km_veiculo                             "
-                    ",a010_data_entrada                           "
+                    ",TO_CHAR(a010_data_entrada, 'DD/MM/YYYY')    "
                     ",a010_status                                 "
                     ",a010_valor_mao_obra                         "
                     ",a010_valor_total_mercadorias                "
@@ -890,7 +890,7 @@ void frm_ordemservico::on_txt_ge_filtrar_returnPressed()
                     + filtro_sql +
                     "AND a010_ativo = true "
                 "ORDER BY "
-                    "a010_codigo DESC";
+                    "a010_data_entrada DESC";
     }
 
     //contador para percorrer linhas
@@ -996,11 +996,11 @@ void frm_ordemservico::on_tw_listaOS_itemSelectionChanged()
                       ",a002_qtde_estoque                                    "
                       ",a002_posicao_peca                                    "
                   "FROM "
-                    "a010_OS "
-                    "JOIN a015_os_itens ON (a015_fk_codigo_os = a010_codigo)   "
-                    "JOIN a002_estoque ON  (a002_codigo = a015_fk_codigo_peca) "
+                      "a010_OS "
+                      "JOIN a015_os_itens ON (a015_fk_codigo_os = a010_codigo)   "
+                      "JOIN a002_estoque ON  (a002_codigo = a015_fk_codigo_peca) "
                   "WHERE "
-                    "a015_codigo = '" +codigo_os+ "' ");
+                      "a015_codigo = '" +codigo_os+ "' ");
 
 
     if( !query.exec() )

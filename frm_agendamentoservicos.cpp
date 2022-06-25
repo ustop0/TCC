@@ -207,10 +207,10 @@ void frm_agendamentoservicos::on_tabWidget_currentChanged(int index)
                           "JOIN a004_veiculos ON (a004_codigo = a009_fk_codigo_veiculo) "
                           "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo)   "
                       "WHERE "
-                        "a009_status = 'Pendente' "
-                        "AND a009_ativo = true    "
+                          "a009_ativo = true "
                       "ORDER BY "
-                          "a009_codigo DESC ");
+                          "a009_data DESC "
+                          ",a009_hora ASC");
 
         if( query.exec() ) //verifica se ouve algum erro na execução da query
         {
@@ -359,10 +359,10 @@ void frm_agendamentoservicos::on_txt_ge_filtrar_returnPressed()
                         "JOIN a004_veiculos ON (a004_codigo = a009_fk_codigo_veiculo) "
                         "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo)   "
                     "WHERE "
-                      "a009_status = 'Pendente' "
-                      "AND a009_ativo = true    "
+                      "a009_ativo = true "
                     "ORDER BY "
-                        "a009_codigo DESC";
+                       "a009_data DESC "
+                       ",a009_hora ASC ";
         }
         else
         {
@@ -382,10 +382,10 @@ void frm_agendamentoservicos::on_txt_ge_filtrar_returnPressed()
                         "JOIN a004_veiculos ON (a004_codigo = a009_fk_codigo_veiculo) "
                         "JOIN a012_modelos ON (a012_codigo = a004_fk_codigo_modelo)   "
                     "WHERE "
-                      "a009_status = 'Pendente' "
-                      "AND a009_ativo = true    "
+                      "a009_ativo = true "
                     "ORDER BY "
-                        "a009_codigo DESC";
+                       "a009_data DESC "
+                       ",a009_hora ASC ";
         }
     }
     else
@@ -452,7 +452,8 @@ void frm_agendamentoservicos::on_txt_ge_filtrar_returnPressed()
                   + filtro_sql +
                   "AND a009_ativo = true    "
                 "ORDER BY "
-                    "a009_codigo DESC";
+                    "a009_data DESC "
+                    ",a009_hora ASC";
     }
 
     //contador para percorrer linhas

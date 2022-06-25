@@ -488,7 +488,7 @@ void frms_nv_veiculocliente::on_tabWidget_currentChanged(int index)
                           ",a004_chassi_veiculo                    "
                           ",a004_placa_Veiculo                     "
                           ",a004_cor_veiculo                       "
-                          ",coalesce(a004_observacao, '(NENHUM)')  "
+                          ",COALESCE(a004_observacao, '(NENHUM)')  "
                       "FROM "
                           "a004_veiculos "
                           "JOIN a005_cliente ON (a005_codigo = a004_fk_codigo_cliente) "
@@ -591,7 +591,7 @@ void frms_nv_veiculocliente::on_tw_ge_veiculos_itemSelectionChanged()
                       ",a004_chassi_veiculo                    "
                       ",a004_placa_Veiculo                     "
                       ",a004_cor_veiculo                       "
-                      ",coalesce(a004_observacao, '(NENHUM)')  "
+                      ",COALESCE(a004_observacao, '(NENHUM)')  "
                   "FROM "
                       "a004_veiculos "
                       "JOIN a005_cliente ON (a005_codigo = a004_fk_codigo_cliente) "
@@ -648,7 +648,7 @@ void frms_nv_veiculocliente::on_txt_ge_filtrar_returnPressed()
                       ",a004_chassi_veiculo                    "
                       ",a004_placa_Veiculo                     "
                       ",a004_cor_veiculo                       "
-                      ",coalesce(a004_observacao, '(NENHUM)')  "
+                      ",COALESCE(a004_observacao, '(NENHUM)')  "
                   "FROM "
                       "a004_veiculos "
                       "JOIN a005_cliente ON (a005_codigo = a004_fk_codigo_cliente) "
@@ -671,7 +671,7 @@ void frms_nv_veiculocliente::on_txt_ge_filtrar_returnPressed()
                       ",a004_chassi_veiculo                    "
                       ",a004_placa_Veiculo                     "
                       ",a004_cor_veiculo                       "
-                      ",coalesce(a004_observacao, '(NENHUM)')  "
+                      ",COALESCE(a004_observacao, '(NENHUM)')  "
                   "FROM "
                       "a004_veiculos "
                       "JOIN a005_cliente ON (a005_codigo = a004_fk_codigo_cliente) "
@@ -733,7 +733,7 @@ void frms_nv_veiculocliente::on_txt_ge_filtrar_returnPressed()
                   ",a004_chassi_veiculo                    "
                   ",a004_placa_Veiculo                     "
                   ",a004_cor_veiculo                       "
-                  ",coalesce(a004_observacao, '(NENHUM)')  "
+                  ",COALESCE(a004_observacao, '(NENHUM)')  "
               "FROM "
                   "a004_veiculos "
                   "JOIN a005_cliente ON (a005_codigo = a004_fk_codigo_cliente) "
@@ -1093,5 +1093,4 @@ QString frms_nv_veiculocliente::crudModelo()
 
     return cod_modelo;
 }
-
 
