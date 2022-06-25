@@ -175,7 +175,7 @@ frm_ordemservico::frm_ordemservico(QWidget *parent, QString c_codigo_cliente
     ui->cb_meiopagamento->addItem("-");
     ui->cb_meiopagamento->addItem("À VISTA");
     ui->cb_meiopagamento->addItem("PIX");
-    ui->cb_meiopagamento->addItem("XEQUE");
+    ui->cb_meiopagamento->addItem("CHEQUE");
 }
 
 frm_ordemservico::~frm_ordemservico() //**INICIO** destrutor
