@@ -387,6 +387,9 @@ void frms_nv_veiculocliente::on_btn_nv_filtrar_clicked()
 //btn formulario de seleção de veiculos
 void frms_nv_veiculocliente::on_btn_selecionaVeiculo_clicked()
 {
+    //fechando formulário após abrir o outro
+    close();
+
     QString codigo_cliente = ui->txt_nv_codcliente->text();
 
     frms_selecionaveiculo *fmSelecionaVeiculo = new frms_selecionaveiculo( this, codigo_cliente );

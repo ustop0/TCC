@@ -284,13 +284,14 @@ void frms_selecionaveiculo::on_btn_confirmarVeiculo_clicked()
 
     //emit sendData( g_nomeVeiculo );
 
+    //fechando formulário depois de abrir o outro
+    close();
 
     frms_nv_veiculocliente *fm_nv_veiculocliente = new frms_nv_veiculocliente( this
                                                                               ,g_codigo_cliente
                                                                               ,g_nomeMarca
                                                                               ,g_codigoVeiculo
                                                                               ,g_nomeVeiculo );
-    fm_nv_veiculocliente->close();
     fm_nv_veiculocliente->exec();
 
 
@@ -299,7 +300,7 @@ void frms_selecionaveiculo::on_btn_confirmarVeiculo_clicked()
     {
         delete fm_nv_veiculocliente;
     }
-    catch (...)
+    catch ( ... )
     {
         qDebug() << "__Falha ao deletar ponteiro: fm_nv_veiculocliente na tela de selecaoveiculo";
     }

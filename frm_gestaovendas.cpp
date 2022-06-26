@@ -363,7 +363,7 @@ void frm_gestaovendas::on_btn_mostratTodasVendas_clicked()
                   "WHERE "
                       "a007_ativo = true "
                   "ORDER BY "
-                    "a007_codigo DESC");
+                      "a007_codigo DESC");
 
     if(!query.exec())
     {

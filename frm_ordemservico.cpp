@@ -187,8 +187,10 @@ frm_ordemservico::~frm_ordemservico() //**INICIO** destrutor
 //seleciona dados cliente/veiculo O.S
 void frm_ordemservico::on_btn_selecionaveiculo_clicked()
 {
-    frms_selecionacliente_os *fmSelecionaClienteOS = new frms_selecionacliente_os();
+    //fechando formulário após abrir o outro
+    close();
 
+    frms_selecionacliente_os *fmSelecionaClienteOS = new frms_selecionacliente_os();
     fmSelecionaClienteOS->exec();
 
     //deletando ponteiro
@@ -200,8 +202,6 @@ void frm_ordemservico::on_btn_selecionaveiculo_clicked()
     {
         qDebug() << "__Falha ao deletar ponteiro: fmSelecionaClienteOS na tela de agendaserviços";
     }
-
-    close();
 }
 
 //pegando peças TW Modelo
@@ -365,7 +365,7 @@ void frm_ordemservico::on_btn_removerItem_clicked()
         }
         else
         {
-
+            return;
         }
     }
     else
@@ -1337,7 +1337,7 @@ void frm_ordemservico::resetaCampos()
     ui->txt_qtdeEstoque->clear();
     ui->txt_qtde->setText("1"); //volta quantidade para 1 no campo quantidade
 
-    ui->de_entrada->setDate( QDate::fromString("01/01/2022") );
+    ui->de_entrada->setDate( QDate::currentDate() );
     ui->txt_kmVeiculo->clear();
     ui->cb_meiopagamento->setCurrentIndex(0);
     ui->txt_valorServico->clear();

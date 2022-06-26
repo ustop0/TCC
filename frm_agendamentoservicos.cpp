@@ -88,8 +88,15 @@ frm_agendamentoservicos::~frm_agendamentoservicos() //**INICIO** destrutor
 //abre formulário de seleção de clientes
 void frm_agendamentoservicos::on_btn_selecionaCliente_clicked()
 {
+    //fecha o formulário ao executar o outro
+    close();
+
     frms_selecionacliente *fmSelecionaCliente = new frms_selecionacliente();
     fmSelecionaCliente->exec();
+
+    //TESTE FECHANDO O BOTÃO EMITINDO SINAL
+    //connect( ui->btn_selecionaCliente, &QPushButton::clicked, this,
+    //                                   &frm_agendamentoservicos::fechaFormulario );
 
     //deletando ponteiro
     try
@@ -171,6 +178,7 @@ void frm_agendamentoservicos::on_btn_agendarServico_clicked()
             {
                 ui->txt_nomeCliente->clear();
                 ui->txt_nomeVeiculo->clear();
+                ui->de_data->setDate( QDate::currentDate() );
                 ui->txt_tipoServico->clear();
                 ui->Ptxt_observacao->clear();
 
@@ -627,4 +635,3 @@ void frm_agendamentoservicos::on_btn_ge_excluir_clicked()
         }
     }
 }
-

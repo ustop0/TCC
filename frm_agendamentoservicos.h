@@ -40,6 +40,9 @@ public:
     QString g_codigo_veiculo;
     QString g_nome_veiculo;
 
+
+public slots:
+
 private slots:
     void on_btn_selecionaCliente_clicked();
 

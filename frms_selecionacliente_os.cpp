@@ -511,6 +511,9 @@ void frms_selecionacliente_os::on_btn_confirmarCliente_clicked()
         return;
     }
 
+    //fechando formulário após abrir o outro
+    close();
+
     //enviando nome e codigo do cliente selecionado para o campo do modelo no agendaservicos
     frm_ordemservico *fm_ordemservico  = new frm_ordemservico(this, g_codigo_cliente
                                                                   , g_nome_cliente
@@ -525,7 +528,7 @@ void frms_selecionacliente_os::on_btn_confirmarCliente_clicked()
     {
         delete fm_ordemservico ;
     }
-    catch (...)
+    catch ( ... )
     {
         qDebug() << "__Falha ao deletar ponteiro: fm_ordemservico  na tela de selecaocliente";
     }

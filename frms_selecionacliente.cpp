@@ -516,6 +516,9 @@ void frms_selecionacliente::on_btn_confirmarCliente_clicked() //confirmar
         return;
     }
 
+    //fechando formulário após abrir o outro
+    close();
+
     //enviando nome e codigo do cliente selecionado para o campo do modelo no agendaservicos
     frm_agendamentoservicos *fm_agendamentoservicos =
                                             new frm_agendamentoservicos(this, g_codigoCliente
@@ -529,13 +532,11 @@ void frms_selecionacliente::on_btn_confirmarCliente_clicked() //confirmar
     {
         delete fm_agendamentoservicos;
     }
-    catch (...)
+    catch ( ... )
     {
         qDebug() << "__Falha ao deletar ponteiro: fm_agendamentoservicos na "
                     "tela de selecaocliente";
     }
-
-    close();
 }
 
 
