@@ -311,7 +311,7 @@ void frm_gestaoclientes::on_tw_ge_listaclientes_itemSelectionChanged()
                   "FROM "
                       "a005_cliente "
                   "WHERE "
-                    "a005_codigo = '" +QString::number(id)+ "'"
+                    "a005_codigo = '" +QString::number(id)+ "' "
                     "AND a005_ativo = true "
                   "ORDER BY "
                       "a005_codigo DESC");

@@ -343,24 +343,24 @@ void frm_gestaoesotque::on_tabWidget_currentChanged(int index)
         //limpa as linhas do table widget
         funcoes_globais::removerLinhas( ui->tw_ge_listapecas );
         //inserir linhas dentro do table widget
-        int contlinhas=0;
+        int contlinhas = 0;
         //Remover os produtos do table widget
         QSqlQuery query; //query para listar os colaboradores no table widget
         query.prepare("SELECT "
-                          "a002_codigo          "
-                          ",a003_razao_social   "
-                          ",a012_nome_veiculo   "
-                          ",a002_nc_peca        "
-                          ",a002_denomicanao    "
-                          ",a002_grupo          "
-                          ",a002_valor_compra   "
-                          ",a002_valor_venda    "
-                          ",a002_qtde_estoque   "
-                          ",a002_posicao_peca   "
+                          "a002_codigo                            "
+                          ",a003_razao_social                     "
+                          ",a012_nome_veiculo                     "
+                          ",a002_nc_peca                          "
+                          ",a002_denomicanao                      "
+                          ",a002_grupo                            "
+                          ",a002_valor_compra                     "
+                          ",a002_valor_venda                      "
+                          ",a002_qtde_estoque                     "
+                          ",a002_posicao_peca                     "
                       "FROM "
                           "a002_estoque "
                           "JOIN a003_fornecedor ON (a003_codigo = a002_fk_codigo_forncedor) "
-                          "JOIN a012_modelos ON (a012_codigo = a002_fk_codigo_modelo) "
+                          "JOIN a012_modelos ON (a012_codigo = a002_fk_codigo_modelo)       "
                       "WHERE "
                         "a002_ativo = true "
                       "ORDER BY "
@@ -559,7 +559,7 @@ void frm_gestaoesotque::on_txt_nv_filtrar_returnPressed()
     }
 
     //contador para percorrer linhas
-    int contlinhas=0;
+    int contlinhas = 0;
     QSqlQuery query;
     query.prepare( busca );
 
@@ -785,11 +785,11 @@ void frm_gestaoesotque::on_btn_nv_salvar_clicked()
 {
     QString aux; //converter campo digitado da UI de ',' para '.'
 
-    QString codigo_fornecedor = ui->txt_nv_codigoFornecedor->text();
-    QString codigo_modelo = ui->txt_nv_codigoModelo->text();
-    QString nc_peca = ui->txt_nv_ncPeca->text();
-    QString denominacao = ui->txt_nv_denominacao->text();
-    QString grupo = ui->txt_nv_grupo->text();
+    QString codigo_fornecedor = ui->txt_nv_codigoFornecedor->text().toUpper();
+    QString codigo_modelo = ui->txt_nv_codigoModelo->text().toUpper();
+    QString nc_peca = ui->txt_nv_ncPeca->text().toUpper();
+    QString denominacao = ui->txt_nv_denominacao->text().toUpper();
+    QString grupo = ui->txt_nv_grupo->text().toUpper();
 
     aux=ui->txt_nv_valorcompra->text();
     std::replace(aux.begin(), aux.end(), ',', '.'); //substitui valores
@@ -800,16 +800,16 @@ void frm_gestaoesotque::on_btn_nv_salvar_clicked()
     QString valor_venda = aux;
 
     QString qtde = ui->txt_nv_qtde->text();
-    QString posicao = ui->txt_nv_posicao->text();
+    QString posicao = ui->txt_nv_posicao->text().toUpper();
 
-    qDebug() << "Código do fornecedor: " + codigo_fornecedor;
+    //qDebug() << "Código do fornecedor: " + codigo_fornecedor;
     //verifica se um fornecedor foi selecionado
     if( codigo_fornecedor == "" )
     {
         QMessageBox::information(this, "Fornecedor", "Selecione um fornecedor");
     }
 
-    qDebug() << "Código do fornecedor: " + codigo_modelo;
+    //qDebug() << "Código do fornecedor: " + codigo_modelo;
     //verifica se um fornecedor foi selecionado
     if( codigo_modelo == "" )
     {
@@ -827,15 +827,15 @@ void frm_gestaoesotque::on_btn_nv_salvar_clicked()
                                  ",a002_posicao_peca         "
                                  ",a002_fk_codigo_forncedor  "
                                  ",a002_fk_codigo_modelo)    "
-                    "VALUES('" +QString::number( nc_peca.toInt() )           +  "'"
-                          ",'" +denominacao                                  +  "'"
-                          ",'" +grupo                                        +  "'"
-                          ",'" +QString::number( valor_compra.toFloat() )    +  "'"
-                          ",'" +QString::number( valor_venda.toFloat() )     +  "'"
-                          ",'" +QString::number( qtde.toInt() )              +  "'"
-                          ",'" +posicao                                      +  "'"
-                          ",'" +QString::number( codigo_fornecedor.toInt() ) +  "'"
-                          ",'" +QString::number( codigo_modelo.toInt() )     +  "') ");
+                    "VALUES('" +nc_peca                                  +  "'"
+                          ",'" +denominacao                              +  "'"
+                          ",'" +grupo                                    +  "'"
+                          ",'" +QString::number(valor_compra.toDouble()) +  "'"
+                          ",'" +QString::number(valor_venda .toDouble()) +  "'"
+                          ",'" +qtde                                     +  "'"
+                          ",'" +posicao                                  +  "'"
+                          ",'" +codigo_fornecedor                        +  "'"
+                          ",'" +codigo_modelo                            +  "') ");
 
     if( !query.exec() ) //verifica se a query tem algum erro e executa ela
     {
@@ -869,20 +869,20 @@ void frm_gestaoesotque::on_tw_ge_listapecas_itemSelectionChanged()
     //exibe os dados da linha selecionada
     QSqlQuery query;
     query.prepare("SELECT "
-                      "a002_codigo        "
-                      ",a003_razao_social "
-                      ",a012_nome_veiculo "
-                      ",a002_nc_peca      "
-                      ",a002_denomicanao  "
-                      ",a002_grupo        "
-                      ",a002_valor_compra "
-                      ",a002_valor_venda  "
-                      ",a002_qtde_estoque "
-                      ",a002_posicao_peca "
+                      "a002_codigo                         "
+                      ",a003_razao_social                  "
+                      ",a012_nome_veiculo                  "
+                      ",a002_nc_peca                       "
+                      ",a002_denomicanao                   "
+                      ",a002_grupo                         "
+                      ",a002_valor_compra                  "
+                      ",a002_valor_venda                   "
+                      ",a002_qtde_estoque                  "
+                      ",a002_posicao_peca                  "
                   "FROM "
                     "a002_estoque "
                     "JOIN a003_fornecedor ON (a003_codigo = a002_fk_codigo_forncedor) "
-                    "JOIN a012_modelos ON (a012_codigo = a002_fk_codigo_modelo) "
+                    "JOIN a012_modelos ON (a012_codigo = a002_fk_codigo_modelo)       "
                   "WHERE "
                     "a002_codigo = '" +QString::number(id)+ "' ");
 
@@ -906,7 +906,7 @@ void frm_gestaoesotque::on_tw_ge_listapecas_itemSelectionChanged()
 void frm_gestaoesotque::on_txt_ge_filtrar_returnPressed()
 {
     QString cb_filtro = ui->cb_ge_filtrar->currentText();
-    QString txt_filtro = ui->txt_ge_filtrar->text();
+    QString txt_filtro = ui->txt_ge_filtrar->text().toUpper();
 
     QString busca; //armazena busca
     QString filtro_sql;
@@ -924,20 +924,20 @@ void frm_gestaoesotque::on_txt_ge_filtrar_returnPressed()
         if( cb_filtro == "" ) //consulta de acordo com o radio selecionado
         {
             busca = "SELECT "
-                        "a002_codigo        "
-                        ",a003_razao_social "
-                        ",a012_nome_veiculo "
-                        ",a002_nc_peca      "
-                        ",a002_denomicanao  "
-                        ",a002_grupo        "
-                        ",a002_valor_compra "
-                        ",a002_valor_venda  "
-                        ",a002_qtde_estoque "
-                        ",a002_posicao_peca "
+                        "a002_codigo                         "
+                        ",a003_razao_social                  "
+                        ",a012_nome_veiculo                  "
+                        ",a002_nc_peca                       "
+                        ",a002_denomicanao                   "
+                        ",a002_grupo                         "
+                        ",a002_valor_compra                  "
+                        ",a002_valor_venda                   "
+                        ",a002_qtde_estoque                  "
+                        ",a002_posicao_peca                  "
                     "FROM "
                         "a002_estoque "
                         "JOIN a003_fornecedor ON (a003_codigo = a002_fk_codigo_forncedor) "
-                        "JOIN a012_modelos ON (a012_codigo = a002_fk_codigo_modelo) "
+                        "JOIN a012_modelos ON (a012_codigo = a002_fk_codigo_modelo)       "
                     "WHERE "
                         "a002_codigo = true "
                     "ORDER BY "
@@ -946,16 +946,16 @@ void frm_gestaoesotque::on_txt_ge_filtrar_returnPressed()
         else
         {
             busca = "SELECT "
-                        "a002_codigo        "
-                        ",a003_razao_social "
-                        ",a012_nome_veiculo "
-                        ",a002_nc_peca      "
-                        ",a002_denomicanao  "
-                        ",a002_grupo        "
-                        ",a002_valor_compra "
-                        ",a002_valor_venda  "
-                        ",a002_qtde_estoque "
-                        ",a002_posicao_peca "
+                        "a002_codigo                         "
+                        ",a003_razao_social                  "
+                        ",a012_nome_veiculo                  "
+                        ",a002_nc_peca                       "
+                        ",a002_denomicanao                   "
+                        ",a002_grupo                         "
+                        ",a002_valor_compra                  "
+                        ",a002_valor_venda                   "
+                        ",a002_qtde_estoque                  "
+                        ",a002_posicao_peca                  "
                     "FROM "
                         "a002_estoque "
                         "JOIN a003_fornecedor ON (a003_codigo = a002_fk_codigo_forncedor) "
@@ -1007,20 +1007,20 @@ void frm_gestaoesotque::on_txt_ge_filtrar_returnPressed()
         }
 
         busca = "SELECT "
-                    "a002_codigo        "
-                    ",a003_razao_social "
-                    ",a012_nome_veiculo "
-                    ",a002_nc_peca      "
-                    ",a002_denomicanao  "
-                    ",a002_grupo        "
-                    ",a002_valor_compra "
-                    ",a002_valor_venda  "
-                    ",a002_qtde_estoque "
-                    ",a002_posicao_peca "
+                    "a002_codigo                         "
+                    ",a003_razao_social                  "
+                    ",a012_nome_veiculo                  "
+                    ",a002_nc_peca                       "
+                    ",a002_denomicanao                   "
+                    ",a002_grupo                         "
+                    ",a002_valor_compra                  "
+                    ",a002_valor_venda as numeric        "
+                    ",a002_qtde_estoque                  "
+                    ",a002_posicao_peca                  "
                 "FROM "
                     "a002_estoque "
                     "JOIN a003_fornecedor ON (a003_codigo = a002_fk_codigo_forncedor) "
-                    "JOIN a012_modelos ON (a012_codigo = a002_fk_codigo_modelo) "
+                    "JOIN a012_modelos ON (a012_codigo = a002_fk_codigo_modelo)       "
                 "WHERE "
                     + filtro_sql +
                     "AND a002_ativo = true "
@@ -1029,7 +1029,7 @@ void frm_gestaoesotque::on_txt_ge_filtrar_returnPressed()
     }
 
     //contador para percorrer linhas
-    int contlinhas=0;
+    int contlinhas = 0;
     QSqlQuery query;
     query.prepare( busca );
 
@@ -1118,33 +1118,36 @@ void frm_gestaoesotque::on_btn_ge_salvar_clicked()
 
     QString aux; //converter campo digitado da UI de ',' para '.'
 
-    QString nc_peca = ui->txt_ge_ncPeca->text();
-    QString denominacao = ui->txt_ge_denominacao->text();
-    QString grupo = ui->txt_ge_grupo->text();
-    QString valor_compra = ui->txt_ge_valorcompra->text();
-    QString valor_venda = ui->txt_ge_valorvenda->text();
-    QString qtde_estoque = ui->txt_ge_qtde->text();
-    QString posicao_peca = ui->txt_ge_posicao->text();
+    QString nc_peca = ui->txt_ge_ncPeca->text().toUpper();
+    QString denominacao = ui->txt_ge_denominacao->text().toUpper();
+    QString grupo = ui->txt_ge_grupo->text().toUpper();
+    QString valor_compra = ui->txt_ge_valorcompra->text().toUpper();
+    QString valor_venda = ui->txt_ge_valorvenda->text().toUpper();
+    QString qtde_estoque = ui->txt_ge_qtde->text().toUpper();
+    QString posicao_peca = ui->txt_ge_posicao->text().toUpper();
 
-//    aux=ui->txt_nv_valorcompra->text();
-//    std::replace(aux.begin(), aux.end(), ',', '.'); //substitui valores
-//    valor_compra = aux;
+    qDebug() << "Convertendo valor compra: " << valor_compra;
+    qDebug() << "Convertendo valor venda: " << valor_venda;
 
-//    aux=ui->txt_nv_valorvenda->text();
-//    std::replace(aux.begin(), aux.end(), ',', '.');
-//    valor_venda = aux;
+    //aux=ui->txt_nv_valorcompra->text();
+    //std::replace(aux.begin(), aux.end(), ',', '.'); //substitui valores
+    //valor_compra = aux;
+
+    //aux=ui->txt_nv_valorvenda->text();
+    //std::replace(aux.begin(), aux.end(), ',', '.');
+    //valor_venda = aux;
 
     QSqlQuery query;
     query.prepare("UPDATE "
                     "a002_estoque "
                   "SET "
-                    "a002_nc_peca        ='" +QString::number( nc_peca.toInt() )         + "'"
-                    ",a002_denomicanao   ='" +denominacao                                + "'"
-                    ",a002_grupo         ='" +grupo                                      + "'"
-                    ",a002_valor_compra  ='" +QString::number( valor_compra.toFloat() )  + "'"
-                    ",a002_valor_venda   ='" +QString::number( valor_venda.toFloat() )   + "'"
-                    ",a002_qtde_estoque  ='" +QString::number( qtde_estoque.toInt() )    + "'"
-                    ",a002_posicao_peca  ='" +posicao_peca                               + "'"
+                    "a002_nc_peca        ='" +nc_peca                                   + "'"
+                    ",a002_denomicanao   ='" +denominacao                               + "'"
+                    ",a002_grupo         ='" +grupo                                     + "'"
+                    ",a002_valor_compra  ='" +valor_compra  + "'"
+                    ",a002_valor_venda   ='" +valor_venda   + "'"
+                    ",a002_qtde_estoque  ='" +qtde_estoque                              + "'"
+                    ",a002_posicao_peca  ='" +posicao_peca                              + "'"
                   "WHERE "
                     "a002_codigo ='" +id+ "'");
 
