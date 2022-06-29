@@ -21,7 +21,6 @@ frm_gestaousuarios::frm_gestaousuarios(QWidget *parent) :
     ui->cb_nv_acesso->addItem("-");
     ui->cb_nv_acesso->addItem("Administrador");
     ui->cb_nv_acesso->addItem("Funcionário");
-    ui->cb_ge_acesso->addItem("-");
     ui->cb_ge_acesso->addItem("Administrador");
     ui->cb_ge_acesso->addItem("Funcionário");
     ui->txt_nv_nome->setFocus();

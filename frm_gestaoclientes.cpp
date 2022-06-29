@@ -23,6 +23,9 @@ frm_gestaoclientes::frm_gestaoclientes(QWidget *parent) :
     ui->btn_nv_validacep->setVisible(false);
     ui->btn_ge_validacep->setVisible(false);
 
+    //deixa o botão mostrar veículos invisível
+    ui->btn_nv_cadastrarveiculo->setVisible(false);
+
     //define o Novo Produto de index(0) como aba padrão(que inicia ao ser aberta a interface)
     ui->tabWidget->setCurrentIndex(0);
 
@@ -35,7 +38,7 @@ frm_gestaoclientes::frm_gestaoclientes(QWidget *parent) :
 
     //**Estilizando layout da table widget**
     //definindo o tamanho das colunas
-    ui->tw_ge_listaclientes->setColumnCount(9); //Nro colunas
+    ui->tw_ge_listaclientes->setColumnCount(11); //Nro colunas
     ui->tw_ge_listaclientes->setColumnWidth(0, 20); //id cliente
     ui->tw_ge_listaclientes->setColumnWidth(1, 150); //nome cliente
     ui->tw_ge_listaclientes->setColumnWidth(3, 120); //carro cliente
@@ -544,25 +547,30 @@ void frm_gestaoclientes::on_btn_ge_validacep_clicked()
 //salvar dados do cliente editado gestão clientes
 void frm_gestaoclientes::on_btn_ge_salvar_clicked()
 {
-    //**EM DESENVOLVIMENTO
-    ClCliente cliente;
-
-    cliente.codigo = ui->txt_ge_codigo->text().toUpper();
-    cliente.nome = ui->txt_ge_nome->text().toUpper();
-    cliente.cpf = ui->txt_ge_cpf->text().toUpper();
-    if( recebeCPF( cliente.cpf ) == false ) //**EM TESTES**recebendo e tratando o cpf
+    if( ui->tw_ge_listaclientes->currentRow() == -1 )
     {
-        qDebug() << "cpf inválido para sql";
+        QMessageBox::warning(this, "ERRO", "Selecione um cliente");
+        return;
     }
 
-    cliente.cep = ui->txt_ge_cep->text().toUpper();
-    cliente.estado = ui->txt_ge_estado->text().toUpper();
-    cliente.cidade = ui->txt_ge_cidade->text().toUpper();
-    cliente.rua = ui->txt_ge_rua->text().toUpper();
-    cliente.nro_casa = ui->txt_ge_nrocasa->text().toUpper();
-    cliente.bairro = ui->txt_ge_bairro->text().toUpper();
-    cliente.telefone1 = ui->txt_ge_telefone->text().toUpper();
+    QString codigo = ui->txt_ge_codigo->text();
 
+    //ClCliente cliente;
+
+    QString nome = ui->txt_ge_nome->text().toUpper();
+    QString cpf = ui->txt_ge_cpf->text().toUpper();
+    if( recebeCPF( cpf ) == false )
+    {
+        qDebug() << "cpf inválido para sql";
+        return;
+    }
+    QString cep = ui->txt_ge_cep->text().toUpper();
+    QString estado = ui->txt_ge_estado->text().toUpper();
+    QString cidade = ui->txt_ge_cidade->text().toUpper();
+    QString rua = ui->txt_ge_rua->text().toUpper();
+    QString nro_casa = ui->txt_ge_nrocasa->text().toUpper();
+    QString bairro = ui->txt_ge_bairro->text().toUpper();
+    QString telefone1 = ui->txt_ge_telefone->text().toUpper();
 
     //DESENVOLVENDO CRUD COM O BANCO
     QSqlQuery query;
@@ -571,17 +579,17 @@ void frm_gestaoclientes::on_btn_ge_salvar_clicked()
     query.prepare("UPDATE "
                     "a005_cliente "
                   "SET "
-                    "a005_nome      = '" +cliente.nome      + "'"
-                    ",a005_cpf      = '" +cliente.cpf       + "'"
-                    ",a005_cep      = '" +cliente.cep       + "'"
-                    ",a005_estado   = '" +cliente.estado    + "'"
-                    ",a005_cidade   = '" +cliente.cidade    + "'"
-                    ",a005_rua      = '" +cliente.rua       + "'"
-                    ",a005_nro_casa = '" +cliente.nro_casa  + "'"
-                    ",a005_bairro   = '" +cliente.bairro    + "'"
-                    ",a005_telefone = '" +cliente.telefone1 + "'"
+                    "a005_nome      = '" +nome      + "' "
+                    ",a005_cpf      = '" +cpf       + "' "
+                    ",a005_cep      = '" +cep       + "' "
+                    ",a005_estado   = '" +estado    + "' "
+                    ",a005_cidade   = '" +cidade    + "' "
+                    ",a005_rua      = '" +rua       + "' "
+                    ",a005_nro_casa = '" +nro_casa  + "' "
+                    ",a005_bairro   = '" +bairro    + "' "
+                    ",a005_telefone = '" +telefone1 + "' "
                   "WHERE "
-                    "a005_codigo = '" +cliente.codigo+ "'");
+                    "a005_codigo = '" +codigo+ "'");
 
 
     if( !query.exec() ) //verifica se a query tem algum erro e executa ela
@@ -593,15 +601,16 @@ void frm_gestaoclientes::on_btn_ge_salvar_clicked()
         //pega a linha que está selecionada
         int linha = ui->tw_ge_listaclientes->currentRow();
         //atualizando o table widget com o novo registro
-        ui->tw_ge_listaclientes->item(linha, 1)->setText(cliente.nome);
-        ui->tw_ge_listaclientes->item(linha, 2)->setText(cliente.cpf);
-        ui->tw_ge_listaclientes->item(linha, 3)->setText(cliente.cep);
-        ui->tw_ge_listaclientes->item(linha, 4)->setText(cliente.estado);
-        ui->tw_ge_listaclientes->item(linha, 5)->setText(cliente.cidade);
-        ui->tw_ge_listaclientes->item(linha, 6)->setText(cliente.rua);
-        ui->tw_ge_listaclientes->item(linha, 7)->setText(cliente.nro_casa);
-        ui->tw_ge_listaclientes->item(linha, 8)->setText(cliente.bairro);
-        ui->tw_ge_listaclientes->item(linha, 9)->setText(cliente.telefone1);
+        ui->tw_ge_listaclientes->item(linha, 1)->setText( nome );
+        ui->tw_ge_listaclientes->item(linha, 2)->setText( cpf );
+        ui->tw_ge_listaclientes->item(linha, 3)->setText( cep );
+        ui->tw_ge_listaclientes->item(linha, 4)->setText( estado );
+        ui->tw_ge_listaclientes->item(linha, 5)->setText( cidade );
+        ui->tw_ge_listaclientes->item(linha, 6)->setText( rua );
+        ui->tw_ge_listaclientes->item(linha, 7)->setText( nro_casa );
+        ui->tw_ge_listaclientes->item(linha, 8)->setText( bairro );
+        ui->tw_ge_listaclientes->item(linha, 9)->setText( telefone1 );
+
 
         QMessageBox::information(this, "Atualizado", "Cliente atualizado com sucesso!");
 
@@ -642,7 +651,7 @@ void frm_gestaoclientes::on_btn_ge_salvar_clicked()
             ui->txt_ge_telefone->clear();
             ui->txt_ge_nome->setFocus();
 
-            //limpando os campos da NV
+           //limpando os campos da NV
             ui->txt_nv_nome->clear();
             ui->txt_nv_cpf->clear();
             ui->txt_nv_cep->clear();
@@ -652,7 +661,6 @@ void frm_gestaoclientes::on_btn_ge_salvar_clicked()
             ui->txt_nv_nrocasa->clear();
             ui->txt_nv_bairro->clear();
             ui->txt_nv_telefone->clear();
-            ui->txt_nv_nome->setFocus();
         }
     }
 }
