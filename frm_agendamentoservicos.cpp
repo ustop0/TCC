@@ -124,9 +124,9 @@ void frm_agendamentoservicos::on_btn_agendarServico_clicked()
 
         QString data = ui->de_data->text();
         QString hora = ui->de_hora->text() + ":00";
-        QString servico = ui->txt_tipoServico->text();
-        QString observacao = ui->Ptxt_observacao->toPlainText();
-        QString status = "Pendente";
+        QString servico = ui->txt_tipoServico->text().toUpper();
+        QString observacao = ui->Ptxt_observacao->toPlainText().toUpper();
+        QString status = "PENDENTE";
         QString codigo_cliente = g_codigo_cliente;
         QString codigo_veiculo = g_codigo_veiculo;
 
@@ -334,7 +334,7 @@ void frm_agendamentoservicos::on_tw_listaservicos_itemSelectionChanged()
 void frm_agendamentoservicos::on_txt_ge_filtrar_returnPressed()
 {
     QString cb_filtro = ui->cb_ge_filtrar->currentText();
-    QString txt_filtro = ui->txt_ge_filtrar->text();
+    QString txt_filtro = ui->txt_ge_filtrar->text().toUpper();
 
     QString busca; //armazena busca
     QString filtro_sql;
@@ -549,9 +549,9 @@ void frm_agendamentoservicos::on_btn_ge_salvar_clicked()
     QString nome_veiculo = ui->txt_ge_nomeVeiculo->text();
     QString data = ui->de_ge_data->text();
     QString hora = ui->de_ge_hora->text();
-    QString servico = ui->txt_ge_tipoServico->text();
-    QString observacao = ui->Ptxt_ge_observacao->toPlainText();
-    QString status = ui->cb_ge_status->currentText();
+    QString servico = ui->txt_ge_tipoServico->text().toUpper();
+    QString observacao = ui->Ptxt_ge_observacao->toPlainText().toUpper();
+    QString status = ui->cb_ge_status->currentText().toUpper();
 
 
     query.prepare("UPDATE "
@@ -618,7 +618,7 @@ void frm_agendamentoservicos::on_btn_ge_excluir_clicked()
         QSqlQuery query;
 
         query.prepare("UPDATE "
-                        "a009_fornecedor "
+                        "a009_agenda_servicos "
                       "SET "
                         "a009_ativo = false "
                       "WHERE "

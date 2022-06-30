@@ -20,13 +20,11 @@ frm_modelos::frm_modelos(QWidget *parent) :
     ui->cb_nv_filtrar->addItem("-");
     ui->cb_nv_filtrar->addItem("Marca");
     ui->txt_nv_marca->setFocus();
-    ui->txt_nv_marca->setFocus();
 
     //combo box gestão modelos
     ui->cb_ge_filtrar->addItem("-");
     ui->cb_ge_filtrar->addItem("Marca");
     ui->cb_ge_filtrar->addItem("Modelo");
-    ui->txt_ge_marca->setFocus();
     ui->txt_ge_marca->setFocus();
 
     //define o Novo Produto de index(0) como aba padrão(que inicia ao ser aberta a interface)

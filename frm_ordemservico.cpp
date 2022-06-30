@@ -385,12 +385,12 @@ void frm_ordemservico::on_btn_salvaros_clicked()
     QString aux;
     QString msgFimOS;
 
-    QString data = ui->de_entrada->text();
-    QString km_veiculo = ui->txt_kmVeiculo->text();
-    QString meio_pagamento = ui->cb_meiopagamento->currentText();
+    QString data = ui->de_entrada->text().toUpper();
+    QString km_veiculo = ui->txt_kmVeiculo->text().toUpper();
+    QString meio_pagamento = ui->cb_meiopagamento->currentText().toUpper();
     QString valor_mao_obra = ui->txt_valorServico->text();
     QString valor_pecas = ui->lb_totalvenda->text();
-    QString detalhes = ui->Ptxt_detalhesServico->toPlainText();
+    QString detalhes = ui->Ptxt_detalhesServico->toPlainText().toUpper();
 
     aux = valor_mao_obra;
     std::replace(aux.begin(), aux.end(), ',', '.'); //substitui valores
@@ -402,6 +402,7 @@ void frm_ordemservico::on_btn_salvaros_clicked()
 
     double total_servico = valor_mao_obra.toDouble() + valor_pecas.toDouble();
 
+    qDebug() << "KM veiculo: " << km_veiculo;
 
     //inserindo dados da venda na tabela de vendas
     QSqlQuery query;
@@ -414,14 +415,14 @@ void frm_ordemservico::on_btn_salvaros_clicked()
                             ",a010_meio_pagamento           "
                             ",a010_detalhes_servico         "
                             ",a010_fk_codigo_veiculo)       "
-                  "VALUES('"+data                                 + "'"
-                        ",'"+km_veiculo                           + "'"
-                        ",'"+valor_mao_obra                       + "'"
-                        ",'"+valor_pecas                          + "'"
-                        ",'"+QString::number( total_servico )     + "'"
-                        ",'"+meio_pagamento                       + "'"
-                        ",'"+detalhes                             + "'"
-                        ",'"+g_codigo_veiculo                     + "')");
+                  "VALUES('"+data                                           + "'"
+                        ",'"+QString::number( km_veiculo.toDouble() )       + "'"
+                        ",'"+QString::number( valor_mao_obra.toDouble() )   + "'"
+                        ",'"+valor_pecas                                    + "'"
+                        ",'"+QString::number( total_servico )               + "'"
+                        ",'"+meio_pagamento                                 + "'"
+                        ",'"+detalhes                                       + "'"
+                        ",'"+g_codigo_veiculo                               + "')");
 
     if( !query.exec() )
     {
@@ -768,7 +769,7 @@ void frm_ordemservico::on_tabWidget_currentChanged(int index)
 void frm_ordemservico::on_txt_ge_filtrar_returnPressed()
 {
     QString cb_filtro = ui->cb_ge_filtrar->currentText();
-    QString txt_filtro = ui->txt_ge_filtrar->text();
+    QString txt_filtro = ui->txt_ge_filtrar->text().toUpper();
 
     QString busca; //armazena busca
     QString filtro_sql;
