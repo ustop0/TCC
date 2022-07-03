@@ -1,6 +1,5 @@
 #include "frm_gestaousuarios.h"
 #include "ui_frm_gestaousuarios.h"
-//#include "frms_nv_veiculocliente.h" // verificar
 
 frm_gestaousuarios::frm_gestaousuarios(QWidget *parent) :
     QDialog(parent),
@@ -54,7 +53,6 @@ frm_gestaousuarios::frm_gestaousuarios(QWidget *parent) :
 frm_gestaousuarios::~frm_gestaousuarios()//** destrutor
 {
     con.fechar(); //fechando conexao com o banco de dados
-
     delete ui;
 }
 

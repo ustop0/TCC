@@ -27,6 +27,7 @@ frms_nv_veiculocliente::frms_nv_veiculocliente(QWidget *parent, QString c_codigo
     //define o Novo Produto de index(0) como aba padrão(que inicia ao ser aberta a interface)
     ui->tabWidget->setCurrentIndex(0);
 
+    ui->btn_ge_selecionaVeiculo->setVisible(false);
     ui->txt_nv_filtrar->setFocus();
 
     //**Estilizando layout da table widget CLIENTES**

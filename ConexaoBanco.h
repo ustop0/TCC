@@ -8,24 +8,29 @@
 class Conexao
 {
     public:
+        //QSqlDatabase bancoDeDados = QSqlDatabase::database();
         QSqlDatabase bancoDeDados;
         QString banco_host = "localhost";
         QString banco_usuario = "postgres";
         QString banco_senha = "12meurex";
         QString banco_nome = "dbAmincar";
 
+
         Conexao()
         {
             //drive do postgre
-            bancoDeDados = QSqlDatabase::addDatabase("QPSQL");
+            bancoDeDados = QSqlDatabase::addDatabase( "QPSQL" );
         }
 
-        inline void fechar() //fecha a conexao com o banco
+        //fecha a conexao com o banco
+        inline void fechar()
         {
             bancoDeDados.close();
+            QSqlDatabase::removeDatabase( banco_nome );
         }
 
-        inline bool abrir() //abre a conexao com o banco
+        //abre a conexao com o banco
+        inline bool abrir()
         {
             //fazendo conexao com o PostgreSQL
             bancoDeDados.setHostName( banco_host );
@@ -44,7 +49,8 @@ class Conexao
             }
         }
 
-        bool aberto() //verifica se o banco está aberto ou fechado
+        //verifica se o banco está aberto ou fechado
+        inline bool aberto()
         {
             if( bancoDeDados.isOpen() )
             {
