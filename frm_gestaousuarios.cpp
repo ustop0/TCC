@@ -419,5 +419,3 @@ void frm_gestaousuarios::on_btn_ge_excluir_clicked()
         }
     }
 }
-
-

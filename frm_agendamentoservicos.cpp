@@ -177,12 +177,13 @@ void frm_agendamentoservicos::on_btn_agendarServico_clicked()
             else
             {
                 ui->txt_nomeCliente->clear();
+
                 ui->txt_nomeVeiculo->clear();
                 ui->de_data->setDate( QDate::currentDate() );
                 ui->txt_tipoServico->clear();
                 ui->Ptxt_observacao->clear();
 
-                QMessageBox::warning(this, "AVISO", "Serviço agendado com sucesso");
+                QMessageBox::information(this, "AVISO", "Serviço agendado com sucesso");
             }
         }
     }
@@ -315,15 +316,15 @@ void frm_agendamentoservicos::on_tw_listaservicos_itemSelectionChanged()
         QString verificaStatus = query.value(7).toString();
 
         //verifica o status do seriço e muda o indice do combo box
-        if( verificaStatus == "Pendente" )
+        if( verificaStatus == "PENDENTE" )
         {
             ui->cb_ge_status->setCurrentIndex(1);
         }
-        else if( verificaStatus == "Realizado" )
+        else if( verificaStatus == "REALIZADO" )
         {
             ui->cb_ge_status->setCurrentIndex(2);
         }
-        else if( verificaStatus == "Cancelado" )
+        else if( verificaStatus == "CANCELADO" )
         {
             ui->cb_ge_status->setCurrentIndex(3);
         }

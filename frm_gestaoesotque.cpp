@@ -501,7 +501,7 @@ void frm_gestaoesotque::on_txt_nv_filtrar_returnPressed()
                     "FROM "
                         "a003_fornecedor "
                     "WHERE "
-                      "a003_ativo = true "
+                        "a003_ativo = true "
                     "ORDER BY "
                         "a003_codigo DESC";
         }
@@ -1141,13 +1141,13 @@ void frm_gestaoesotque::on_btn_ge_salvar_clicked()
     query.prepare("UPDATE "
                     "a002_estoque "
                   "SET "
-                    "a002_nc_peca        ='" +nc_peca                                   + "'"
-                    ",a002_denomicanao   ='" +denominacao                               + "'"
-                    ",a002_grupo         ='" +grupo                                     + "'"
+                    "a002_nc_peca        ='" +nc_peca       + "'"
+                    ",a002_denomicanao   ='" +denominacao   + "'"
+                    ",a002_grupo         ='" +grupo         + "'"
                     ",a002_valor_compra  ='" +valor_compra  + "'"
                     ",a002_valor_venda   ='" +valor_venda   + "'"
-                    ",a002_qtde_estoque  ='" +qtde_estoque                              + "'"
-                    ",a002_posicao_peca  ='" +posicao_peca                              + "'"
+                    ",a002_qtde_estoque  ='" +qtde_estoque  + "'"
+                    ",a002_posicao_peca  ='" +posicao_peca  + "'"
                   "WHERE "
                     "a002_codigo ='" +id+ "'");
 
