@@ -18,9 +18,37 @@ This repository is about my TCC system, it is being developed in C++ using the Q
 </div>
 <br>
 
-<h5>2 - Follow the installer steps</h5>
+<h5>2 - Choose a folder for installation and follow the installer steps(it is recommended to create a folder for the installation)</h5>
 <br>
 <div align="center">
   <img src="https://user-images.githubusercontent.com/60183103/214975417-131e290f-ec24-499a-953e-54576907e31c.png"> 
 </div>
 <br>
+
+<h5>3 - Change the file permissions with sudo chmod 777 TCC.sh and run ./TCC.sh</h5>
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/60183103/214976567-a1daea80-cd31-404a-ba7c-0d2b0603a321.png" style="width:80%; height:80%"> 
+</div>
+<br>
+
+
+<h3>The system</h3>
+<br>
+<h4>Login screen</h4>
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/60183103/214976397-634ec5fc-12cd-49bb-b568-70f865ee0cb2.png"> 
+</div>
+<br>
+
+<h4>Loading splash screen</h4>
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/60183103/214977099-a754960c-d53e-4118-a137-a2ebf115d53e.png"> 
+</div>
+<br>
+
+<h4>Main screen</h4>
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/60183103/214977365-1ea49b49-1ccc-41b1-9806-006c7fe05126.png" width="80%"> 
+</div>
+<br>
+
