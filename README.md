@@ -33,6 +33,7 @@ This repository is about my TCC system, it is being developed in C++ using the Q
 
 
 <h3>The system</h3>
+<p>About the system and some screens</p>
 <br>
 <h4>Login screen</h4>
 <div align="center">
@@ -41,14 +42,80 @@ This repository is about my TCC system, it is being developed in C++ using the Q
 <br>
 
 <h4>Loading splash screen</h4>
+<br>
 <div align="center">
   <img src="https://user-images.githubusercontent.com/60183103/214977099-a754960c-d53e-4118-a137-a2ebf115d53e.png"> 
 </div>
 <br>
 
 <h4>Main screen</h4>
+<br>
+<p>This is the main screen of the system. It contains a menu that provides access to all system functionality.</p>
 <div align="center">
   <img src="https://user-images.githubusercontent.com/60183103/214977365-1ea49b49-1ccc-41b1-9806-006c7fe05126.png" width="80%"> 
 </div>
 <br>
 
+<h4>Customer registration and management screen</h4>
+<br>
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/60183103/215237766-3ce8d1d9-f53f-482e-a15d-59f0b0a2fa0a.png" width="80%"> 
+</div>
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/60183103/215237859-70439847-92ab-4fef-8f76-8fc5529dd0d7.png" width="80%"> 
+</div>
+<br>
+
+<h4>Vehicle registration screen</h4>
+<br>
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/60183103/215237898-5a35d9ca-1763-41ba-8de2-2333bba27cae.png" width="80%"> 
+</div>
+<br>
+
+<h4>Inventory registration and management screen</h4>
+<br>
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/60183103/215237970-0a2c8a4e-dc68-4dd9-84dd-7fe07e82e464.png" width="80%"> 
+</div>
+<br>
+
+<h4>Sales screens and sales report</h4>
+<br>
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/60183103/215238075-12a68601-3382-47f9-98db-5e55bdfd6dd8.png" width="80%"> 
+</div>
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/60183103/215238082-19450071-a035-43b0-9788-f89ae666d60f.png" width="80%"> 
+</div>
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/60183103/215238163-9990c639-56e2-410b-a78d-4172bf9981de.png" width="80%"> 
+</div>
+<br>
+
+
+<h4>Service scheduling screen</h4>
+<br>
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/60183103/215238258-0c541859-4131-43f4-9ade-85e3817c577a.png" width="80%"> 
+</div>
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/60183103/215238274-0f813f34-af05-4cc6-9ad7-3d33958d5f32.png" width="80%"> 
+</div>
+<br>
+
+<h4>work order screen/h4>
+<br>
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/60183103/215238321-4dc5bbea-9515-4900-9d7f-5fa6fea9ebe2.png" width="80%"> 
+</div>
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/60183103/215238363-2bf4e94f-dbf8-4318-8b0b-2eb4806711ea.png" width="80%"> 
+</div>
+<br>
+
+<h4>About system/h4>
+<br>
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/60183103/215238487-102fcef4-3a23-42c0-9ef5-8b765b941ee6.png" width="40%"> 
+</div>
