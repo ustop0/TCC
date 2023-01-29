@@ -1,5 +1,5 @@
 # TCC
-This repository is about my TCC system, it is being developed in C++ using the Qt framework and the Qt Creator IDE
+This repository is about my TCC system, it is being developed in C++ using the Qt framework and the Qt Creator IDE. The context and stages of the project are detailed in /Artigo_Apresentacao/Apresentação_TCC.pdf.
 
 <h3>How to use in Qt Creator:</h3>
 <br>
@@ -33,7 +33,9 @@ This repository is about my TCC system, it is being developed in C++ using the Q
 
 
 <h3>The system</h3>
-<p>About the system and some screens</p>
+<p>This Information System was developed for the management of stocks and services, of a mechanic and auto parts workshop, focusing on the control of parts and accessories for vehicles, as well as the management of workshop mechanic services.<br>
+Its main features are: storage and processing of data relating to stock, suppliers, customers, vehicles and services provided.</p>
+<p>Some system screens</p>
 <br>
 <h4>Login screen</h4>
 <div align="center">
@@ -104,7 +106,7 @@ This repository is about my TCC system, it is being developed in C++ using the Q
 </div>
 <br>
 
-<h4>work order screen/h4>
+<h4>work order screen</h4>
 <br>
 <div align="center">
   <img src="https://user-images.githubusercontent.com/60183103/215238321-4dc5bbea-9515-4900-9d7f-5fa6fea9ebe2.png" width="80%"> 
@@ -114,7 +116,7 @@ This repository is about my TCC system, it is being developed in C++ using the Q
 </div>
 <br>
 
-<h4>About system/h4>
+<h4>About system</h4>
 <br>
 <div align="center">
   <img src="https://user-images.githubusercontent.com/60183103/215238487-102fcef4-3a23-42c0-9ef5-8b765b941ee6.png" width="40%"> 
