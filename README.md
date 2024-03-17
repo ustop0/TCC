@@ -112,7 +112,7 @@ Its main features are: storage and processing of data relating to stock, supplie
   <img src="https://user-images.githubusercontent.com/60183103/215238321-4dc5bbea-9515-4900-9d7f-5fa6fea9ebe2.png" width="80%"> 
 </div>
 <div align="center">
-#  <img src="https://user-images.githubusercontent.com/60183103/215238363-2bf4e94f-dbf8-4318-8b0b-2eb4806711ea.png" width="80%"> 
+<!--  <img src="https://user-images.githubusercontent.com/60183103/215238363-2bf4e94f-dbf8-4318-8b0b-2eb4806711ea.png" width="80%"> -->
 </div>
 <br>
 
